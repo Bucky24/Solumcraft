@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<title>Solumcraft WebChat</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+<script type="text/javascript">
+var lastId = -1;
+var username;
+var sessionId;
+
+function getChat() {
+	var url = "http://solumcraft.com/solumcraft/chat/chat.php?";
+	url += "action=getChat";
+	
+	var seconds = Math.ceil(new Date().getTime() / 1000)
+	
+	url += "&id=" + lastId;
+	
+	$.ajax({url: url})
+	.success(function(data) {
+		var obj = JSON.parse(data);
+		if (obj.success === undefined || obj.success != true) {
+			console.log(obj.message);
+			return;
+		}
+		var html = "";
+		var newLast = lastId;
+		for (var i=0;i<obj.data.length;i++) {
+			if (obj.data[i].id > lastId) {
+				html += obj.data[i].player + ": " + obj.data[i].message + "\n";
+				newLast = obj.data[i].id;
+			}
+		}
+		lastId = newLast;
+		var active = obj.activePlayers.length;
+		var activeHtml = "<b>";
+		for (var i=0;i<obj.activePlayers.length;i++) {
+			activeHtml += obj.activePlayers[i] + " ";
+		}
+		activeHtml += "</b>";
+		var playerStr = "players";
+		var word2 = "are";
+		if (active == 1) {
+			playerStr = "player";
+			word2 = "is";
+		}
+		$("#playersOn").html("There " + word2 + " " + active + " " + playerStr + " on the server: " + activeHtml);
+		$("#chatLog").val($("#chatLog").val() + html);
+		
+		var activeWeb = obj.activeWeb.length;
+		var activeWebHtml = "<b>";
+		for (var i=0;i<obj.activeWeb.length;i++) {
+			activeWebHtml += obj.activeWeb[i] + " ";
+		}
+		activeWebHtml += "</b>";
+		playerStr = "players";
+		word2 = "are";
+		if (activeWeb == 1) {
+			playerStr = "player";
+			word2 = "is";
+		}
+		$("#playersWeb").html("There " + word2 + " " + activeWeb + " " + playerStr + " in WebChat: " + activeWebHtml);
+		
+		var psconsole = $('#chatLog');
+		psconsole.scrollTop(
+			psconsole[0].scrollHeight - psconsole.height()
+		);
+	});
+}
+
+$(function() {
+	$("#login").on('click',function() {
+		var user = $("#username").val();
+		var password = $("#password").val();
+		if (user== "") {
+			alert("Please enter a username");
+			return;
+		}
+		
+		var url = "http://solumcraft.com/solumcraft/chat/chat.php?action=login&username=" + user + "&password=" + password;
+		
+		$.ajax({url:url})
+		.success(function(data) {			
+			var obj = JSON.parse(data);
+			if (obj.success === undefined || obj.success != true) {
+				alert(obj.message);
+				return;
+			}
+			
+			sessionId = obj.session;
+			
+			username = user;
+			$("#chat").show();
+			$("#controls").hide();
+			$("#header").html("You are logged in as " + username);
+			
+			setInterval(getChat,1000);
+		});
+		
+
+	});
+	
+	$("body").on('keyup',function(event) {
+		var code = event.keyCode;
+		
+		if (code == 13) {
+			var message = $("#chatLine").val();
+			$("#chatLine").val("");
+			
+			if (message == "") return;
+			
+			var url = "http://solumcraft.com/solumcraft/chat/chat.php?";
+			url += "action=sendMessage";
+			url += "&username=" + username;
+			url += "&session=" + sessionId;
+			url += "&message=" + encodeURIComponent(message);
+			
+			$.ajax({url:url})
+			.success(function(data) {
+				var obj = JSON.parse(data);
+				
+				if (obj.success === undefined) {
+					// we assume this means a bad session
+					alert(obj.message);
+					$("#controls").show();
+					$("#username").val("");
+					$("#password").val("");
+				}
+			});
+		}
+	});
+});
+</script>
+</head>
+<body>
+<div id="controls">
+<b>Note:</b> You will need to login to the minecraft server and use the /setpassword command before you can use WebChat<br>
+Username: <input type="text" id="username"><br>
+Password: <input type="password" id="password"><br>
+<input type="button" id="login" value="Login!"><br>
+</div>
+<div id="chat" style="display: none">
+	<div id="header" style="font-size: 15px; font-weight: bold;"></div>
+	<div id="playersOn" style="font-size: 15px;"></div>
+	<div id="playersWeb" style="font-size: 15px;"></div>
+	<textarea id="chatLog" rows="20" cols="100"></textarea><br>
+	<input type="text" id="chatLine" style="width:400px;">
+</div>
+</body>
+</html>

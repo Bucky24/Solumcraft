@@ -1,0 +1,5 @@
+AuthName "Solumcraft Restricted" 
+AuthType Basic 
+AuthUserFile /var/www/solumcraft/pricingTool/.htpasswd 
+AuthGroupFile /dev/null 
+require valid-user

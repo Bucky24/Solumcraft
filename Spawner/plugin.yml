@@ -1,0 +1,9 @@
+name: Spawner
+version: 0.3
+main: com.thepastimers.Spawner.Spawner
+softdepend: [Database,Permission]
+commands:
+    createspawn:
+        description: creates a spawn point
+    runspawn:
+        description: activates a group of spawn points

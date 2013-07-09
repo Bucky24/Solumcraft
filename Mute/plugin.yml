@@ -1,0 +1,13 @@
+name: Mute
+version: 0.1
+main: com.thepastimers.Mute.Mute
+softdepend: [Database, Rank, Permission]
+commands:
+    mute:
+        description: mute
+    unmute:
+        description: mute
+    globalmute:
+        description: mute
+    globalunmute:
+        description: mute

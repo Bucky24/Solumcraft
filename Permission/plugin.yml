@@ -1,0 +1,9 @@
+name: Permission
+version: 1.0
+main: com.thepastimers.Permission.Permission
+softdepend: [Database,Rank]
+commands:
+    perms:
+        description: give/remove/check perms
+    groupperms:
+        description: give/remove/check group perms

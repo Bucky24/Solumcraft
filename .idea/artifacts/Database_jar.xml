@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Database:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Database.jar">
+      <element id="module-output" name="Database" />
+      <element id="file-copy" path="$PROJECT_DIR$/Database/plugin.yml" />
+    </root>
+  </artifact>
+</component>

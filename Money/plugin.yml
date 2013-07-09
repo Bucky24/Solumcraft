@@ -1,0 +1,15 @@
+name: Money
+version: 1.2
+main: com.thepastimers.Money.Money
+softdepend: [Database, Permission, ItemName]
+commands:
+    bal:
+        description: show balance
+    pay:
+        description: pay money to a player
+    sell:
+        description: sell item to server
+    worth:
+        description: get worth of items
+    price:
+        description: get/set prices of items

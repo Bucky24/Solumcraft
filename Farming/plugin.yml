@@ -1,0 +1,4 @@
+name: Farming
+version: 0.2
+main: com.thepastimers.Farming.Farming
+softdepend: [Permission,ItemName]

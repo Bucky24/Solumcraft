@@ -1,0 +1,7 @@
+name: Pattern
+version: 0.1
+main: com.thepastimers.Pattern.Pattern
+softdepend: [Database,Permission,Coord]
+commands:
+    pattern:
+        description: main pattern command

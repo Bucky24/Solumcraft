@@ -1,0 +1,13 @@
+name: Teleport
+version: 0.3
+main: com.thepastimers.Teleport.Teleport
+softdepend: [Rank,Permission,Mute]
+commands:
+    tp:
+        description: teleport command
+    tpa:
+        description: teleport to others
+    tpaccept:
+        description: accept a teleport request
+    tpdeny:
+        description: deny a teleport request

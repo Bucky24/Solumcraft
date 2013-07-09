@@ -1,0 +1,7 @@
+name: Coord
+version: 1.1
+main: com.thepastimers.Coord.Coord
+softdepend: [Permission]
+commands:
+    coord:
+        description: coord commands

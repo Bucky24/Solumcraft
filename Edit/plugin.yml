@@ -1,0 +1,19 @@
+name: Edit
+version: 0.5
+main: com.thepastimers.Edit.Edit
+softdepend: [Permission,Coord]
+commands:
+    check:
+        description: get material name of block
+    fill:
+        description: fill area with block
+    pyramid:
+        description: creates a pyramid with block
+    pyramidlegs:
+        description: creates a pyramid with 4 legs
+    filldiag:
+        description: fill diagonal lines inside area with block
+    shift:
+        description: move blocks (doesn't work)
+    encase:
+        description: encases a player in cobblestone

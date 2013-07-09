@@ -1,0 +1,19 @@
+name: Home
+version: 1.3
+main: com.thepastimers.Home.Home
+softdepend: [Database,Permission,Rank,CombatLog]
+commands:
+    home:
+        description: home command
+    delhome:
+        description: delete home
+    sethome:
+        description: set home
+    listhome:
+        description: list homes
+    maxhome:
+        description: set max homes
+    groupmaxhome:
+        description: set group max homes
+    forcehome:
+        description: Force teleport to a home

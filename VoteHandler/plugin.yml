@@ -1,0 +1,9 @@
+name: VoteHandler
+version: 1.0
+main: com.thepastimers.VoteHandler.VoteHandler
+softdepend: [Database,Permission,Rank,Votifier]
+commands:
+    testvote:
+        description: Admin command for testing Votifier
+    vote:
+        description: main vote command

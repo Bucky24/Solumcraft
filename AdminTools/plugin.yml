@@ -1,0 +1,11 @@
+name: AdminTools
+version: 0.9
+main: com.thepastimers.AdminTools.AdminTools
+softdepend: [Database,Permission]
+commands:
+    ban:
+        description: bans user
+    kick:
+        description: kicks user
+    pardon:
+        description: pardon user

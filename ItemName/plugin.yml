@@ -1,0 +1,7 @@
+name: ItemName
+version: 1.0
+main: com.thepastimers.ItemName.ItemName
+softdepend: [Permission]
+commands:
+    nameitem:
+        description: Names item in hand

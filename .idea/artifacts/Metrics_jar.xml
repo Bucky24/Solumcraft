@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Metrics:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Metrics.jar">
+      <element id="module-output" name="Metrics" />
+      <element id="file-copy" path="$PROJECT_DIR$/Metrics/plugin.yml" />
+    </root>
+  </artifact>
+</component>

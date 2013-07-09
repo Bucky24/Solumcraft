@@ -1,0 +1,9 @@
+name: Magic
+version: 1.2
+main: com.thepastimers.Magic.Magic
+softdepend: [Database,Permission,ItemName]
+commands:
+    cast:
+        description: cast spell
+    checkmana:
+        description: check mana

@@ -1,0 +1,7 @@
+name: Mail
+version: 0.45
+main: com.thepastimers.Mail.Mail
+softdepend: [Database,Permission]
+commands:
+  mail:
+    description: Mail command

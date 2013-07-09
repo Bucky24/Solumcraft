@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<title>Pricing Tool</title>
+	<style type="text/css">
+		.amount {
+			width: 70px;
+		}
+	</style>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function generatePrice(data) {
+			var id = data.id;
+			var name = data.name;
+			var amount = data.amount;
+			
+			var html = "<tr id='priceRow" + id + "'><td>" + id + "</td><td class='name'><input type='text' value='" + name + "'></td><td><input type='text' class='amount' value='" + amount + "'>" +
+			"</td><td><input type='button' value='Save' onClick='save(\"" + id + "\")'><input type='button' value='Delete' onClick='del(\"" + id + "\")'></td></tr>";
+			$("#priceTable tr:last").after(html);
+		}
+		
+		function save(id) {
+			var row = $("#priceRow" + id);
+			
+			var name = $(row).find(".name input").val();
+			var amount = $(row).find(".amount").val();
+			
+			if (id == "New") {
+				id = "-1";
+				newPriceRow();
+			}
+			
+			$.ajax("http://solumcraft.com/solumcraft/pricingTool/prices.php?action=save&id=" + id + "&name=" + name + "&amount=" + amount)
+			.done(function(data) {
+				var obj = JSON.parse(data);
+				if (obj.result == "error") {
+					alert(obj.message);
+				}
+			});
+		}
+		
+		function del(id) {
+			var row = $("#priceRow" + id);
+			$(row).remove();
+			$.ajax("http://solumcraft.com/solumcraft/pricingTool/prices.php?action=delete&id=" + id)
+			.done(function(data) {
+				var obj = JSON.parse(data);
+				if (obj.result == "error") {
+					alert(obj.message);
+				}
+			});
+		}
+		
+		function newPriceRow() {
+
+			var html = "<tr id='priceRowNew'><td></td><td class='name'><input type='text'></td><td><input type='text' class='amount'></td></td><td><input type='button' value='Save' onClick='save(\"New\")'>" + 
+			"</td></tr>";
+			$("#priceTable tr").eq(1).before(html);
+		}
+	
+		$(function() {
+			var html = "<table id='priceTable' border=1><tr><th>Id</th><th>Item</th><th>Amount (cents)</th><th></th></tr></table>";
+			$("#priceList").html(html);
+			
+			$.ajax("http://solumcraft.com/solumcraft/pricingTool/prices.php?action=getPrices")
+			.done(function(data) {
+				var prices = JSON.parse(data);
+				
+				if (prices.result == "error") {
+					alert(prices.message);
+				} else {				
+					for (var i=0;i<prices.data.length;i++) {
+						var price = prices.data[i];
+						
+						generatePrice(price);
+					}
+				}
+				
+				newPriceRow();
+			});
+		});
+	</script>
+</head>
+<body>
+<b>Notes</b><br>
+The server only needs prices to be set for items that cannot be built from a recipe.<br>
+For example, if you want to get the price for an iron axe, and the server already knows the price<br>
+of sticks, and the price of iron ingots, it can use those prices to determine the price of an iron axe.<br>
+However in cases where there is a circular recipe, such as diamond block -> diamond -> diamond block,<br>
+the server will be unable to determine what is the "base" element, and you will have to specify the price.<br>
+Likewise if something can be built from more then one recipe, the server won't know which recipe to use<br>
+to determine the price.
+<div id="priceList"></div>
+</body>
+</html>

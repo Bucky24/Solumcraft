@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Director:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Director.jar">
+      <element id="module-output" name="Director" />
+      <element id="file-copy" path="$PROJECT_DIR$/Director/plugin.yml" />
+    </root>
+  </artifact>
+</component>

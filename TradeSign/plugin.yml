@@ -1,0 +1,5 @@
+name: TradeSign
+version: 3.1
+main: com.thepastimers.TradeSign.TradeSign
+softdepend: [Database,Money,Rank]
+commands:

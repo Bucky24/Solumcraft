@@ -1,0 +1,9 @@
+name: Director
+version: 0.5
+main: com.thepastimers.Director.Director
+softdepend: [Permission, Database, Spawner, ItemName, Coord]
+commands:
+    arena:
+        description: arena based commands
+    compete:
+        description: Competition commands

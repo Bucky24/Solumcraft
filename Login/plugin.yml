@@ -1,0 +1,7 @@
+name: Login
+version: 0.1
+main: com.thepastimers.Login.Login
+softdepend: [Database,Permission]
+commands:
+    setPassword:
+        description: sets password

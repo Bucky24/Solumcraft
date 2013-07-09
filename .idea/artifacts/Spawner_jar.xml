@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Spawner:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Spawner.jar">
+      <element id="module-output" name="Spawner" />
+      <element id="file-copy" path="$PROJECT_DIR$/Spawner/plugin.yml" />
+    </root>
+  </artifact>
+</component>

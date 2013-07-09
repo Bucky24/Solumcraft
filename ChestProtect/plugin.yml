@@ -1,0 +1,7 @@
+name: ChestProtect
+version: 1.1
+main: com.thepastimers.ChestProtect.ChestProtect
+softdepend: [Database,Permission,Coord]
+commands:
+    protect:
+        description: Chest protection command

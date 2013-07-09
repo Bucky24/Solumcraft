@@ -1,0 +1,7 @@
+name: Kit
+version: 0.1
+main: com.thepastimers.Kit.Kit
+softdepend: [Permission, Database, ItemName]
+commands:
+    kit:
+        description: kit commands

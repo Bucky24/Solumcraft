@@ -1,0 +1,17 @@
+name: ExtCommands
+version: 0.8
+main: com.thepastimers.ExtCommands.ExtCommands
+softdepend: [Permission, Metrics]
+commands:
+    spawn:
+        description: teleports to spawn
+    setspawn:
+        description: sets spawn point
+    tpe:
+        description: teleports to coordinates
+    clear:
+        description: removes certain things
+    itemCheck:
+        description: gives info about held item
+    opCheck:
+        description: checks if player has op

@@ -1,0 +1,9 @@
+name: Warp
+version: 0.1
+main: com.thepastimers.Warp.Warp
+softdepend: [Database,Permission]
+commands:
+    warp:
+        description: warp command
+    setwarp:
+        description: set warps
