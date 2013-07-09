@@ -1,0 +1,4 @@
+Solumcraft
+==========
+
+Solumcraft plugins repository
