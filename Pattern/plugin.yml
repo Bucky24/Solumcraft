@@ -1,5 +1,5 @@
 name: Pattern
-version: 0.1
+version: 0.2
 main: com.thepastimers.Pattern.Pattern
 softdepend: [Database,Permission,Coord]
 commands:

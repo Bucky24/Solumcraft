@@ -15,6 +15,8 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
@@ -100,6 +102,10 @@ public class Creative extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
 
         if (block == null) return;
+
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            return;
+        }
 
         if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BURNING_FURNACE
                 || block.getType() == Material.ENDER_CHEST) {

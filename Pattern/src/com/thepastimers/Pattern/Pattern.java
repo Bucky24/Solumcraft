@@ -135,6 +135,7 @@ public class Pattern extends JavaPlugin implements Listener {
                                     pb.setX(x-x1);
                                     pb.setY(y-y1);
                                     pb.setZ(z-z1);
+                                    pb.setData(b.getData());
 
                                     if (!pb.save(database)) {
                                         error ++;
@@ -197,6 +198,7 @@ public class Pattern extends JavaPlugin implements Listener {
                             if (!"AIR".equalsIgnoreCase(pb.getBlock())) {
                                 Block b = w.getBlockAt(pb.getX()+x1,pb.getY()+y1,pb.getZ()+z1);
                                 b.setType(Material.getMaterial(pb.getBlock()));
+                                b.setData(pb.getData());
                             }
                             count ++;
                         }
@@ -205,9 +207,56 @@ public class Pattern extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/pattern use <name>");
                     }
+                } else if ("list".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"pattern_use") || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (pattern_use)");
+                        return true;
+                    }
+
+                    List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"1 group by pattern");
+
+                    sender.sendMessage("List of patterns:");
+                    StringBuilder builder = new StringBuilder();
+                    for (int i=0;i<patternBlockList.size();i++) {
+                        PatternBlock pb = patternBlockList.get(i);
+                        builder.append(pb.getPattern());
+                        if (i < patternBlockList.size()-1) {
+                            builder.append(",");
+                        }
+                    }
+                    sender.sendMessage(builder.toString());
+                } else if ("remove".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"pattern_set") || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (pattern_set)");
+                        return true;
+                    }
+
+                    if (args.length > 1) {
+                        String name = args[1];
+
+                        List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"pattern = '" + database.makeSafe(name) + "'");
+
+                        if (patternBlockList == null || patternBlockList.size() == 0) {
+                            sender.sendMessage(ChatColor.RED + "Unable to find pattern " + name);
+                            return true;
+                        }
+
+                        int count = 0;
+                        int removed = 0;
+                        for (PatternBlock b : patternBlockList) {
+                            if (b.delete(database)) {
+                                removed ++;
+                            }
+                            count ++;
+                        }
+
+                        sender.sendMessage("Removed " + removed + "/" + count);
+                    } else {
+                        sender.sendMessage("/pattern remove <name>");
+                    }
                 }
             } else {
-                sender.sendMessage("/pattern <set|use|info|remove>");
+                sender.sendMessage("/pattern <set|use|info|remove|list>");
             }
         } else {
             return false;

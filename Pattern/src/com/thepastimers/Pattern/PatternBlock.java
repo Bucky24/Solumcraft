@@ -29,6 +29,7 @@ public class PatternBlock extends Table {
     int y;
     int z;
     String block;
+    byte data;
 
     public int getId() {
         return id;
@@ -78,6 +79,14 @@ public class PatternBlock extends Table {
         this.block = block;
     }
 
+    public byte getData() {
+        return data;
+    }
+
+    public void setData(byte data) {
+        this.data = data;
+    }
+
     public static List<PatternBlock> parseResult(ResultSet result) throws SQLException {
         List<PatternBlock> ret = new ArrayList<PatternBlock>();
 
@@ -94,6 +103,7 @@ public class PatternBlock extends Table {
             p.setY(result.getInt("y"));
             p.setZ(result.getInt("z"));
             p.setBlock(result.getString("block"));
+            p.setData(result.getByte("data"));
 
             ret.add(p);
         }
@@ -116,8 +126,8 @@ public class PatternBlock extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(pattern,x,y,z,block)";
-            String values = "('" + d.makeSafe(pattern) + "'," + x + "," + y + "," + z + ",'" + d.makeSafe(block) + "')";
+            String columns = "(pattern,x,y,z,block,data)";
+            String values = "('" + d.makeSafe(pattern) + "'," + x + "," + y + "," + z + ",'" + d.makeSafe(block) + "'," + data + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -141,7 +151,8 @@ public class PatternBlock extends Table {
             query.append("x = " + z + ", ");
             query.append("y = " + y + ", ");
             query.append("z = " + z + ", ");
-            query.append("block = '" + d.makeSafe(block) + "' ");
+            query.append("block = '" + d.makeSafe(block) + "', ");
+            query.append("data = " + data + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -151,7 +162,7 @@ public class PatternBlock extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string pattern, int x, int y, int z, string block");
+        builder.append(" int id, string pattern, int x, int y, int z, string block, byte data");
 
         return builder.toString();
     }

@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -373,7 +374,7 @@ public class Plot extends JavaPlugin implements Listener {
             // handled in another function
             return;
         } else if(damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
-                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow) {
+                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
                 event.setCancelled(true);
         }
     }
@@ -405,7 +406,7 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         } else if(damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
-                || damaged instanceof Chicken) {
+                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
             if (damager instanceof Player) {
                 Player p = (Player)damager;
                 int perms = getPlotPerms(pd,p.getName());
@@ -469,7 +470,7 @@ public class Plot extends JavaPlugin implements Listener {
             if (event.getEntity() instanceof TNTPrimed) {
                     event.setCancelled(true);
             }
-            if (event.getEntity() instanceof Creeper && !plot.isPvp()) {
+            if (event.getEntity() instanceof Creeper && !plot.isPve()) {
                 event.setCancelled(true);
             }
         } else {
@@ -483,6 +484,18 @@ public class Plot extends JavaPlugin implements Listener {
                 if (p != null) {
                     itor.remove();
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void fireSpread(BlockSpreadEvent event) {
+        Location l = event.getBlock().getLocation();
+
+        PlotData plot = plotAt(l);
+        if (plot != null && !plot.isPve()) {
+            if (event.getSource().getType() == Material.FIRE) {
+                event.setCancelled(true);
             }
         }
     }
