@@ -416,12 +416,16 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         if (damaged instanceof Player) {
-            if (damager instanceof Player && !pd.isPvp()) {
-                event.setCancelled(true);
+            if (damager instanceof Player) {
+                if (!pd.isPvp()) {
+                    event.setCancelled(true);
+                }
             } else if (damager instanceof Arrow) {
                 Arrow a = (Arrow)damager;
-                if (a.getShooter() instanceof Player && !pd.isPvp()) {
-                    event.setCancelled(true);
+                if (a.getShooter() instanceof Player) {
+                    if (!pd.isPvp()) {
+                        event.setCancelled(true);
+                    }
                 } else if (!pd.isPve()) {
                     event.setCancelled(true);
                 }
@@ -752,6 +756,7 @@ public class Plot extends JavaPlugin implements Listener {
                         return true;
                     } else {
                         sender.sendMessage("You are in " + pd.getName() + ", owned by " + pd.getOwner() + ". Bounds: (" + pd.getX1() + "," + pd.getZ1() + ") to (" + pd.getX2() + "," + pd.getZ2() + ")");
+                        sender.sendMessage("Pvp: " + pd.isPvp() + ", pve: " + pd.isPve());
                     }
                 } else if (subCommand.equalsIgnoreCase("setperm")) {
                     Player p = (Player)sender;
@@ -821,11 +826,68 @@ public class Plot extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " removeperm <player>");
                     }
+                } else if ("flag".equalsIgnoreCase(subCommand)) {
+                    Player p = (Player)sender;
+                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plotcreate)");
+                        return true;
+                    }
+
+                    if (args.length > 2) {
+                        String flag = args[1];
+                        String val = args[2];
+
+                        PlotData pd = plotAt(p.getLocation().getBlockX(),p.getLocation().getBlockZ(),p.getWorld().getName(),subPlot);
+
+                        if (pd == null) {
+                            sender.sendMessage(ChatColor.RED + "You are not currently inside a plot.");
+                            return true;
+                        }
+
+                        int perms = getPlotPerms(pd,playerName);
+                        if (perms < PlotPerms.COOWNER) {
+                            sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+                            return true;
+                        }
+
+                        if (!"on".equalsIgnoreCase(val) && !"off".equalsIgnoreCase(val)) {
+                            sender.sendMessage("/" + command + " flag " + flag + " <on|off>");
+                            return true;
+                        }
+
+                        if ("pvp".equalsIgnoreCase(flag)) {
+                            if ("on".equalsIgnoreCase(val)) {
+                                pd.setPvp(true);
+                            } else if ("off".equalsIgnoreCase(val)) {
+                                pd.setPvp(false);
+                            }
+                            if (pd.save(database)) {
+                                sender.sendMessage(ChatColor.GREEN + "PVP for this plot is now " + val);
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Could not update plot");
+                            }
+                        } else if ("pve".equalsIgnoreCase(flag)) {
+                            if ("on".equalsIgnoreCase(val)) {
+                                pd.setPve(true);
+                            } else if ("off".equalsIgnoreCase(val)) {
+                                pd.setPve(false);
+                            }
+                            if (pd.save(database)) {
+                                sender.sendMessage(ChatColor.GREEN + "PVE for this plot is now " + val);
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Could not update plot");
+                            }
+                        } else {
+                            sender.sendMessage("/" + command + " flag <pvp|pve> <on|off>");
+                        }
+                    } else {
+                        sender.sendMessage("/" + command + " flag <pvp|pve> <on|off>");
+                    }
                 } else {
-                    sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm>");
+                    sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag>");
                 }
             } else {
-                sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm>");
+                sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag>");
             }
         } else if (command.equalsIgnoreCase("reloadplots")) {
             if (permission == null || !permission.hasPermission(playerName,"plot_reload")) {

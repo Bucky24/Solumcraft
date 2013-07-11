@@ -110,14 +110,19 @@ public class Edit extends JavaPlugin {
             }
 
             if (args.length > 0) {
-                String name = args[0];
-
-                Material m = Material.getMaterial(name);
-
-                if (m == null) {
-                    sender.sendMessage("Unknown material");
-                    return true;
+                List<Material> materials = new ArrayList<Material>();
+                boolean error = false;
+                for (int i=0;i<args.length;i++) {
+                    String name = args[i];
+                    Material m = Material.getMaterial(name);
+                    if (m == null) {
+                        sender.sendMessage(name + " is unknown material");
+                        error = true;
+                    } else {
+                        materials.add(m);
+                    }
                 }
+                if (error) return true;
 
                 List<CoordData> coords = coord.popCoords(playerName,2);
 
@@ -164,6 +169,10 @@ public class Edit extends JavaPlugin {
                     for (y=y1;y<=y2;y++) {
                         for (z=z1;z<=z2;z++) {
                             Block b = w.getBlockAt(x,y,z);
+
+                            int rand = (int)(Math.random()*materials.size()-1);
+
+                            Material m = materials.get(rand);
 
                             b.setType(m);
 
@@ -607,6 +616,189 @@ public class Edit extends JavaPlugin {
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "/encase <player name>");
+            }
+        } else if (command.equalsIgnoreCase("replace")) {
+            if (permission == null || !permission.hasPermission(playerName,"edit_fill") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage("You do not have permission to use this command");
+                return true;
+            }
+
+            if (args.length > 1) {
+                String name = args[0];
+                Material from = Material.getMaterial(name);
+                if (from == null) {
+                    sender.sendMessage(name + " is unknown material");
+                    return true;
+                }
+                name = args[1];
+                Material to = Material.getMaterial(name);
+                if (to == null) {
+                    sender.sendMessage(name + " is unknown material");
+                    return true;
+                }
+
+                List<CoordData> coords = coord.popCoords(playerName,2);
+
+                if (coords.size() < 2) {
+                    sender.sendMessage("You must have 2 coords set in order to do this");
+                    return true;
+                }
+
+                Player p = getServer().getPlayer(playerName);
+                World w = p.getWorld();
+
+                CoordData c1 = coords.get(0);
+                CoordData c2 = coords.get(1);
+
+                int x1 = (int)c1.getX();
+                int y1 = (int)c1.getY();
+                int z1 = (int)c1.getZ();
+
+                int x2 = (int)c2.getX();
+                int y2 = (int)c2.getY();
+                int z2 = (int)c2.getZ();
+
+                if (x1 > x2) {
+                    int tmp = x1;
+                    x1 = x2;
+                    x2 = tmp;
+                }
+
+                if (y1 > y2) {
+                    int tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                if (z1 > z2) {
+                    int tmp = z1;
+                    z1 = z2;
+                    z2 = tmp;
+                }
+
+                int x,y,z;
+
+                for (x=x1;x<=x2;x++) {
+                    for (y=y1;y<=y2;y++) {
+                        for (z=z1;z<=z2;z++) {
+                            Block b = w.getBlockAt(x,y,z);
+
+                            if (b.getType() == from){
+                                b.setType(to);
+
+                                sender.sendMessage("(" + x + "," + y + "," + z + ")");
+                            }
+                        }
+                    }
+                }
+            } else {
+                sender.sendMessage("/fill <from material> <to material>");
+            }
+        } else if (command.equalsIgnoreCase("extend")) {
+            if (permission == null || !permission.hasPermission(playerName,"edit_fill") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage("You do not have permission to use this command");
+                return true;
+            }
+
+            if (args.length > 1) {
+                String name = args[0];
+                Material from = Material.getMaterial(name);
+                if (from == null) {
+                    sender.sendMessage(name + " is unknown material");
+                    return true;
+                }
+                String dir = args[1];
+
+                List<CoordData> coords = coord.popCoords(playerName,2);
+
+                if (coords.size() < 2) {
+                    sender.sendMessage("You must have 2 coords set in order to do this");
+                    return true;
+                }
+
+                Player p = getServer().getPlayer(playerName);
+                World w = p.getWorld();
+
+                CoordData c1 = coords.get(0);
+                CoordData c2 = coords.get(1);
+
+                int x1 = (int)c1.getX();
+                int y1 = (int)c1.getY();
+                int z1 = (int)c1.getZ();
+
+                int x2 = (int)c2.getX();
+                int y2 = (int)c2.getY();
+                int z2 = (int)c2.getZ();
+
+                if (x1 > x2) {
+                    int tmp = x1;
+                    x1 = x2;
+                    x2 = tmp;
+                }
+
+                if (y1 > y2) {
+                    int tmp = y1;
+                    y1 = y2;
+                    y2 = tmp;
+                }
+
+                if (z1 > z2) {
+                    int tmp = z1;
+                    z1 = z2;
+                    z2 = tmp;
+                }
+
+                int x,y,z;
+
+                for (x=x1;x<=x2;x++) {
+                    for (y=y1;y<=y2;y++) {
+                        for (z=z1;z<=z2;z++) {
+                            Block b = w.getBlockAt(x,y,z);
+
+                            if (b.getType() == from){
+                                if ("+y".equalsIgnoreCase(dir)) {
+                                    for (int i=y;i<=y2;i++) {
+                                        sender.sendMessage("(" + x + "," + i + "," + z + ")");
+                                        Block b2 = w.getBlockAt(x,i,z);
+                                        b2.setType(from);
+                                    }
+                                } else if ("+x".equalsIgnoreCase(dir)) {
+                                    for (int i=x;i<=x2;i++) {
+                                        sender.sendMessage("(" + i + "," + y + "," + z + ")");
+                                        Block b2 = w.getBlockAt(i,y,z);
+                                        b2.setType(from);
+                                    }
+                                } else if ("-z".equalsIgnoreCase(dir)) {
+                                    for (int i=z;i<=z2;i++) {
+                                        sender.sendMessage("(" + x + "," + y + "," + i + ")");
+                                        Block b2 = w.getBlockAt(x,y,i);
+                                        b2.setType(from);
+                                    }
+                                } else if ("-y".equalsIgnoreCase(dir)) {
+                                    for (int i=y;i>=y1;i--) {
+                                        sender.sendMessage("(" + x + "," + i + "," + z + ")");
+                                        Block b2 = w.getBlockAt(x,i,z);
+                                        b2.setType(from);
+                                    }
+                                } else if ("-x".equalsIgnoreCase(dir)) {
+                                    for (int i=x;i>=x1;i--) {
+                                        sender.sendMessage("(" + i + "," + y + "," + z + ")");
+                                        Block b2 = w.getBlockAt(i,y,z);
+                                        b2.setType(from);
+                                    }
+                                } else if ("-z".equalsIgnoreCase(dir)) {
+                                    for (int i=z;i>=z1;i--) {
+                                        sender.sendMessage("(" + x + "," + y + "," + i + ")");
+                                        Block b2 = w.getBlockAt(x,y,i);
+                                        b2.setType(from);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                sender.sendMessage("/extend <material> <x|y|z (direction)>");
             }
         } else {
             return false;

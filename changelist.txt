@@ -34,3 +34,7 @@ teleport mount
 
 chests in plots can only be opened by people with permission
 Though have a flag for this, so that plots without the flag set (set by default) don't have this restriction
+
+Finish Director plugin!
+
+set up trade signs to not take damaged armor or items

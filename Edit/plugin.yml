@@ -1,5 +1,5 @@
 name: Edit
-version: 0.5
+version: 0.7
 main: com.thepastimers.Edit.Edit
 softdepend: [Permission,Coord]
 commands:
@@ -17,3 +17,7 @@ commands:
         description: move blocks (doesn't work)
     encase:
         description: encases a player in cobblestone
+    replace:
+        description: replace 1 type of block with another
+    extend:
+        description: duplicates block in a direction
