@@ -8,6 +8,7 @@ import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,10 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -113,12 +111,13 @@ public class TradeSign extends JavaPlugin implements Listener {
     @EventHandler
     public void placeSign(SignChangeEvent event) {
         //getLogger().info(event.getBlock().getType().name());
-        if (event.getBlock().getType() == Material.WALL_SIGN) {
-            if ("[sell]".equalsIgnoreCase(event.getLine(0))) {
-                event.getPlayer().sendMessage(ChatColor.RED + "Please note that wall signs do not properly work as trade signs yet");
-            }
-        }
-        if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST) {
+        //if (event.getBlock().getType() == Material.WALL_SIGN) {
+            //if ("[sell]".equalsIgnoreCase(event.getLine(0))) {
+               // event.getPlayer().sendMessage(ChatColor.RED + "Please note that wall signs do not properly work as trade signs yet");
+               // return;
+            //}
+        //}
+        if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST || event.getBlock().getType() == Material.WALL_SIGN) {
             String[] lines = handleSign((Sign)event.getBlock().getState(),event.getPlayer(),event.getLines());
             for (int i=0;i<lines.length;i++) {
                 event.setLine(i,lines[i]);
@@ -131,6 +130,7 @@ public class TradeSign extends JavaPlugin implements Listener {
         if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST || event.getBlock().getType() == Material.WALL_SIGN) {
             SignData data = getSignAt(event.getBlock().getX(),event.getBlock().getY(),event.getBlock().getZ(),event.getBlock().getWorld().getName());
             if (data != null) {
+                //getLogger().info("Trade sign broken");
                 if (event.getPlayer().getName().equals(data.getPlayer())) {
                     Player p = event.getPlayer();
                     if (itemName == null) {
@@ -158,20 +158,22 @@ public class TradeSign extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void playerInteract(PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null) return;
-        if (event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST) {
-            Block b = event.getClickedBlock();
+    public void playerInteract(BlockDamageEvent event) {
+        handleBlock(event.getPlayer(),event.getBlock());
+    }
+
+    private boolean handleBlock(Player p, Block b) {
+        if (b.getType() == Material.SIGN || b.getType() == Material.SIGN_POST || b.getType() == Material.WALL_SIGN) {
             Location l = b.getLocation();
             SignData data = getSignAt(l.getBlockX(),l.getBlockY(),l.getBlockZ(),l.getWorld().getName());
             if (data != null) {
-                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    getLogger().info("Handle purchase event: " + event.getPlayer().getName());
-                    handlePurchase(event.getPlayer(),data,event.getClickedBlock());
-                    event.setCancelled(true);
-                }
+                getLogger().info("Handle purchase event: " + b);
+                handlePurchase(p,data,b);
+                return true;
             }
         }
+
+        return false;
     }
 
     private String[] handleSign(Sign s, Player p, String[] lines) {
@@ -225,6 +227,10 @@ public class TradeSign extends JavaPlugin implements Listener {
     }
 
     public void handlePurchase(Player p, SignData data, Block b) {
+        if (p.getGameMode() == GameMode.CREATIVE) {
+            p.sendMessage(ChatColor.RED + "This action cannot be taken while in creative mode.");
+            return;
+        }
         Sign s = (Sign)b.getState();
         boolean owner = false;
         if (p.getName().equalsIgnoreCase(data.getPlayer())) {
@@ -276,7 +282,7 @@ public class TradeSign extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "This sign does not have a cost/dispense amount set.");
             return;
         }
-        if (data.getAmount() > data.getDispense()) {
+        if (data.getAmount() >= data.getDispense()) {
             int prevCount = itemName.countInInventory(data.getContains(),p.getName());
             if (itemName == null || !itemName.giveItem(p,data.getContains(),data.getDispense())) {
                 p.sendMessage(ChatColor.RED + "Unable to take item from sign");
@@ -345,9 +351,9 @@ public class TradeSign extends JavaPlugin implements Listener {
                     sender.sendMessage("To sell XP in a sign:");
                     sender.sendMessage("Line 1: [SELL]");
                     sender.sendMessage("Line 2: XP");
-                    sender.sendMessage("To fill a sign, hold the item in your hand and right click the sign. All items of that type in your inventory will be put into the sign");
-                    sender.sendMessage("To purchase/withdraw from a sign, if you are the owner, right click the sign with an empty hand. You will not be charged.");
-                    sender.sendMessage("Anyone else purchasing from the sign can right click it with anything in their hand");
+                    sender.sendMessage("To fill a sign, hold the item in your hand and left click the sign. All items of that type in your inventory will be put into the sign");
+                    sender.sendMessage("To purchase/withdraw from a sign, if you are the owner, left click the sign with an empty hand. You will not be charged.");
+                    sender.sendMessage("Anyone else purchasing from the sign can left click it with anything in their hand");
                     sender.sendMessage(ChatColor.RED + "Please report any unusual behavior from any trade sign to a staff member");
                 } else if ("price".equalsIgnoreCase(subCommand)) {
                     if (permission == null || !permission.hasPermission(playerName,"sign_place") || playerName.equalsIgnoreCase("CONSOLE")) {
@@ -407,7 +413,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                             Block b = getServer().getWorld(sd.getWorld()).getBlockAt(sd.getX(),sd.getY(),sd.getZ());
                             try {
                                 Sign s = (Sign)b.getState();
-                                s.setLine(3,"$" + sd.getCost() + ":" + sd.getDispense());
+                                s.setLine(3,"$" + sd.getCost() + " for " + sd.getDispense());
                                 s.update();
                             } catch (Exception e) {
                                 sender.sendMessage(ChatColor.RED + "Unable to update sign message");

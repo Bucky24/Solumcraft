@@ -4,6 +4,7 @@ import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -318,8 +319,14 @@ public class Money extends JavaPlugin implements Listener {
                 return true;
             }
 
+            Player p = getServer().getPlayer(playerName);
+
+            if (p.getGameMode() == GameMode.CREATIVE) {
+                p.sendMessage(ChatColor.RED + "You cannot use /sell while in creative mode");
+                return true;
+            }
+
             if (args.length > 0) {
-                Player p = getServer().getPlayer(playerName);
                 String from = args[0];
                 int amount = -1;
                 if (args.length > 1) {

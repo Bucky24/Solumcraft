@@ -318,17 +318,51 @@ public class VoteHandler extends JavaPlugin implements Listener {
                                     }
                                 }
                             }
+                        } else if ("chiseled_block".equalsIgnoreCase(reward)) {
+                            int need = 2;
+                            if (credits.getCredits() < need) {
+                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get 5 chiseled stone blocks. You have " + credits.getCredits());
+                            } else {
+                                credits.setCredits(credits.getCredits()-need);
+                                if (!credits.save(database)) {
+                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
+                                } else {
+                                    if (itemName != null && itemName.giveItem((Player)sender,"CHISELED_STONE",5)) {
+                                        sender.sendMessage(ChatColor.GREEN + "You have been given 5 chiseled stone blocks");
+                                    } else {
+                                        credits.setCredits(credits.getCredits()+need);
+                                        credits.save(database);
+                                        sender.sendMessage(ChatColor.RED + "Unable to give you 5 chiseled stone blocks. Your credits have been refunded.");
+                                    }
+                                }
+                            }
                         } else {
                             sender.sendMessage("You have " + credits.getCredits() + " vote credits. Earn more by voting for the server!");
                             sender.sendMessage("Vote reward list:");
                             sender.sendMessage("horse (horse egg): 10 credits");
                             sender.sendMessage("cow (cow egg): 10 credits");
+                            sender.sendMessage("chiseled_block (5 chiseled stone blocks): 2 credits");
                         }
                     } else {
                         sender.sendMessage("/vote redeem <list|item (use list to see items)>");
                     }
+                } else if ("sites".equalsIgnoreCase(command)) {
+                    sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
+                    sender.sendMessage(ChatColor.GREEN + "http://www.mcserverlist.net/servers/516ba260041b26153700019e");
+                    sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+                } else if ("credits".equalsIgnoreCase(command)) {
+                    List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
+                    VoteCredits credits = null;
+                    if (voteCreditsList.size() == 0) {
+                        credits = new VoteCredits();
+                        credits.setCredits(0);
+                    } else {
+                        credits = voteCreditsList.get(0);
+                    }
+
+                    sender.sendMessage(ChatColor.GREEN + "You have " + credits.getCredits() + " vote credits. Earn more by voting for the server!");
                 } else {
-                    sender.sendMessage("/vote <setReward|redeem>");
+                    sender.sendMessage("/vote <setReward|redeem|credits|sites>");
                 }
             } else {
                 sender.sendMessage("/vote <setReward|redeem>");

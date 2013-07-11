@@ -1,5 +1,5 @@
 name: VoteHandler
-version: 1.0
+version: 1.1
 main: com.thepastimers.VoteHandler.VoteHandler
 softdepend: [Database,Permission,Rank,Votifier]
 commands:

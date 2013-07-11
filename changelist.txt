@@ -20,8 +20,6 @@ Rent schedule would be "daily","weekly","monthly". all at beginning of whatever 
 
 Will have to create a cron for this. 3 crons, for each interval. that way we don't have to actually check the interval in the cron, which allows for testing.
 
-dd 5 chiseled stone block as vote reward
-
 vote rewards can be set/changed/removed via command
 
 chat upgrades.
@@ -29,12 +27,10 @@ I'm thinking needs a better way to detect if player is online, and if they are o
 
 Allow chat plugin to register commands and process them, sending input back to player.
 
-add command to list vote servers.
-
 Recepie to craft saddles. Leather + diamonds? Emeralds?
 
 plot prevent fire spreading
 teleport mount
 
-make it impossible to /sell items when in creative
-trade signs don't load/dispense when user is in creative.
+chests in plots can only be opened by people with permission
+Though have a flag for this, so that plots without the flag set (set by default) don't have this restriction
