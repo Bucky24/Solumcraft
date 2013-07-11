@@ -10,8 +10,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -107,6 +109,26 @@ public class Coord extends JavaPlugin implements Listener {
      public void blockDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();
+        if (permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
+            if (p.getItemInHand().getType() == Material.STICK) {
+                Location l = b.getLocation();
+                CoordData c = new CoordData(l.getX(),l.getY(),l.getZ());
+
+                addCoord(p.getName(),c);
+
+                p.sendMessage("Coordinate (" + l.getX() + "," + l.getY() + "," + l.getZ() + ") added. You have "
+                        + getCoordSize(p.getName()) + " coords set");
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void hitBlock(PlayerInteractEvent event) {
+        Player p = event.getPlayer();
+        Block b = event.getClickedBlock();
+        if (b == null) return;
+        if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
             if (p.getItemInHand().getType() == Material.STICK) {
                 Location l = b.getLocation();

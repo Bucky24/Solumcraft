@@ -1,13 +1,19 @@
 package com.thepastimers.TradeSign;
 
+import com.thepastimers.Coord.Coord;
+import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Money.Money;
+import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +42,8 @@ public class TradeSign extends JavaPlugin implements Listener {
     Rank rank;
     Money money;
     ItemName itemName;
+    Permission permission;
+    Coord coord;
 
     @Override
     public void onEnable() {
@@ -61,9 +70,18 @@ public class TradeSign extends JavaPlugin implements Listener {
         }
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
-
         if (itemName == null) {
             getLogger().warning("Unable to load ItemName plugin. Some functionality will not be available.");
+        }
+
+        permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
+        if (permission == null) {
+            getLogger().warning("Unable to load Permission plugin. Some functionality will not be available.");
+        }
+
+        coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
+        if (coord == null) {
+            getLogger().warning("Unable to load Coord plugin. Some functionality will not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -78,276 +96,334 @@ public class TradeSign extends JavaPlugin implements Listener {
         getLogger().info("TradeSign disabled");
     }
 
-    public SignData getSignAt(Location l) {
-        return SignData.getSignAt(l.getBlockX(), l.getBlockY(), l.getBlockZ());
+    public SignData getSignAt(int x, int y, int z, String world) {
+        if (database == null) {
+            return null;
+        }
+
+        List<SignData> signDataList = (List<SignData>)database.select(SignData.class,"x = " + x + " and y = " + y + " and z = " + z + " and world = '" + database.makeSafe(world) + "'");
+
+        if (signDataList.size() == 0) {
+            return null;
+        }
+
+        return signDataList.get(0);
     }
 
     @EventHandler
-    public void blockBreak(BlockBreakEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-        SignData sd = getSignAt(event.getBlock().getLocation());
-
-        if (sd != null) {
-            Block b = event.getBlock();
-
-            if (!(b.getState() instanceof Sign)) {
-                getLogger().warning("Warning, database thinks there is a trade sign at (" + b.getLocation().getBlockX()
-                + "," + + b.getLocation().getBlockY() + "," + + b.getLocation().getBlockZ() + ") but it is in fact type "
-                + b.getType().name());
-                return;
+    public void placeSign(SignChangeEvent event) {
+        //getLogger().info(event.getBlock().getType().name());
+        if (event.getBlock().getType() == Material.WALL_SIGN) {
+            if ("[sell]".equalsIgnoreCase(event.getLine(0))) {
+                event.getPlayer().sendMessage(ChatColor.RED + "Please note that wall signs do not properly work as trade signs yet");
             }
+        }
+        if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST) {
+            String[] lines = handleSign((Sign)event.getBlock().getState(),event.getPlayer(),event.getLines());
+            for (int i=0;i<lines.length;i++) {
+                event.setLine(i,lines[i]);
+            }
+        }
+    }
 
-            Player p = event.getPlayer();
-            if (p.getName().equalsIgnoreCase(sd.getPlayer())) {
-                if (sd.getContains().equalsIgnoreCase("XP")) {
-                    setExperience(p,getExperience(p) + sd.getAmount());
-                    sd.delete(database);
-                } else {
-                    if (itemName != null && itemName.giveItem(p,sd.getContains(),sd.getAmount())) {
-                        sd.delete(database);
-                    } else {
-                        p.sendMessage(ChatColor.RED + "Unable to remove trade sign");
+    @EventHandler
+    public void breakSign(BlockBreakEvent event) {
+        if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST || event.getBlock().getType() == Material.WALL_SIGN) {
+            SignData data = getSignAt(event.getBlock().getX(),event.getBlock().getY(),event.getBlock().getZ(),event.getBlock().getWorld().getName());
+            if (data != null) {
+                if (event.getPlayer().getName().equals(data.getPlayer())) {
+                    Player p = event.getPlayer();
+                    if (itemName == null) {
+                        p.sendMessage(ChatColor.RED + "This action is not currently possible");
                         event.setCancelled(true);
+                    } else {
+                        if (!"".equalsIgnoreCase(data.getContains()) && itemName.giveItem(p,data.getContains(),data.getAmount())) {
+                            if (!data.delete(database)) {
+                                p.sendMessage(ChatColor.RED + "Unable to remove sign");
+                                itemName.takeItem(p,data.getContains(),data.getAmount());
+                            } else {
+                                p.sendMessage(ChatColor.GREEN + "Successfully emptied and removed sign!");
+                            }
+                        } else {
+                            p.sendMessage(ChatColor.RED + "Could not empty sign into your inventory");
+                            event.setCancelled(true);
+                        }
                     }
+                } else {
+                    event.getPlayer().sendMessage(ChatColor.RED + "This block is marked as a trade sign. Only the owner can break a trade sign.");
+                    event.setCancelled(true);
                 }
-            } else {
-                event.getPlayer().sendMessage("This sign is only breakable by owner.");
-                event.setCancelled(true);
             }
         }
     }
 
     @EventHandler
     public void playerInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (event.getClickedBlock() == null) return;
+        if (event.getClickedBlock().getType() == Material.SIGN || event.getClickedBlock().getType() == Material.SIGN_POST) {
             Block b = event.getClickedBlock();
-            if (b.getState() instanceof Sign) {
-                Sign s = (Sign)b.getState();
-                Location l = b.getLocation();
-                SignData sd = SignData.getSignAt(l.getBlockX(),l.getBlockY(),l.getBlockZ());
-                Player p = event.getPlayer();
-                if (p != null && sd != null) {
-                    if (p.getName().equalsIgnoreCase(sd.getPlayer())) {
-                        if (sd.getContains() == null) {
-
-                        } else {
-                            if (sd.getContains().equalsIgnoreCase("XP")) {
-                                int xp = getExperience(p);
-
-                                if (xp < sd.getDispense()) {
-                                    p.sendMessage("You don't have enough xp for this sign.");
-                                } else {
-                                    sd.setAmount(sd.getAmount() + sd.getDispense());
-                                    sd.save(database);
-                                    s.setLine(2,"Has: " + sd.getAmount());
-                                    s.update(true);
-                                    setExperience(p,xp-sd.getDispense());
-                                }
-                            }
-                        }
-                    }
+            Location l = b.getLocation();
+            SignData data = getSignAt(l.getBlockX(),l.getBlockY(),l.getBlockZ(),l.getWorld().getName());
+            if (data != null) {
+                if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    getLogger().info("Handle purchase event: " + event.getPlayer().getName());
+                    handlePurchase(event.getPlayer(),data,event.getClickedBlock());
+                    event.setCancelled(true);
                 }
             }
         }
     }
 
-    public int getExperience(Player p) {
-        if (p == null) {
-            return 0;
+    private String[] handleSign(Sign s, Player p, String[] lines) {
+        String line1 = lines[0];
+        String line2 = lines[1];
+
+        String[] retLines = new String[4];
+
+        for (int i=0;i<s.getLines().length;i++) {
+            getLogger().info(i + " " + s.getLines()[i]);
         }
+        if ("[SELL]".equalsIgnoreCase(line1)) {
 
-        int xp = 0;
-        int forLevel = 17;
-
-        //getLogger().info("get experience called with level " + p.getLevel() + " exp " + p.getExp());
-
-        for (int i=1;i<=p.getLevel();i++) {
-            xp += forLevel;
-            if (i >= 16) {
-                forLevel += 3;
+            if (permission == null || !permission.hasPermission(p.getName(),"sign_place")) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to create trade signs (sign_place)");
+                return lines;
             }
-            if (i >= 31) {
-                forLevel += 4;
+            // creating a sell sign!
+            String contains = "";
+            if ("XP".equalsIgnoreCase(line2)) {
+                contains = "XP";
             }
-        }
 
-        float percent = p.getExp();
-
-        xp += ((float)forLevel)*percent;
-
-        //getLogger().info("returning " + xp);
-
-        return xp;
-    }
-
-    public void setExperience(Player p, int xp) {
-        if (p == null) {
-            return;
-        }
-
-        int level = 0;
-        float lastXp = 0;
-        int forLevel = 17;
-
-        //getLogger().info("set experience called with xp " + xp);
-
-        while (true) {
-            if (xp < forLevel) {
-                break;
-            }
-            level ++;
-            xp -= forLevel;
-            if (level >= 16) {
-                forLevel += 3;
-            }
-            if (level >= 31) {
-                forLevel += 4;
-            }
-        }
-
-        float percent = ((float)xp)/((float)forLevel);
-
-        //getLogger().info("level " + level + ", xp = " + percent);
-
-        p.setLevel(level);
-        p.setExp(percent);
-    }
-
-    @EventHandler
-    public void signPlaced(SignChangeEvent event) {
-        if (database == null) {
-            return;
-        }
-        if (event.isCancelled()) {
-            return;
-        }
-
-        if ("[SELL]".equalsIgnoreCase(event.getLine(0))) {
-            Location l = event.getBlock().getLocation();
             SignData sd = new SignData();
-            sd.setX(l.getBlockX());
-            sd.setY(l.getBlockY());
-            sd.setZ(l.getBlockZ());
-            sd.setCost(0.0d);
             sd.setAmount(0);
+            sd.setCost(0);
             sd.setDispense(0);
-            sd.setPlayer(event.getPlayer().getName());
+            sd.setContains(contains);
+            sd.setX(s.getX());
+            sd.setY(s.getY());
+            sd.setZ(s.getZ());
+            sd.setPlayer(p.getName());
+            sd.setWorld(s.getWorld().getName());
 
-            event.setLine(0,ChatColor.RED + "Sell Sign");
+            if (sd.save(database)) {
+                p.sendMessage(ChatColor.GREEN + "Successfully created trade sign");
+                retLines[0] = "[SELL]";
+                if ("".equals(contains)) {
+                    contains = "EMPTY";
+                }
+                retLines[1] = contains;
+                s.update();
+            } else {
+                p.sendMessage(ChatColor.RED + "Failed to create sign");
+            }
+        } else {
+            return lines;
+        }
 
-            if ("xp".equalsIgnoreCase(event.getLine(1))) {
-                Double price = null;
-                Integer dispense = null;
-                if (!"".equalsIgnoreCase(event.getLine(2))) {
-                    String line = event.getLine(2);
+        return retLines;
+    }
 
-                    String[] lines = line.split("\\:");
-                    if (lines.length >= 2) {
-                        try {
-                            price = Double.parseDouble(lines[0]);
-                            dispense = Integer.parseInt(lines[1]);
-                        } catch (NumberFormatException e) {
-                            event.getPlayer().sendMessage("Something you entered wasn't a valid number...");
-                            return;
-                        }
+    public void handlePurchase(Player p, SignData data, Block b) {
+        Sign s = (Sign)b.getState();
+        boolean owner = false;
+        if (p.getName().equalsIgnoreCase(data.getPlayer())) {
+            ItemStack is = p.getItemInHand();
+            boolean purchase = false;
+            if (is == null || is.getType() == Material.AIR) {
+                purchase = true;
+            }
+            getLogger().info("Player is owner of sign");
+
+            owner = true;
+            if (!purchase) {
+                getLogger().info("Owner is adding");
+                if (itemName == null) {
+                    p.sendMessage(ChatColor.RED + "That action is not possible at this time");
+                    return;
+                }
+                String item = itemName.getItemName(is);
+                if ("".equals(data.getContains()) || data.getContains() == null) {
+                    data.setContains(item);
+                } else {
+                    if (!item.equalsIgnoreCase(data.getContains())) {
+                        p.sendMessage(ChatColor.RED + "This sign already contains " + data.getContains());
+                        return;
                     }
                 }
+                int count = itemName.countInInventory(item,p.getName());
+                if (itemName.takeItem(p,item,count)) {
+                    data.setAmount(data.getAmount() + count);
 
-                if (!(price == null || price < 0 || dispense == null || dispense < 0)) {
-                    sd.setContains("XP");
-                    sd.setCost(price);
-                    sd.setDispense(dispense);
-                    event.setLine(1,"EXPERIENCE");
-                    event.setLine(2,"Has: 0");
-                    event.setLine(3,ChatColor.GREEN + "$" + price + ChatColor.BLACK + ":" + dispense);
+                    if (!data.save(database)) {
+                        p.sendMessage(ChatColor.RED + "Unable to update sign");
+                        itemName.giveItem(p,item,count);
+                    } else {
+                        p.sendMessage(ChatColor.GREEN + "Sign filled!");
+                        s.setLine(1,item);
+                        s.setLine(2,"Has: " + data.getAmount());
+                        s.update();
+                        getLogger().info("Owner added " + count);
+                    }
                 } else {
-                    event.getPlayer().sendMessage("Sign requires price:dispense on the third line. Both must be positive.");
+                    p.sendMessage(ChatColor.RED + "Unable to remove items from your inventory");
+                }
+                return;
+            }
+        }
+
+        if (data.getDispense() <= 0 || data.getCost() <= 0) {
+            p.sendMessage(ChatColor.RED + "This sign does not have a cost/dispense amount set.");
+            return;
+        }
+        if (data.getAmount() > data.getDispense()) {
+            int prevCount = itemName.countInInventory(data.getContains(),p.getName());
+            if (itemName == null || !itemName.giveItem(p,data.getContains(),data.getDispense())) {
+                p.sendMessage(ChatColor.RED + "Unable to take item from sign");
+            } else {
+                if (itemName.countInInventory(data.getContains(),p.getName()) < prevCount + data.getDispense()) {
+                    p.sendMessage(ChatColor.RED + "Something went wrong and you were not credited your items.");
                     return;
                 }
 
-            }
+                if ((money == null || money.getBalance(p.getName()) < data.getCost()) && !owner) {
+                    p.sendMessage(ChatColor.RED + "You don't have enough money to make this purchase");
+                    return;
+                }
 
-            if (sd.save(database)) {
-                event.getPlayer().sendMessage("Trade sign created");
-            } else {
-                event.getPlayer().sendMessage("Could not create trade sign.");
+                if (!owner) {
+                    if (!money.setBalance(p.getName(),money.getBalance(p.getName())-data.getCost())) {
+                        p.sendMessage(ChatColor.RED + "Unable to complete transaction-internal failure");
+                        itemName.takeItem(p,data.getContains(),data.getDispense());
+                        return;
+                    }
+                    money.setBalance(data.getPlayer(),money.getBalance(data.getPlayer())+data.getCost());
+                }
+
+                data.setAmount(data.getAmount()-data.getDispense());
+                if (!data.save(database)) {
+                    p.sendMessage(ChatColor.RED + "Unable to update sign");
+                    itemName.takeItem(p,data.getContains(),data.getDispense());
+                    money.setBalance(p.getName(),money.getBalance(p.getName())+data.getCost());
+                } else {
+                    s.setLine(2,"Has: " + data.getAmount());
+                    s.update();
+                    p.sendMessage(ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost());
+                    p.sendMessage(ChatColor.GREEN + "Note due to our anti-cheat software, there may be a slight delay before the item appears in your inventory");
+                    getLogger().info(p.getName() + " purchased " + data.getDispense() + " from sign at (" + data.getX() + "," + data.getY() + "," + data.getZ() + ")");
+                }
             }
+        } else {
+            p.sendMessage(ChatColor.RED + "This sign does not have enough in it to dispense");
         }
     }
 
-    private boolean giveItem(Player p, String item, int amount) {
-        if (p == null || item == null || amount < 0) {
-            return false;
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        String playerName = "";
+
+        if (sender instanceof Player) {
+            playerName = ((Player)sender).getName();
+        } else {
+            playerName = "CONSOLE";
         }
 
-        if (itemName == null) {
-            return false;
-        }
+        String command = cmd.getName();
 
-        PlayerInventory inv = p.getInventory();
-
-        int empty = 0;
-
-        Iterator itor = inv.iterator();
-
-        while (itor.hasNext()) {
-            ItemStack is = (ItemStack)itor.next();
-
-            if (is == null) {
-                empty ++;
-                continue;
-            }
-        }
-
-        ItemStack is = itemName.getItemFromName(item);
-        int max = is.getMaxStackSize();
-
-        int stacks = (int)Math.ceil(((double)amount)/((double)max));
-
-        if (stacks > empty) {
-            p.sendMessage("You don't have inventory room for that much");
-            return false;
-        }
-
-        ItemStack[] items = inv.getContents();
-
-        int amountDone = 0;
-        while (amountDone < amount) {
-            int toDoTotal = is.getMaxStackSize();
-            if (amountDone + toDoTotal > amount) {
-                toDoTotal = amount-amountDone;
+        if ("sign".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"sign_sign") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_sign)");
+                return true;
             }
 
-            int toDo = toDoTotal;
+            if (args.length > 0) {
+                String subCommand = args[0];
+                if ("format".equalsIgnoreCase(subCommand)) {
+                    sender.sendMessage("Format for an item sell sign:");
+                    sender.sendMessage("Line 1: [SELL]");
+                    sender.sendMessage("Then to set a price, use /sign price");
+                    sender.sendMessage("To sell XP in a sign:");
+                    sender.sendMessage("Line 1: [SELL]");
+                    sender.sendMessage("Line 2: XP");
+                    sender.sendMessage("To fill a sign, hold the item in your hand and right click the sign. All items of that type in your inventory will be put into the sign");
+                    sender.sendMessage("To purchase/withdraw from a sign, if you are the owner, right click the sign with an empty hand. You will not be charged.");
+                    sender.sendMessage("Anyone else purchasing from the sign can right click it with anything in their hand");
+                    sender.sendMessage(ChatColor.RED + "Please report any unusual behavior from any trade sign to a staff member");
+                } else if ("price".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"sign_place") || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_place)");
+                        return true;
+                    }
 
-            for (int i=0;i<items.length;i++) {
-                ItemStack is3 = items[i];
-                if (is3 != null && is3.getType() == is.getType() && is3.getDurability() == is.getDurability()) {
-                    if (is3.getAmount() + toDo <= is.getMaxStackSize()) {
-                        is3.setAmount(is3.getAmount() + toDo);
-                        break;
+                    if (args.length > 2) {
+                        double price;
+                        int dispense;
+                        try {
+                            price = Double.parseDouble(args[1]);
+                        } catch (NumberFormatException e) {
+                            sender.sendMessage(ChatColor.RED + "Price needs to be a number");
+                            return true;
+                        }
+                        try {
+                            dispense = Integer.parseInt(args[2]);
+                        } catch (NumberFormatException e) {
+                            sender.sendMessage(ChatColor.RED + "Dispense needs to be a number");
+                            return true;
+                        }
+                        if (coord == null) {
+                            sender.sendMessage(ChatColor.RED + "This action is currently unavailable");
+                            return true;
+                        }
+
+                        List<CoordData> coordDataList = coord.popCoords(playerName,1);
+                        if (coordDataList.size() < 1) {
+                            sender.sendMessage(ChatColor.RED + "You must have 1 coordinate set to use this action");
+                            return true;
+                        }
+                        int x = (int)Math.floor(coordDataList.get(0).getX());
+                        int y = (int)Math.floor(coordDataList.get(0).getY());
+                        int z = (int)Math.floor(coordDataList.get(0).getZ());
+
+                        Player p = (Player)sender;
+
+                        SignData sd = getSignAt(x,y,z,p.getWorld().getName());
+                        if (sd == null) {
+                            sender.sendMessage(ChatColor.RED + "There is no set trade sign at (" + x + "," + y + "," + z + ")");
+                            return true;
+                        }
+
+                        if (!playerName.equalsIgnoreCase(sd.getPlayer())) {
+                            sender.sendMessage(ChatColor.RED + "You do not have permission to edit this sign");
+                            return true;
+                        }
+
+                        sd.setDispense(dispense);
+                        sd.setCost(price);
+
+                        if (!sd.save(database)) {
+                            sender.sendMessage(ChatColor.RED + "Unable to update sign");
+                        } else {
+                            sender.sendMessage(ChatColor.GREEN + "Sign updated!");
+                            Block b = getServer().getWorld(sd.getWorld()).getBlockAt(sd.getX(),sd.getY(),sd.getZ());
+                            try {
+                                Sign s = (Sign)b.getState();
+                                s.setLine(3,"$" + sd.getCost() + ":" + sd.getDispense());
+                                s.update();
+                            } catch (Exception e) {
+                                sender.sendMessage(ChatColor.RED + "Unable to update sign message");
+                            }
+                        }
                     } else {
-                        toDo -= (is.getMaxStackSize()-is3.getAmount());
-                        is3.setAmount(is.getMaxStackSize());
+                        sender.sendMessage("/sign price <price> <dispense amount>");
                     }
                 }
-                if (items[i] == null) {
-                    ItemStack is2 = new ItemStack(is.getType(),toDo);
-                    is2.setDurability(is.getDurability());
-                    items[i] = is2;
-                    break;
-                }
+            } else {
+                sender.sendMessage("/sign <format|price|restore>");
             }
-
-            amountDone += toDoTotal;
+        } else {
+            return false;
         }
-
-        inv.setContents(items);
 
         return true;
     }
-
-
 }

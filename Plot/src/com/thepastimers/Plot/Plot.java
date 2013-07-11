@@ -21,6 +21,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -319,6 +322,28 @@ public class Plot extends JavaPlugin implements Listener {
         if (!canModifyBlock(p,b)) {
             p.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void paintingBreak(HangingBreakByEntityEvent event) {
+        Entity b = event.getEntity();
+
+        Player pl = null;
+        if (event.getRemover() instanceof Player) {
+            pl = (Player)event.getRemover();
+        }
+
+        PlotData p = plotAt(b.getLocation());
+        if (p != null) {
+            if (p != null) {
+                if (!pl.getName().equalsIgnoreCase(p.getOwner())) {
+                    pl.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
+                    event.setCancelled(true);
+                }
+            } else {
+                event.setCancelled(true);
+            }
         }
     }
 

@@ -37,6 +37,7 @@ public class SignData extends Table {
     int amount;
     int cost;
     int dispense;
+    String world;
 
     public int getId() {
         return id;
@@ -118,6 +119,14 @@ public class SignData extends Table {
         this.dispense = dispense;
     }
 
+    public String getWorld() {
+        return world;
+    }
+
+    public void setWorld(String world) {
+        this.world = world;
+    }
+
     public static List<SignData> parseResult(ResultSet result) throws SQLException {
         List<SignData> ret = new ArrayList<SignData>();
 
@@ -137,6 +146,7 @@ public class SignData extends Table {
             p.setAmount(result.getInt("amount"));
             p.setCost(result.getInt("cost"));
             p.setDispense(result.getInt("dispense"));
+            p.setWorld(result.getString("world"));
 
             ret.add(p);
         }
@@ -165,9 +175,9 @@ public class SignData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(player,x,y,z,contains,amount,cost,dispense)";
+            String columns = "(player,x,y,z,contains,amount,cost,dispense,world)";
             String values = "('" + d.makeSafe(player) + "'," + x + "," + y + "," + z
-                    +  ",'" + d.makeSafe(contains) + "'," + amount + "," + cost + "," + dispense + ")";
+                    +  ",'" + d.makeSafe(contains) + "'," + amount + "," + cost + "," + dispense + ",'" + d.makeSafe(world) + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -195,7 +205,8 @@ public class SignData extends Table {
             query.append("contains = '" + d.makeSafe(contains) + "', ");
             query.append("amount = " + amount + ", ");
             query.append("cost = " + cost + ", ");
-            query.append("dispense = " + dispense + " ");
+            query.append("dispense = " + dispense + ", ");
+            query.append("world = '" + d.makeSafe(world) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -205,7 +216,7 @@ public class SignData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense");
+        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense, string world");
 
         return builder.toString();
     }
