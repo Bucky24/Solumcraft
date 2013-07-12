@@ -346,11 +346,11 @@ public class VoteHandler extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/vote redeem <list|item (use list to see items)>");
                     }
-                } else if ("sites".equalsIgnoreCase(command)) {
+                } else if ("sites".equalsIgnoreCase(subCommand)) {
                     sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
                     sender.sendMessage(ChatColor.GREEN + "http://www.mcserverlist.net/servers/516ba260041b26153700019e");
                     sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
-                } else if ("credits".equalsIgnoreCase(command)) {
+                } else if ("credits".equalsIgnoreCase(subCommand)) {
                     List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
                     VoteCredits credits = null;
                     if (voteCreditsList.size() == 0) {
@@ -365,7 +365,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
                     sender.sendMessage("/vote <setReward|redeem|credits|sites>");
                 }
             } else {
-                sender.sendMessage("/vote <setReward|redeem>");
+                sender.sendMessage("/vote <setReward|redeem|credits|sites>");
             }
         } else {
             return false;

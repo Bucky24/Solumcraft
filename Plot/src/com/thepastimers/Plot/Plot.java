@@ -338,8 +338,11 @@ public class Plot extends JavaPlugin implements Listener {
         if (p != null) {
             if (p != null) {
                 if (!pl.getName().equalsIgnoreCase(p.getOwner())) {
-                    pl.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
-                    event.setCancelled(true);
+                    PlotPerms pp = getPlotPermobject(p,pl.getName());
+                    if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
+                        pl.sendMessage(ChatColor.RED + "You do not have permissions to modify hangings here");
+                        event.setCancelled(true);
+                    }
                 }
             } else {
                 event.setCancelled(true);
@@ -883,11 +886,50 @@ public class Plot extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " flag <pvp|pve> <on|off>");
                     }
+                } else if ("name".equalsIgnoreCase(subCommand)) {
+
+                    Player p = (Player)sender;
+                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plotcreate)");
+                        return true;
+                    }
+
+                    if (args.length > 1) {
+                        String name = "";
+                        for (int i=1;i<args.length;i++) {
+                            name += args[i];
+                            if (i < args.length-1) {
+                                name += " ";
+                            }
+                        }
+
+                        PlotData pd = plotAt(p.getLocation().getBlockX(),p.getLocation().getBlockZ(),p.getWorld().getName(),subPlot);
+
+                        if (pd == null) {
+                            sender.sendMessage(ChatColor.RED + "You are not currently inside a plot.");
+                            return true;
+                        }
+
+                        int perms = getPlotPerms(pd,playerName);
+                        if (perms < PlotPerms.COOWNER) {
+                            sender.sendMessage(ChatColor.RED + "You don't have permission to do this");
+                            return true;
+                        }
+
+                        pd.setName(name);
+                        if (pd.save(database)) {
+                            p.sendMessage(ChatColor.GREEN + "Plot name updated to " + name);
+                        } else {
+                            p.sendMessage(ChatColor.RED + "Unable to update plot");
+                        }
+                    } else {
+                        sender.sendMessage("/" + command + " name <name>");
+                    }
                 } else {
-                    sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag>");
+                    sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag|name>");
                 }
             } else {
-                sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag>");
+                sender.sendMessage("/" + command + " <create|release|info|check|setperm|removeperm|flag|name>");
             }
         } else if (command.equalsIgnoreCase("reloadplots")) {
             if (permission == null || !permission.hasPermission(playerName,"plot_reload")) {

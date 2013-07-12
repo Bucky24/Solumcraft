@@ -38,3 +38,28 @@ Though have a flag for this, so that plots without the flag set (set by default)
 Finish Director plugin!
 
 set up trade signs to not take damaged armor or items
+
+Make sure all item names are <= 15 chars (since that's max that trade signs do on one line)
+
+custom /help command that is actually helpful.
+
+update ban plugin to use server's ban for perm-bans.
+If the plugin goes down, I'm not too upset if temp-ban people come back on, but perm-ban people need to stay off.
+
+web graph showing how many players were on at what time.
+Advance the graph to show times where server staff was online, so you can match that up with peak hours.
+
+Can also show people on webchat/staff on webchat.
+
+Create a cron daemon that records cpu usage and memory usage of the server.
+Update metrics plugin so that it stores the version numbers of all plugins every reload.
+This would allow tracking what plugin updates caused spikes in server usage.
+
+Update the edit commands to be able to use/copy the data byte.
+Update edit commands to copy/use the durability (to allow for colored wool, blocks, etc)
+
+Add the magic plugin (for alchemy command) back into the game.
+
+Update webchat so that it has a button to reset the logout countdown, and shows time left.
+
+update creative plugin so people can't break the last layer of bedrock unless they have full perms
