@@ -100,6 +100,16 @@ public class Spawner extends JavaPlugin implements Listener {
         return s.save(database);
     }
 
+    public List<SpawnData> getNearestSpawns(int x, int y, int z, String world) {
+        List<SpawnData> ret = new ArrayList<SpawnData>();
+        if (world == null) return ret;
+
+        List<SpawnData> spawnDatas = (List<SpawnData>)database.select(SpawnData.class,"1");
+
+
+        return ret;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";

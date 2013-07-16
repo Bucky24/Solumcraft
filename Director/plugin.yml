@@ -5,5 +5,3 @@ softdepend: [Permission, Database, Spawner, ItemName, Coord]
 commands:
     arena:
         description: arena based commands
-    compete:
-        description: Competition commands

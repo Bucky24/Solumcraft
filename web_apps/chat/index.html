@@ -9,12 +9,19 @@ var username;
 var sessionId;
 
 function getChat() {
+	if (!$("#update").is(":checked")) {
+		return;
+	}
 	var url = "http://solumcraft.com/solumcraft/chat/chat.php?";
 	url += "action=getChat";
 	
 	var seconds = Math.ceil(new Date().getTime() / 1000)
 	
 	url += "&id=" + lastId;
+	
+	if (lastId == -1) {
+		url += "&history=10";
+	}
 	
 	$.ajax({url: url})
 	.success(function(data) {
@@ -27,7 +34,63 @@ function getChat() {
 		var newLast = lastId;
 		for (var i=0;i<obj.data.length;i++) {
 			if (obj.data[i].id > lastId) {
-				html += obj.data[i].player + ": " + obj.data[i].message + "\n";
+				var player = obj.data[i].player_string;
+				var playerArr = player.split(":");
+				//console.log(playerArr);
+				try {
+					player = "";
+					var inColor = false;
+					for (var j=0;j<playerArr.length;j++) {
+						var tok = playerArr[j];
+						if (tok == "blue") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #0000ff'>";
+							inColor = true;
+						} else if (tok == "white") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #000000'>";
+							inColor = true;
+						} else if (tok == "red") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #ff0000'>";
+							inColor = true;
+						} else if (tok == "dark green") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #009900'>";
+							inColor = true;
+						} else if (tok == "dark red") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #990000'>";
+							inColor = true;
+						} else if (tok == "gold") {
+							if (inColor) {
+								player += "</span>";
+							}
+							player += "<span style='color: #ff9933'>";
+							inColor = true;
+						} else {
+							player += tok;
+							lastColor = false;
+						}
+					}
+					if (inColor) {
+						player += "</span>";
+					}
+				} catch (e) {
+					player = obj.data[i].player_string;
+				}
+				//player = player.replace(/\:(.*?)\:/g,"");
+				html += "[" + obj.data[i].time + "] " + player + ": " + obj.data[i].message + "<br>";
 				newLast = obj.data[i].id;
 			}
 		}
@@ -45,7 +108,7 @@ function getChat() {
 			word2 = "is";
 		}
 		$("#playersOn").html("There " + word2 + " " + active + " " + playerStr + " on the server: " + activeHtml);
-		$("#chatLog").val($("#chatLog").val() + html);
+		$("#chatLog").html($("#chatLog").html() + html);
 		
 		var activeWeb = obj.activeWeb.length;
 		var activeWebHtml = "<b>";
@@ -59,12 +122,14 @@ function getChat() {
 			playerStr = "player";
 			word2 = "is";
 		}
-		$("#playersWeb").html("There " + word2 + " " + activeWeb + " " + playerStr + " in WebChat: " + activeWebHtml);
+		$("#playersWeb").html("There " + word2 + " " + activeWeb + " active " + playerStr + " in WebChat: " + activeWebHtml);
 		
-		var psconsole = $('#chatLog');
-		psconsole.scrollTop(
-			psconsole[0].scrollHeight - psconsole.height()
-		);
+		if ($("#autoScroll").is(":checked")) {
+			var psconsole = $('#chatLog');
+			psconsole.scrollTop(
+				psconsole[0].scrollHeight
+			);
+		}
 	});
 }
 
@@ -95,6 +160,25 @@ $(function() {
 			$("#header").html("You are logged in as " + username);
 			
 			setInterval(getChat,1000);
+			
+			setInterval(function() {
+				var url = "http://solumcraft.com/solumcraft/chat/chat.php?action=timeLeft&username=" + username + "&session=" + sessionId;
+				
+				$.ajax({url:url})
+				.success(function(data) {			
+					var obj = JSON.parse(data);
+					if (obj.success === undefined || obj.success != true) {
+						console.log(obj.message);
+						return;
+					}
+					
+					var min = Math.floor(obj.time/60);
+					var sec = obj.time-min*60;
+					if (sec < 10) sec = "0" + sec;
+					
+					$("#timeLeft").html("Session timeout: " + min + ":" + sec);
+				});
+			},1000);
 		});
 		
 
@@ -129,6 +213,22 @@ $(function() {
 			});
 		}
 	});
+	
+	$("#updateSession").on('click',function() {
+		var url = "http://solumcraft.com/solumcraft/chat/chat.php?";
+		url += "action=updateSession";
+		url += "&username=" + username;
+		url += "&session=" + sessionId;
+		
+		$.ajax({url:url})
+		.success(function(data) {
+			var obj = JSON.parse(data);
+			
+			if (obj.success === undefined) {
+				alert(obj.message);
+			}
+		});	
+	});
 });
 </script>
 </head>
@@ -143,8 +243,12 @@ Password: <input type="password" id="password"><br>
 	<div id="header" style="font-size: 15px; font-weight: bold;"></div>
 	<div id="playersOn" style="font-size: 15px;"></div>
 	<div id="playersWeb" style="font-size: 15px;"></div>
-	<textarea id="chatLog" rows="20" cols="100"></textarea><br>
-	<input type="text" id="chatLine" style="width:400px;">
+	<div id="chatLog" style="border: 1px solid #000; width: 600px; height: 300px; overflow: scroll;"></div><br>
+	<input type="text" id="chatLine" style="width:400px;"> Press enter to send your message<br>
+	<input type="checkbox" id="autoScroll" checked> Auto-Scroll
+	<input type="checkbox" id="update" checked> Update chats
+	<br>
+	<div style="display: inline-block;" id="timeLeft"></div><input type="button" id="updateSession" value="Update Session">
 </div>
 </body>
 </html>

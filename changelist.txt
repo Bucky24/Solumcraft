@@ -36,6 +36,28 @@ chests in plots can only be opened by people with permission
 Though have a flag for this, so that plots without the flag set (set by default) don't have this restriction
 
 Finish Director plugin!
+/arena create
+/arena join
+/arena start
+/arena accept <- remembers their coordinates
+
+/arena leave <- teleports back to original coords
+/arena finish
+or victory/loss conditions
+/warp arena will go to viewing area, players can fly, but not drop below a certain area.
+
+auto-spawns
+every few seconds:
+1) Plugin checks where players are and computes how much difficulty they should be facing
+player_score = 10
+x player
+if 5 players, they should have 50 zombies around them in a 30x30 block area
+if < then that number, then spawn up to 3 zombies at random spawners nearby
+
+name
+x1,y1,z1
+x2,y2,z2
+
 
 set up trade signs to not take damaged armor or items
 
@@ -60,6 +82,10 @@ Update edit commands to copy/use the durability (to allow for colored wool, bloc
 
 Add the magic plugin (for alchemy command) back into the game.
 
-Update webchat so that it has a button to reset the logout countdown, and shows time left.
-
 update creative plugin so people can't break the last layer of bedrock unless they have full perms
+
+Update warp plugin so that people re-warp when they take damage
+
+Allow people to change their own titles (set up permission)
+
+Modify ranks to have parent ranks. child ranks inherit perms from parent ranks.

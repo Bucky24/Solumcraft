@@ -17,6 +17,11 @@
 		
 		if ($action == "getChat") {
 			$lastId = $_REQUEST['id'];
+			$history = 0;
+			
+			if (isset($_REQUEST['history'])) {
+				$history = $_REQUEST['history'];
+			}
 		
 			if ($lastId == -1) {
 				$query = "SELECT MAX(id) AS id FROM chat";
@@ -50,7 +55,7 @@
 			}
 			$activePlayers .= "]";
 		
-			$query = "SELECT * FROM chat WHERE id > $lastId order by id ASC";
+			$query = "SELECT * FROM chat WHERE id > $lastId-$history order by id ASC";
 			$result = mysql_query($query,$dbh);
 			
 			print "{\"success\":true,\"data\":[";
@@ -58,12 +63,18 @@
 			for ($i=0;$i<mysql_num_rows($result);$i+=1) {
 				$id = mysql_result($result,$i,"id");
 				$player = mysql_result($result,$i,"player");
-				
 				$message = mysql_result($result,$i,"message");
+				$time = mysql_result($result,$i,"time");
+				$playerNice = mysql_result($result,$i,"player_string");
 				
 				$message = str_replace("\\","\\\\",$message);
+				$message = str_replace("\"","\\\"",$message);
 				
-				print "{\"id\":$id,\"player\":\"$player\",\"message\":\"$message\"}";
+				if ($playerNice == "") { 
+					$playerNice = $player;
+				}
+				
+				print "{\"id\":$id,\"player\":\"$player\",\"message\":\"$message\",\"time\":\"$time\",\"player_string\":\"$playerNice\"}";
 				
 				if ($i < mysql_num_rows($result)-1) {
 					print ",";
@@ -105,14 +116,24 @@
 			$user = $_REQUEST['username'];
 			$session = $_REQUEST['session'];
 			
-			$session = getSession($user);
 			if (isSessionValid($user,$session)) {
 				updateSession($session);
 				$message = urldecode($message);
 				
-				$query = "INSERT INTO chat(message,player,time,seen) VALUES('" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($user) . "',now(),0)";
+				$title = "";
+				$query = "SELECT title FROM title WHERE player = '" . mysql_real_escape_string($user) . "'";
+				$result = mysql_query($query,$dbh);
+				if (mysql_num_rows($result) > 0) {
+					$title = mysql_result($result,0,"title");
+					$title .= ":white: ";
+				}
+				
+				$title .= "$user";
+				
+				$query = "INSERT INTO chat(message,player,time,seen,player_string) VALUES('" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($user) . "',now(),0,'" . mysql_real_escape_string($title) . "')";
+				//error_log($query);
 				mysql_query($query,$dbh);
-				print "{\"success\":true}";
+				print "{\"success\":true,\"timeout\":" . getSessionTime($user,$session) . "}";
 			} else {
 				print "{\"message\":\"Your session has expired, please login again\"}";
 			}
@@ -149,6 +170,44 @@
 				
 				print "{\"success\":true,\"session\":$session}";
 			}
+		} else if ($action == "timeLeft") {
+			if (!isset($_REQUEST['username'])) {
+				print "{\"message\":\"Required parameter username not given\"}";
+				exit(1);
+			}
+			if (!isset($_REQUEST['session'])) {
+				print "{\"message\":\"Required parameter session not given\"}";
+				exit(1);
+			}
+			$message = $_REQUEST['message'];
+			$user = $_REQUEST['username'];
+			$session = $_REQUEST['session'];
+	
+			if (isSessionValid($user,$session)) {
+				$time = getSessionTime($user,$session);
+				print "{\"success\":true,\"time\":\"$time\"}";
+			} else {
+				print "\"success\":true,\"time\":\"0\"}";
+			}
+		} else if ($action == "updateSession") {
+			if (!isset($_REQUEST['username'])) {
+				print "{\"message\":\"Required parameter username not given\"}";
+				exit(1);
+			}
+			if (!isset($_REQUEST['session'])) {
+				print "{\"message\":\"Required parameter session not given\"}";
+				exit(1);
+			}
+			$message = $_REQUEST['message'];
+			$user = $_REQUEST['username'];
+			$session = $_REQUEST['session'];
+	
+			if (isSessionValid($user,$session)) {
+				updateSession($session);
+				print "{\"success\":true}";
+			} else {
+				print "\"success\":false,\"message\":\"Session already expired\"}";
+			}
 		} else {
 			print "{\"message\":\"Action $action is unknown\"}";
 		}
@@ -181,6 +240,22 @@
 		$count = mysql_result($result,0,"count");
 		
 		return ($count > 0);
+	}
+	
+	function getSessionTime($username,$session) {
+		if ($session == -1 || $session == "") return false;
+		global $dbh;
+		$query = "SELECT expires FROM session WHERE id = " . mysql_real_escape_string($session) . " AND player = '" . mysql_real_escape_string($username) . "'";
+		$result = mysql_query($query,$dbh);
+		if (!$result) {
+			error_log($query . " " . mysql_error());
+			return -1;
+		}
+		$count = strtotime(mysql_result($result,0,"expires"));
+		
+		$now = time();
+		
+		return $count-$now;
 	}
 	
 	function updateSession($session) {
