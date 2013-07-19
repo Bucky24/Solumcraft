@@ -17,11 +17,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -69,6 +67,15 @@ public class Creative extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void playerLogin(PlayerLoginEvent event) {
+        Player p = event.getPlayer();
+        String playerName = p.getName();
+        if (permission == null || !permission.hasPermission(playerName,commandPerm)) {
+            p.setGameMode(GameMode.SURVIVAL);
+        }
+    }
+
+    @EventHandler
     public void playerDropItem(PlayerDropItemEvent event) {
         Player p = event.getPlayer();
         if (p.getGameMode() == GameMode.CREATIVE) {
@@ -80,8 +87,33 @@ public class Creative extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void placeBlock(BlockPlaceEvent event) {
+        Player p = event.getPlayer();
+        if (event.getBlockPlaced().getType() == Material.BEDROCK) {
+            if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void breakBlock(BlockBreakEvent event) {
+        Player p = event.getPlayer();
+        if (event.getBlock().getType() == Material.BEDROCK) {
+            if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
             List<Entity> entityList = event.getEntity().getNearbyEntities(6,6,6);
             for (Entity e : entityList) {
                 if (e.getType() == EntityType.PLAYER) {

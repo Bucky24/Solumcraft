@@ -1,5 +1,5 @@
 name: Chat
-version: 0.7
+version: 0.8
 main: com.thepastimers.Chat.Chat
 softdepend: [Database]
 commands:

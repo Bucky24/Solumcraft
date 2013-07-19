@@ -82,8 +82,6 @@ Update edit commands to copy/use the durability (to allow for colored wool, bloc
 
 Add the magic plugin (for alchemy command) back into the game.
 
-update creative plugin so people can't break the last layer of bedrock unless they have full perms
-
 Update warp plugin so that people re-warp when they take damage
 
 Allow people to change their own titles (set up permission)

@@ -336,11 +336,30 @@ public class VoteHandler extends JavaPlugin implements Listener {
                                     }
                                 }
                             }
+                        } else if ("villager".equalsIgnoreCase(reward)) {
+                            int need = 20;
+                            if (credits.getCredits() < need) {
+                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get a villager egg. You have " + credits.getCredits());
+                            } else {
+                                credits.setCredits(credits.getCredits()-need);
+                                if (!credits.save(database)) {
+                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
+                                } else {
+                                    if (itemName != null && itemName.giveItem((Player)sender,"VILLAGER_EGG",1)) {
+                                        sender.sendMessage(ChatColor.GREEN + "You have been given a villager egg");
+                                    } else {
+                                        credits.setCredits(credits.getCredits()+need);
+                                        credits.save(database);
+                                        sender.sendMessage(ChatColor.RED + "Unable to give you a villager egg. Your credits have been refunded.");
+                                    }
+                                }
+                            }
                         } else {
                             sender.sendMessage("You have " + credits.getCredits() + " vote credits. Earn more by voting for the server!");
                             sender.sendMessage("Vote reward list:");
                             sender.sendMessage("horse (horse egg): 10 credits");
                             sender.sendMessage("cow (cow egg): 10 credits");
+                            sender.sendMessage("villager (villager egg): 20 credits");
                             sender.sendMessage("chiseled_block (5 chiseled stone blocks): 2 credits");
                         }
                     } else {

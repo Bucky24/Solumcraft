@@ -86,6 +86,10 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void sendChat(String message, String player, boolean save) {
+        sendChat(message,player,save,false);
+    }
+
+    public void sendChat(String message, String player, boolean save, boolean web) {
         ChatData data = new ChatData();
         data.setPlayer(player);
         data.setPlayerString(player);
@@ -114,7 +118,11 @@ public class Chat extends JavaPlugin implements Listener {
         data.setMessage(replaceColor(data.getMessage()));
         data.setMessage(data.getMessage() + ChatColor.getByChar("r").toString());
 
-        getServer().broadcastMessage("<" + data.getPlayerString() + "> " + data.getMessage());
+        if (web) {
+            getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " <" + data.getPlayerString() + "> " + data.getMessage());
+        } else {
+            getServer().broadcastMessage("<" + data.getPlayerString() + "> " + data.getMessage());
+        }
 
         // we want it unspoiled (without the color codes) for when it goes into db
         data.setPlayerString(bak);

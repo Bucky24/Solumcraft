@@ -119,7 +119,7 @@
 			if (isSessionValid($user,$session)) {
 				updateSession($session);
 				$message = urldecode($message);
-				
+
 				$title = "";
 				$query = "SELECT title FROM title WHERE player = '" . mysql_real_escape_string($user) . "'";
 				$result = mysql_query($query,$dbh);
@@ -187,7 +187,7 @@
 				$time = getSessionTime($user,$session);
 				print "{\"success\":true,\"time\":\"$time\"}";
 			} else {
-				print "\"success\":true,\"time\":\"0\"}";
+				print "{\"success\":true,\"time\":\"0\"}";
 			}
 		} else if ($action == "updateSession") {
 			if (!isset($_REQUEST['username'])) {
@@ -206,7 +206,7 @@
 				updateSession($session);
 				print "{\"success\":true}";
 			} else {
-				print "\"success\":false,\"message\":\"Session already expired\"}";
+				print "{\"success\":false,\"message\":\"Session already expired\"}";
 			}
 		} else {
 			print "{\"message\":\"Action $action is unknown\"}";

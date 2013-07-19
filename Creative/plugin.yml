@@ -1,5 +1,5 @@
 name: Creative
-version: 0.6
+version: 0.7
 main: com.thepastimers.Creative.Creative
 softdepend: [Database,Permission]
 commands:

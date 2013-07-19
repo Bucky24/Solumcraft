@@ -34,7 +34,7 @@ public class GetChats extends BukkitRunnable {
 
         for (ChatData cd : data) {
             Chat c = (Chat)plugin;
-            c.sendChat(cd.getMessage(),cd.getPlayer(),false);
+            c.sendChat(cd.getMessage(),cd.getPlayer(),false,true);
             cd.setSeen(true);
             cd.save(database);
         }

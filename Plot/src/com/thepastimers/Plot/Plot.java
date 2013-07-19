@@ -26,6 +26,7 @@ import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.potion.Potion;
@@ -404,6 +405,28 @@ public class Plot extends JavaPlugin implements Listener {
         } else if(damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
                 || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
                 event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void playerMove(PlayerMoveEvent event) {
+        Location l = event.getFrom();
+        Location l2 = event.getTo();
+
+        PlotData p1 = plotAt(l,true);
+        if (p1 == null) p1 = plotAt(l,false);
+        PlotData p2 = plotAt(l2,true);
+        if (p2 == null) p2 = plotAt(l2,false);
+        Player p = event.getPlayer();
+
+        if (p2 != null && p1 == null) {
+            p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
+        } else if (p1 != null && p2 == null) {
+            p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName());
+        } else if (!(p1 == null && p2 == null)) {
+            if (p1.getId() != p2.getId()) {
+                p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
+            }
         }
     }
 
@@ -889,8 +912,8 @@ public class Plot extends JavaPlugin implements Listener {
                 } else if ("name".equalsIgnoreCase(subCommand)) {
 
                     Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
-                        sender.sendMessage("You don't have permissions for this command (plot_plotcreate)");
+                    if (!permission.hasPermission(playerName,"plot_plot")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (plot_plot)");
                         return true;
                     }
 

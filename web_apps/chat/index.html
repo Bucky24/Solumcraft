@@ -8,6 +8,38 @@ var lastId = -1;
 var username;
 var sessionId;
 
+function getColor(text) {
+	var tokStyles = {"blue":"color: #0000ff","red":"color:#ff0000","white":"color:#000","dark green":"color:#009900","dark red":"color:#990000","gold":"color:#ff9933","yellow":"color:#ffff00","obf":"","strike":"text-decoration:line-through","purple":"color:#ff00ff"};
+	try {
+		var inColor = false;
+		
+		var player = "";
+		var playerArr = text.split(":");
+		var inColor = false;
+		for (var j=0;j<playerArr.length;j++) {
+			var tok = playerArr[j];
+			if (tokStyles[tok] !== undefined) {
+				if (inColor) {
+					player += "</span>";
+				}
+				player += "<span style='" + tokStyles[tok] + "'>";
+				inColor = true;
+			} else {
+				player += tok;
+				lastColor = false;
+			}
+		}
+		if (inColor) {
+			player += "</span>";
+		}
+		
+		return player;
+	} catch (e) {
+		throw e;
+	}
+	
+}
+
 function getChat() {
 	if (!$("#update").is(":checked")) {
 		return;
@@ -30,67 +62,21 @@ function getChat() {
 			console.log(obj.message);
 			return;
 		}
+		
 		var html = "";
 		var newLast = lastId;
 		for (var i=0;i<obj.data.length;i++) {
 			if (obj.data[i].id > lastId) {
 				var player = obj.data[i].player_string;
-				var playerArr = player.split(":");
-				//console.log(playerArr);
 				try {
-					player = "";
-					var inColor = false;
-					for (var j=0;j<playerArr.length;j++) {
-						var tok = playerArr[j];
-						if (tok == "blue") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #0000ff'>";
-							inColor = true;
-						} else if (tok == "white") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #000000'>";
-							inColor = true;
-						} else if (tok == "red") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #ff0000'>";
-							inColor = true;
-						} else if (tok == "dark green") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #009900'>";
-							inColor = true;
-						} else if (tok == "dark red") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #990000'>";
-							inColor = true;
-						} else if (tok == "gold") {
-							if (inColor) {
-								player += "</span>";
-							}
-							player += "<span style='color: #ff9933'>";
-							inColor = true;
-						} else {
-							player += tok;
-							lastColor = false;
-						}
-					}
-					if (inColor) {
-						player += "</span>";
-					}
-				} catch (e) {
-					player = obj.data[i].player_string;
-				}
+					player = getColor(player);
+				} catch (e) {}
+				var message = obj.data[i].message;
+				try {
+					message = getColor(message);
+				} catch (e) {}
 				//player = player.replace(/\:(.*?)\:/g,"");
-				html += "[" + obj.data[i].time + "] " + player + ": " + obj.data[i].message + "<br>";
+				html += "[" + obj.data[i].time + "] " + player + ": " + message + "<br>";
 				newLast = obj.data[i].id;
 			}
 		}
@@ -176,6 +162,11 @@ $(function() {
 					var sec = obj.time-min*60;
 					if (sec < 10) sec = "0" + sec;
 					
+					if (obj.time == 0 && $("#controls").is(":hidden")) {
+						$("#controls").show();
+						$("#password").val("");
+					}
+					
 					$("#timeLeft").html("Session timeout: " + min + ":" + sec);
 				});
 			},1000);
@@ -207,7 +198,6 @@ $(function() {
 					// we assume this means a bad session
 					alert(obj.message);
 					$("#controls").show();
-					$("#username").val("");
 					$("#password").val("");
 				}
 			});

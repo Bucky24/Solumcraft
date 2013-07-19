@@ -217,11 +217,6 @@ public class Metrics extends JavaPlugin implements Listener {
     public void playerDeath(PlayerDeathEvent event) {
         Player player = (Player)event.getEntity();
 
-        if (director != null) {
-            if (director.isPlayerCompeting(player)) {
-                return;
-            }
-        }
 
         PlayerDeath pd = new PlayerDeath();
 
