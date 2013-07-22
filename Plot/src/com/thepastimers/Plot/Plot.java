@@ -5,6 +5,7 @@ import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,6 +28,9 @@ import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.potion.Potion;
@@ -410,24 +414,58 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void playerMove(PlayerMoveEvent event) {
-        Location l = event.getFrom();
-        Location l2 = event.getTo();
+        handleMove(event.getFrom(),event.getTo(),event.getPlayer());
+    }
 
+    private boolean handleMove(Location l, Location l2, Player p) {
         PlotData p1 = plotAt(l,true);
         if (p1 == null) p1 = plotAt(l,false);
         PlotData p2 = plotAt(l2,true);
         if (p2 == null) p2 = plotAt(l2,false);
-        Player p = event.getPlayer();
 
         if (p2 != null && p1 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
+            if (p2.isCreative() && getPlotPerms(p2,p.getName()) > PlotPerms.NONE) {
+                p.setGameMode(GameMode.CREATIVE);
+            }
         } else if (p1 != null && p2 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName());
+            if (p1.isCreative()) {
+                if (permission == null || !permission.hasPermission(p.getName(),"creative_all")) {
+                    PlayerInventory inv = p.getInventory();
+                    ItemStack[] itemList = inv.getContents();
+
+                    for (int i=0;i<itemList.length;i++) {
+                        itemList[i] = null;
+                    }
+                    inv.setContents(itemList);
+
+                    itemList = inv.getArmorContents();
+
+                    for (int i=0;i<itemList.length;i++) {
+                        itemList[i] = null;
+                    }
+                    inv.setArmorContents(itemList);
+                }
+                p.setGameMode(GameMode.SURVIVAL);
+            }
         } else if (!(p1 == null && p2 == null)) {
             if (p1.getId() != p2.getId()) {
                 p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
+                if (p1.isCreative() && !p2.isCreative()) {
+                    p.setGameMode(GameMode.SURVIVAL);
+                } else if (!p1.isCreative() && p2.isCreative()) {
+                    p.setGameMode(GameMode.CREATIVE);
+                }
             }
         }
+
+        return true;
+    }
+
+    @EventHandler
+    public void playerTeleport(PlayerTeleportEvent event) {
+        handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }
 
     @EventHandler

@@ -182,9 +182,9 @@ public class TradeSign extends JavaPlugin implements Listener {
 
         String[] retLines = new String[4];
 
-        for (int i=0;i<s.getLines().length;i++) {
-            getLogger().info(i + " " + s.getLines()[i]);
-        }
+        //for (int i=0;i<s.getLines().length;i++) {
+        //    getLogger().info(i + " " + s.getLines()[i]);
+        //}
         if ("[SELL]".equalsIgnoreCase(line1)) {
 
             if (permission == null || !permission.hasPermission(p.getName(),"sign_place")) {
@@ -239,11 +239,11 @@ public class TradeSign extends JavaPlugin implements Listener {
             if (is == null || is.getType() == Material.AIR) {
                 purchase = true;
             }
-            getLogger().info("Player is owner of sign");
+            //getLogger().info("Player is owner of sign");
 
             owner = true;
             if (!purchase) {
-                getLogger().info("Owner is adding");
+                //getLogger().info("Owner is adding");
                 if (itemName == null) {
                     p.sendMessage(ChatColor.RED + "That action is not possible at this time");
                     return;

@@ -32,6 +32,7 @@ public class PlotData extends Table {
         id = -1;
         pvp = false;
         pve = false;
+        creative = false;
     }
     
     String name;
@@ -46,6 +47,7 @@ public class PlotData extends Table {
     
     boolean pvp;
     boolean pve;
+    boolean creative;
 
     public int getId() {
         return id;
@@ -143,6 +145,14 @@ public class PlotData extends Table {
         this.world = world;
     }
 
+    public boolean isCreative() {
+        return creative;
+    }
+
+    public void setCreative(boolean creative) {
+        this.creative = creative;
+    }
+
     public static List<PlotData> parseResult(ResultSet result) throws SQLException {
         List<PlotData> ret = new ArrayList<PlotData>();
 
@@ -165,6 +175,7 @@ public class PlotData extends Table {
             p.setPvp(result.getBoolean("pvp"));
             p.setPve(result.getBoolean("pve"));
             p.setWorld(result.getString("world"));
+            p.setCreative(result.getBoolean("creative"));
 
             ret.add(p);
         }
@@ -193,10 +204,10 @@ public class PlotData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(name,owner,x1,z1,x2,z2,subPlot,parent,pvp,pve,world)";
+            String columns = "(name,owner,x1,z1,x2,z2,subPlot,parent,pvp,pve,world,creative)";
             String values = "('" + d.makeSafe(name) + "','" + d.makeSafe(owner) + "'," + x1 + "," + z1
                     +  "," + x2 + "," + z2 + "," + subPlot + "," + parent + "," + pvp + "," + pve + ",'"
-                    + d.makeSafe(world) + "')";
+                    + d.makeSafe(world) + "'," + creative + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -227,7 +238,8 @@ public class PlotData extends Table {
             query.append("parent = " + parent + ", ");
             query.append("pvp = " + pvp + ", ");
             query.append("pve = " + pve + ", ");
-            query.append("world = '" + d.makeSafe(world) + "' ");
+            query.append("world = '" + d.makeSafe(world) + "', ");
+            query.append("creative = " + creative + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -238,7 +250,7 @@ public class PlotData extends Table {
         StringBuilder builder = new StringBuilder(table);
 
         builder.append(" int id, string name, string owner, int x1, int z1, int x2, int z2, string world, bool subPlot");
-        builder.append(", int parent, bool pvp, bool pve");
+        builder.append(", int parent, bool pvp, bool pve, bool creative");
 
         return builder.toString();
     }
