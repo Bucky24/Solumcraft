@@ -95,12 +95,24 @@ public class Creative extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
+        if (event.getBlockPlaced().getType() == Material.TNT) {
+            if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                event.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
     public void breakBlock(BlockBreakEvent event) {
         Player p = event.getPlayer();
         if (event.getBlock().getType() == Material.BEDROCK) {
+            if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                event.setCancelled(true);
+            }
+        }
+        if (event.getBlock().getType() == Material.TNT) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
                 event.setCancelled(true);

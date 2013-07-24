@@ -4,6 +4,9 @@ import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Plot.Plot;
+import com.thepastimers.Plot.PlotData;
+import com.thepastimers.Plot.PlotPerms;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,6 +37,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Coord coord;
+    Plot plot;
     int MAX_PROTECTIONS = 2;
 
     @Override
@@ -60,6 +64,12 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
         if (coord == null) {
             getLogger().warning("Unable to connect to Coord plugin.");
+        }
+
+        plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
+
+        if (plot == null) {
+            getLogger().warning("Unable to connect to Plot plugin.");
         }
 
         getLogger().info("Table info: ");
@@ -105,10 +115,36 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 return true;
             }
 
-            return (getProtection(b.getX(),b.getY(),b.getZ(),b.getWorld().getName()) != null);
+            if (getProtection(b.getX(),b.getY(),b.getZ(),b.getWorld().getName()) != null) {
+                return true;
+            } else {
+                if (plot != null) {
+                    getLogger().info("trying to figure out if block is protected");
+                    PlotData pd = plot.plotAt(b.getLocation(),true);
+                    if (pd == null) {
+                        pd = plot.plotAt(b.getLocation());
+                    }
+                    getLogger().info("" + pd);
+                    if (pd != null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         } else {
             return false;
         }
+    }
+
+    public boolean canUserAccess(Block b, String player) {
+        if (isProtected(b)) {
+            return true;
+        }
+
+        if (!canBeProtected(b)) return true;
+
+
+        return true;
     }
 
     private ProtectData getProtectionById(int id) {
@@ -207,36 +243,31 @@ public class ChestProtect extends JavaPlugin implements Listener {
         ProtectData data = getProtection(x,y,z,world);
 
         if (data == null) {
-            return true;
+            if (plot != null) {
+                getLogger().info("here");
+                PlotData pd = plot.plotAt(x,z,world,true);
+                if (pd == null) {
+                    pd = plot.plotAt(x,z,world,false);
+                }
+                if (plot.getPlotPerms(pd,player) >= PlotPerms.RESIDENT) {
+                    return true;
+                }
+            }
+        } else {
+            getLogger().info(data + " is not null");
+
+            if (player.equalsIgnoreCase(data.getOwner())) {
+                return true;
+            }
+
+            List<ProtectPerm> perms = (List<ProtectPerm>)database.select(ProtectPerm.class,"player = '"
+                    + database.makeSafe(player) + "' and protect = " + data.getId());
+            if (perms.size() != 0) {
+                return true;
+            }
         }
 
-        if (player.equalsIgnoreCase(data.getOwner())) {
-            return true;
-        }
-
-        List<ProtectPerm> perms = (List<ProtectPerm>)database.select(ProtectPerm.class,"player = '"
-                + database.makeSafe(player) + "' and protect = " + data.getId());
-
-        return (perms.size() != 0);
-    }
-
-    public boolean hasPerms(String player, ProtectData data) {
-        if (database == null || player == null) {
-            return false;
-        }
-
-        if (data == null) {
-            return true;
-        }
-
-        if (player.equalsIgnoreCase(data.getOwner())) {
-            return true;
-        }
-
-        List<ProtectPerm> perms = (List<ProtectPerm>)database.select(ProtectPerm.class,"player = '"
-                + database.makeSafe(player) + "' and protect = " + data.getId());
-
-        return (perms.size() != 0);
+        return false;
     }
 
     private boolean removePerm(String player, ProtectData data) {
@@ -267,7 +298,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
             return true;
         }
 
-        if (hasPerms(player,data)) {
+        if (hasPerms(player,data.getX(),data.getY(),data.getZ(),data.getWorld())) {
             return true;
         }
 
@@ -285,7 +316,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
             Player p = event.getPlayer();
 
             if (isProtected(b)) {
-                if (!hasPerms(p,b)) {
+                if (!hasPerms(p.getName(),b.getX(),b.getY(),b.getZ(),b.getWorld().getName())) {
                     event.setCancelled(true);
                     p.sendMessage(ChatColor.RED + "You do not have permission to interact with this");
                 }
@@ -297,8 +328,10 @@ public class ChestProtect extends JavaPlugin implements Listener {
     public void blockBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
         if (isProtected(b)) {
-            event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED + "This block cannot be removed until its protection has been removed.");
+            if (!hasPerms(event.getPlayer().getName(), b.getX(), b.getY(), b.getZ(), b.getWorld().getName())) {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ChatColor.RED + "This block cannot be removed until its protection has been removed.");
+            }
         }
     }
 

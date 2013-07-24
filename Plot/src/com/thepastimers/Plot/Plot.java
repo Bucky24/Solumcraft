@@ -5,6 +5,7 @@ import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.ChestProtect.ChestProtect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,10 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -25,10 +23,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.painting.PaintingBreakEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -320,6 +315,29 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void chestInteract(PlayerInteractEvent event) {
+        ChestProtect protect = (ChestProtect)getServer().getPluginManager().getPlugin("ChestProtect");
+        if (protect != null) return;
+        Player pl = event.getPlayer();
+        Block bl = event.getClickedBlock();
+        PlotData pd = plotAt(bl.getLocation());
+
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            bl = event.getClickedBlock();
+            pl = event.getPlayer();
+            if (pd != null) {
+                if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
+                    PlotPerms pp = getPlotPermobject(pd,pl.getName());
+                    if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
+                        pl.sendMessage(ChatColor.RED + "You do not have permissions interact with this");
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void blockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();
@@ -340,7 +358,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         PlotData p = plotAt(b.getLocation());
-        if (p != null) {
+
             if (p != null) {
                 if (!pl.getName().equalsIgnoreCase(p.getOwner())) {
                     PlotPerms pp = getPlotPermobject(p,pl.getName());
@@ -349,9 +367,7 @@ public class Plot extends JavaPlugin implements Listener {
                         event.setCancelled(true);
                     }
                 }
-            } else {
-                event.setCancelled(true);
-            }
+
         }
     }
 
@@ -613,6 +629,11 @@ public class Plot extends JavaPlugin implements Listener {
 
             boolean subPlot = false;
             PlotData parent = null;
+            String subCommand = "";
+
+            if (args.length > 0) {
+                subCommand = args[0];
+            }
 
             if (command.equalsIgnoreCase("subplot")) {
                 subPlot = true;
@@ -624,14 +645,14 @@ public class Plot extends JavaPlugin implements Listener {
                 }
 
                 int perms = getPlotPerms(parent,playerName);
-                if (perms < PlotPerms.COOWNER) {
+                if (perms < PlotPerms.COOWNER && !"info".equalsIgnoreCase(subCommand)) {
                     sender.sendMessage("You don't have permission to use that command here");
                     return true;
                 }
             }
 
             if (args.length > 0) {
-                String subCommand = args[0];
+                subCommand = args[0];
 
                 if (subCommand.equalsIgnoreCase("create") || subCommand.equalsIgnoreCase("check")) {
                     Player p = (Player)sender;

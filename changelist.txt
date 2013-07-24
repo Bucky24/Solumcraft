@@ -58,7 +58,6 @@ name
 x1,y1,z1
 x2,y2,z2
 
-
 set up trade signs to not take damaged armor or items
 
 Make sure all item names are <= 15 chars (since that's max that trade signs do on one line)

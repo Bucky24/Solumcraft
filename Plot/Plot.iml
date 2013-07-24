@@ -12,6 +12,7 @@
     <orderEntry type="module" module-name="Coord" />
     <orderEntry type="module" module-name="Money" />
     <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130711.012359-4" level="project" />
+    <orderEntry type="module" module-name="ChestProtect" />
   </component>
 </module>
 
