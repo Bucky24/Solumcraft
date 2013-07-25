@@ -1,9 +1,4 @@
 <?php
-	// auth for page
-	// pastimerbucky TJxyBSxH
-	// sevanaka Z3nbT8ZK
-	// escherthelizard9 QKM2JY4v
-
 	$url = "localhost";
 	$username = "pluginuser";
 	$password = "R6r7UEYy4X26t44E";

@@ -1,5 +1,5 @@
 name: Coord
-version: 1.2
+version: 1.3
 main: com.thepastimers.Coord.Coord
 softdepend: [Permission]
 commands:

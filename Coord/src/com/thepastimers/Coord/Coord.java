@@ -174,7 +174,7 @@ public class Coord extends JavaPlugin implements Listener {
         String command = cmd.getName();
 
         if (command.equalsIgnoreCase("coord")) {
-            if (permission == null || !permission.hasPermission(playerName,"coord_admin")) {
+            if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
                 sender.sendMessage("You do not have permissions for this command");
                 return true;
             }
@@ -183,13 +183,20 @@ public class Coord extends JavaPlugin implements Listener {
 
                 if (subcommand.equalsIgnoreCase("clear")) {
                     if (args.length > 1) {
+                        if (permission == null || !permission.hasPermission(playerName,"coord_admin")) {
+                            sender.sendMessage("You do not have permissions for this command");
+                            return true;
+                        }
                         String player = args[1];
 
                         clear(player);
 
                         sender.sendMessage(player + " now has " + getCoordSize(player) + " coords set");
                     } else {
-                        sender.sendMessage("/coord clear <player>");
+                        String player = playerName;
+                        clear(player);
+
+                        sender.sendMessage("You now have " + getCoordSize(player) + " coords set");
                     }
                 } else {
                     sender.sendMessage("/coord <clear>");

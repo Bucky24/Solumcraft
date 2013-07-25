@@ -313,8 +313,8 @@ public class ItemName extends JavaPlugin {
         dataList.add(new ItemData("PURPLE_WOOL",Material.getMaterial(35),10));
         dataList.add(new ItemData("BLUE_WOOL",Material.getMaterial(35),11));
         dataList.add(new ItemData("BROWN_WOOL",Material.getMaterial(35),12));
-        dataList.add(new ItemData("RED_WOOL",Material.getMaterial(35),13));
-        dataList.add(new ItemData("GREEN_WOOL",Material.getMaterial(35),14));
+        dataList.add(new ItemData("GREEN_WOOL",Material.getMaterial(35),13));
+        dataList.add(new ItemData("RED_WOOL",Material.getMaterial(35),14));
         dataList.add(new ItemData("BLACK_WOOL",Material.getMaterial(35),15));
 
         // I'm just going to ignore double slabs here, becuase I don't think they actually matter
