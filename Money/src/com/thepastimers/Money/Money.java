@@ -385,6 +385,12 @@ public class Money extends JavaPlugin implements Listener {
                         sender.sendMessage("Unable to sell.");
                     } else {
                         sender.sendMessage("Sale complete. Balance: $" + getBalance(playerName));
+                        Sale sale = new Sale();
+                        sale.setItem(from);
+                        sale.setAmount(amount);
+                        sale.setPrice(total);
+                        sale.setPlayer(playerName);
+                        sale.save(database);
                     }
                 }
             } else {

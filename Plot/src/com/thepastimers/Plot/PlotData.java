@@ -316,4 +316,22 @@ public class PlotData extends Table {
 
         return ret;
     }
+
+    public static int getPlayerPlotCount(String player) {
+        int count = 0;
+        if (player == null) {
+            return count;
+        }
+
+        for (Integer i : dataMap.keySet()) {
+            PlotData data = dataMap.get(i);
+
+            if (player.equalsIgnoreCase(data.getOwner())) {
+                count++;
+                break;
+            }
+        }
+
+        return count;
+    }
 }

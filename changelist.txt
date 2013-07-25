@@ -86,3 +86,5 @@ Update warp plugin so that people re-warp when they take damage
 Allow people to change their own titles (set up permission)
 
 Modify ranks to have parent ranks. child ranks inherit perms from parent ranks.
+
+Reset volocity when teleporting to home, warps, etc.

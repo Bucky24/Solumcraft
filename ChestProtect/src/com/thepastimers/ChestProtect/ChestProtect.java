@@ -119,12 +119,12 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 return true;
             } else {
                 if (plot != null) {
-                    getLogger().info("trying to figure out if block is protected");
+                    //getLogger().info("trying to figure out if block is protected");
                     PlotData pd = plot.plotAt(b.getLocation(),true);
                     if (pd == null) {
                         pd = plot.plotAt(b.getLocation());
                     }
-                    getLogger().info("" + pd);
+                    //getLogger().info("" + pd);
                     if (pd != null) {
                         return true;
                     }
@@ -550,12 +550,16 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
                     Block b = w.getBlockAt(x,y,z);
 
-                    if (!isProtected(b)) {
+                    if (!isProtected(b) && b != null) {
                         sender.sendMessage("This block is not protected.");
                         return true;
                     }
 
                     ProtectData pd = getProtection(x,y,z,w.getName());
+                    if (pd == null) {
+                        sender.sendMessage("This block is not protected");
+                        return true;
+                    }
 
                     sender.sendMessage("This " + b.getType().name().toLowerCase() + " is protected by " + pd.getOwner());
                 } else if (subCommand.equalsIgnoreCase("allow")) {

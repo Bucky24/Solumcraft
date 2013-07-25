@@ -725,15 +725,15 @@ public class Plot extends JavaPlugin implements Listener {
                     int height = z2-z1;
 
                     if ((width == 0 || height == 0)
-                            || ((width < 200 || height < 200) && !override && !subPlot)) {
-                        sender.sendMessage("This plot is " + width + "x" + height + ". It must be at least 200x200");
+                            || ((width < 100 || height < 100 || width > 100 || height > 100) && !override && !subPlot)) {
+                        sender.sendMessage("This plot is " + width + "x" + height + ". It cannot be less then 100x100. It cannot be greater then 100x100");
                         return true;
                     }
 
                     double cost = 0;
 
                     if (!override && !subPlot) {
-                        cost = width*height*2;
+                        cost = width*height*8;
                         if (money == null) {
                             sender.sendMessage("This functionality is currently unavailable");
                         }

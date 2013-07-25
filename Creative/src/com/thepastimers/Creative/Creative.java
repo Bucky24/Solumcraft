@@ -95,7 +95,7 @@ public class Creative extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-        if (event.getBlockPlaced().getType() == Material.TNT) {
+        if (event.getBlockPlaced().getType() == Material.TNT && p.getGameMode() == GameMode.CREATIVE) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
                 event.setCancelled(true);
@@ -112,7 +112,7 @@ public class Creative extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-        if (event.getBlock().getType() == Material.TNT) {
+        if (event.getBlock().getType() == Material.TNT && p.getGameMode() == GameMode.CREATIVE) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
                 event.setCancelled(true);
