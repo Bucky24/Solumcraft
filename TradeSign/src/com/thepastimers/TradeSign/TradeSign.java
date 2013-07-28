@@ -258,7 +258,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                     }
                 }
                 int count = itemName.countInInventory(item,p.getName());
-                if (itemName.takeItem(p,item,count)) {
+                if (itemName.takeItem(p,item,count,true)) {
                     data.setAmount(data.getAmount() + count);
 
                     if (!data.save(database)) {

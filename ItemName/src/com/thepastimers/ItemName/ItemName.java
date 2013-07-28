@@ -2,6 +2,7 @@ package com.thepastimers.ItemName;
 
 import com.sun.media.sound.AiffFileReader;
 import com.thepastimers.Permission.Permission;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -196,6 +197,10 @@ public class ItemName extends JavaPlugin {
     }
 
     public boolean takeItem(Player p, String item, int amount) {
+        return takeItem(p,item,amount,false);
+    }
+
+    public boolean takeItem(Player p, String item, int amount, boolean checkDurability) {
         //getLogger().info("Take item " + p + " "+ item + " " + amount);
         if (p == null || item == null || amount < 0) {
             return false;
@@ -211,6 +216,19 @@ public class ItemName extends JavaPlugin {
         }
 
         ItemStack[] items = inv.getContents();
+
+        for (int i=0;i<items.length;i++) {
+            ItemStack is = items[i];
+            String name = getItemName(is);
+            if (name != null && item.equalsIgnoreCase(name)) {
+                if (isTool(name)) {
+                    if (is.getDurability() > 0) {
+                        p.sendMessage(ChatColor.RED + "One of the items you are trying to add to the sign is damaged. At this time, you cannot add damaged items to trade signs.");
+                        return false;
+                    }
+                }
+            }
+        }
 
         for (int i=0;i<items.length;i++) {
             ItemStack is = items[i];
@@ -235,6 +253,22 @@ public class ItemName extends JavaPlugin {
         inv.setContents(items);
 
         return true;
+    }
+
+    public boolean isTool(String item) {
+        ItemStack is = getItemFromName(item);
+        if (is == null) return false;
+        
+        Material t = is.getType();
+        if (t == Material.WOOD_SPADE || t == Material.STONE_SPADE || t == Material.IRON_SPADE || t == Material.GOLD_SPADE || t == Material.DIAMOND_SPADE
+                || t == Material.WOOD_AXE || t == Material.STONE_AXE || t == Material.IRON_AXE || t == Material.GOLD_AXE || t == Material.DIAMOND_AXE
+                || t == Material.WOOD_PICKAXE || t == Material.STONE_PICKAXE || t == Material.IRON_PICKAXE || t == Material.GOLD_PICKAXE || t == Material.DIAMOND_PICKAXE
+                || t == Material.WOOD_HOE || t == Material.STONE_HOE || t == Material.IRON_HOE || t == Material.GOLD_HOE || t == Material.DIAMOND_HOE
+                || t == Material.WOOD_SWORD || t == Material.STONE_SWORD || t == Material.IRON_SWORD || t == Material.GOLD_SWORD || t == Material.DIAMOND_SWORD) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -330,10 +364,10 @@ public class ItemName extends JavaPlugin {
 
         // also ignoring silverfish cobblestone
 
-        dataList.add(new ItemData("STONE_BRICK",Material.getMaterial(5),0));
-        dataList.add(new ItemData("MOSSY_STONE_BRICK",Material.getMaterial(5),1));
-        dataList.add(new ItemData("CRACKED_STONE",Material.getMaterial(5),2));
-        dataList.add(new ItemData("CHISELED_STONE",Material.getMaterial(5),3));
+        dataList.add(new ItemData("STONE_BRICK",Material.getMaterial(98),0));
+        dataList.add(new ItemData("MOSSY_STONE_BRICK",Material.getMaterial(98),1));
+        dataList.add(new ItemData("CRACKED_STONE",Material.getMaterial(98),2));
+        dataList.add(new ItemData("CHISELED_STONE",Material.getMaterial(98),3));
 
         // ignoring double wood slabs
 

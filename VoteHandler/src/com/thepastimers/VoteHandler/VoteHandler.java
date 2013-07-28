@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
     Rank rank;
     Permission permission;
     ItemName itemName;
+    List<VoteReward> rewards;
 
     @Override
     public void onEnable() {
@@ -57,6 +59,12 @@ public class VoteHandler extends JavaPlugin implements Listener {
         if (itemName == null) {
             getLogger().warning("Cannot load ItemName plugin. Some functionality may not be available");
         }
+
+        rewards = new ArrayList<VoteReward>();
+        rewards.add(new VoteReward("cow","COW_EGG","Cow spawn egg",1,10));
+        rewards.add(new VoteReward("horse","HORSE_EGG","Horse spawn egg",1,10));
+        rewards.add(new VoteReward("villager","VILLAGER_EGG","Villager spawn egg",1,20));
+        rewards.add(new VoteReward("chiseled_block","CHISELED_STONE","Chiseled stone block",5,2));
 
         getLogger().info("Table info: ");
         getLogger().info(VoteSettings.getTableInfo());
@@ -270,100 +278,53 @@ public class VoteHandler extends JavaPlugin implements Listener {
                         sender.sendMessage("/vote setReward <diamonds|credits>");
                     }
                 } else if ("redeem".equalsIgnoreCase(subCommand)) {
+                    List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
+                    VoteCredits credits = null;
+                    if (voteCreditsList.size() == 0) {
+                        credits = new VoteCredits();
+                        credits.setCredits(0);
+                    } else {
+                        credits = voteCreditsList.get(0);
+                    }
                     if (args.length > 1) {
                         String reward = args[1];
 
-                        List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
-                        VoteCredits credits = null;
-                        if (voteCreditsList.size() == 0) {
-                            credits = new VoteCredits();
-                            credits.setCredits(0);
-                        } else {
-                            credits = voteCreditsList.get(0);
+                        boolean found = false;
+
+                        for (VoteReward r : rewards) {
+                            if (r.getName().equalsIgnoreCase(reward)) {
+                                int need = r.getCredits();
+                                if (credits.getCredits() < need) {
+                                    sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get a " + r.getDescription() + ". You have " + credits.getCredits());
+                                } else {
+                                    credits.setCredits(credits.getCredits()-need);
+                                    if (!credits.save(database)) {
+                                        sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
+                                    } else {
+                                        if (itemName != null && itemName.giveItem((Player)sender,r.getItem(),r.getAmount())) {
+                                            sender.sendMessage(ChatColor.GREEN + "You have been given " + r.getAmount() + " " + r.getDescription());
+                                        } else {
+                                            credits.setCredits(credits.getCredits()+need);
+                                            credits.save(database);
+                                            sender.sendMessage(ChatColor.RED + "Unable to give you " + r.getAmount() + " " + r.getDescription() + ". Your credits have been refunded.");
+                                        }
+                                    }
+                                }
+                                found = true;
+                                break;
+                            }
                         }
 
-                        if ("horse".equalsIgnoreCase(reward)) {
-                            int need = 10;
-                            if (credits.getCredits() < need) {
-                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get a horse egg. You have " + credits.getCredits());
-                            } else {
-                                credits.setCredits(credits.getCredits()-need);
-                                if (!credits.save(database)) {
-                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
-                                } else {
-                                    if (itemName != null && itemName.giveItem((Player)sender,"HORSE_EGG",1)) {
-                                        sender.sendMessage(ChatColor.GREEN + "You have been given a horse egg");
-                                    } else {
-                                        credits.setCredits(credits.getCredits()+need);
-                                        credits.save(database);
-                                        sender.sendMessage(ChatColor.RED + "Unable to give you a horse egg. Your credits have been refunded.");
-                                    }
-                                }
-                            }
-                        } else if ("cow".equalsIgnoreCase(reward)) {
-                            int need = 10;
-                            if (credits.getCredits() < need) {
-                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get a cow egg. You have " + credits.getCredits());
-                            } else {
-                                credits.setCredits(credits.getCredits()-need);
-                                if (!credits.save(database)) {
-                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
-                                } else {
-                                    if (itemName != null && itemName.giveItem((Player)sender,"COW_EGG",1)) {
-                                        sender.sendMessage(ChatColor.GREEN + "You have been given a cow egg");
-                                    } else {
-                                        credits.setCredits(credits.getCredits()+need);
-                                        credits.save(database);
-                                        sender.sendMessage(ChatColor.RED + "Unable to give you a cow egg. Your credits have been refunded.");
-                                    }
-                                }
-                            }
-                        } else if ("chiseled_block".equalsIgnoreCase(reward)) {
-                            int need = 2;
-                            if (credits.getCredits() < need) {
-                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get 5 chiseled stone blocks. You have " + credits.getCredits());
-                            } else {
-                                credits.setCredits(credits.getCredits()-need);
-                                if (!credits.save(database)) {
-                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
-                                } else {
-                                    if (itemName != null && itemName.giveItem((Player)sender,"CHISELED_STONE",5)) {
-                                        sender.sendMessage(ChatColor.GREEN + "You have been given 5 chiseled stone blocks");
-                                    } else {
-                                        credits.setCredits(credits.getCredits()+need);
-                                        credits.save(database);
-                                        sender.sendMessage(ChatColor.RED + "Unable to give you 5 chiseled stone blocks. Your credits have been refunded.");
-                                    }
-                                }
-                            }
-                        } else if ("villager".equalsIgnoreCase(reward)) {
-                            int need = 20;
-                            if (credits.getCredits() < need) {
-                                sender.sendMessage(ChatColor.RED + "You need " + need + " credits to get a villager egg. You have " + credits.getCredits());
-                            } else {
-                                credits.setCredits(credits.getCredits()-need);
-                                if (!credits.save(database)) {
-                                    sender.sendMessage(ChatColor.RED + "Unable to update your credits balance");
-                                } else {
-                                    if (itemName != null && itemName.giveItem((Player)sender,"VILLAGER_EGG",1)) {
-                                        sender.sendMessage(ChatColor.GREEN + "You have been given a villager egg");
-                                    } else {
-                                        credits.setCredits(credits.getCredits()+need);
-                                        credits.save(database);
-                                        sender.sendMessage(ChatColor.RED + "Unable to give you a villager egg. Your credits have been refunded.");
-                                    }
-                                }
-                            }
-                        } else {
-                            sender.sendMessage("You have " + credits.getCredits() + " vote credits. Earn more by voting for the server!");
-                            sender.sendMessage("Vote reward list:");
-                            sender.sendMessage("horse (horse egg): 10 credits");
-                            sender.sendMessage("cow (cow egg): 10 credits");
-                            sender.sendMessage("villager (villager egg): 20 credits");
-                            sender.sendMessage("chiseled_block (5 chiseled stone blocks): 2 credits");
+                        if (!found) {
+                            sender.sendMessage(ChatColor.RED + "That reward does not exist. Use /vote redeem (without an item name) to list rewards");
                         }
                     } else {
-                        sender.sendMessage("/vote redeem <list|item (use list to see items)>");
+                        sender.sendMessage("/vote redeem <item>");
+                        sender.sendMessage("You have " + credits.getCredits() + " vote credits. Earn more by voting for the server!");
+                        sender.sendMessage("Vote reward list:");
+                        for (VoteReward r : rewards) {
+                            sender.sendMessage(r.getName() + "(" + r.getAmount() + " " + r.getDescription() + ") " + r.getCredits());
+                        }
                     }
                 } else if ("sites".equalsIgnoreCase(subCommand)) {
                     sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");

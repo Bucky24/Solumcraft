@@ -65,7 +65,7 @@ public class Mail extends JavaPlugin implements Listener {
         int count = unreadMessages(p.getName());
 
         if (count > 0) {
-            p.sendMessage("You have unread mail! Use /mail read to read it.");
+            p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail read to read it.");
         }
     }
 
@@ -132,7 +132,7 @@ public class Mail extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("mail")) {
             if (permission == null || !permission.hasPermission(playerName,"mail_mail") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permissions for this command (mail_mail)");
+                sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (mail_mail)");
                 return true;
             }
 
@@ -147,6 +147,7 @@ public class Mail extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("Message from " + md.getSender());
                         sender.sendMessage(md.getMessage());
+                        sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
                     }
                 } else if ("check".equalsIgnoreCase(subcommand)) {
                     int unread = unreadMessages(playerName);

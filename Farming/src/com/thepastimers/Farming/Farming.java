@@ -77,5 +77,15 @@ public class Farming extends JavaPlugin implements Listener {
                 }
             }
         }
+
+        if (b.getType() == Material.CARROT && b.getData() == 7) {
+            if (permission != null && permission.hasPermission(event.getPlayer().getName(),"farming_replant")) {
+                if (itemName.countInInventory(Material.CARROT_ITEM.name(),p.getName()) > 0) {
+                    if (itemName.takeItem(p,Material.CARROT_ITEM.name(),1)) {
+                        BukkitTask task = new ResetCarrots(this,b).runTaskLater(this, 2);
+                    }
+                }
+            }
+        }
     }
 }

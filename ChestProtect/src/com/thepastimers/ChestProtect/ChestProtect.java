@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Door;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -244,7 +245,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
         if (data == null) {
             if (plot != null) {
-                getLogger().info("here");
+                //getLogger().info("here");
                 PlotData pd = plot.plotAt(x,z,world,true);
                 if (pd == null) {
                     pd = plot.plotAt(x,z,world,false);
@@ -254,7 +255,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 }
             }
         } else {
-            getLogger().info(data + " is not null");
+            //getLogger().info(data + " is not null");
 
             if (player.equalsIgnoreCase(data.getOwner())) {
                 return true;
@@ -331,6 +332,18 @@ public class ChestProtect extends JavaPlugin implements Listener {
             if (!hasPerms(event.getPlayer().getName(), b.getX(), b.getY(), b.getZ(), b.getWorld().getName())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "This block cannot be removed until its protection has been removed.");
+            }
+        }
+    }
+
+    @EventHandler
+    public void tnt(EntityExplodeEvent event) {
+        List<Block> blist = event.blockList();
+
+        for (Block b : blist) {
+            if (isProtected(b)) {
+                event.setCancelled(true);
+                return;
             }
         }
     }
