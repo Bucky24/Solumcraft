@@ -1,0 +1,4 @@
+name: Pvp
+version: 0.1
+main: com.thepastimers.Pvp.Pvp
+softdepend: [Database]
