@@ -196,6 +196,7 @@ public class Metrics extends JavaPlugin implements Listener {
         p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
         p.sendMessage(ChatColor.GREEN + "www.mcserverlist.net/servers/516ba260041b26153700019e");
         p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+        p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
     }
 
     public int getLoginCount(String player) {
@@ -275,14 +276,15 @@ public class Metrics extends JavaPlugin implements Listener {
             count = Integer.parseInt(causeArr[1]);
         }
 
-        event.setDeathMessage("");
+        //event.setDeathMessage("");
 
-        String output = ChatColor.LIGHT_PURPLE + message + ". They have now died " + deathCount + " time/s. ";
+        String output = ChatColor.LIGHT_PURPLE + message + ". You have now died " + deathCount + " time/s. ";
         if (!"".equalsIgnoreCase(cause)) {
             output += "Most common cause of death: " + cause + " (" + count + " times)";
         }
 
         getServer().broadcastMessage(output);
+        //player.sendMessage(output);
 
         if (chat != null) {
             chat.saveMessage("Player " + player.getName() + " has died (" + pd.getCause() + ").",":red:Server");

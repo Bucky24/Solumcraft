@@ -302,7 +302,7 @@ public class Rank extends JavaPlugin implements Listener {
         //ChatColor textColor = getTitleColor(title);
 
         if (!"".equalsIgnoreCase(title)) {
-            cd.setPlayerString(title + " :white:" + cd.getPlayer());
+            cd.setPlayerString(title + " :white:" + cd.getPlayerString());
         }
     }
 
