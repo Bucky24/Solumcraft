@@ -239,6 +239,22 @@ public class Creative extends JavaPlugin implements Listener {
                         inv.setArmorContents(itemList);
                     }
                     p.setGameMode(GameMode.SURVIVAL);
+                } else {
+                    if (permission == null || !permission.hasPermission(playerName,"creative_other")) {
+                        return true;
+                    }
+                    Player other = getServer().getPlayer(mode);
+                    if (other == null) {
+                        p.sendMessage(ChatColor.GREEN + "Player does not exist");
+                    } else {
+                        if (other.getGameMode() == GameMode.CREATIVE) {
+                            p.sendMessage(ChatColor.GREEN + mode + " is in creative mode");
+                        } else if (other.getGameMode() == GameMode.SURVIVAL) {
+                            p.sendMessage(ChatColor.GREEN + mode + " is in survival mode");
+                        } else {
+                            p.sendMessage(ChatColor.GREEN + mode + " is in an unknown mode");
+                        }
+                        }
                 }
             } else {
                 sender.sendMessage("/gm <0|1>");

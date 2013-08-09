@@ -696,6 +696,11 @@ public class Plot extends JavaPlugin implements Listener {
                     int x2 = (int)c2.getX();
                     int z2 = (int)c2.getZ();
 
+                    if (!"economy".equalsIgnoreCase(p.getWorld().getName()) && !override) {
+                        sender.sendMessage(ChatColor.RED + "Protected plots can only be created in the economy world");
+                        return true;
+                    }
+
                     if (x1 > x2) {
                         int tmp = x1;
                         x1 = x2;
@@ -732,8 +737,10 @@ public class Plot extends JavaPlugin implements Listener {
 
                     double cost = 0;
 
+                    int count = PlotData.getPlayerPlotCount(playerName);
+
                     if (!override && !subPlot) {
-                        cost = width*height*8;
+                        cost = width*height*16+(width*height)*count*4;
                         if (money == null) {
                             sender.sendMessage("This functionality is currently unavailable");
                         }

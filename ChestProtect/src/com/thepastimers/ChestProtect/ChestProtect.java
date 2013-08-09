@@ -126,7 +126,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                         pd = plot.plotAt(b.getLocation());
                     }
                     //getLogger().info("" + pd);
-                    if (pd != null) {
+                    if (pd != null && pd.isChestProtect()) {
                         return true;
                     }
                 }
@@ -400,6 +400,11 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
                     Player p = (Player)sender;
                     World w = p.getWorld();
+
+                    if (!"world".equalsIgnoreCase(w.getName())) {
+                        sender.sendMessage(ChatColor.RED + "Chest protections can only be created in the main world");
+                        return true;
+                    }
 
                     Block b = w.getBlockAt(x,y,z);
 

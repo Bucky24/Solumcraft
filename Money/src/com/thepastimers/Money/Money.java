@@ -198,6 +198,7 @@ public class Money extends JavaPlugin implements Listener {
                     getLogger().info("Got a recipe for " + name + " but it has no items in it. WTF.");
                 } else {
                     for (ItemStack item : itemList) {
+                        if (item == null || item.getType() == null) continue;
                         int tPrice = getPrice(item.getType().name());
                         if (tPrice == -1) {
                             return -1;

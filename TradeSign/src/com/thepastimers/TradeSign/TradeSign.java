@@ -24,9 +24,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -191,6 +190,12 @@ public class TradeSign extends JavaPlugin implements Listener {
                 p.sendMessage(ChatColor.RED + "You do not have permission to create trade signs (sign_place)");
                 return lines;
             }
+
+            if (!"economy".equalsIgnoreCase(p.getWorld().getName())){
+                p.sendMessage(ChatColor.RED + "You can only place trade signs in the economy world.");
+                return lines;
+            }
+
             // creating a sell sign!
             String contains = "";
             if ("XP".equalsIgnoreCase(line2)) {
@@ -314,8 +319,24 @@ public class TradeSign extends JavaPlugin implements Listener {
                 } else {
                     s.setLine(2,"Has: " + data.getAmount());
                     s.update();
-                    p.sendMessage(ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost());
-                    p.sendMessage(ChatColor.GREEN + "Note due to our anti-cheat software, there may be a slight delay before the item appears in your inventory");
+                    String purchaseString = ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost();
+                    if (owner) {
+                        purchaseString = ChatColor.GREEN + "You have removed " + data.getDispense() + " " + data.getContains() + " from this trade sign";
+                    } else {
+                        Purchase purchase = new Purchase();
+                        purchase.setPurchaser(p.getName());
+                        purchase.setFromPlayer(data.getPlayer());
+                        purchase.setItem(data.getContains());
+                        purchase.setAmount(data.getCostAsInt());
+                        purchase.setCount(data.getDispense());
+                        purchase.setSign(data.getId());
+                        Date date = new Date();
+                        purchase.setTime(new Timestamp(date.getTime()));
+                        if (!purchase.save(database)) {
+                            getLogger().warning("Unable to save purchase to database.");
+                        }
+                    }
+                    p.sendMessage(purchaseString);
                     getLogger().info(p.getName() + " purchased " + data.getDispense() + " from sign at (" + data.getX() + "," + data.getY() + "," + data.getZ() + ")");
                 }
             }
@@ -348,9 +369,9 @@ public class TradeSign extends JavaPlugin implements Listener {
                     sender.sendMessage("Format for an item sell sign:");
                     sender.sendMessage("Line 1: [SELL]");
                     sender.sendMessage("Then to set a price, use /sign price");
-                    sender.sendMessage("To sell XP in a sign:");
-                    sender.sendMessage("Line 1: [SELL]");
-                    sender.sendMessage("Line 2: XP");
+                    //sender.sendMessage("To sell XP in a sign:");
+                    //sender.sendMessage("Line 1: [SELL]");
+                    //sender.sendMessage("Line 2: XP");
                     sender.sendMessage("To fill a sign, hold the item in your hand and left click the sign. All items of that type in your inventory will be put into the sign");
                     sender.sendMessage("To purchase/withdraw from a sign, if you are the owner, left click the sign with an empty hand. You will not be charged.");
                     sender.sendMessage("Anyone else purchasing from the sign can left click it with anything in their hand");
@@ -422,9 +443,45 @@ public class TradeSign extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/sign price <price> <dispense amount>");
                     }
+                } else if ("report".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"sign_place")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_place)");
+                        return true;
+                    }
+
+                    String player = playerName;
+
+                    if (args.length > 2) {
+                        if (permission == null || !permission.hasPermission(playerName,"sign_report_other")) {
+                            sender.sendMessage(ChatColor.RED + "You don't have permission to do this (sign_report_other)");
+                            return true;
+                        }
+                        player = args[1];
+                    }
+
+                    List<Purchase> purchaseList = (List<Purchase>)database.select(Purchase.class,"from_player = '" + database.makeSafe(player) + "' and `time` >= NOW() - interval 1 day");
+
+                    Map<String,Integer> amountMap = new HashMap<String, Integer>();
+                    Map<String,Integer> revenueMap = new HashMap<String, Integer>();
+
+                    for (Purchase purchase : purchaseList) {
+                        if (!amountMap.containsKey(purchase.getItem())) {
+                            amountMap.put(purchase.getItem(),0);
+                        }
+                        if (!revenueMap.containsKey(purchase.getItem())) {
+                            revenueMap.put(purchase.getItem(),0);
+                        }
+                        amountMap.put(purchase.getItem(),amountMap.get(purchase.getItem())+purchase.getCount());
+                        revenueMap.put(purchase.getItem(),revenueMap.get(purchase.getItem())+purchase.getAmount());
+                    }
+
+                    sender.sendMessage("Your trade sign revenue for the last 24 hours:");
+                    for (String key : amountMap.keySet()) {
+                        sender.sendMessage(amountMap.get(key) + " " + key + " for $" + ((double)revenueMap.get(key))/100);
+                    }
                 }
             } else {
-                sender.sendMessage("/sign <format|price|restore>");
+                sender.sendMessage("/sign <format" + /*|price|restore*/ "|report>");
             }
         } else {
             return false;

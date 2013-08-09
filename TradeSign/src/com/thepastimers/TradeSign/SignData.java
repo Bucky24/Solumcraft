@@ -38,6 +38,7 @@ public class SignData extends Table {
     int cost;
     int dispense;
     String world;
+    String name;
 
     public int getId() {
         return id;
@@ -125,6 +126,14 @@ public class SignData extends Table {
 
     public void setWorld(String world) {
         this.world = world;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public static List<SignData> parseResult(ResultSet result) throws SQLException {

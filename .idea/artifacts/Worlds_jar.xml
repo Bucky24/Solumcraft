@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Worlds:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Worlds.jar">
+      <element id="module-output" name="Worlds" />
+      <element id="file-copy" path="$PROJECT_DIR$/Worlds/plugin.yml" />
+    </root>
+  </artifact>
+</component>

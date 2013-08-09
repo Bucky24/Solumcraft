@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class Pattern extends JavaPlugin implements Listener {
                         z1 = (int)Math.min(coord1.getZ(),coord2.getZ());
                         z2 = (int)Math.max(coord1.getZ(),coord2.getZ());
 
-                        int error = 0;
+                        /*int error = 0;
                         int count = 0;
 
                         for (int x=x1;x<=x2;x++) {
@@ -149,7 +150,10 @@ public class Pattern extends JavaPlugin implements Listener {
                         p.sendMessage(ChatColor.GREEN + "Pattern " + name + " created: " + count + " blocks");
                         if (error > 0) {
                             p.sendMessage(ChatColor.RED.toString() + error + " blocks failed to save");
-                        }
+                        }*/
+                        p.sendMessage(ChatColor.BLUE + "Saving pattern");
+                        SavePattern pattern = new SavePattern(this,database,p,w.getName(),name,x1,y1,z1,x2,y2,z2);
+                        pattern.run();
                     } else {
                         sender.sendMessage("/pattern set <name>");
                     }
@@ -186,7 +190,7 @@ public class Pattern extends JavaPlugin implements Listener {
                         y1 = (int)coord1.getY();
                         z1 = (int)coord1.getZ();
 
-                        List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"pattern = '" + database.makeSafe(name) + "'");
+                        /*List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"pattern = '" + database.makeSafe(name) + "'");
 
                         if (patternBlockList == null || patternBlockList.size() == 0) {
                             sender.sendMessage(ChatColor.RED + "Unable to retrieve pattern " + name);
@@ -201,9 +205,11 @@ public class Pattern extends JavaPlugin implements Listener {
                                 b.setData(pb.getData());
                             }
                             count ++;
-                        }
+                        }*/
 
-                        sender.sendMessage(ChatColor.GREEN + "Pattern " + name + " activated: " + count + " blocks");
+                        p.sendMessage(ChatColor.BLUE + "Using pattern" + name);
+                        LoadPattern pattern = new LoadPattern(this,database,p,w.getName(),name,x1,y1,z1);
+                        pattern.run();
                     } else {
                         sender.sendMessage("/pattern use <name>");
                     }

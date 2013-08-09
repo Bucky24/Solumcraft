@@ -100,12 +100,17 @@ public class Spawner extends JavaPlugin implements Listener {
         return s.save(database);
     }
 
-    public List<SpawnData> getNearestSpawns(int x, int y, int z, String world) {
+    public List<SpawnData> getNearestSpawns(int x, int y, int z, String world, int count) {
         List<SpawnData> ret = new ArrayList<SpawnData>();
         if (world == null) return ret;
 
         List<SpawnData> spawnDatas = (List<SpawnData>)database.select(SpawnData.class,"1");
 
+        List<SpawnData> nearest = new ArrayList<SpawnData>();
+
+        for (int i=0;i<spawnDatas.size();i++) {
+            SpawnData d = spawnDatas.get(i);
+        }
 
         return ret;
     }

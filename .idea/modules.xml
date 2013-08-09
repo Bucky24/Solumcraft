@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AdminTools/AdminTools.iml" filepath="$PROJECT_DIR$/AdminTools/AdminTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Boundry/Boundry.iml" filepath="$PROJECT_DIR$/Boundry/Boundry.iml" />
       <module fileurl="file://$PROJECT_DIR$/Chat/Chat.iml" filepath="$PROJECT_DIR$/Chat/Chat.iml" />
       <module fileurl="file://$PROJECT_DIR$/ChestProtect/ChestProtect.iml" filepath="$PROJECT_DIR$/ChestProtect/ChestProtect.iml" />
       <module fileurl="file://$PROJECT_DIR$/CombatLog/CombatLog.iml" filepath="$PROJECT_DIR$/CombatLog/CombatLog.iml" />
@@ -25,13 +26,18 @@
       <module fileurl="file://$PROJECT_DIR$/Pattern/Pattern.iml" filepath="$PROJECT_DIR$/Pattern/Pattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/Permission/Permission.iml" filepath="$PROJECT_DIR$/Permission/Permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/Plot/Plot.iml" filepath="$PROJECT_DIR$/Plot/Plot.iml" />
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/Pvp/Pvp.iml" filepath="$PROJECT_DIR$/Pvp/Pvp.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/Pyro/Pyro.iml" filepath="$PROJECT_DIR$/Pyro/Pyro.iml" />
+>>>>>>> Stashed changes
       <module fileurl="file://$PROJECT_DIR$/Rank/Rank.iml" filepath="$PROJECT_DIR$/Rank/Rank.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spawner/Spawner.iml" filepath="$PROJECT_DIR$/Spawner/Spawner.iml" />
       <module fileurl="file://$PROJECT_DIR$/Teleport/Teleport.iml" filepath="$PROJECT_DIR$/Teleport/Teleport.iml" />
       <module fileurl="file://$PROJECT_DIR$/TradeSign/TradeSign.iml" filepath="$PROJECT_DIR$/TradeSign/TradeSign.iml" />
       <module fileurl="file://$PROJECT_DIR$/VoteHandler/VoteHandler.iml" filepath="$PROJECT_DIR$/VoteHandler/VoteHandler.iml" />
       <module fileurl="file://$PROJECT_DIR$/Warp/Warp.iml" filepath="$PROJECT_DIR$/Warp/Warp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Worlds/Worlds.iml" filepath="$PROJECT_DIR$/Worlds/Worlds.iml" />
       <module fileurl="file://$PROJECT_DIR$/solumcraft.iml" filepath="$PROJECT_DIR$/solumcraft.iml" />
     </modules>
   </component>

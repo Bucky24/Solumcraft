@@ -12,7 +12,7 @@
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Spawner" />
     <orderEntry type="module" module-name="Coord" />
-    <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130711.012359-4" level="project" />
+    <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130803.204129-12" level="project" />
   </component>
 </module>
 

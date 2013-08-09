@@ -330,6 +330,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
                     sender.sendMessage(ChatColor.GREEN + "http://www.mcserverlist.net/servers/516ba260041b26153700019e");
                     sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+                    sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
                 } else if ("credits".equalsIgnoreCase(subCommand)) {
                     List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
                     VoteCredits credits = null;
