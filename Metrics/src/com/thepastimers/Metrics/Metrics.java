@@ -316,7 +316,7 @@ public class Metrics extends JavaPlugin implements Listener {
         pl.save(database);
 
         if (chat != null) {
-            chat.saveMessage("Player " + p.getName() + " has joined.","Server");
+            chat.saveMessage("Player " + p.getName() + " has joined.",":red:Server");
         }
     }
 
@@ -341,7 +341,7 @@ public class Metrics extends JavaPlugin implements Listener {
         pl.save(database);
 
         if (chat != null) {
-            chat.saveMessage("Player " + p.getName() + " has left.","Server");
+            chat.saveMessage("Player " + p.getName() + " has left.",":red:Server");
         }
     }
 }
