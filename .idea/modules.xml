@@ -27,6 +27,7 @@
       <module fileurl="file://$PROJECT_DIR$/Permission/Permission.iml" filepath="$PROJECT_DIR$/Permission/Permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/Plot/Plot.iml" filepath="$PROJECT_DIR$/Plot/Plot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Pvp/Pvp.iml" filepath="$PROJECT_DIR$/Pvp/Pvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pyro/Pyro.iml" filepath="$PROJECT_DIR$/Pyro/Pyro.iml" />
       <module fileurl="file://$PROJECT_DIR$/Rank/Rank.iml" filepath="$PROJECT_DIR$/Rank/Rank.iml" />
       <module fileurl="file://$PROJECT_DIR$/Spawner/Spawner.iml" filepath="$PROJECT_DIR$/Spawner/Spawner.iml" />
       <module fileurl="file://$PROJECT_DIR$/Teleport/Teleport.iml" filepath="$PROJECT_DIR$/Teleport/Teleport.iml" />
