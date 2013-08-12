@@ -1,5 +1,5 @@
 name: Plot
-version: 4.3
+version: 4.4
 main: com.thepastimers.Plot.Plot
 softdepend: [Database,Permission,Coord,Money]
 commands:

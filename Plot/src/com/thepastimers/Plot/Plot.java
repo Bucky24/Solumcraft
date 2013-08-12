@@ -803,6 +803,18 @@ public class Plot extends JavaPlugin implements Listener {
                         return true;
                     }
 
+                    if (args.length < 2) {
+                        sender.sendMessage(ChatColor.RED + "Warning! The /plot release command will REMOVE your plot!");
+                        sender.sendMessage(ChatColor.RED + "You will have to recreate it completely (and pay the cost again)");
+                        sender.sendMessage(ChatColor.RED + "If you really want to remove it, use /plot release yes");
+                        return true;
+                    }
+
+                    String confirm = args[2];
+                    if (!"yes".equalsIgnoreCase(confirm)) {
+                        return true;
+                    }
+
                     PlotData pd = plotAt(p.getLocation().getBlockX(),p.getLocation().getBlockZ(),p.getWorld().getName(),subPlot);
 
                     if (pd == null) {

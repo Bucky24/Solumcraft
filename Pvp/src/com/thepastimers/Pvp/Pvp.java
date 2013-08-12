@@ -123,7 +123,7 @@ public class Pvp extends JavaPlugin implements Listener {
         }
 
         if (count > 0) {
-            cd.setPlayerString(cd.getPlayerString() + ChatColor.LIGHT_PURPLE + " [" + count + "]" + ChatColor.RESET);
+            cd.setPlayerString(cd.getPlayerString() + " :purple:[" + count + "]:reset:");
         }
     }
 }
