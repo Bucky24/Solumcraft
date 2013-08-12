@@ -83,7 +83,7 @@ public class HeadCount extends Table {
             query.append("UPDATE " + table + " SET ");
 
             query.append("player = '" + d.makeSafe(player) + "'" + ", ");
-            query.append("head_count = " + headCount + ", ");
+            query.append("head_count = " + headCount + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
