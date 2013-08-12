@@ -36,7 +36,8 @@ public class Worlds extends JavaPlugin implements Listener {
             return;
         }
 
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CHUNK_GEN) {
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CHUNK_GEN
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
             event.setCancelled(true);
         }
     }

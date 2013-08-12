@@ -301,6 +301,18 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage(ChatColor.RED + "/opCheck <player> <broadcast>");
             }
+        } else if ("pot".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_pot")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_pot)");
+                return true;
+            }
+
+            if ("Kurama_09".equalsIgnoreCase(playerName)) {
+                Player p = (Player)sender;
+                p.kickPlayer("POT POT POT POT POT");
+            } else {
+                sender.sendMessage("This command added for Kurama_09");
+            }
         } else {
             return false;
         }

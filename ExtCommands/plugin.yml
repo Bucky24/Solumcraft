@@ -15,3 +15,5 @@ commands:
         description: gives info about held item
     opCheck:
         description: checks if player has op
+    pot:
+        description: Kurama_09's command
