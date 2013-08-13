@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,23 +63,22 @@ public class Permission extends JavaPlugin {
             return true;
         }
 
-        String playerRank = "all";
+        List<String> playerRanks = new ArrayList<String>();
 
         if (rank != null) {
-            playerRank = rank.getRank(player);
+            playerRanks = rank.getRanks(player);
+        }
+        if (playerRanks.size() == 0) {
+            playerRanks.add("all");
         }
 
-        if (GroupPerm.hasPermission(playerRank, permission)) {
-            return true;
+        for (String playerRank : playerRanks) {
+            if (GroupPerm.hasPermission(playerRank, permission)) {
+                return true;
+            }
         }
 
-        boolean group =  GroupPerm.hasPermission("all", permission);
-
-        if (!group) {
-            //getLogger().info("Group 'all' does not have " + permission);
-        }
-
-        return group;
+        return false;
     }
 
     public boolean setPermission(String player, String permission) {

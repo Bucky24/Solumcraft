@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,7 @@ public class Rank extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         getLogger().info(PlayerRank.getTableInfo());
         getLogger().info(PlayerTitle.getTableInfo());
+        getLogger().info(RankData.getTableInfo());
 
         getLogger().info("Rank init complete");
     }
@@ -71,6 +73,36 @@ public class Rank extends JavaPlugin implements Listener {
         }
 
         return ranks.get(0).getRank();
+    }
+
+    public List<String> getRanks(String player) {
+        List<String> ranks = new ArrayList<String>();
+        if (player == null || database == null) {
+            return ranks;
+        }
+
+        player = player.replace("'","");
+
+        String rank = getRank(player);
+        if ("".equalsIgnoreCase(rank)) {
+            return ranks;
+        }
+
+        ranks.add(rank);
+
+        String newRank = rank;
+        while (true) {
+            List<RankData> rankDataList = (List<RankData>)database.select(RankData.class,"rank = '" + database.makeSafe(newRank) + "'");
+            if (rankDataList.size() == 0) {
+                break;
+            }
+
+            RankData data = rankDataList.get(0);
+            ranks.add(data.getParentRank());
+            newRank = data.getParentRank();
+        }
+
+        return ranks;
     }
 
     public PlayerRank getRankObject(String player) {
