@@ -7,3 +7,5 @@ commands:
         description: creates a spawn point
     runspawn:
         description: activates a group of spawn points
+    listspawns:
+        description: lists spawn points

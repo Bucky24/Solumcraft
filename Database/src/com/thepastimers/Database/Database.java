@@ -125,6 +125,7 @@ public class Database extends JavaPlugin {
             getLogger().warning("select: Unable to run query:");
             getLogger().warning(query);
             getLogger().warning(e.getMessage());
+            e.printStackTrace();
             getLogger().warning("Closing connection.");
             killConnection(connection);
             return ret;
@@ -178,6 +179,7 @@ public class Database extends JavaPlugin {
             getLogger().warning("query: Unable to run query:");
             getLogger().warning(query);
             getLogger().info(e.getMessage());
+            e.printStackTrace();
             getLogger().warning("Closing connection.");
             killConnection(connection);
             return false;

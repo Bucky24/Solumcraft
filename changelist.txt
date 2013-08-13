@@ -88,3 +88,6 @@ Allow people to change their own titles (set up permission)
 Modify ranks to have parent ranks. child ranks inherit perms from parent ranks.
 
 Reset volocity when teleporting to home, warps, etc.
+
+minigames: blockcraft
+there is player interest in mob arena, need to finish that up.

@@ -166,6 +166,18 @@ public class Spawner extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage("/runspawn <group>");
             }
+        } else if (command.equalsIgnoreCase("listspawns")) {
+            if (permission == null || !permission.hasPermission(playerName,"spawn_spawn")) {
+                sender.sendMessage("You do not have permissions to use this command (spawn_spawn)");
+                return true;
+            }
+
+            List<SpawnData> spawns = (List<SpawnData>)database.select(SpawnData.class,"1 GROUP BY `group`");
+
+            sender.sendMessage("Spawn List:");
+            for (SpawnData s : spawns) {
+                sender.sendMessage(s.getGroup());
+            }
         } else {
             return false;
         }
