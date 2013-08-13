@@ -32,6 +32,7 @@ public class Worlds extends JavaPlugin implements Listener {
     public void spawn(CreatureSpawnEvent event) {
         EntityType type = event.getEntityType();
 
+       //getLogger().info("Creature spawning");
         if (!"economy".equalsIgnoreCase(event.getLocation().getWorld().getName())) {
             return;
         }
@@ -39,6 +40,7 @@ public class Worlds extends JavaPlugin implements Listener {
         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CHUNK_GEN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
             event.setCancelled(true);
+            event.getEntity().setHealth(-1);
         } else {
             getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name());
         }

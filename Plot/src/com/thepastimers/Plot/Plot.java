@@ -804,13 +804,13 @@ public class Plot extends JavaPlugin implements Listener {
                     }
 
                     if (args.length < 2) {
-                        sender.sendMessage(ChatColor.RED + "Warning! The /plot release command will REMOVE your plot!");
+                        sender.sendMessage(ChatColor.RED + "Warning! The /" + command + " release command will REMOVE your plot!");
                         sender.sendMessage(ChatColor.RED + "You will have to recreate it completely (and pay the cost again)");
-                        sender.sendMessage(ChatColor.RED + "If you really want to remove it, use /plot release yes");
+                        sender.sendMessage(ChatColor.RED + "If you really want to remove it, use /" + command + " release yes");
                         return true;
                     }
 
-                    String confirm = args[2];
+                    String confirm = args[1];
                     if (!"yes".equalsIgnoreCase(confirm)) {
                         return true;
                     }
