@@ -33,7 +33,7 @@
     <file path="/SignData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375146064137" ignored="false" />
     <file path="/PlayerMetrics.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1363836311827" ignored="false" />
     <file path="/Vote.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1364270629590" ignored="false" />
-    <file path="/VoteHandler.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376346522304" ignored="false" />
+    <file path="/VoteHandler.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376419410221" ignored="false" />
     <file path="/Mail.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1374766779783" ignored="false" />
     <file path="/MailData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1364604347054" ignored="false" />
     <file path="/AdminTools.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1366683531950" ignored="false" />
@@ -86,6 +86,7 @@
     <file path="/HeadCount.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376020979379" ignored="false" />
     <file path="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376076652451" ignored="false" />
     <file path="/RankData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376418052690" ignored="false" />
+    <file path="/Votes.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376419103375" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,54 +151,55 @@
       <file leaf-file-name="VoteHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="342" column="49" selection-start="14427" selection-end="14427" vertical-scroll-proportion="0.0">
+            <state line="251" column="72" selection-start="8830" selection-end="8830" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Creative.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
+      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VoteHandler/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="16" selection-start="2496" selection-end="2496" vertical-scroll-proportion="0.0">
+            <state line="8" column="13" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
+      <file leaf-file-name="Votes.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/Votes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="22" selection-start="2649" selection-end="2649" vertical-scroll-proportion="0.0">
+            <state line="99" column="44" selection-start="2109" selection-end="2109" vertical-scroll-proportion="0.09113001">
               <folding>
-                <element signature="e#2289#2297#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1292#1299#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rank.iml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/Rank.iml">
+      <file leaf-file-name="VoteSettings.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="53" column="0" selection-start="978" selection-end="3031" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerRank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+      <file leaf-file-name="Chat.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="0" selection-start="943" selection-end="2598" vertical-scroll-proportion="0.0">
+            <state line="97" column="57" selection-start="3449" selection-end="3534" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerTitle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java">
+      <file leaf-file-name="ChatData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/ChatData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="17" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0">
+            <state line="29" column="8" selection-start="605" selection-end="605" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -212,13 +214,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Permission.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Permission.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="23" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.3304982">
+            <state line="61" column="30" selection-start="1763" selection-end="1763" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#1876#1884#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VoteCredits.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteCredits.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="13" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -228,18 +239,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="1" column="12" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RankData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="42" selection-start="2436" selection-end="2436" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1116#1126#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -254,8 +253,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java" />
-        <option value="$PROJECT_DIR$/Plot/plugin.yml" />
         <option value="$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/HeadCount.java" />
         <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
         <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
@@ -264,12 +261,14 @@
         <option value="$PROJECT_DIR$/Pyro/src/plugin.yml" />
         <option value="$PROJECT_DIR$/Pyro/src/com/thepastimers/Pyro/Pyro/Pyro.java" />
         <option value="$PROJECT_DIR$/Pyro/src/com/thepastimers/Pyro/Pyro.java" />
-        <option value="$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
         <option value="$PROJECT_DIR$/Rank/plugin.yml" />
         <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java" />
         <option value="$PROJECT_DIR$/Permission/plugin.yml" />
+        <option value="$PROJECT_DIR$/VoteHandler/plugin.yml" />
+        <option value="$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java" />
+        <option value="$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/Votes.java" />
       </list>
     </option>
   </component>
@@ -889,7 +888,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39935064" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27060133" sideWeight="0.67270666" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27060133" sideWeight="0.6761042" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -963,55 +962,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="34" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="309" column="17" selection-start="13453" selection-end="13453" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="32" selection-start="557" selection-end="557" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pyro/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="22" selection-start="46" selection-end="46" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pyro/src/com/thepastimers/Pyro/Pyro.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="29" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="752" column="30" selection-start="25169" selection-end="25169" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="342" column="49" selection-start="14427" selection-end="14427" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="80" column="16" selection-start="2496" selection-end="2496" vertical-scroll-proportion="0.0">
@@ -1075,9 +1025,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="23" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.3304982">
+        <state line="61" column="30" selection-start="1763" selection-end="1763" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#1876#1884#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteCredits.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="13" selection-start="398" selection-end="398" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteSettings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="0" selection-start="978" selection-end="3031" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/ChatData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="8" selection-start="605" selection-end="605" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="57" selection-start="3449" selection-end="3534" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VoteHandler/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="229" selection-end="229" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="251" column="72" selection-start="8830" selection-end="8830" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/Votes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="44" selection-start="2109" selection-end="2109" vertical-scroll-proportion="0.09113001">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1292#1299#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -17,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,6 +71,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         getLogger().info(VoteSettings.getTableInfo());
         getLogger().info(VoteCredits.getTableInfo());
+        getLogger().info(Votes.getTableInfo());
 
         getLogger().info("VoteHandler init complete");
     }
@@ -129,16 +132,27 @@ public class VoteHandler extends JavaPlugin implements Listener {
 
         Player p = getServer().getPlayer(user);
 
+        Votes v = new Votes();
+        v.setPlayer(user);
+        Date date = new Date();
+        v.setWhen(new Timestamp(date.getTime()));
+        v.setRedeemed(false);
+
         if (p == null) {
             getLogger().warning("User " + user + " does not exist.");
         } else {
             String reward = getReward(user);
             if ("credits".equalsIgnoreCase(reward)) {
-               creditCredits(p,address);
+               if (creditCredits(p,address)) {
+                   v.setRedeemed(true);
+               }
             } else {
                 creditDiamonds(p,address);
+                v.setRedeemed(true);
             }
         }
+
+        v.save(database);
     }
 
     private boolean creditCredits(Player p, String address) {
@@ -241,7 +255,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
         String command = cmd.getName();
 
         if (command.equalsIgnoreCase("testvote")) {
-            if (permission == null || !permission.hasPermission(playerName,"vote_test") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"vote_test")) {
                 sender.sendMessage("You don't have permissions for this command (vote_test)");
                 return true;
             }
