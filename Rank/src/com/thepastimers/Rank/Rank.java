@@ -382,7 +382,6 @@ public class Rank extends JavaPlugin implements Listener {
                         getLogger().info(playerName + " attempted unauthorized access of /rank set");
                         return true;
                     }
-
                     if (args.length > 2) {
                         String player = args[1];
                         String title = "";

@@ -1,7 +1,7 @@
 name: ExtCommands
 version: 1.0
 main: com.thepastimers.ExtCommands.ExtCommands
-softdepend: [Permission, Metrics]
+softdepend: [Permission, Metrics,Rank]
 commands:
     spawn:
         description: teleports to spawn
@@ -17,3 +17,5 @@ commands:
         description: checks if player has op
     pot:
         description: Kurama_09's command
+    setTitle:
+        description: set own title (if permissions)

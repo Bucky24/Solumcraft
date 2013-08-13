@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 public class Boundry extends JavaPlugin implements Listener {
     int limit = 5000;
-    String world = "anarchy";
+    String world = "economy";
 
     @Override
     public void onEnable() {

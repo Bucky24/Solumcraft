@@ -1,6 +1,7 @@
 package com.thepastimers.Coord;
 
 import com.thepastimers.Permission.Permission;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -198,11 +199,23 @@ public class Coord extends JavaPlugin implements Listener {
 
                         sender.sendMessage("You now have " + getCoordSize(player) + " coords set");
                     }
+                } else if ("set".equalsIgnoreCase(subcommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
+                        sender.sendMessage(ChatColor.RED + "You do not have permissions for this command (coord_coord)");
+                        return true;
+                    }
+
+                    Player p = (Player)sender;
+                    Location l = p.getLocation();
+                    CoordData cd = new CoordData(l.getX(),l.getY(),l.getZ());
+                    addCoord(p.getName(),cd);
+                    p.sendMessage("Coordinate (" + l.getX() + "," + l.getY() + "," + l.getZ() + ") added. You have "
+                            + getCoordSize(p.getName()) + " coords set");
                 } else {
-                    sender.sendMessage("/coord <clear>");
+                    sender.sendMessage("/coord <clear|set>");
                 }
             } else {
-                sender.sendMessage("/coord <clear>");
+                sender.sendMessage("/coord <clear|set>");
             }
         } else {
             return false;

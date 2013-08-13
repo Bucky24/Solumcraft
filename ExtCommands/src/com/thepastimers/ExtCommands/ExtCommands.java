@@ -2,6 +2,7 @@ package com.thepastimers.ExtCommands;
 
 import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Rank.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +31,7 @@ import java.util.List;
 public class ExtCommands extends JavaPlugin implements Listener {
     Permission permission;
     Metrics metrics;
+    Rank rank;
 
     @Override
     public void onEnable() {
@@ -47,6 +49,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
         if (metrics == null) {
             getLogger().warning("Unable to load Metrics plugin.");
+        }
+
+        rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
+        if (rank == null) {
+            getLogger().warning("Unable to load rank plugin.");
         }
 
         getLogger().info("ExtCommands init complete");
@@ -312,6 +319,32 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 p.kickPlayer("POT POT POT POT POT");
             } else {
                 sender.sendMessage("This command added for Kurama_09");
+            }
+        } else if ("setTitle".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"title_self")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command title_self)");
+                return true;
+            }
+
+            if (args.length > 0) {
+                StringBuilder title = new StringBuilder();
+                for (int i=0;i<args.length;i++) {
+                    title.append(args[i]);
+                    if (i < args.length-1) {
+                        title.append(" ");
+                    }
+                }
+
+                if (rank == null) {
+                    sender.sendMessage(ChatColor.RED + "This command is not currently available");
+                    return true;
+                }
+
+                if (!rank.setTitle(playerName,title.toString())) {
+                    sender.sendMessage(ChatColor.RED + "Unable to set title");
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "/setTitle <title>");
             }
         } else {
             return false;
