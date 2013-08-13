@@ -1,5 +1,6 @@
 package com.thepastimers.Warp;
 
+import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Warp extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    CombatLog combatLog;
 
     @Override
     public void onEnable() {
@@ -37,6 +39,11 @@ public class Warp extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin. Some functionality may not be available");
+        }
+
+        combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
+        if (combatLog == null) {
+            getLogger().warning("Unable to load CombatLog plugin. Some functionality may not be available");
         }
 
         getLogger().info("Table info:");
@@ -66,6 +73,14 @@ public class Warp extends JavaPlugin implements Listener {
             if (permission == null || !permission.hasPermission(playerName,"warp_warp") || playerName.equalsIgnoreCase("CONSOLE")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (warp_warp)");
                 return true;
+            }
+
+            if (combatLog != null) {
+                int seconds = combatLog.secondsSinceCombat(playerName);
+                if (seconds > -1 && seconds < 10) {
+                    sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can use /warp");
+                    return true;
+                }
             }
 
             if (args.length > 0) {

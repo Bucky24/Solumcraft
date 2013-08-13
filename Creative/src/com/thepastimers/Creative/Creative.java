@@ -19,6 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -126,7 +127,7 @@ public class Creative extends JavaPlugin implements Listener {
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
-            List<Entity> entityList = event.getEntity().getNearbyEntities(6,6,6);
+            List<Entity> entityList = event.getEntity().getNearbyEntities(10,10,10);
             for (Entity e : entityList) {
                 if (e.getType() == EntityType.PLAYER) {
                     Player p = (Player)e;
@@ -168,6 +169,18 @@ public class Creative extends JavaPlugin implements Listener {
         if (p.getGameMode() == GameMode.CREATIVE) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerDamaged(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            Player p = (Player)event.getDamager();
+            if (p.getGameMode() == GameMode.CREATIVE) {
+                if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                    event.setCancelled(true);
+                }
             }
         }
     }

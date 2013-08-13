@@ -1,7 +1,7 @@
 name: Warp
-version: 0.1
+version: 0.2
 main: com.thepastimers.Warp.Warp
-softdepend: [Database,Permission]
+softdepend: [Database,Permission,CombatLog]
 commands:
     warp:
         description: warp command

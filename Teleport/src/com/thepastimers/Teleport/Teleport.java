@@ -1,8 +1,10 @@
 package com.thepastimers.Teleport;
 
+import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Mute.Mute;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,6 +26,7 @@ public class Teleport extends JavaPlugin {
     Permission permission;
     Mute mute;
     Map<String,String> requests;
+    CombatLog combatLog;
 
     @Override
     public void onEnable() {
@@ -45,6 +48,11 @@ public class Teleport extends JavaPlugin {
 
         if (mute == null) {
             getLogger().warning("Unable to load Mute plugin. Some functionality will not be available.");
+        }
+
+        combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
+        if (combatLog == null) {
+            getLogger().warning("Unable to load CombatLog plugin. Some functionality will not be available.");
         }
 
         requests = new HashMap<String,String>();
@@ -133,6 +141,15 @@ public class Teleport extends JavaPlugin {
 
                 if (hasRequest(player,playerName)) {
                     Player p = getServer().getPlayer(player);
+
+                    if (combatLog != null) {
+                        int seconds = combatLog.secondsSinceCombat(playerName);
+                        if (seconds > -1 && seconds < 10) {
+                            sender.sendMessage(ChatColor.RED + "Teleport canceled due to recent combat");
+                            sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can teleport.");
+                            return true;
+                        }
+                    }
 
                     if (p == null) {
                         sender.sendMessage(player + " is not currently online");

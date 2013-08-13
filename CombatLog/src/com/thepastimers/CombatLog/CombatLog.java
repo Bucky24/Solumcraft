@@ -44,9 +44,11 @@ public class CombatLog extends JavaPlugin implements Listener {
 
         if (e1 instanceof Player && e2 instanceof Player) {
             Player p = (Player)e2;
+            Player p2 = (Player)e1;
             Date now = new Date();
 
             lastCombat.put(p.getName(),now);
+            lastCombat.put(p2.getName(),now);
         }
     }
 
