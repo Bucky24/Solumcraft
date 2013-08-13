@@ -199,7 +199,7 @@ public class Money extends JavaPlugin implements Listener {
                 } else {
                     for (ItemStack item : itemList) {
                         if (item == null || item.getType() == null) continue;
-                        int tPrice = getPrice(item.getType().name());
+                        int tPrice = getPrice(itemName.getItemName(item));
                         if (tPrice == -1) {
                             return -1;
                         } else {
