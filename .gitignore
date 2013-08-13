@@ -1,5 +1,4 @@
 plugins/*
 plugins
-.idea/workspace.xml
 *.class
 out
