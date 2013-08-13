@@ -25,7 +25,7 @@ public class GetChats extends BukkitRunnable {
     }
 
     public void run() {
-        List<ChatData> data = (List<ChatData>)database.select(ChatData.class,"seen = 0 AND time > NOW() - interval 10 second");
+        List<ChatData> data = (List<ChatData>)database.select(ChatData.class,"seen = 0 AND time > NOW() - interval 10 second",false);
 
         if (data == null) {
             plugin.getLogger().warning("Can't get chats.");

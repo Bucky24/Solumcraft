@@ -64,6 +64,10 @@ public class Database extends JavaPlugin {
     }
 
     public List<? extends Table> select(Class c, String where) {
+        return select(c,where,true);
+    }
+
+    public List<? extends Table> select(Class c, String where, boolean cache) {
         List<? extends Table> ret = new ArrayList<Table>();
         if (!enabled) {
             return ret;
@@ -84,7 +88,11 @@ public class Database extends JavaPlugin {
             where = "1";
         }
 
-        String query = "SELECT * FROM " + table + " WHERE " + where;
+        String query = "SELECT ";
+        if (!cache) {
+            query += "SQL_NO_CACHE ";
+        }
+        query += "* FROM " + table + " WHERE " + where;
 
         /*try {
             connection = DriverManager.getConnection(url,username,password);
