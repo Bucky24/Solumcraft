@@ -43,7 +43,7 @@ public class Rank extends JavaPlugin implements Listener {
         if (chat == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
         } else {
-            chat.register(Rank.class,this);
+            chat.register(Rank.class,this,1);
         }
 
         getLogger().info("Table info: ");

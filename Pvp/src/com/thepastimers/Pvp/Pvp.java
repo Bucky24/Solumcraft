@@ -53,7 +53,7 @@ public class Pvp extends JavaPlugin implements Listener {
         if (chat == null) {
             getLogger().warning("Unabel to load Chat module. Some functionality may not be available.");
         } else {
-            chat.register(Pvp.class,this);
+            chat.register(Pvp.class,this,2);
         }
 
         getLogger().info("Printing table data:");
@@ -123,7 +123,7 @@ public class Pvp extends JavaPlugin implements Listener {
         }
 
         if (count > 0) {
-            cd.setPlayerString(cd.getPlayerString() + " :purple:[" + count + "]:reset:");
+            cd.setPlayerString(":purple:[" + count + "]:reset: " + cd.getPlayerString());
         }
     }
 }

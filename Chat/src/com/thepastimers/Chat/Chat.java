@@ -25,7 +25,7 @@ import java.util.*;
  */
 public class Chat extends JavaPlugin implements Listener {
     Database database;
-    Map<Class,JavaPlugin> listeners;
+    Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
 
@@ -45,7 +45,7 @@ public class Chat extends JavaPlugin implements Listener {
 
         BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,20);
         BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,20);
-        listeners = new HashMap<Class,JavaPlugin>();
+        listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
         commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
 
         codes = new ArrayList<ChatCode>();
@@ -75,13 +75,22 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void register(Class c, JavaPlugin plugin) {
-        listeners.put(c,plugin);
+        register(c,plugin,1);
+    }
+
+    public void register(Class c, JavaPlugin plugin, int priority) {
+        Map<Class,JavaPlugin> listenerMap = listeners.get(priority);
+        if (listenerMap == null) {
+            listenerMap = new HashMap<Class, JavaPlugin>();
+            listeners.put(priority,listenerMap);
+        }
+        listenerMap.put(c,plugin);
     }
 
     public void registerCommand(String command, Class c, JavaPlugin plugin) {
         Map<Class,JavaPlugin> classMap = new HashMap<Class, JavaPlugin>();
         classMap.put(c,plugin);
-        commandListeners.put(command,classMap);
+        commandListeners.put(command, classMap);
     }
 
     @EventHandler
@@ -107,14 +116,18 @@ public class Chat extends JavaPlugin implements Listener {
         data.setTime(new Timestamp(date.getTime()));
         data.setSeen(true);
 
-        for (Class c : listeners.keySet()) {
-            try {
-                JavaPlugin p = listeners.get(c);
-                Class[] argTypes = new Class[] {ChatData.class};
-                Method m = c.getDeclaredMethod("doChat",argTypes);
-                m.invoke(p,data);
-            } catch (Exception e) {
-                getLogger().warning("Unable to call doChat for " + c.getName());
+        SortedSet<Integer> keys = new TreeSet<Integer>(listeners.keySet());
+        for (Integer prio : keys) {
+            Map<Class,JavaPlugin> classMap = listeners.get(prio);
+            for (Class c : classMap.keySet()) {
+                try {
+                    JavaPlugin p = classMap.get(c);
+                    Class[] argTypes = new Class[] {ChatData.class};
+                    Method m = c.getDeclaredMethod("doChat",argTypes);
+                    m.invoke(p,data);
+                } catch (Exception e) {
+                    getLogger().warning("Unable to call doChat for " + c.getName());
+                }
             }
         }
 
@@ -158,14 +171,18 @@ public class Chat extends JavaPlugin implements Listener {
         data.setTime(new Timestamp(date.getTime()));
         data.setSeen(true);
 
-        for (Class c : listeners.keySet()) {
-            try {
-                JavaPlugin p = listeners.get(c);
-                Class[] argTypes = new Class[] {ChatData.class};
-                Method m = c.getDeclaredMethod("doChat",argTypes);
-                m.invoke(p,data);
-            } catch (Exception e) {
-                getLogger().warning("Unable to call doChat for " + c.getName());
+        SortedSet<Integer> keys = new TreeSet<Integer>(listeners.keySet());
+        for (Integer prio : keys) {
+            Map<Class,JavaPlugin> classMap = listeners.get(prio);
+            for (Class c : classMap.keySet()) {
+                try {
+                    JavaPlugin p = classMap.get(c);
+                    Class[] argTypes = new Class[] {ChatData.class};
+                    Method m = c.getDeclaredMethod("doChat",argTypes);
+                    m.invoke(p,data);
+                } catch (Exception e) {
+                    getLogger().warning("Unable to call doChat for " + c.getName());
+                }
             }
         }
 
