@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class Database extends JavaPlugin {
     boolean enabled = true;
-    String url = "jdbc:mysql://solumcraft.com:3306/minecraft";
-    String username = "pluginuser";
-    String password = "R6r7UEYy4X26t44E";
+    String url;
+    String username;
+    String password;
 
     Connection connection;
 
@@ -38,6 +38,14 @@ public class Database extends JavaPlugin {
             getLogger().warning("Unable to load driver");
             enabled = false;
         }
+
+        saveDefaultConfig();
+        password = getConfig().getString("password");
+        username = getConfig().getString("username");
+        String host = getConfig().getString("server");
+        String port = getConfig().getString("port");
+        String database = getConfig().getString("database");
+        url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 
         getLogger().info("Making connection");
         try {

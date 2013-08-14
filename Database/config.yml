@@ -1,0 +1,6 @@
+# default config.yml
+server: localhost
+port: 3306
+database: minecraft
+username: username
+password: password
