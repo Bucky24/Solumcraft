@@ -1,5 +1,7 @@
 package com.thepastimers.ExtCommands;
 
+import com.thepastimers.Chat.Chat;
+import com.thepastimers.Chat.CommandData;
 import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
@@ -35,6 +37,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
     Permission permission;
     Metrics metrics;
     Rank rank;
+    Chat chat;
     VanishPlugin vanishNoPacket;
     VanishManager manager;
 
@@ -59,6 +62,13 @@ public class ExtCommands extends JavaPlugin implements Listener {
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
             getLogger().warning("Unable to load Rank plugin.");
+        }
+
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat == null) {
+            getLogger().warning("Unable to load Chat plugin.");
+        } else {
+            chat.registerCommand("setTitle",ExtCommands.class,this);
         }
 
         vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
@@ -105,6 +115,43 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 }
             }
         }
+    }
+
+    public void handleCommand(CommandData data) {
+        String response = "";
+        String command = data.getCommand();
+        if ("setTitle".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(data.getPlayer(),"title_self")) {
+                data.setResponse(":red:You do not have permission to use this command (title_self)");
+                return;
+            }
+
+            if (data.getArgumentArray().length > 0) {
+                StringBuilder title = new StringBuilder();
+                for (int i=0;i<data.getArgumentArray().length;i++) {
+                    title.append(data.getArgumentArray()[i]);
+                    if (i < data.getArgumentArray().length-1) {
+                        title.append(" ");
+                    }
+                }
+
+                if (rank == null) {
+                    data.setResponse("This command is not currently available");
+                    return;
+                }
+
+                if (!rank.setTitle(data.getPlayer(),title.toString())) {
+                    response = ":red:Unable to set title";
+                } else {
+                    response = ":green:Title changed!";
+                }
+            } else {
+                response = ":red:/setTitle <title>";
+            }
+        } else {
+            response = ":red:Unknown command";
+        }
+        data.setResponse(response);
     }
 
     @Override

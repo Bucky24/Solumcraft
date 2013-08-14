@@ -152,7 +152,7 @@ public class ChatData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, string message, timestamp time, string player_string");
+        builder.append(" int id, string player, string message, timestamp time, boolean seen, string player_string");
 
         return builder.toString();
     }

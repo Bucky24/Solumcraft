@@ -27,6 +27,7 @@ public class Chat extends JavaPlugin implements Listener {
     Database database;
     Map<Class,JavaPlugin> listeners;
     List<ChatCode> codes;
+    Map<String,Map<Class,JavaPlugin>> commandListeners;
 
     @Override
     public void onEnable() {
@@ -43,7 +44,9 @@ public class Chat extends JavaPlugin implements Listener {
         getLogger().info(ChatData.getTableInfo());
 
         BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,20);
+        BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,20);
         listeners = new HashMap<Class,JavaPlugin>();
+        commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
 
         codes = new ArrayList<ChatCode>();
 
@@ -73,6 +76,12 @@ public class Chat extends JavaPlugin implements Listener {
 
     public void register(Class c, JavaPlugin plugin) {
         listeners.put(c,plugin);
+    }
+
+    public void registerCommand(String command, Class c, JavaPlugin plugin) {
+        Map<Class,JavaPlugin> classMap = new HashMap<Class, JavaPlugin>();
+        classMap.put(c,plugin);
+        commandListeners.put(command,classMap);
     }
 
     @EventHandler
