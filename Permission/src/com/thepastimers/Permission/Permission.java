@@ -18,8 +18,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Permission extends JavaPlugin {
-    Database database = null;
-    Rank rank = null;
+    Database database;
+    Rank rank;
 
     @Override
     public void onEnable() {
@@ -28,7 +28,7 @@ public class Permission extends JavaPlugin {
         database = (Database)getServer().getPluginManager().getPlugin("Database");
 
         if (database == null) {
-            getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
+            getLogger().warning("Unable to load Database plugin. Some functionality w ill not be available.");
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
@@ -74,6 +74,7 @@ public class Permission extends JavaPlugin {
 
         for (String playerRank : playerRanks) {
             if (GroupPerm.hasPermission(playerRank, permission)) {
+                //getLogger().info(playerRank + " has perm " + permission);
                 return true;
             }
         }
@@ -204,7 +205,7 @@ public class Permission extends JavaPlugin {
                         String perm = args[2];
 
                         if (!hasPermission(player,perm)) {
-                            sender.sendMessage(player + " does not have permission " + perm);
+                            sender.sendMessage(player + " does not  have permission " + perm);
                         } else {
                             sender.sendMessage(player + " has permission " + perm);
                         }
@@ -257,7 +258,7 @@ public class Permission extends JavaPlugin {
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
                     if (!hasPermission(playerName,"groupperms_remove")) {
-                        getLogger().info(playerName + " attempted unauthorized access of /groupperms remove");
+                        getLogger().info(playerName + " attempted unauthorized access of /groupperms remove (groupperms_remove)");
                         return true;
                     }
 
