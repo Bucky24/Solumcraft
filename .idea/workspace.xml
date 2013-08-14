@@ -60,7 +60,7 @@
     <file path="/PlayerPerm.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371174042881" ignored="false" />
     <file path="/GroupPerm.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371174171454" ignored="false" />
     <file path="/Mute.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371409404620" ignored="false" />
-    <file path="/Chat.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376504377484" ignored="false" />
+    <file path="/Chat.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376522690738" ignored="false" />
     <file path="/ChatData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1372813494947" ignored="false" />
     <file path="/GetChats.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376432105640" ignored="false" />
     <file path="/Login.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1372125673248" ignored="false" />
@@ -104,6 +104,8 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -140,8 +142,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -169,10 +169,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pvp/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="12" selection-start="22" selection-end="22" vertical-scroll-proportion="0.030852994">
+            <state line="3" column="31" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -181,7 +181,7 @@
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="12" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0">
+            <state line="6" column="32" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -205,15 +205,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chat.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Chat.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="176" column="19" selection-start="6784" selection-end="6784" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#3515#3534#0" expanded="true" />
-                <element signature="e#4420#4429#0" expanded="true" />
-                <element signature="e#6632#6641#0" expanded="true" />
-              </folding>
+            <state line="62" column="90" selection-start="2603" selection-end="2603" vertical-scroll-proportion="0.5055762">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -266,11 +262,11 @@
         <option value="$PROJECT_DIR$/Database/config.yml" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
-        <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
         <option value="$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java" />
-        <option value="$PROJECT_DIR$/Chat/plugin.yml" />
         <option value="$PROJECT_DIR$/Rank/plugin.yml" />
         <option value="$PROJECT_DIR$/Pvp/plugin.yml" />
+        <option value="$PROJECT_DIR$/Chat/plugin.yml" />
+        <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
       </list>
     </option>
   </component>
@@ -307,16 +303,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -527,6 +513,16 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -658,7 +654,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="960" height="1040" extended-state="0" />
+    <frame x="0" y="0" width="960" height="1040" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -669,7 +665,6 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227633" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -679,6 +674,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272933" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6751947" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -788,9 +784,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="11" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="11" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Database/Database.iml">
@@ -828,24 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="19" selection-start="6784" selection-end="6784" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#3515#3534#0" expanded="true" />
-            <element signature="e#4420#4429#0" expanded="true" />
-            <element signature="e#6632#6641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="12" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="12" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0">
@@ -862,7 +838,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pvp/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="12" selection-start="22" selection-end="22" vertical-scroll-proportion="0.030852994">
+        <state line="3" column="31" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="32" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="90" selection-start="2603" selection-end="2603" vertical-scroll-proportion="0.5055762">
           <folding />
         </state>
       </provider>

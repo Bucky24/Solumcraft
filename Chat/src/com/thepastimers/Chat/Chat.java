@@ -59,6 +59,7 @@ public class Chat extends JavaPlugin implements Listener {
         codes.add(new ChatCode("white",ChatColor.WHITE.toString(),"White text"));
         codes.add(new ChatCode("gold",ChatColor.GOLD.toString(),"Gold text"));
         codes.add(new ChatCode("gray",ChatColor.GRAY.toString(),"Gray text"));
+        codes.add(new ChatCode("black",ChatColor.BLACK.toString(),"Black text"));
         codes.add(new ChatCode("dark red",ChatColor.DARK_RED.toString(),"Dark Red text"));
 
         codes.add(new ChatCode("obf",ChatColor.getByChar("k").toString(),"Obfuscated text"));
