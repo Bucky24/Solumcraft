@@ -91,3 +91,5 @@ Reset volocity when teleporting to home, warps, etc.
 
 minigames: blockcraft (HiveMC.eu)
 there is player interest in mob arena, need to finish that up.
+
+add perms for /tpe and invisibility to admin rank

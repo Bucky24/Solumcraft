@@ -18,6 +18,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kitteh.vanish.VanishManager;
+import org.kitteh.vanish.VanishPlugin;
+import org.kitteh.vanish.staticaccess.VanishNoPacket;
 
 import java.util.List;
 
@@ -32,6 +35,8 @@ public class ExtCommands extends JavaPlugin implements Listener {
     Permission permission;
     Metrics metrics;
     Rank rank;
+    VanishPlugin vanishNoPacket;
+    VanishManager manager;
 
     @Override
     public void onEnable() {
@@ -53,8 +58,15 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
-            getLogger().warning("Unable to load rank plugin.");
+            getLogger().warning("Unable to load Rank plugin.");
         }
+
+        vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
+        if (vanishNoPacket == null) {
+            getLogger().warning("Unable to load VanishNoPacket plugin.");
+        }
+
+        manager = vanishNoPacket.getManager();
 
         getLogger().info("ExtCommands init complete");
     }
@@ -322,7 +334,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             }
         } else if ("setTitle".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"title_self")) {
-                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command title_self)");
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (title_self)");
                 return true;
             }
 
@@ -345,6 +357,16 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 }
             } else {
                 sender.sendMessage(ChatColor.RED + "/setTitle <title>");
+            }
+        } else if ("hide".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_vanish") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_vanish)");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            if (manager != null) {
+                manager.toggleVanish(p);
             }
         } else {
             return false;

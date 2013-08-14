@@ -34,6 +34,8 @@ public class Money extends JavaPlugin implements Listener {
     Permission permission;
     ItemName itemName;
 
+    String economyWorld = "economy";
+
     Map<String,Integer> prices;
 
     @Override
@@ -242,6 +244,12 @@ public class Money extends JavaPlugin implements Listener {
                 return true;
             }
 
+            Player player2 = getServer().getPlayer(playerName);
+            if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
+                sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
+                return true;
+            }
+
             String player = "";
 
             if (args.length == 0) {
@@ -264,6 +272,12 @@ public class Money extends JavaPlugin implements Listener {
         } else if (command.equalsIgnoreCase("pay")) {
             if (permission == null || !permission.hasPermission(playerName,"money_pay") || playerName.equalsIgnoreCase("CONSOLE")) {
                 sender.sendMessage("You do not have permission to use this command (money_pay)");
+                return true;
+            }
+
+            Player player2 = getServer().getPlayer(playerName);
+            if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
+                sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
 
@@ -324,6 +338,12 @@ public class Money extends JavaPlugin implements Listener {
 
             if (p.getGameMode() == GameMode.CREATIVE) {
                 p.sendMessage(ChatColor.RED + "You cannot use /sell while in creative mode");
+                return true;
+            }
+
+            Player player = getServer().getPlayer(playerName);
+            if (!economyWorld.equalsIgnoreCase(player.getWorld().getName())) {
+                sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
 
@@ -404,6 +424,12 @@ public class Money extends JavaPlugin implements Listener {
             }
             if (permission == null || !permission.hasPermission(playerName,"money_pay") || playerName.equalsIgnoreCase("CONSOLE")) {
                 sender.sendMessage("You do not have permission to use this command (money_pay)");
+                return true;
+            }
+
+            Player player = getServer().getPlayer(playerName);
+            if (!economyWorld.equalsIgnoreCase(player.getWorld().getName())) {
+                sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
 

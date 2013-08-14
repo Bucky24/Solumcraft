@@ -19,3 +19,5 @@ commands:
         description: Kurama_09's command
     setTitle:
         description: set own title (if permissions)
+    hide:
+        description: Vanish player

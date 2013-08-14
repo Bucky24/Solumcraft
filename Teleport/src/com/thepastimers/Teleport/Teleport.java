@@ -197,13 +197,13 @@ public class Teleport extends JavaPlugin {
             }
         } else if (command.equals("tp")) {
             if (permission == null || !permission.hasPermission(playerName,"teleport_tp")) {
-                sender.sendMessage("You do not have permissions to use this command");
+                sender.sendMessage("You do not have permissions to use this command (teleport_tp)");
                 return true;
             }
 
             if (args.length == 2) {
                 if (!permission.hasPermission(playerName,"teleport_other")) {
-                    getLogger().info("You do not have permissions to do this");
+                    sender.sendMessage(ChatColor.RED + "You do not have permissions to do this (teleport_other)");
                     return true;
                 }
                 String player = args[0];
