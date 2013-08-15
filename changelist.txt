@@ -18,22 +18,19 @@ If inherit, then the plot inherits the rent settings from its parent. This allow
 
 Rent schedule would be "daily","weekly","monthly". all at beginning of whatever it is, so 12 midnight, sunday, 1st of month.
 
-Will have to create a cron for this. 3 crons, for each interval. that way we don't have to actually check the interval in the cron, which allows for testing.
+Can do this with bukkit scheduler
 
 vote rewards can be set/changed/removed via command
 
 chat upgrades.
 I'm thinking needs a better way to detect if player is online, and if they are online, allow others to /tell to them (which will require writing a new whisper plugin). This necessitates the need for player-specific messages to be passed to the chat command.
 
-Allow chat plugin to register commands and process them, sending input back to player.
+Update webchat UI to be able to send commands.
 
-Recepie to craft saddles. Leather + diamonds? Emeralds?
+Recipe to craft saddles. Leather + diamonds? Emeralds?
 
-plot prevent fire spreading
+plot prevent fire spreading (this sorta happens, but needs to work properly)
 teleport mount
-
-chests in plots can only be opened by people with permission
-Though have a flag for this, so that plots without the flag set (set by default) don't have this restriction
 
 Finish Director plugin!
 /arena create
@@ -83,13 +80,7 @@ Add the magic plugin (for alchemy command) back into the game.
 
 Update warp plugin so that people re-warp when they take damage
 
-Allow people to change their own titles (set up permission)
-
-Modify ranks to have parent ranks. child ranks inherit perms from parent ranks.
-
 Reset volocity when teleporting to home, warps, etc.
 
 minigames: blockcraft (HiveMC.eu)
-there is player interest in mob arena, need to finish that up.
-
-add perms for /tpe and invisibility to admin rank
+there is player interest in mob arena, MobArena plugin
