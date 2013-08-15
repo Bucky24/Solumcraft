@@ -104,8 +104,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -142,6 +140,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -163,7 +163,7 @@
       <file leaf-file-name="Pvp.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="26" selection-start="4090" selection-end="4090" vertical-scroll-proportion="0.0">
+            <state line="114" column="26" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -199,17 +199,28 @@
       <file leaf-file-name="Rank.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="34" selection-start="1394" selection-end="1394" vertical-scroll-proportion="0.0">
+            <state line="43" column="16" selection-start="1369" selection-end="1369" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chat.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Chat.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="90" selection-start="2603" selection-end="2603" vertical-scroll-proportion="0.5055762">
+            <state line="84" column="9" selection-start="3348" selection-end="3348" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GetChats.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetChats.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="36" selection-start="575" selection-end="575" vertical-scroll-proportion="0.6003717">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -218,15 +229,6 @@
         <entry file="file://$PROJECT_DIR$/Database/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="2" column="21" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Database.iml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Database/Database.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -303,6 +305,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -513,22 +525,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$PROJECT_DIR$/Home/src/com/thepastimers/Home" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
@@ -538,14 +540,16 @@
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\rwijtman\code\solumcraft\Solumcraft\Chat\src\com\thepastimers\Chat" />
+      <recent name="C:\Users\rwijtman\code\solumcraft\Solumcraft\Director" />
       <recent name="C:\Users\rwijtman\code\solumcraft\Solumcraft\Pyro" />
     </key>
   </component>
@@ -562,6 +566,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -589,19 +606,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -654,7 +658,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="960" height="1040" extended-state="1" />
+    <frame x="0" y="0" width="960" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -754,13 +758,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetChats.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="31" selection-start="1080" selection-end="1080" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetCommands.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="43" selection-start="1745" selection-end="1745" vertical-scroll-proportion="0.0">
@@ -801,13 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Database/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="10" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="12" selection-start="943" selection-end="943" vertical-scroll-proportion="0.0">
@@ -817,7 +807,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="34" selection-start="1394" selection-end="1394" vertical-scroll-proportion="0.0">
+        <state line="43" column="16" selection-start="1369" selection-end="1369" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -831,7 +821,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="26" selection-start="4090" selection-end="4090" vertical-scroll-proportion="0.0">
+        <state line="114" column="26" selection-start="3902" selection-end="3902" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -850,10 +840,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Database/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="10" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="90" selection-start="2603" selection-end="2603" vertical-scroll-proportion="0.5055762">
+        <state line="84" column="9" selection-start="3348" selection-end="3348" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetChats.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="36" selection-start="575" selection-end="575" vertical-scroll-proportion="0.6003717">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -911,7 +917,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>ExtCommands</last-edited>
+          <last-edited>Money</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

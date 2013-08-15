@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Method;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.*;
 
