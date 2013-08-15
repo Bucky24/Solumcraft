@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -164,18 +165,91 @@ public class Kit extends JavaPlugin implements Listener {
             }
             if (args.length > 0) {
                 String kit = args[0];
-                if (getKit(kit) == null) {
-                    sender.sendMessage(ChatColor.RED + "No kit by that name exists");
-                    return true;
-                }
 
-                if (useKit(kit,playerName)) {
-                    sender.sendMessage(ChatColor.GREEN + "Kit given!");
+                if (args.length > 1) {
+                    String subCommand = args[1];
+                    if ("create".equalsIgnoreCase(subCommand)) {
+                        if (permission == null || !permission.hasPermission(playerName,"kit_create") || playerName.equalsIgnoreCase("CONSOLE")) {
+                            sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (kit_create)");
+                            return true;
+                        }
+
+                        if (getKit(kit) != null) {
+                            sender.sendMessage(ChatColor.RED + "Kit " + kit + " already exists");
+                            return true;
+                        }
+
+                        if (args.length > 3) {
+                            String intervalStr = args[2];
+                            Long interval;
+                            try {
+                                interval = Long.parseLong(intervalStr);
+                            } catch (NumberFormatException e) {
+                                sender.sendMessage(ChatColor.RED + "Interval must be a number");
+                                return true;
+                            }
+                            JSONArray items = new JSONArray();
+                            for (int i=3;i<args.length;i++) {
+                                items.add(args[i]);
+                            }
+                            KitData kitData = new KitData();
+                            kitData.setItems(items);
+                            kitData.setTimeout(interval);
+                            kitData.setName(kit);
+                            if (kitData.save(database)) {
+                                sender.sendMessage(ChatColor.GREEN + "Kit created");
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Kit could not be created");
+                            }
+                        } else {
+                            sender.sendMessage("/kit " + kit + " create <interval> <items>");
+                        }
+                    } else if ("view".equalsIgnoreCase(subCommand)) {
+                        if (getKit(kit) == null) {
+                            sender.sendMessage(ChatColor.RED + "No kit by that name exists");
+                            return true;
+                        }
+                        // we don't need to check for kit_kit perms because we've already done this
+                        KitData kitData = getKit(kit);
+                        sender.sendMessage("Items in " + kit);
+                        JSONArray items = kitData.getItems();
+                        for (int i=0;i<items.size();i++) {
+                            sender.sendMessage((String)items.get(i));
+                        }
+                    } else if ("remove".equalsIgnoreCase(subCommand)) {
+                        if (getKit(kit) == null) {
+                            sender.sendMessage(ChatColor.RED + "No kit by that name exists");
+                            return true;
+                        }
+                        if (permission == null || !permission.hasPermission(playerName,"kit_create") || playerName.equalsIgnoreCase("CONSOLE")) {
+                            sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (kit_create)");
+                            return true;
+                        }
+
+                        KitData kitData = getKit(kit);
+                        if (kitData.delete(database)) {
+                            sender.sendMessage(ChatColor.GREEN + "Kit " + kit + " has been removed");
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "Kit " + kit + " has not been removed");
+                        }
+                    } else {
+                        sender.sendMessage("/kit <name> [create|view|remove]");
+                    }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "Unable to give kit.");
+                    if (getKit(kit) == null) {
+                        sender.sendMessage(ChatColor.RED + "No kit by that name exists");
+                        return true;
+                    }
+
+                    if (useKit(kit,playerName)) {
+                        sender.sendMessage(ChatColor.GREEN + "Kit given!");
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "Unable to give kit.");
+                    }
                 }
             } else {
                 List<KitData> kits = (List<KitData>)database.select(KitData.class,"1");
+                sender.sendMessage("/kit <name> [create|view|remove]");
                 sender.sendMessage("List of kits (type /kit <name> to use): ");
                 for (KitData kd : kits) {
                     sender.sendMessage(kd.getName());

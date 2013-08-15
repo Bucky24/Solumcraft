@@ -1,5 +1,5 @@
 name: Kit
-version: 0.1
+version: 0.2
 main: com.thepastimers.Kit.Kit
 softdepend: [Permission, Database, ItemName]
 commands:

@@ -51,7 +51,7 @@
     <file path="/PatternData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1373155344701" ignored="false" />
     <file path="/Competitor.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1368686101545" ignored="false" />
     <file path="/Permission.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376449297006" ignored="false" />
-    <file path="/Kit.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1370915264308" ignored="false" />
+    <file path="/Kit.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376601952163" ignored="false" />
     <file path="/KitData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1369967476363" ignored="false" />
     <file path="/UserKit.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1370914894485" ignored="false" />
     <file path="/Farming.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375033934764" ignored="false" />
@@ -172,14 +172,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Table.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Table.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Database/src/com/thepastimers/Database/Table.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="40" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.5371747">
+            <state line="128" column="51" selection-start="4503" selection-end="4503" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#612#628#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Kit.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="177" column="36" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Kit/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="37" selection-start="151" selection-end="151" vertical-scroll-proportion="0.18511796">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -215,34 +233,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/CommandData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="13" selection-start="418" selection-end="418" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1899#1912#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Database/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="1" column="12" selection-start="27" selection-end="27" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GetChats.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetChats.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="26" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -266,8 +261,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
-        <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/GetCommands.java" />
         <option value="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
         <option value="$PROJECT_DIR$/Database/config.yml" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
@@ -282,6 +275,8 @@
         <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Table.java" />
         <option value="$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java" />
+        <option value="$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java" />
+        <option value="$PROJECT_DIR$/Kit/plugin.yml" />
       </list>
     </option>
   </component>
@@ -461,6 +456,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Plot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Kit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -718,7 +749,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227633" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -797,20 +828,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Pvp/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="31" selection-start="85" selection-end="85" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="32" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="84" column="9" selection-start="3348" selection-end="3348" vertical-scroll-proportion="0.0">
@@ -915,11 +932,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Database/src/com/thepastimers/Database/Table.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="40" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.5371747">
+        <state line="128" column="51" selection-start="4503" selection-end="4503" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#612#628#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="177" column="36" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Kit/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="37" selection-start="151" selection-end="151" vertical-scroll-proportion="0.18511796">
+          <folding />
         </state>
       </provider>
     </entry>
