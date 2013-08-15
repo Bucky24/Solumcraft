@@ -21,8 +21,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.hanging.HangingBreakEvent;
-import org.bukkit.event.painting.PaintingBreakEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -84,6 +82,10 @@ public class Plot extends JavaPlugin implements Listener {
         PlotData.refreshCache(database,getLogger());
         getLogger().info(PlotPerms.getTableInfo());
         PlotPerms.refreshCache(database,getLogger());
+        PlotRent.autoPopulate = true;
+        PlotRent.myClass = PlotRent.class;
+        database.select(PlotRent.class,"1");
+        getLogger().info(PlotRent.getTableInfo());
 
         getLogger().info("Plot init complete");
     }

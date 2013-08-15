@@ -2,7 +2,6 @@ package com.thepastimers.Metrics;
 
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Database.Database;
-import com.thepastimers.Director.Director;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,7 +30,6 @@ import java.util.Map;
  */
 public class Metrics extends JavaPlugin implements Listener {
     Database database;
-    Director director;
     Chat chat;
 
     @Override
@@ -42,11 +40,6 @@ public class Metrics extends JavaPlugin implements Listener {
         database = (Database)getServer().getPluginManager().getPlugin("Database");
         if (database == null) {
             getLogger().warning("Cannot load Database plugin. Some functionality may not be available");
-        }
-
-        director = (Director)getServer().getPluginManager().getPlugin("Director");
-        if (director == null) {
-            getLogger().warning("Cannot load Director plugin. Some functionality may not be available");
         }
 
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
