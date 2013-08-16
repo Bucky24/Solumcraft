@@ -100,8 +100,12 @@ public class Table {
                     String function = new String(stringArray);
                     function = "set" + function;
 
-                    Method m = myClass.getDeclaredMethod(function,argTypes);
-                    m.invoke(instance,value);
+                    try {
+                        Method m = myClass.getDeclaredMethod(function,argTypes);
+                        m.invoke(instance,value);
+                    } catch (Exception e) {
+                        // ignore it
+                    }
                 }
                 ret.add(instance);
             }
@@ -146,7 +150,8 @@ public class Table {
                         Method m = myClass.getDeclaredMethod(function,argTypes);
                         value = m.invoke(this);
                     } catch (Exception e) {
-                        return false;
+                        // ignore
+                        continue;
                     }
 
                     cols.append(name);

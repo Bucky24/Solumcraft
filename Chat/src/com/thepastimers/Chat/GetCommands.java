@@ -61,6 +61,7 @@ public class GetCommands extends BukkitRunnable {
             }
 
             cd.setHandled(true);
+            cd.setRead(false);
             cd.save(database);
         }
     }

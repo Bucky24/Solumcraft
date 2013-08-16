@@ -41,6 +41,7 @@ public class Chat extends JavaPlugin implements Listener {
         }
 
         getLogger().info(ChatData.getTableInfo());
+        getLogger().info(CommandData.getTableInfo());
 
         BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,20);
         BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,20);
