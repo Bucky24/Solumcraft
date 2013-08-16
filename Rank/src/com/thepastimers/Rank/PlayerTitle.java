@@ -18,12 +18,6 @@ import java.util.List;
 public class PlayerTitle extends Table {
     public static String table = "title";
 
-    int id;
-
-    public PlayerTitle() {
-        id = -1;
-    }
-
     String player;
     String title;
 
@@ -31,7 +25,7 @@ public class PlayerTitle extends Table {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,61 +43,5 @@ public class PlayerTitle extends Table {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public static List<PlayerTitle> parseResult(ResultSet result) throws SQLException {
-        List<PlayerTitle> ret = new ArrayList<PlayerTitle>();
-
-        if (result == null) {
-            return ret;
-        }
-
-        while (result.next()) {
-            PlayerTitle t = new PlayerTitle();
-            t.setId(result.getInt("id"));
-            t.setPlayer(result.getString("player"));
-            t.setTitle(result.getString("title"));
-
-            ret.add(t);
-        }
-
-        return ret;
-    }
-
-    public boolean delete(Database d) {
-        if (id == -1) {
-            return true;
-        }
-        if (d == null) {
-            return false;
-        }
-        return d.query("DELETE FROM " + table + " WHERE id = " + id);
-    }
-
-    public boolean save(Database d) {
-        if (d == null) {
-            return false;
-        }
-        if (id == -1) {
-            String columns = "(player,title)";
-            String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(title)  + "')";
-            return d.query("INSERT INTO " + table + columns + " VALUES" + values);
-        } else {
-            StringBuilder query = new StringBuilder();
-            query.append("UPDATE " + table + " SET ");
-
-            query.append("player = '" + d.makeSafe(player) + "'" + ", ");
-            query.append("title = '" + d.makeSafe(title) + "'");
-
-            query.append("WHERE id = " + id);
-            return d.query(query.toString());
-        }
-    }
-
-    public static String getTableInfo() {
-        StringBuilder builder = new StringBuilder(table);
-        builder.append(" int id, string player, string title");
-
-        return builder.toString();
     }
 }

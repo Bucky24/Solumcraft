@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -132,10 +133,19 @@ public class Database extends JavaPlugin {
                 //killConnection(connection);
                 return ret;
             } catch (Exception e) {
-                getLogger().warning("select: Unable to invoke parseResult for " + c.getName());
-                e.printStackTrace();
+                try {
+                // try it with Table
+                Class[] argTypes = new Class[] {ResultSet.class,Logger.class};
+                Method m = Table.class.getDeclaredMethod("parseResult",argTypes);
+                ret = (List<? extends Table>)m.invoke(null,results,getLogger());
                 //killConnection(connection);
                 return ret;
+                } catch (Exception e2) {
+                    getLogger().warning("select: Unable to invoke parseResult for " + c.getName());
+                    e2.printStackTrace();
+                    //killConnection(connection);
+                    return ret;
+                }
             }
         } catch (Exception e) {
             getLogger().warning("select: Unable to run query:");

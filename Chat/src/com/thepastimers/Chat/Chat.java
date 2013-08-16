@@ -49,22 +49,30 @@ public class Chat extends JavaPlugin implements Listener {
 
         codes = new ArrayList<ChatCode>();
 
-        codes.add(new ChatCode("red",ChatColor.RED.toString(),"Red text"));
-        codes.add(new ChatCode("blue",ChatColor.BLUE.toString(),"Blue text"));
-        codes.add(new ChatCode("green",ChatColor.GREEN.toString(),"Green text"));
-        codes.add(new ChatCode("dark green",ChatColor.DARK_GREEN.toString(),"Dark Green text"));
-        codes.add(new ChatCode("yellow",ChatColor.YELLOW.toString(),"Yellow text"));
-        codes.add(new ChatCode("purple",ChatColor.LIGHT_PURPLE.toString(),"Purple text"));
-        codes.add(new ChatCode("white",ChatColor.WHITE.toString(),"White text"));
-        codes.add(new ChatCode("gold",ChatColor.GOLD.toString(),"Gold text"));
-        codes.add(new ChatCode("gray",ChatColor.GRAY.toString(),"Gray text"));
-        codes.add(new ChatCode("black",ChatColor.BLACK.toString(),"Black text"));
-        codes.add(new ChatCode("dark red",ChatColor.DARK_RED.toString(),"Dark Red text"));
+        codes.add(new ChatCode(":red:;&c",ChatColor.RED.toString(),"Red text"));
+        codes.add(new ChatCode(":blue:;&1",ChatColor.BLUE.toString(),"Blue text"));
+        codes.add(new ChatCode(":green:;&a",ChatColor.GREEN.toString(),"Green text"));
+        codes.add(new ChatCode(":dark green:;&2",ChatColor.DARK_GREEN.toString(),"Dark Green text"));
+        codes.add(new ChatCode(":yellow:;&e",ChatColor.YELLOW.toString(),"Yellow text"));
+        codes.add(new ChatCode(":purple:;&d",ChatColor.LIGHT_PURPLE.toString(),"Purple text"));
+        codes.add(new ChatCode(":white:;&f",ChatColor.WHITE.toString(),"White text"));
+        codes.add(new ChatCode(":gold:;&6",ChatColor.GOLD.toString(),"Gold text"));
+        codes.add(new ChatCode(":gray:;&7",ChatColor.GRAY.toString(),"Gray text"));
+        codes.add(new ChatCode(":black:;&0",ChatColor.BLACK.toString(),"Black text"));
+        codes.add(new ChatCode(":dark red:;&4",ChatColor.DARK_RED.toString(),"Dark Red text"));
+        codes.add(new ChatCode(":aqua:;&b",ChatColor.AQUA.toString(),"Aqua text"));
+        codes.add(new ChatCode(":dark aqua:;&3",ChatColor.DARK_AQUA.toString(),"Dark Aqua text"));
+        codes.add(new ChatCode(":dark blue:;&9",ChatColor.DARK_BLUE.toString(),"Dark Blue text"));
+        codes.add(new ChatCode(":dark purple:;&5",ChatColor.DARK_PURPLE.toString(),"Dark Purple text"));
+        codes.add(new ChatCode(":dark gray:;&8",ChatColor.DARK_GRAY.toString(),"Dark Gray text"));
 
-        codes.add(new ChatCode("obf",ChatColor.getByChar("k").toString(),"Obfuscated text"));
-        codes.add(new ChatCode("strike",ChatColor.getByChar("m").toString(),"Strikethrough"));
+        codes.add(new ChatCode(":obf:;&k",ChatColor.getByChar("k").toString(),"Obfuscated text"));
+        codes.add(new ChatCode(":strike:;&m",ChatColor.getByChar("m").toString(),"Strikethrough"));
+        codes.add(new ChatCode(":italic:;&o",ChatColor.getByChar("o").toString(),"Italic"));
+        codes.add(new ChatCode(":underline:;&n",ChatColor.getByChar("n").toString(),"Underline"));
+        codes.add(new ChatCode(":bold:;&l",ChatColor.getByChar("l").toString(),"Bold"));
 
-        codes.add(new ChatCode("reset",ChatColor.getByChar("r").toString(),"Reset formatting"));
+        codes.add(new ChatCode(":reset:;&r",ChatColor.getByChar("r").toString(),"Reset formatting"));
 
         getLogger().info("Chat init complete");
     }
@@ -155,9 +163,12 @@ public class Chat extends JavaPlugin implements Listener {
     }
     
     public String replaceColor(String text) {
-        for (ChatCode code : codes) {
+       for (ChatCode code : codes) {
             //getLogger().info(text + " " + code.getKey() + " " + code.getCode());
-            text = text.replace(":" + code.getKey() + ":",code.getCode());
+            String[] codeList = code.getKey().split(";");
+            for (int i=0;i<codeList.length;i++) {
+                text = text.replace(codeList[i],code.getCode());
+            }
         }
         return text;
     }
@@ -206,7 +217,8 @@ public class Chat extends JavaPlugin implements Listener {
         if (command.equalsIgnoreCase("codes")) {
             sender.sendMessage("Chat codes:");
             for (ChatCode code : codes) {
-                sender.sendMessage(":" + code.getKey() + ": = " + code.getDescription());
+                String key = code.getKey().replace(";"," or ");
+                sender.sendMessage(key + " = " + code.getDescription());
             }
         } else {
             return false;

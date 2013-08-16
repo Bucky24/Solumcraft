@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,12 +39,17 @@ public class Table {
     }
 
     public static List<? extends Table> parseResult(ResultSet resultSet) throws Exception {
+        return parseResult(resultSet,null);
+    }
+
+    public static List<? extends Table> parseResult(ResultSet resultSet, Logger l) throws Exception {
         List<Table> ret = new ArrayList<Table>();
 
         ResultSetMetaData data = resultSet.getMetaData();
 
         if (autoPopulate) {
-            for (int i=0;i<data.getColumnCount();i++) {
+            int count = data.getColumnCount();
+            for (int i=1;i<=count;i++) {
                 int type = data.getColumnType(i);
                 String name = data.getColumnName(i);
 
@@ -67,7 +73,7 @@ public class Table {
 
             while (resultSet.next()) {
                 Table instance = (Table)myClass.newInstance();
-                for (int i=0;i<data.getColumnCount();i++) {
+                for (int i=1;i<=data.getColumnCount();i++) {
                     int type = data.getColumnType(i);
                     String name = data.getColumnName(i);
 
@@ -97,36 +103,51 @@ public class Table {
                     Method m = myClass.getDeclaredMethod(function,argTypes);
                     m.invoke(instance,value);
                 }
+                ret.add(instance);
             }
         }
 
         return ret;
     }
 
-    public boolean save(Database d) throws Exception {
+    public boolean save(Database d) {
         if (d == null) {
             return false;
         }
         if (autoPopulate) {
+            try {
+                table = (String)myClass.getField("table").get(null);
+            } catch (Exception e) {
+                // can't do anything
+            }
+
             if (id == -1) {
                 StringBuilder cols = new StringBuilder();
                 cols.append("(");
                 StringBuilder values = new StringBuilder();
                 values.append("(");
 
-                String[] keys = (String[])columns.keySet().toArray();
+                String[] keys = columns.keySet().toArray(new String[0]);
                 for (int i=0;i<keys.length;i++) {
                     String name = keys[i];
                     String type = columns.get(name);
+
+                    // don't save the ID
+                    if ("id".equalsIgnoreCase(name)) continue;
 
                     char[] stringArray = name.toCharArray();
                     stringArray[0] = Character.toUpperCase(stringArray[0]);
                     String function = new String(stringArray);
                     function = "get" + function;
 
-                    Class[] argTypes = new Class[0];
-                    Method m = myClass.getDeclaredMethod(function,argTypes);
-                    Object value = m.invoke(this);
+                    Object value;
+                    try {
+                        Class[] argTypes = new Class[0];
+                        Method m = myClass.getDeclaredMethod(function,argTypes);
+                        value = m.invoke(this);
+                    } catch (Exception e) {
+                        return false;
+                    }
 
                     cols.append(name);
                     if ("string".equalsIgnoreCase(type) || "timestamp".equalsIgnoreCase(type)) {
@@ -156,14 +177,22 @@ public class Table {
                     String name = keys[i];
                     String type = columns.get(name);
 
+                    // don't save the id (though in an update it doesn't really matter
+                    if ("id".equalsIgnoreCase(name)) continue;
+
                     char[] stringArray = name.toCharArray();
                     stringArray[0] = Character.toUpperCase(stringArray[0]);
                     String function = new String(stringArray);
                     function = "get" + function;
 
-                    Class[] argTypes = new Class[0];
-                    Method m = myClass.getDeclaredMethod(function,argTypes);
-                    Object value = m.invoke(this);
+                    Object value;
+                    try {
+                        Class[] argTypes = new Class[0];
+                        Method m = myClass.getDeclaredMethod(function,argTypes);
+                        value = m.invoke(this);
+                    } catch (Exception e) {
+                        return false;
+                    }
 
                     query.append(name).append("=");
                     if ("string".equalsIgnoreCase(type) || "timestamp".equalsIgnoreCase(type)) {
@@ -203,6 +232,13 @@ public class Table {
         }
         if (d == null) {
             return false;
+        }
+        if (autoPopulate) {
+            try {
+                table = (String)myClass.getField("table").get(null);
+            } catch (Exception e) {
+                // can't do anything
+            }
         }
         return d.query("DELETE FROM " + table + " WHERE ID = " + id);
     }
