@@ -94,7 +94,7 @@ public class Pvp extends JavaPlugin implements Listener {
         if (name != null) {
             Player p = getServer().getPlayer(name);
             if (p != null) {
-                ItemStack is = new ItemStack(144,1,(byte)3);
+                ItemStack is = itemName.getItemFromName("STEVE_HEAD");
                 SkullMeta meta = (SkullMeta)is.getItemMeta();
                 String killed = event.getEntity().getName();
                 meta.setOwner(killed);

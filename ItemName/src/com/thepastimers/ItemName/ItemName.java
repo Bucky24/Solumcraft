@@ -183,6 +183,8 @@ public class ItemName extends JavaPlugin {
                 if (items[i] == null) {
                     ItemStack is2 = new ItemStack(is.getType(),toDo);
                     is2.setDurability(is.getDurability());
+                    is2.setData(is.getData());
+                    is2.setItemMeta(is.getItemMeta());
                     items[i] = is2;
                     break;
                 }
