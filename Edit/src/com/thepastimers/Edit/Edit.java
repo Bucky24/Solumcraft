@@ -105,7 +105,7 @@ public class Edit extends JavaPlugin {
             }
         } else if (command.equalsIgnoreCase("fill")) {
             if (permission == null || !permission.hasPermission(playerName,"edit_fill") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You do not have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (edit_fill)");
                 return true;
             }
 

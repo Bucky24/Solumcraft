@@ -181,7 +181,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             sender.sendMessage("Teleporting you to spawn.");
         } else if (command.equalsIgnoreCase("tpe")) {
             if (permission == null || !permission.hasPermission(playerName,"command_tpe") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You do not have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_tpe)");
                 return true;
             }
 
