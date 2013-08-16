@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-java-5.1.7-bin" level="project" />
-    <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130803.204129-12" level="project" />
+    <orderEntry type="library" name="bukkit-1.6.2-R0.1" level="project" />
   </component>
 </module>
 

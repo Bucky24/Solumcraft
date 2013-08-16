@@ -12,7 +12,7 @@
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="module" module-name="ItemName" />
-    <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130803.204129-12" level="project" />
+    <orderEntry type="library" name="bukkit-1.6.2-R0.1" level="project" />
   </component>
 </module>
 

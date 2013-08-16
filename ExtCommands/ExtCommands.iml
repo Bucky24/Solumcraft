@@ -9,11 +9,11 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Metrics" />
-    <orderEntry type="library" name="bukkit-1.6.2-R0.1-20130803.204129-12" level="project" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="library" name="VanishNoPacket" level="project" />
     <orderEntry type="module" module-name="Chat" />
     <orderEntry type="module" module-name="Database" />
+    <orderEntry type="library" name="bukkit-1.6.2-R0.1" level="project" />
   </component>
 </module>
 
