@@ -48,7 +48,7 @@ public class Rank extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         getLogger().info(PlayerRank.getTableInfo());
         PlayerTitle.autoPopulate = true;
-        PlayerTitle.myClass = PlayerTitle.class;
+        //PlayerTitle.myClass = PlayerTitle.class;
         database.select(PlayerTitle.class,"1");
         getLogger().info(PlayerTitle.getTableInfo());
         getLogger().info(RankData.getTableInfo());
@@ -254,7 +254,7 @@ public class Rank extends JavaPlugin implements Listener {
 
         String title = getTitle(player);
 
-        titleObj.delete(database);
+        titleObj.delete(database,PlayerTitle.class);
 
         titleObj = getTitleObject(player);
 
@@ -286,7 +286,7 @@ public class Rank extends JavaPlugin implements Listener {
         pt.setPlayer(player);
         pt.setTitle(title);
 
-        if (pt.save(database)) {
+        if (pt.save(database,PlayerTitle.class)) {
             title = getTitle(player);
             if (chat != null) {
                 title = chat.replaceColor(title);

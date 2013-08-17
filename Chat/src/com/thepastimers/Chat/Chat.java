@@ -135,6 +135,7 @@ public class Chat extends JavaPlugin implements Listener {
                     m.invoke(p,data);
                 } catch (Exception e) {
                     getLogger().warning("Unable to call doChat for " + c.getName());
+                    e.printStackTrace();
                 }
             }
         }
@@ -193,6 +194,7 @@ public class Chat extends JavaPlugin implements Listener {
                     m.invoke(p,data);
                 } catch (Exception e) {
                     getLogger().warning("Unable to call doChat for " + c.getName());
+                    getLogger().warning(e.getMessage());
                 }
             }
         }
@@ -201,6 +203,7 @@ public class Chat extends JavaPlugin implements Listener {
             data.save(database);
         }
     }
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {

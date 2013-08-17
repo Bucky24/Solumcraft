@@ -138,16 +138,16 @@ public class SavePattern extends BukkitRunnable {
 
         int total = (endx-startx)*(endy-starty)*(endz-startz);
 
-        player.sendMessage(ChatColor.BLUE + "Done: " + done + "/" + total + ". This round handled " + count + " non-air blocks. Errors: " + error);
+        //player.sendMessage(ChatColor.BLUE + "Done: " + done + "/" + total + ". This round handled " + count + " non-air blocks. Errors: " + error);
         if (done / (total/10) < 1000) {
-            player.sendMessage(ChatColor.BLUE + "stats. We are now at: (" + curx + "," + cury + "," + curz + ") we started at (" + startx + "," + starty + "," + startz + "). Ending at (" + endx + "," + endy + "," + endz + ")");
+            //player.sendMessage(ChatColor.BLUE + "stats. We are now at: (" + curx + "," + cury + "," + curz + ") we started at (" + startx + "," + starty + "," + startz + "). Ending at (" + endx + "," + endy + "," + endz + ")");
         }
         //plugin.getLogger().info(ChatColor.BLUE + "stats. We are now at: (" + curx + "," + cury + "," + curz + ") we started at (" + startx + "," + starty + "," + startz + "). Ending at (" + endx + "," + endy + "," + endz + ")");
 
         if (!areWeDone) {
             BukkitTask task = new SavePattern(plugin,database,player,world,pattern,startx,starty,startz,endx,endy,endz,curx,cury,curz,done).runTaskLater(plugin,delay);
         } else {
-            player.sendMessage(ChatColor.GREEN + "Done!");
+            player.sendMessage(ChatColor.GREEN + "Done saving " + pattern);
         }
     }
 }

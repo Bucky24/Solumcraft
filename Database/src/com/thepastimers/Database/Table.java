@@ -23,7 +23,6 @@ public class Table {
     protected int id;
 
     public static boolean autoPopulate = false;
-    public static Class myClass = null;
     private static Map<String,String> columns = new HashMap<String, String>();
 
     public Table() {
@@ -42,7 +41,7 @@ public class Table {
         return parseResult(resultSet,null);
     }
 
-    public static List<? extends Table> parseResult(ResultSet resultSet, Logger l) throws Exception {
+    public static List<? extends Table> parseResult(ResultSet resultSet,Class myClass) throws Exception {
         List<Table> ret = new ArrayList<Table>();
 
         ResultSetMetaData data = resultSet.getMetaData();
@@ -100,8 +99,12 @@ public class Table {
                     String function = new String(stringArray);
                     function = "set" + function;
 
-                    Method m = myClass.getDeclaredMethod(function,argTypes);
-                    m.invoke(instance,value);
+                    try {
+                        Method m = myClass.getDeclaredMethod(function,argTypes);
+                        m.invoke(instance,value);
+                    } catch (Exception e) {
+                        // ignore
+                    }
                 }
                 ret.add(instance);
             }
@@ -110,7 +113,7 @@ public class Table {
         return ret;
     }
 
-    public boolean save(Database d) {
+    public boolean save(Database d, Class myClass) {
         if (d == null) {
             return false;
         }
@@ -226,7 +229,7 @@ public class Table {
         return sb.toString();
     }
 
-    public boolean delete(Database d) {
+    public boolean delete(Database d,Class myClass) {
         if (id == -1) {
             return true;
         }

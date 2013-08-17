@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -59,6 +60,62 @@ public class Pattern extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getLogger().info("Pattern disable");
+    }
+
+    public boolean loadPattern(String patternName, int x, int y, int z, String world) {
+        LoadPattern pattern = new LoadPattern(this,database,null,world,patternName,x,y,z);
+        pattern.run();
+
+        return true;
+    }
+
+    public boolean clearThenLoadPattern(String patternName, String patternName2, int x, int y, int z, String world, int x2, int y2, int z2, String world2) {
+        ClearThenLoad pattern = new ClearThenLoad(this,database,null,world,patternName,x,y,z,x2,y2,z2,patternName2,world2);
+        pattern.run();
+
+        return true;
+    }
+
+
+    public boolean clearPattern(String patternName, int x, int y, int z, String world) {
+        ClearPattern pattern = new ClearPattern(this,database,null,world,patternName,x,y,z);
+        pattern.run();
+
+        return true;
+    }
+
+    public int getXSize(String patternName) {
+        int minX = 0;
+        int maxX = 0;
+
+        ResultSet blocks = database.rawSelect("SELECT MIN(x),MAX(x) FROM pattern_block WHERE pattern = \"" + database.makeSafe(patternName) + "\"");
+        if (blocks != null) {
+            try {
+                minX = blocks.getInt(1);
+                maxX = blocks.getInt(2);
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+
+        return (maxX-minX);
+    }
+
+    public int getZSize(String patternName) {
+        int minZ = 0;
+        int maxZ = 0;
+
+        ResultSet blocks = database.rawSelect("SELECT MIN(z),MAX(z) FROM pattern_block WHERE pattern = \"" + database.makeSafe(patternName) + "\"");
+        if (blocks != null) {
+            try {
+                minZ = blocks.getInt(1);
+                maxZ = blocks.getInt(2);
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+
+        return (maxZ-minZ);
     }
 
     @Override

@@ -28,8 +28,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.potion.Potion;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -44,6 +47,8 @@ public class Plot extends JavaPlugin implements Listener {
     Permission permission;
     Coord coord;
     Money money;
+    Map<Class,JavaPlugin> plotEnterListener;
+    Map<Class,JavaPlugin> plotLeaveListener;
 
     @Override
     public void onEnable() {
@@ -82,10 +87,12 @@ public class Plot extends JavaPlugin implements Listener {
         PlotData.refreshCache(database,getLogger());
         getLogger().info(PlotPerms.getTableInfo());
         PlotPerms.refreshCache(database,getLogger());
-        PlotRent.autoPopulate = true;
-        PlotRent.myClass = PlotRent.class;
-        database.select(PlotRent.class,"1");
-        getLogger().info(PlotRent.getTableInfo());
+        //PlotRent.autoPopulate = true;
+        //database.select(PlotRent.class,"1");
+        //getLogger().info(PlotRent.getTableInfo());
+
+        plotEnterListener = new HashMap<Class, JavaPlugin>();
+        plotLeaveListener = new HashMap<Class, JavaPlugin>();
 
         getLogger().info("Plot init complete");
     }
@@ -316,6 +323,14 @@ public class Plot extends JavaPlugin implements Listener {
         return pp.delete(database);
     }
 
+    public void registerPlotEnter(Class c, JavaPlugin plugin) {
+        plotEnterListener.put(c,plugin);
+    }
+
+    public void registerPlotLeave(Class c, JavaPlugin plugin) {
+        plotLeaveListener.put(c,plugin);
+    }
+
     @EventHandler
     public void chestInteract(PlayerInteractEvent event) {
         ChestProtect protect = (ChestProtect)getServer().getPluginManager().getPlugin("ChestProtect");
@@ -446,6 +461,17 @@ public class Plot extends JavaPlugin implements Listener {
             if (p2.isCreative() && getPlotPerms(p2,p.getName()) > PlotPerms.NONE) {
                 p.setGameMode(GameMode.CREATIVE);
             }
+
+            for (Class c : plotEnterListener.keySet()) {
+                try {
+                    JavaPlugin plugin = plotEnterListener.get(c);
+                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                    Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
+                    m.invoke(plugin,p2,p);
+                } catch (Exception e) {
+                    getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
+                }
+            }
         } else if (p1 != null && p2 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName());
             if (p1.isCreative()) {
@@ -467,13 +493,46 @@ public class Plot extends JavaPlugin implements Listener {
                 }
                 p.setGameMode(GameMode.SURVIVAL);
             }
+
+            for (Class c : plotLeaveListener.keySet()) {
+                try {
+                    JavaPlugin plugin = plotLeaveListener.get(c);
+                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                    Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
+                    m.invoke(plugin,p1,p);
+                } catch (Exception e) {
+                    getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                }
+            }
         } else if (!(p1 == null && p2 == null)) {
             if (p1.getId() != p2.getId()) {
-                p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
+                p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName() + " and entering " + p2.getName());
                 if (p1.isCreative() && !p2.isCreative()) {
                     p.setGameMode(GameMode.SURVIVAL);
                 } else if (!p1.isCreative() && p2.isCreative()) {
                     p.setGameMode(GameMode.CREATIVE);
+                }
+
+                for (Class c : plotEnterListener.keySet()) {
+                    try {
+                        JavaPlugin plugin = plotEnterListener.get(c);
+                        Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                        Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
+                        m.invoke(plugin,p2,p);
+                    } catch (Exception e) {
+                        getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
+                    }
+                }
+
+                for (Class c : plotLeaveListener.keySet()) {
+                    try {
+                        JavaPlugin plugin = plotLeaveListener.get(c);
+                        Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                        Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
+                        m.invoke(plugin,p1,p);
+                    } catch (Exception e) {
+                        getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                    }
                 }
             }
         }
@@ -679,6 +738,7 @@ public class Plot extends JavaPlugin implements Listener {
                         if (flag.equalsIgnoreCase("override")) {
                             if (permission.hasPermission(playerName,"override")) {
                                 override = true;
+                                sender.sendMessage(ChatColor.GREEN + "Override enabled");
                             }
                         }
                     }

@@ -346,4 +346,15 @@ public class PlotData extends Table {
 
         return count;
     }
+
+    public static PlotData getPlotById(int id) {
+        for (Integer i : dataMap.keySet()) {
+            PlotData data = dataMap.get(i);
+
+            if (i == id) {
+                return data;
+            }
+        }
+        return null;
+    }
 }

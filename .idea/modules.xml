@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AdminTools/AdminTools.iml" filepath="$PROJECT_DIR$/AdminTools/AdminTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/Boundry/Boundry.iml" filepath="$PROJECT_DIR$/Boundry/Boundry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CastleWars/CastleWars.iml" filepath="$PROJECT_DIR$/CastleWars/CastleWars.iml" />
       <module fileurl="file://$PROJECT_DIR$/Chat/Chat.iml" filepath="$PROJECT_DIR$/Chat/Chat.iml" />
       <module fileurl="file://$PROJECT_DIR$/ChestProtect/ChestProtect.iml" filepath="$PROJECT_DIR$/ChestProtect/ChestProtect.iml" />
       <module fileurl="file://$PROJECT_DIR$/CombatLog/CombatLog.iml" filepath="$PROJECT_DIR$/CombatLog/CombatLog.iml" />

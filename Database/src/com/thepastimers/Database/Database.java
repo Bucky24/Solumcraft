@@ -135,9 +135,9 @@ public class Database extends JavaPlugin {
             } catch (Exception e) {
                 try {
                 // try it with Table
-                Class[] argTypes = new Class[] {ResultSet.class,Logger.class};
+                Class[] argTypes = new Class[] {ResultSet.class,Class.class};
                 Method m = Table.class.getDeclaredMethod("parseResult",argTypes);
-                ret = (List<? extends Table>)m.invoke(null,results,getLogger());
+                ret = (List<? extends Table>)m.invoke(null,results,c);
                 //killConnection(connection);
                 return ret;
                 } catch (Exception e2) {
@@ -155,6 +155,36 @@ public class Database extends JavaPlugin {
             getLogger().warning("Closing connection.");
             killConnection(connection);
             return ret;
+        }
+
+    }
+
+    public ResultSet rawSelect(String query) {
+        if (!enabled) {
+            return null;
+        }
+        try {
+            killConnection(connection);
+            connection = DriverManager.getConnection(url,username,password);
+        } catch (Exception e) {
+            getLogger().warning("Unable to re-open connection");
+            getLogger().warning(e.getMessage());
+            return null;
+        }
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(query);
+
+            return results;
+        } catch (Exception e) {
+            getLogger().warning("select: Unable to run query:");
+            getLogger().warning(query);
+            getLogger().warning(e.getMessage());
+            e.printStackTrace();
+            getLogger().warning("Closing connection.");
+            killConnection(connection);
+            return null;
         }
 
     }
