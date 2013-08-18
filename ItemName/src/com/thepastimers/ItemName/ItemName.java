@@ -129,26 +129,26 @@ public class ItemName extends JavaPlugin {
             return false;
         }
 
-        PlayerInventory inv = p.getInventory();
+        ItemStack is = getItemFromName(item);
+        return giveItem(p,is,amount);
+    }
 
+    public boolean giveItem(Player p, ItemStack is, int amount) {
         int empty = 0;
+
+        PlayerInventory inv = p.getInventory();
 
         Iterator itor = inv.iterator();
 
         while (itor.hasNext()) {
-            ItemStack is = (ItemStack)itor.next();
+            ItemStack is2 = (ItemStack)itor.next();
 
-            if (is == null) {
+            if (is2 == null) {
                 empty ++;
                 continue;
             }
         }
 
-        ItemStack is = getItemFromName(item);
-        if (is == null) {
-            getLogger().warning("Unable to get item for " + item);
-            return false;
-        }
         int max = is.getMaxStackSize();
 
         int stacks = (int)Math.ceil(((double)amount)/((double)max));
@@ -183,6 +183,8 @@ public class ItemName extends JavaPlugin {
                 if (items[i] == null) {
                     ItemStack is2 = new ItemStack(is.getType(),toDo);
                     is2.setDurability(is.getDurability());
+                    is2.setData(is.getData());
+                    is2.setItemMeta(is.getItemMeta());
                     items[i] = is2;
                     break;
                 }

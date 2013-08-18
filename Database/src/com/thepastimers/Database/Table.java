@@ -103,7 +103,11 @@ public class Table {
                         Method m = myClass.getDeclaredMethod(function,argTypes);
                         m.invoke(instance,value);
                     } catch (Exception e) {
+<<<<<<< HEAD
                         // ignore
+=======
+                        // ignore it
+>>>>>>> 808676543f64d0a113e064bb1c1114a7613eb620
                     }
                 }
                 ret.add(instance);
@@ -149,7 +153,8 @@ public class Table {
                         Method m = myClass.getDeclaredMethod(function,argTypes);
                         value = m.invoke(this);
                     } catch (Exception e) {
-                        return false;
+                        // ignore
+                        continue;
                     }
 
                     cols.append(name);

@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.Skull;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -91,7 +94,13 @@ public class Pvp extends JavaPlugin implements Listener {
         if (name != null) {
             Player p = getServer().getPlayer(name);
             if (p != null) {
-                itemName.giveItem(p,"STEVE_HEAD",1);
+                ItemStack is = itemName.getItemFromName("STEVE_HEAD");
+                SkullMeta meta = (SkullMeta)is.getItemMeta();
+                String killed = event.getEntity().getName();
+                meta.setOwner(killed);
+                meta.setDisplayName(killed + "'s head");
+                is.setItemMeta(meta);
+                itemName.giveItem(p,is,1);
                 List<HeadCount> countList = (List<HeadCount>)database.select(HeadCount.class,"player = '" + database.makeSafe(p.getName()) + "'");
                 HeadCount count = null;
                 if (countList.size() == 0) {

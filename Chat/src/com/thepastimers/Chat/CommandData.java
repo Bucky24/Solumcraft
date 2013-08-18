@@ -31,6 +31,7 @@ public class CommandData extends Table {
     Timestamp time;
     boolean handled;
     String response;
+    boolean read;
 
     public int getId() {
         return id;
@@ -92,6 +93,14 @@ public class CommandData extends Table {
         this.response = response;
     }
 
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
     public static List<CommandData> parseResult(ResultSet result) throws SQLException {
         List<CommandData> ret = new ArrayList<CommandData>();
 
@@ -109,6 +118,7 @@ public class CommandData extends Table {
             p.setTime(result.getTimestamp("time"));
             p.setHandled(result.getBoolean("handled"));
             p.setResponse(result.getString("response"));
+            p.setRead(result.getBoolean("read"));
 
             ret.add(p);
         }
@@ -131,9 +141,9 @@ public class CommandData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(player,command,arguments,time,handled,response)";
+            String columns = "(player,command,arguments,time,handled,response,`read`)";
             String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(command) + "','" + d.makeSafe(arguments)
-                    + "','" + time + "'," + handled + ",'" + d.makeSafe(response) + "')";
+                    + "','" + time + "'," + handled + ",'" + d.makeSafe(response) + "'," + read + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -158,7 +168,8 @@ public class CommandData extends Table {
             query.append("arguments = '" + d.makeSafe(arguments) + "', ");
             query.append("time = '" + time + "', ");
             query.append("handled = " + handled + ", ");
-            query.append("response = '" + d.makeSafe(response) + "' ");
+            query.append("response = '" + d.makeSafe(response) + "', ");
+            query.append("`read` = " + read + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -168,7 +179,7 @@ public class CommandData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, string command, string arguments, timestamp time, boolean handled, string response");
+        builder.append(" int id, string player, string command, string arguments, timestamp time, boolean handled, string response, boolean read");
 
         return builder.toString();
     }

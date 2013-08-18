@@ -143,7 +143,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 if (!rank.setTitle(data.getPlayer(),title.toString())) {
                     response = ":red:Unable to set title";
                 } else {
-                    response = ":green:Title changed!";
+                    response = ":green:Title changed to " + title.toString();
                 }
             } else {
                 response = ":red:/setTitle <title>";
