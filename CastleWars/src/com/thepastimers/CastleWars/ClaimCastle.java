@@ -40,23 +40,25 @@ public class ClaimCastle extends BukkitRunnable {
             player.sendMessage(ChatColor.GREEN + "" +  time + " seconds remain before you claim this castle");
         }
         if (time <= 0) {
-            PlotData pd = PlotData.getPlotById(cd.getPlot());
-            String oldOwner = cd.getOwner();
-            cd.setOwner(player.getName());
-            pd.setName(player.getName() + "'s castle");
-            if (pd.save(database)) {
-                if (cd.save(database)) {
-                    player.sendMessage(ChatColor.GREEN + "You have successfully claimed this castle!");
-                    if ("Unclaimed".equalsIgnoreCase(oldOwner)) {
-                        plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just claimed a castle");
+            if (player != null) {
+                PlotData pd = PlotData.getPlotById(cd.getPlot());
+                String oldOwner = cd.getOwner();
+                cd.setOwner(player.getName());
+                pd.setName(player.getName() + "'s castle");
+                if (pd.save(database)) {
+                    if (cd.save(database)) {
+                        player.sendMessage(ChatColor.GREEN + "You have successfully claimed this castle!");
+                        if ("Unclaimed".equalsIgnoreCase(oldOwner)) {
+                            plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just claimed a castle");
+                        } else {
+                            plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just stolen a castle from " + oldOwner);
+                        }
                     } else {
-                        plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just stolen a castle from " + oldOwner);
+                        player.sendMessage(ChatColor.RED + "Unable to update castle!");
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED + "Unable to update castle!");
+                    player.sendMessage(ChatColor.RED + "Unable to update plot!");
                 }
-            } else {
-                player.sendMessage(ChatColor.RED + "Unable to update plot!");
             }
             this.cancel();
         } else {
