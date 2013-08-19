@@ -288,57 +288,52 @@ public class TradeSign extends JavaPlugin implements Listener {
             return;
         }
         if (data.getAmount() >= data.getDispense()) {
-            int prevCount = itemName.countInInventory(data.getContains(),p.getName());
+            if ((money == null || money.getBalance(p.getName()) < data.getCost()) && !owner) {
+                p.sendMessage(ChatColor.RED + "You don't have enough money to make this purchase");
+                return;
+            }
+
             if (itemName == null || !itemName.giveItem(p,data.getContains(),data.getDispense())) {
                 p.sendMessage(ChatColor.RED + "Unable to take item from sign");
-            } else {
-                if (itemName.countInInventory(data.getContains(),p.getName()) < prevCount + data.getDispense()) {
-                    p.sendMessage(ChatColor.RED + "Something went wrong and you were not credited your items.");
-                    return;
-                }
+                return;
+            }
 
-                if ((money == null || money.getBalance(p.getName()) < data.getCost()) && !owner) {
-                    p.sendMessage(ChatColor.RED + "You don't have enough money to make this purchase");
-                    return;
-                }
-
-                if (!owner) {
-                    if (!money.setBalance(p.getName(),money.getBalance(p.getName())-data.getCost())) {
-                        p.sendMessage(ChatColor.RED + "Unable to complete transaction-internal failure");
-                        itemName.takeItem(p,data.getContains(),data.getDispense());
-                        return;
-                    }
-                    money.setBalance(data.getPlayer(),money.getBalance(data.getPlayer())+data.getCost());
-                }
-
-                data.setAmount(data.getAmount()-data.getDispense());
-                if (!data.save(database)) {
-                    p.sendMessage(ChatColor.RED + "Unable to update sign");
+            if (!owner) {
+                if (!money.setBalance(p.getName(),money.getBalance(p.getName())-data.getCost())) {
+                    p.sendMessage(ChatColor.RED + "Unable to complete transaction-internal failure");
                     itemName.takeItem(p,data.getContains(),data.getDispense());
-                    money.setBalance(p.getName(),money.getBalance(p.getName())+data.getCost());
-                } else {
-                    s.setLine(2,"Has: " + data.getAmount());
-                    s.update();
-                    String purchaseString = ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost();
-                    if (owner) {
-                        purchaseString = ChatColor.GREEN + "You have removed " + data.getDispense() + " " + data.getContains() + " from this trade sign";
-                    } else {
-                        Purchase purchase = new Purchase();
-                        purchase.setPurchaser(p.getName());
-                        purchase.setFromPlayer(data.getPlayer());
-                        purchase.setItem(data.getContains());
-                        purchase.setAmount(data.getCostAsInt());
-                        purchase.setCount(data.getDispense());
-                        purchase.setSign(data.getId());
-                        Date date = new Date();
-                        purchase.setTime(new Timestamp(date.getTime()));
-                        if (!purchase.save(database)) {
-                            getLogger().warning("Unable to save purchase to database.");
-                        }
-                    }
-                    p.sendMessage(purchaseString);
-                    getLogger().info(p.getName() + " purchased " + data.getDispense() + " from sign at (" + data.getX() + "," + data.getY() + "," + data.getZ() + ")");
+                    return;
                 }
+                money.setBalance(data.getPlayer(),money.getBalance(data.getPlayer())+data.getCost());
+            }
+
+            data.setAmount(data.getAmount()-data.getDispense());
+            if (!data.save(database)) {
+                p.sendMessage(ChatColor.RED + "Unable to update sign");
+                itemName.takeItem(p,data.getContains(),data.getDispense());
+                money.setBalance(p.getName(),money.getBalance(p.getName())+data.getCost());
+            } else {
+                s.setLine(2,"Has: " + data.getAmount());
+                s.update();
+                String purchaseString = ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost();
+                if (owner) {
+                    purchaseString = ChatColor.GREEN + "You have removed " + data.getDispense() + " " + data.getContains() + " from this trade sign";
+                } else {
+                    Purchase purchase = new Purchase();
+                    purchase.setPurchaser(p.getName());
+                    purchase.setFromPlayer(data.getPlayer());
+                    purchase.setItem(data.getContains());
+                    purchase.setAmount(data.getCostAsInt());
+                    purchase.setCount(data.getDispense());
+                    purchase.setSign(data.getId());
+                    Date date = new Date();
+                    purchase.setTime(new Timestamp(date.getTime()));
+                    if (!purchase.save(database)) {
+                        getLogger().warning("Unable to save purchase to database.");
+                    }
+                }
+                p.sendMessage(purchaseString);
+                getLogger().info(p.getName() + " purchased " + data.getDispense() + " from sign at (" + data.getX() + "," + data.getY() + "," + data.getZ() + ")");
             }
         } else {
             p.sendMessage(ChatColor.RED + "This sign does not have enough in it to dispense");
@@ -358,7 +353,7 @@ public class TradeSign extends JavaPlugin implements Listener {
         String command = cmd.getName();
 
         if ("sign".equalsIgnoreCase(command)) {
-            if (permission == null || !permission.hasPermission(playerName,"sign_sign") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"sign_sign")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_sign)");
                 return true;
             }
@@ -479,9 +474,29 @@ public class TradeSign extends JavaPlugin implements Listener {
                     for (String key : amountMap.keySet()) {
                         sender.sendMessage(amountMap.get(key) + " " + key + " for $" + ((double)revenueMap.get(key))/100);
                     }
+                } else if("reload".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"sign_reload")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_reload)");
+                        return true;
+                    }
+
+                    List<SignData> signDataList = (List<SignData>)database.select(SignData.class,"");
+
+                    for (SignData sd : signDataList) {
+                        Block b = getServer().getWorld(sd.getWorld()).getBlockAt(sd.getX(),sd.getY(),sd.getZ());
+                        if (b.getType() ==  Material.SIGN_POST || b.getType() == Material.SIGN || b.getType() == Material.WALL_SIGN) {
+                            Sign s = (Sign)b.getState();
+                            s.setLine(0,"[SELL]");
+                            s.setLine(1,sd.getContains());
+                            s.setLine(2,"Has: " + sd.getAmount());
+                            s.setLine(3,"$" + sd.getCost() + " for " + sd.getDispense());
+                            s.update();
+                        }
+                    }
+
                 }
             } else {
-                sender.sendMessage("/sign <format" + /*|price|restore*/ "|report>");
+                sender.sendMessage("/sign <format" + /*|price|restore*/ "|report|reload>");
             }
         } else {
             return false;
