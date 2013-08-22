@@ -1,5 +1,5 @@
 name: ChestProtect
-version: 1.5
+version: 1.6
 main: com.thepastimers.ChestProtect.ChestProtect
 softdepend: [Database,Permission,Coord,Plot]
 commands:

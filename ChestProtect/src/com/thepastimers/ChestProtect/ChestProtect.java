@@ -13,6 +13,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Hopper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,7 +23,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.material.Door;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -344,6 +349,36 @@ public class ChestProtect extends JavaPlugin implements Listener {
             if (isProtected(b)) {
                 event.setCancelled(true);
                 return;
+            }
+        }
+    }
+
+    @EventHandler
+    public void hopper(InventoryPickupItemEvent event) {
+        Inventory inv =  event.getInventory();
+        InventoryHolder ih = inv.getHolder();
+        if (ih instanceof Chest) {
+            Chest c = (Chest)ih;
+            Block b = c.getBlock();
+            if (isProtected(b)) {
+                event.setCancelled(true);
+            }
+        } else if (ih instanceof DoubleChest) {
+            DoubleChest c = (DoubleChest)ih;
+            Block b = ((Chest)c.getLeftSide()).getBlock();
+            if (isProtected(b)) {
+                event.setCancelled(true);
+            }
+
+            b = ((Chest)c.getRightSide()).getBlock();
+            if (isProtected(b)) {
+                event.setCancelled(true);
+            }
+        } else if (ih instanceof Hopper) {
+            Hopper c = (Hopper)ih;
+            Block b = c.getBlock();
+            if (isProtected(b)) {
+                event.setCancelled(true);
             }
         }
     }
