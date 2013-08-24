@@ -168,7 +168,8 @@ public class ChestProtect extends JavaPlugin implements Listener {
     }
 
     public boolean canBeProtected(Block b) {
-        return (b.getType() == Material.CHEST || b.getType() == Material.WOOD_DOOR);
+        return (b.getType() == Material.CHEST || b.getType() == Material.WOOD_DOOR || b.getType() == Material.HOPPER
+        || b.getType() == Material.FURNACE || b.getType() == Material.BURNING_FURNACE);
     }
 
     private ProtectData addProtection(Block b, Player owner) {

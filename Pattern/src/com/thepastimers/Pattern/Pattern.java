@@ -98,6 +98,8 @@ public class Pattern extends JavaPlugin implements Listener {
             }
         }
 
+        getLogger().info("max/min: " + maxX + "/" + minX);
+
         return (maxX-minX);
     }
 

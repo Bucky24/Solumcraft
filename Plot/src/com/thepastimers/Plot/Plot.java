@@ -802,7 +802,7 @@ public class Plot extends JavaPlugin implements Listener {
                     int count = PlotData.getPlayerPlotCount(playerName);
 
                     if (!override && !subPlot) {
-                        cost = width*height*16+(width*height)*count*4;
+                        cost = width*height*8+(width*height)*count*4;
                         if (money == null) {
                             sender.sendMessage("This functionality is currently unavailable");
                         }

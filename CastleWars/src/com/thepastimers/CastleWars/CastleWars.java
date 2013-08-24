@@ -39,6 +39,9 @@ public class CastleWars extends JavaPlugin implements Listener {
     Map<Player,ClaimCastle> claims;
 
     static int MAX_LEVEL = 5;
+    // both of these in dollars
+    static int INCOME_PER_LEVEL = 50;
+    static int COST_PER_LEVEL = 2000;
 
     @Override
     public void onEnable() {
@@ -78,6 +81,9 @@ public class CastleWars extends JavaPlugin implements Listener {
 
         getLogger().info(CastleData.getTableInfo());
         CastleData.refreshCache(database,getLogger());
+
+        CastleIncome ci = new CastleIncome(this,database);
+        ci.runTaskTimer(this,0,20*60);
     }
 
     @Override
@@ -290,6 +296,43 @@ public class CastleWars extends JavaPlugin implements Listener {
         pattern.clearPattern(patternStr, off_x, c_y, off_z, pd.getWorld());
     }
 
+    public void triggerIncome() {
+        triggerIncome(false);
+    }
+
+    public void triggerIncome(boolean debug) {
+        if (database == null || money == null) {
+            if (debug) getLogger().info("triggerIncome aborting, database or money plugin not found");
+            return;
+        }
+
+        if (debug) {
+            getLogger().info("Running triggerIncome");
+        }
+
+        List<CastleData> castleDataList = (List<CastleData>)database.select(CastleData.class,"");
+
+        if (debug) {
+            getLogger().info("Got " + castleDataList.size() + " entries");
+        }
+
+        for (CastleData cd : castleDataList) {
+            if (debug) {
+                getLogger().info("Checking castle " + cd.getId() + ". Owner: " + cd.getOwner() + ", level " + cd.getLevel());
+            }
+
+            int amount = cd.getLevel()*INCOME_PER_LEVEL*100;
+            double d_amount = (double)amount;
+            d_amount /= 100;
+
+            if (debug) {
+                getLogger().info("Sending " + d_amount + " to player");
+            }
+
+            money.give(cd.getOwner(),d_amount);
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -408,7 +451,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                     Player p = (Player)sender;
                     Location l = p.getLocation();
 
-                    if (plot == null) {
+                    if (plot == null || money == null) {
                         sender.sendMessage(ChatColor.RED + "This command is not currently available");
                         return true;
                     }
@@ -434,6 +477,36 @@ public class CastleWars extends JavaPlugin implements Listener {
                         return true;
                     }
 
+                    boolean override = false;
+
+                    if (args.length > 1) {
+                        String flag = args[1];
+                        if (flag.equalsIgnoreCase("override")) {
+                            if (permission.hasPermission(playerName,"override")) {
+                                override = true;
+                                sender.sendMessage(ChatColor.GREEN + "Override enabled");
+                            }
+                        }
+                    }
+
+                    int cost = cd.getLevel()*COST_PER_LEVEL*100;
+                    double d_cost = (double)cost;
+                    d_cost /= 100;
+
+                    sender.sendMessage(ChatColor.GREEN + "It costs $" + d_cost + " to upgrade this castle.");
+
+                    if (!override) {
+                        if (money.getBalance(playerName) < d_cost) {
+                            sender.sendMessage(ChatColor.RED + "You do not have enough money to upgrade.");
+                            return true;
+                        }
+
+                        if (!money.give(playerName,-d_cost)) {
+                            sender.sendMessage(ChatColor.RED + "Unable to deduct cost.");
+                            return true;
+                        }
+                    }
+
                     cd.setLevel(cd.getLevel()+1);
                     if (!doesItFit(cd)) {
                         cd.setLevel(cd.getLevel()-1);
@@ -447,9 +520,16 @@ public class CastleWars extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage(ChatColor.RED + "Unable to upgrade castle");
                     }
+                } else if ("testIncome".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"castle_test_income") || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (castle_test_income)");
+                        return true;
+                    }
+
+                    triggerIncome(true);
                 }
             } else {
-                sender.sendMessage("/cw <create|remove|upgrade>");
+                sender.sendMessage("/cw <create|remove|upgrade|testIncome>");
             }
         } else {
             return false;
