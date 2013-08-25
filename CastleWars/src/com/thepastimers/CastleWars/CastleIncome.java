@@ -38,8 +38,9 @@ public class CastleIncome extends BukkitRunnable {
 
         String minutes = dateFormat.format(date);
 
-        plugin.getLogger().info("MINutes: " + minutes);
+        //plugin.getLogger().info("MINutes: " + minutes);
         if ("0".equalsIgnoreCase(minutes) || "00".equalsIgnoreCase(minutes)) {
+            plugin.getLogger().info("Triggering income");
             plugin.triggerIncome();
         }
     }

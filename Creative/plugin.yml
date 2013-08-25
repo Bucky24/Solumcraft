@@ -1,7 +1,7 @@
 name: Creative
-version: 1.0
+version: 1.1
 main: com.thepastimers.Creative.Creative
-softdepend: [Database,Permission]
+softdepend: [Database,Permission,Plot]
 commands:
     gm:
         description: Game Mode

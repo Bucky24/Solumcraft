@@ -513,17 +513,6 @@ public class Plot extends JavaPlugin implements Listener {
                     p.setGameMode(GameMode.CREATIVE);
                 }
 
-                for (Class c : plotEnterListener.keySet()) {
-                    try {
-                        JavaPlugin plugin = plotEnterListener.get(c);
-                        Class[] argTypes = new Class[] {PlotData.class,Player.class};
-                        Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
-                        m.invoke(plugin,p2,p);
-                    } catch (Exception e) {
-                        getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
-                    }
-                }
-
                 for (Class c : plotLeaveListener.keySet()) {
                     try {
                         JavaPlugin plugin = plotLeaveListener.get(c);
@@ -532,6 +521,17 @@ public class Plot extends JavaPlugin implements Listener {
                         m.invoke(plugin,p1,p);
                     } catch (Exception e) {
                         getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                    }
+                }
+
+                for (Class c : plotEnterListener.keySet()) {
+                    try {
+                        JavaPlugin plugin = plotEnterListener.get(c);
+                        Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                        Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
+                        m.invoke(plugin,p2,p);
+                    } catch (Exception e) {
+                        getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
                     }
                 }
             }
@@ -896,6 +896,17 @@ public class Plot extends JavaPlugin implements Listener {
                     }
 
                     sender.sendMessage("Attempting to remove plot");
+
+                    for (Class c : plotLeaveListener.keySet()) {
+                        try {
+                            JavaPlugin plugin = plotLeaveListener.get(c);
+                            Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                            Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
+                            m.invoke(plugin,pd,p);
+                        } catch (Exception e) {
+                            getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                        }
+                    }
 
                     if (!pd.delete(database)) {
                         sender.sendMessage("Unable to remove plot.");

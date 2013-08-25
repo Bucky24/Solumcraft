@@ -2,6 +2,9 @@ package com.thepastimers.Creative;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Plot.Plot;
+import com.thepastimers.Plot.PlotData;
+import com.thepastimers.Plot.PlotPerms;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -25,7 +28,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,9 +43,11 @@ import java.util.List;
 public class Creative extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    Plot plot;
 
     String allPerms = "creative_all";
     String commandPerm = "creative_command";
+    String creativePlot = "creative_plot_only";
 
     @Override
     public void onEnable() {
@@ -48,15 +56,21 @@ public class Creative extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this,this);
 
         database = (Database)getServer().getPluginManager().getPlugin("Database");
-
         if (database == null) {
             getLogger().warning("Unable to load Database module. Some functionality may not be available.");
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-
         if (permission == null) {
             getLogger().warning("Unable to load Permission module. Some functionality may not be available.");
+        }
+
+        plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
+        if (plot == null) {
+            getLogger().warning("Unable to load Plot module. Some functionality may not be available.");
+        } else {
+            getLogger().info("Registering plot handlers");
+            plot.registerPlotLeave(Creative.class,this);
         }
 
         getLogger().info("Creative loaded");
@@ -185,6 +199,18 @@ public class Creative extends JavaPlugin implements Listener {
         }
     }
 
+    public void handlePlotLeave(PlotData data, Player player) {
+        String playerName = player.getName();
+        if (permission == null) {
+            player.setGameMode(GameMode.SURVIVAL);
+            return;
+        }
+
+        if (permission.hasPermission(playerName,creativePlot)) {
+            player.setGameMode(GameMode.SURVIVAL);
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -223,6 +249,22 @@ public class Creative extends JavaPlugin implements Listener {
                         if (is != null && is.getType() != Material.AIR) {
                             empty = false;
                             break;
+                        }
+                    }
+
+                    if (permission.hasPermission(playerName,creativePlot)) {
+                        if (plot == null) {
+                            p.sendMessage(ChatColor.RED + "This action cannot be taken at this time");
+                            return true;
+                        }
+                        PlotData pd = plot.plotAt(p.getLocation());
+                        if (pd == null) {
+                            p.sendMessage(ChatColor.RED + "You can only use /gm inside a plot");
+                            return true;
+                        }
+                        if (plot.getPlotPerms(pd,playerName) < PlotPerms.OWNER) {
+                            p.sendMessage(ChatColor.RED + "You can only use /gm inside a plot that you own");
+                            return true;
                         }
                     }
 
