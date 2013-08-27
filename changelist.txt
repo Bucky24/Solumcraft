@@ -84,3 +84,7 @@ Reset volocity when teleporting to home, warps, etc.
 
 minigames: blockcraft (HiveMC.eu)
 there is player interest in mob arena, MobArena plugin
+
+world-limit the max homes, so each world has separate max home for peeps
+
+raise limit on chat spam filter, to avoid people being kicked when lagging

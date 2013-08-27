@@ -94,6 +94,10 @@ public class Warp extends JavaPlugin implements Listener {
 
                 WarpData wd = warpDataList.get(0);
                 Location l = new Location(getServer().getWorld(wd.getWorld()),wd.getX(),wd.getY(),wd.getZ());
+                if (l == null) {
+                    sender.sendMessage(ChatColor.RED + "This warp appears to be invalid");
+                    return true;
+                }
                 sender.sendMessage(ChatColor.GREEN + "Warping you to " + wd.getWarp());
                 Player p = (Player)sender;
                 p.teleport(l);
