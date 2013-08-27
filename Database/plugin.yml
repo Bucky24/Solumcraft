@@ -1,3 +1,6 @@
 name: Database
-version: 2.5
+version: 2.6
 main: com.thepastimers.Database.Database
+commands:
+    db:
+        description: none

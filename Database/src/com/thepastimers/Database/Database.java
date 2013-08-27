@@ -1,5 +1,8 @@
 package com.thepastimers.Database;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
@@ -8,7 +11,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -27,6 +32,8 @@ public class Database extends JavaPlugin {
     Connection connection;
 
     ResultSet generatedKeys;
+
+    Map<String,Integer> queryLog;
 
     @Override
     public void onEnable() {
@@ -58,6 +65,7 @@ public class Database extends JavaPlugin {
         }
 
         generatedKeys = null;
+        queryLog = new HashMap<String, Integer>();
 
         if (enabled) {
             getLogger().info("Database init successful");
@@ -96,6 +104,13 @@ public class Database extends JavaPlugin {
         if (where == "") {
             where = "1";
         }
+
+        int count = 0;
+        if (queryLog.containsKey(c.getName())) {
+            count = queryLog.get(c.getName());
+        }
+        count ++;
+        queryLog.put(c.getName(),count);
 
         String query = "SELECT ";
         if (!cache) {
@@ -172,6 +187,13 @@ public class Database extends JavaPlugin {
             return null;
         }
 
+        int count = 0;
+        if (queryLog.containsKey("raw")) {
+            count = queryLog.get("raw");
+        }
+        count ++;
+        queryLog.put("raw",count);
+
         try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
@@ -213,6 +235,13 @@ public class Database extends JavaPlugin {
             getLogger().warning("query: Unable to connect to database");
             return false;
         }*/
+
+        int count = 0;
+        if (queryLog.containsKey("query")) {
+            count = queryLog.get("query");
+        }
+        count ++;
+        queryLog.put("query",count);
 
         try {
             //if (connection.isClosed()) {
@@ -257,5 +286,43 @@ public class Database extends JavaPlugin {
 
     public ResultSet getGeneratedKeys() {
         return generatedKeys;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        String playerName = "";
+
+        if (sender instanceof Player) {
+            playerName = ((Player)sender).getName();
+        } else {
+            playerName = "CONSOLE";
+        }
+
+        String command = cmd.getName();
+
+        if ("db".equalsIgnoreCase(command)) {
+            if (!"CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage("This command is only available in console");
+                return true;
+            }
+
+            if (args.length > 0) {
+                String subCommand = args[0];
+
+                if ("clearLog".equalsIgnoreCase(subCommand)) {
+                    queryLog.clear();
+                } else if ("showLog".equalsIgnoreCase(subCommand)) {
+                    sender.sendMessage("DB query log:");
+                    for (String key : queryLog.keySet()) {
+                        sender.sendMessage(key + ": " + queryLog.get(key));
+                    }
+                }
+            } else {
+                sender.sendMessage("/db <clearLog|showLog>");
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 }

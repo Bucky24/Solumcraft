@@ -312,9 +312,34 @@ public class ExtCommands extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/clear cats <world>");
                     }
+                } else if ("chickens".equalsIgnoreCase(subCommand)) {
+                    if (args.length > 1) {
+                        String world = args[1];
+
+                        World w = getServer().getWorld(world);
+                        if (w == null) {
+                            sender.sendMessage(ChatColor.RED + "World '" + world + "' does not exist.");
+                            return true;
+                        }
+
+                        List<Entity> entities = getServer().getWorld(world).getEntities();
+
+                        int count = 0;
+
+                        for (Entity entity : entities) {
+                            if (entity.getType() == EntityType.CHICKEN) {
+                                entity.remove();
+                                count ++;
+                            }
+                        }
+
+                        sender.sendMessage("Removed " + count + " entities.");
+                    } else {
+                        sender.sendMessage("/clear chickens <world>");
+                    }
                 }
             } else {
-                sender.sendMessage("/clear <mobs|withers|cats>");
+                sender.sendMessage("/clear <mobs|withers|cats|chickens>");
             }
         } else if (command.equalsIgnoreCase("itemCheck")) {
             if (permission == null || !permission.hasPermission(playerName,"command_item_check")) {

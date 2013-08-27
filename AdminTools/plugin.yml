@@ -1,5 +1,5 @@
 name: AdminTools
-version: 0.9
+version: 1.0
 main: com.thepastimers.AdminTools.AdminTools
 softdepend: [Database,Permission]
 commands:
@@ -9,3 +9,5 @@ commands:
         description: kicks user
     pardon:
         description: pardon user
+    entities:
+        description: entities command

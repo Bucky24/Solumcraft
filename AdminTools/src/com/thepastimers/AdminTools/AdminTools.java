@@ -4,8 +4,11 @@ import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,9 +16,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -305,6 +306,40 @@ public class AdminTools extends JavaPlugin implements Listener {
                 p.kickPlayer(reason);
             } else {
                 sender.sendMessage("/kick <player> <reason>");
+            }
+        } else if ("entities".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"admin_entities")) {
+                sender.sendMessage("You don't have permission to use this command (admin_entities)");
+                return true;
+            }
+
+            if (args.length > 0) {
+                String subCommand = args[0];
+                if ("report".equalsIgnoreCase(subCommand)) {
+                    List<World> worlds = getServer().getWorlds();
+                    for (World w : worlds) {
+                        sender.sendMessage("World " + w.getName());
+
+                        List<Entity> entities = w.getEntities();
+
+                        Map<String,Integer> entityCount = new HashMap<String,Integer>();
+
+                        for (Entity entity : entities) {
+                            int count = 0;
+                            if (entityCount.containsKey(entity.getType().getName())) {
+                                count = entityCount.get(entity.getType().getName());
+                            }
+                            count ++;
+                            entityCount.put(entity.getType().getName(),count);
+                        }
+
+                        for (String key : entityCount.keySet()) {
+                            sender.sendMessage(key + ": " + entityCount.get(key));
+                        }
+                    }
+                }
+            } else {
+                sender.sendMessage("/entities <report>");
             }
         } else {
             return false;

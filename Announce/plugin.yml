@@ -1,0 +1,4 @@
+name: Announce
+version: 0.1
+main: com.thepastimers.Announce.Announce
+softdepend: [Database]
