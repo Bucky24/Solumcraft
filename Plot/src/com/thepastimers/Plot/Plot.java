@@ -433,7 +433,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void damageNormal(EntityDamageEvent event) {
         Entity damaged = event.getEntity();
         if (event instanceof EntityDamageByEntityEvent) {
@@ -443,7 +443,7 @@ public class Plot extends JavaPlugin implements Listener {
                 || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
                 event.setCancelled(true);
         }
-    }
+    }*/
 
     @EventHandler
     public void playerMove(PlayerMoveEvent event) {

@@ -88,17 +88,20 @@ public class Pattern extends JavaPlugin implements Listener {
         int minX = 0;
         int maxX = 0;
 
+        getLogger().info(patternName);
         ResultSet blocks = database.rawSelect("SELECT MIN(x),MAX(x) FROM pattern_block WHERE pattern = \"" + database.makeSafe(patternName) + "\"");
         if (blocks != null) {
             try {
+                blocks.first();
                 minX = blocks.getInt(1);
                 maxX = blocks.getInt(2);
             } catch (Exception e) {
-                // ignore
+                //getLogger().info("Exception " + e.getMessage());
+                //e.printStackTrace();
             }
         }
 
-        getLogger().info("max/min: " + maxX + "/" + minX);
+        //getLogger().info("max/min: " + maxX + "/" + minX);
 
         return (maxX-minX);
     }
@@ -110,6 +113,7 @@ public class Pattern extends JavaPlugin implements Listener {
         ResultSet blocks = database.rawSelect("SELECT MIN(z),MAX(z) FROM pattern_block WHERE pattern = \"" + database.makeSafe(patternName) + "\"");
         if (blocks != null) {
             try {
+                blocks.first();
                 minZ = blocks.getInt(1);
                 maxZ = blocks.getInt(2);
             } catch (Exception e) {

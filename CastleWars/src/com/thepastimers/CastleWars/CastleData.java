@@ -28,6 +28,7 @@ public class CastleData extends Table {
     int plot;
     int level;
     String owner;
+    int y;
 
     public int getPlot() {
         return plot;
@@ -53,6 +54,14 @@ public class CastleData extends Table {
         this.owner = owner;
     }
 
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public static List<CastleData> parseResult(ResultSet result) throws SQLException {
         List<CastleData> ret = new ArrayList<CastleData>();
 
@@ -67,6 +76,7 @@ public class CastleData extends Table {
             p.setPlot(result.getInt("plot"));
             p.setLevel(result.getInt("level"));
             p.setOwner(result.getString("owner"));
+            p.setY(result.getInt("y"));
 
             ret.add(p);
         }
@@ -79,8 +89,8 @@ public class CastleData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(plot,level,owner)";
-            String values = "(" + plot + "," + level + ",'" + d.makeSafe(owner) + "')";
+            String columns = "(plot,level,owner,y)";
+            String values = "(" + plot + "," + level + ",'" + d.makeSafe(owner) + "'," + y + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -104,7 +114,8 @@ public class CastleData extends Table {
 
             query.append("plot = " + plot + ", ");
             query.append("level = " + level + ", ");
-            query.append("owner = '" + owner + "' ");
+            query.append("owner = '" + owner + "', ");
+            query.append("y = " + y + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -114,7 +125,7 @@ public class CastleData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, int plot, int level, string owner");
+        builder.append(" int id, int plot, int level, string owner, int y");
 
         return builder.toString();
     }

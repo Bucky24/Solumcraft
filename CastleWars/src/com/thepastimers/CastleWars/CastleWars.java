@@ -123,11 +123,13 @@ public class CastleWars extends JavaPlugin implements Listener {
                     }
                 }
             }
-            ClaimCastle cc = new ClaimCastle(this,database,cd,10,p);
+            int timer = 60*cd.getLevel();
+            ClaimCastle cc = new ClaimCastle(this,database,cd,timer,p);
             cc.runTaskTimer(this,20,20);
             claims.put(p,cc);
+            int minutes = timer/60;
+            p.sendMessage(ChatColor.GREEN + "Remain in this plot for " + minutes + " minutes to capture this castle");
         }
-        //p.sendMessage(ChatColor.GREEN + "Remain in this plot for 5 minutes to capture this castle");
     }
 
     public void regenerateCastle(CastleData cd) {
@@ -151,28 +153,14 @@ public class CastleWars extends JavaPlugin implements Listener {
         int off_x = (p_x/2)-(c_x/2);
         int off_z = (p_z/2)-(c_z/2);
 
-        int c_y = -1;
-
-        // get height (first non-air block)
-        World w = getServer().getWorld(pd.getWorld());
-        //getLogger().info("Checking world " + pd.getWorld());
-        for (int i=w.getMaxHeight()-1;i>0;i--) {
-            Block b = w.getBlockAt(pd.getX1() + p_center_x,i,pd.getZ1() + p_center_z);
-            if (b.getType() != Material.AIR) {
-                c_y = i;
-                //getLogger().info("Found non air block at " + b.getType().name() + " at " + c_y);
-                break;
-            }
-        }
-
-        if (c_y == -1) return;
+        int c_y = cd.getY();
 
         //getLogger().info(pd.getX1() + " " + off_x);
 
         off_x += pd.getX1();
         off_z += pd.getZ1();
 
-        //getLogger().info("Creating castle " + patternStr + " at (" + off_x + "," + c_y + "," + off_z + ")");
+        getLogger().info("Creating castle " + patternStr + " at (" + off_x + "," + c_y + "," + off_z + ")");
 
         pattern.loadPattern(patternStr,off_x,c_y,off_z,pd.getWorld());
     }
@@ -208,21 +196,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         int off_x2 = (p_x2/2)-(c_x2/2);
         int off_z2 = (p_z2/2)-(c_z2/2);
 
-        int c_y = -1;
-
-        // get height (first non-air block)
-        World w = getServer().getWorld(pd.getWorld());
-        //getLogger().info("Checking world " + pd.getWorld());
-        for (int i=w.getMaxHeight()-1;i>0;i--) {
-            Block b = w.getBlockAt(pd.getX1() + p_center_x,i,pd.getZ1() + p_center_z);
-            if (b.getType() != Material.AIR) {
-                c_y = i;
-                //getLogger().info("Found non air block at " + b.getType().name() + " at " + c_y);
-                break;
-            }
-        }
-
-        if (c_y == -1) return;
+        int c_y = cd.getY();
 
         //getLogger().info(pd.getX1() + " " + off_x);
 
@@ -248,6 +222,8 @@ public class CastleWars extends JavaPlugin implements Listener {
         int p_x = pd.getX2()-pd.getX1();
         int p_z = pd.getZ2()-pd.getZ1();
 
+        getLogger().info("plot width: (" + p_x + "," + p_z + "), pattern width (" + c_x + "," + c_z + ")");
+
         return !(c_x > p_x || c_z > p_z);
     }
 
@@ -270,23 +246,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         int off_x = (p_x/2)-(c_x/2);
         int off_z = (p_z/2)-(c_z/2);
 
-        int c_y = -1;
-
-        // get height (first non-air block)
-        World w = getServer().getWorld(pd.getWorld());
-        //getLogger().info("Checking world " + pd.getWorld());
-        for (int i=w.getMaxHeight()-1;i>0;i--) {
-            Block b = w.getBlockAt(pd.getX1() + p_center_x,i,pd.getZ1() + p_center_z);
-            if (b.getType() != Material.AIR) {
-                c_y = i;
-                //getLogger().info("Found non air block at " + b.getType().name() + " at " + c_y);
-                break;
-            }
-        }
-
-        if (c_y == -1) return;
-
-        //getLogger().info(pd.getX1() + " " + off_x);
+        int c_y = cd.getY();
 
         off_x += pd.getX1();
         off_z += pd.getZ1();
@@ -382,15 +342,50 @@ public class CastleWars extends JavaPlugin implements Listener {
                         return true;
                     }
 
+                    int p_x = pd.getX2()-pd.getX1();
+                    int p_z = pd.getZ2()-pd.getZ1();
+
+                    //getLogger().info(pd.getX2() + "-" + pd.getX1() + "=" + p_x);
+
+                    // center the pattern in the plot
+                    int p_center_x = pd.getX1() + p_x/2;
+                    int p_center_z = pd.getZ1() + p_z/2;
+                    int c_y = -1;
+
+                    // get height (first non-air block)
+                    World w = getServer().getWorld(pd.getWorld());
+                    //getLogger().info("Checking world " + pd.getWorld());
+                    for (int i=l.getBlockY();i>0;i--) {
+                        int x = p_center_x;
+                        int z = p_center_z;
+                        Block b = w.getBlockAt(x,i,z);
+                        if (b.getType() != Material.AIR) {
+                            c_y = i;
+                            //getLogger().info("Found non air block at " + b.getType().name() + " at (" + x + "," + c_y + "," + z + ")");
+                            break;
+                        }
+                    }
+
+                    if (c_y == -1) {
+                        sender.sendMessage(ChatColor.RED + "Unable to find a suitable block below you");
+                        return true;
+                    }
+
                     CastleData cd = new CastleData();
                     cd.setPlot(pd.getId());
                     cd.setLevel(1);
                     cd.setOwner("Unclaimed");
+                    cd.setY(c_y);
 
                     pd.setOwner("Server");
                     pd.setPve(true);
                     pd.setName("Unclaimed castle");
                     pd.setPve(true);
+
+                    if (!doesItFit(cd)) {
+                        sender.sendMessage(ChatColor.RED + "It is not possible to fit a castle into this plot");
+                        return true;
+                    }
 
                     if (!pd.save(database)) {
                         sender.sendMessage(ChatColor.RED + "Unable to update plot information");

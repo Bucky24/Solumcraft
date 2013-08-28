@@ -109,7 +109,7 @@ public class Warp extends JavaPlugin implements Listener {
                 for (int i=0;i<warpDataList.size();i++) {
                     WarpData wd = warpDataList.get(i);
                     sb.append(wd.getWarp());
-                    // done so comma doensn't get appended to last entry
+                    // done so comma doens't get appended to last entry
                     if (i < warpDataList.size()-1) {
                         sb.append(",");
                     }
