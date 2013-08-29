@@ -1,5 +1,6 @@
 package com.thepastimers.CastleWars;
 
+import com.thepastimers.Chat.Chat;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
@@ -36,6 +37,8 @@ public class CastleWars extends JavaPlugin implements Listener {
     Permission permission;
     Money money;
     Pattern pattern;
+    Chat chat;
+
     Map<Player,ClaimCastle> claims;
 
     static int MAX_LEVEL = 5;
@@ -62,10 +65,15 @@ public class CastleWars extends JavaPlugin implements Listener {
         plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
         if (plot == null) {
             getLogger().warning("Unable to load Plot plugin. Some functionality may not be available");
+        } else {
+            plot.registerPlotEnter(CastleWars.class,this);
+            plot.registerPlotLeave(CastleWars.class,this);
         }
 
-        plot.registerPlotEnter(CastleWars.class,this);
-        plot.registerPlotLeave(CastleWars.class,this);
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat == null) {
+            getLogger().warning("Unable to load Chat plugin. Some functionality may not be available");
+        }
 
         claims = new HashMap<Player, ClaimCastle>();
 

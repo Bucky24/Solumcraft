@@ -50,8 +50,14 @@ public class ClaimCastle extends BukkitRunnable {
                         if (cd.save(database)) {
                             player.sendMessage(ChatColor.GREEN + "You have successfully claimed this castle!");
                             if ("Unclaimed".equalsIgnoreCase(oldOwner)) {
+                                if (plugin.chat != null) {
+                                    plugin.chat.saveMessage(":green:" + player.getName() + " has just claimed a castle",":red:Server");
+                                }
                                 plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just claimed a castle");
                             } else {
+                                if (plugin.chat != null) {
+                                    plugin.chat.saveMessage(":green:" + player.getName() + " has just stolen a castle from " + oldOwner,":red:Server");
+                                }
                                 plugin.getServer().broadcastMessage(ChatColor.GREEN + player.getName() + " has just stolen a castle from " + oldOwner);
                             }
                         } else {
