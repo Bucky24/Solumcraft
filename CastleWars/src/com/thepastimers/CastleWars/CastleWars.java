@@ -110,7 +110,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         } else {
             p.sendMessage(ChatColor.GREEN + "This castle is claimed by " + cd.getOwner());
         }
-        if (p.getName() != cd.getOwner()) {
+        if (!p.getName().equalsIgnoreCase(cd.getOwner())) {
             Player player = getServer().getPlayer(cd.getOwner());
             if (player != null) {
                 Location l = player.getLocation();
@@ -222,7 +222,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         int p_x = pd.getX2()-pd.getX1();
         int p_z = pd.getZ2()-pd.getZ1();
 
-        getLogger().info("plot width: (" + p_x + "," + p_z + "), pattern width (" + c_x + "," + c_z + ")");
+        //getLogger().info("plot width: (" + p_x + "," + p_z + "), pattern width (" + c_x + "," + c_z + ")");
 
         return !(c_x > p_x || c_z > p_z);
     }
