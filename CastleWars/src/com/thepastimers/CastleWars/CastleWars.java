@@ -380,7 +380,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                     pd.setOwner("Server");
                     pd.setPve(true);
                     pd.setName("Unclaimed castle");
-                    pd.setPve(true);
+                    pd.setPvp(true);
 
                     if (!doesItFit(cd)) {
                         sender.sendMessage(ChatColor.RED + "It is not possible to fit a castle into this plot");

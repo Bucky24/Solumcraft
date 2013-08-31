@@ -21,3 +21,5 @@ commands:
         description: set own title (if permissions)
     hide:
         description: Vanish player
+    spawnDragon:
+        description: Spawns Ender Dragon

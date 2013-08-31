@@ -440,6 +440,16 @@ public class ExtCommands extends JavaPlugin implements Listener {
             if (manager != null) {
                 manager.toggleVanish(p);
             }
+        } else if ("spawnDragon".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_dragon") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_dragon)");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            Location l = p.getLocation();
+
+            l.getWorld().spawnEntity(l,EntityType.ENDER_DRAGON);
         } else {
             return false;
         }
