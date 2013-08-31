@@ -148,13 +148,15 @@ public class Database extends JavaPlugin {
                 //killConnection(connection);
                 return ret;
             } catch (Exception e) {
+                //getLogger().warning("Could not call parseResult for class " + c.getName() + ", trying Table");
+                //e.printStackTrace();
                 try {
-                // try it with Table
-                Class[] argTypes = new Class[] {ResultSet.class,Class.class};
-                Method m = Table.class.getDeclaredMethod("parseResult",argTypes);
-                ret = (List<? extends Table>)m.invoke(null,results,c);
-                //killConnection(connection);
-                return ret;
+                    // try it with Table
+                    Class[] argTypes = new Class[] {ResultSet.class,Class.class};
+                    Method m = Table.class.getDeclaredMethod("parseResult",argTypes);
+                    ret = (List<? extends Table>)m.invoke(null,results,c);
+                    //killConnection(connection);
+                    return ret;
                 } catch (Exception e2) {
                     getLogger().warning("select: Unable to invoke parseResult for " + c.getName());
                     e2.printStackTrace();
