@@ -80,6 +80,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
         getLogger().info("Table info: ");
         getLogger().info(ProtectData.getTableInfo());
+        ProtectData.refreshCache(database,getLogger());
         getLogger().info(ProtectPerm.getTableInfo());
 
         getLogger().info("ChestProtect init complete");
@@ -95,14 +96,9 @@ public class ChestProtect extends JavaPlugin implements Listener {
             return null;
         }
 
-        List<ProtectData> data = (List<ProtectData>)database.select(ProtectData.class,"x = " + x + " and y = " + y
-                + " and z = " + z + " and world = '" + database.makeSafe(world) + "'");
+        ProtectData data = ProtectData.getProtectionAt(x,y,z,world);
 
-        if (data.size() == 0) {
-            return null;
-        }
-
-        return data.get(0);
+        return data;
     }
 
     private int numberOfProtections(String player) {

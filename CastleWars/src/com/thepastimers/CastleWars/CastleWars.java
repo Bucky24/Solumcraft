@@ -17,7 +17,9 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -100,6 +102,25 @@ public class CastleWars extends JavaPlugin implements Listener {
     }
 
     public void handlePlotLeave(PlotData pd,Player p) {
+        CastleData cd = CastleData.getCastleForPlot(pd);
+        if (cd == null) return;
+
+        if (claims.containsKey(p)) {
+            ClaimCastle claimCastle = claims.get(p);
+            claimCastle.cancel();
+        }
+    }
+
+    @EventHandler
+    public void death(PlayerDeathEvent event) {
+        Player p = event.getEntity();
+        Location l = p.getLocation();
+        PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+        if (pd == null) {
+            pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+        }
+        if (pd == null) return;
+
         CastleData cd = CastleData.getCastleForPlot(pd);
         if (cd == null) return;
 

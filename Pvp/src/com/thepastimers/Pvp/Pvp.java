@@ -81,13 +81,13 @@ public class Pvp extends JavaPlugin implements Listener {
             //getLogger().info("message 2: " + message);
             name = message;
         } else if (message.contains("shot by")) {
-            //getLogger().info("killed by player");
+            getLogger().info("killed by player");
             String[] parts = message.split("shot by ");
             message = parts[1];
-            //getLogger().info("message now:" + message);
-            parts = message.split("\\.");
+            getLogger().info("message now:" + message);
+            parts = message.split(" ");
             message = parts[0];
-            //getLogger().info("message 2: " + message);
+            getLogger().info("message 2: " + message);
             name = message;
         }
 

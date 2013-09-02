@@ -452,9 +452,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     private boolean handleMove(Location l, Location l2, Player p) {
         PlotData p1 = plotAt(l,true);
-        if (p1 == null) p1 = plotAt(l,false);
+        if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, 1);
         PlotData p2 = plotAt(l2,true);
-        if (p2 == null) p2 = plotAt(l2,false);
+        if (p2 == null) p2 = PlotData.getPlotAtLocation(l2, false, 1);
 
         if (p2 != null && p1 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());

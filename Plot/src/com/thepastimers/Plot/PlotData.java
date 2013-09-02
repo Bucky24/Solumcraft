@@ -290,7 +290,15 @@ public class PlotData extends Table {
 
     // table specific get instructions
 
+    public static PlotData getPlotAtLocation(Location l, boolean subPlot, int overlap) {
+        return getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),subPlot,overlap);
+    }
+
     public static PlotData getPlotAtLocation(int x, int z, String world, boolean subPlot) {
+        return getPlotAtLocation(x,z,world,subPlot,0);
+    }
+
+    public static PlotData getPlotAtLocation(int x, int z, String world, boolean subPlot, int overlap) {
         PlotData pd = null;
 
         if (world == null) {
@@ -300,8 +308,8 @@ public class PlotData extends Table {
         for (Integer i : dataMap.keySet()) {
             PlotData data = dataMap.get(i);
 
-            if (data.getX1() <= x && data.getX2() >= x
-                    && data.getZ1() <= z && data.getZ2() >= z
+            if (data.getX1()-overlap <= x && data.getX2()+overlap >= x
+                    && data.getZ1()-overlap <= z && data.getZ2()+overlap >= z
                     && world.equalsIgnoreCase(data.getWorld()) && data.isSubPlot() == subPlot) {
                 pd = data;
                 break;

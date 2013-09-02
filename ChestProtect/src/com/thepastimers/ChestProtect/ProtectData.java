@@ -2,11 +2,15 @@ package com.thepastimers.ChestProtect;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
+import org.bukkit.Location;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +23,8 @@ public class ProtectData extends Table {
     public static String table = "protect";
 
     int id;
+
+    private static Map<Integer,ProtectData> dataMap;
 
     public ProtectData() {
         id = -1;
@@ -119,7 +125,11 @@ public class ProtectData extends Table {
         if (d == null) {
             return false;
         }
-        return d.query("DELETE FROM " + table + " WHERE ID = " + id);
+        boolean result =  d.query("DELETE FROM " + table + " WHERE ID = " + id);
+        if (result) {
+            dataMap.remove(id);
+        }
+        return result;
     }
 
     public boolean save(Database d) {
@@ -138,9 +148,11 @@ public class ProtectData extends Table {
                 try {
                     if (keys.next()) {
                         setId(keys.getInt(1));
+                        dataMap.put(getId(), this);
                     }
                 } catch (SQLException e) {
                     // fallback method
+                    refreshCache(d,null);
                 }
             }
 
@@ -167,5 +179,40 @@ public class ProtectData extends Table {
         builder.append(" int id, string owner, int x, int y, int z, string world, int link");
 
         return builder.toString();
+    }
+
+    public static void refreshCache(Database d, Logger l) {
+        if (d == null) {
+            return;
+        }
+        List<ProtectData> ProtectDataList = (List<ProtectData>)d.select(ProtectData.class,"");
+
+        dataMap = new HashMap<Integer, ProtectData>();
+
+        if (ProtectDataList == null) {
+            return;
+        }
+
+        for (ProtectData pd : ProtectDataList) {
+            dataMap.put(pd.getId(),pd);
+        }
+
+        if (l != null) {
+            l.info("Cache refresh complete, have " + dataMap.keySet().size() + " entries.");
+        }
+    }
+
+    public static ProtectData getProtectionAt(Location l) {
+        return getProtectionAt(l.getBlockX(),l.getBlockY(),l.getBlockZ(),l.getWorld().getName());
+    }
+
+    public static ProtectData getProtectionAt(int x, int y, int z, String world) {
+        for (Integer id : dataMap.keySet()) {
+            ProtectData pd = dataMap.get(id);
+            if (pd.getX() == x && pd.getY() == y && pd.getZ() == z && pd.getWorld().equalsIgnoreCase(world)) {
+                return pd;
+            }
+        }
+        return null;
     }
 }
