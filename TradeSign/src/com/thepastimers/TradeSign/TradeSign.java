@@ -263,13 +263,8 @@ public class TradeSign extends JavaPlugin implements Listener {
                     }
                 }
 
-                if (itemName.isEnchanted(is)) {
-                    p.sendMessage(ChatColor.RED + "You cannot sell this item in a trade sign");
-                    return;
-                }
-
                 int count = itemName.countInInventory(item,p.getName());
-                if (itemName.takeItem(p,item,count,true)) {
+                if (itemName.takeItem(p,item,count,true,true)) {  // remove, disallowing damaged items, disallowing enchanted items
                     data.setAmount(data.getAmount() + count);
 
                     if (!data.save(database)) {

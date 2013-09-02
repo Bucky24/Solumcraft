@@ -200,10 +200,10 @@ public class ItemName extends JavaPlugin {
     }
 
     public boolean takeItem(Player p, String item, int amount) {
-        return takeItem(p,item,amount,false);
+        return takeItem(p,item,amount,false,false);
     }
 
-    public boolean takeItem(Player p, String item, int amount, boolean checkDurability) {
+    public boolean takeItem(Player p, String item, int amount, boolean checkDurability, boolean checkEnchantments) {
         //getLogger().info("Take item " + p + " "+ item + " " + amount);
         if (p == null || item == null || amount < 0) {
             return false;
@@ -225,10 +225,15 @@ public class ItemName extends JavaPlugin {
             String name = getItemName(is);
             if (name != null && item.equalsIgnoreCase(name)) {
                 if (isTool(name)) {
-                    if (is.getDurability() > 0) {
-                        p.sendMessage(ChatColor.RED + "One of the items you are trying to add to the sign is damaged. At this time, you cannot add damaged items to trade signs.");
+                    if (is.getDurability() > 0 && checkDurability) {
+                        p.sendMessage(ChatColor.RED + "Damaged items are not allowed.");
                         return false;
                     }
+                }
+
+                if (isEnchanted(is) && checkEnchantments) {
+                    p.sendMessage(ChatColor.RED + "Enchanted items are not allowed.");
+                    return false;
                 }
             }
         }
