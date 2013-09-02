@@ -136,7 +136,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                         p.sendMessage(ChatColor.RED + "This action is not currently possible");
                         event.setCancelled(true);
                     } else {
-                        if (!"".equalsIgnoreCase(data.getContains()) && itemName.giveItem(p,data.getContains(),data.getAmount())) {
+                        if ("".equalsIgnoreCase(data.getContains()) || itemName.giveItem(p,data.getContains(),data.getAmount())) {
                             if (!data.delete(database)) {
                                 p.sendMessage(ChatColor.RED + "Unable to remove sign");
                                 itemName.takeItem(p,data.getContains(),data.getAmount());
@@ -262,6 +262,12 @@ public class TradeSign extends JavaPlugin implements Listener {
                         return;
                     }
                 }
+
+                if (itemName.isEnchanted(is)) {
+                    p.sendMessage(ChatColor.RED + "You cannot sell this item in a trade sign");
+                    return;
+                }
+
                 int count = itemName.countInInventory(item,p.getName());
                 if (itemName.takeItem(p,item,count,true)) {
                     data.setAmount(data.getAmount() + count);

@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
@@ -255,6 +256,23 @@ public class ItemName extends JavaPlugin {
         inv.setContents(items);
 
         return true;
+    }
+
+    public boolean isEnchanted(ItemStack is)
+    {
+        if (is == null) return false;
+
+        Material t = is.getType();
+        if (t == Material.ENCHANTED_BOOK) {
+            return true;
+        }
+        Map<Enchantment, Integer> m = is.getEnchantments();
+
+        if (m.keySet().size() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     public boolean isTool(String item) {

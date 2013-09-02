@@ -1,5 +1,5 @@
 name: TradeSign
-version: 0.7
+version: 0.8
 main: com.thepastimers.TradeSign.TradeSign
 softdepend: [Database,Money,Rank,Permission,ItemName,Coord]
 commands:
