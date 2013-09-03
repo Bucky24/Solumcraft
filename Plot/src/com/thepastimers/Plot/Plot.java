@@ -632,9 +632,25 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void explode(EntityExplodeEvent event) {
+        //getLogger().info("Explosion!");
         Location l = event.getLocation();
 
         PlotData plot = plotAt(l);
+
+        List<Block> blockList = event.blockList();
+        Iterator itor = blockList.iterator();
+
+        //getLogger().info(blockList.size() + " were damaged");
+
+        while (itor.hasNext()) {
+            Block b = (Block)itor.next();
+
+            PlotData p = plotAt(b.getLocation());
+            if (p != null) {
+                itor.remove();
+            }
+        }
+        //getLogger().info("Now have " + blockList.size());
 
         if (plot != null) {
             if (event.getEntity() instanceof TNTPrimed) {
@@ -642,18 +658,6 @@ public class Plot extends JavaPlugin implements Listener {
             }
             if (event.getEntity() instanceof Creeper && !plot.isPve()) {
                 event.setCancelled(true);
-            }
-        } else {
-            List<Block> blockList = event.blockList();
-
-            Iterator itor = blockList.iterator();
-            while (itor.hasNext()) {
-                Block b = (Block)itor.next();
-
-                PlotData p = plotAt(b.getLocation());
-                if (p != null) {
-                    itor.remove();
-                }
             }
         }
     }

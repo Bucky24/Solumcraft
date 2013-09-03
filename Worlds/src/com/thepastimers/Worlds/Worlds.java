@@ -1,9 +1,12 @@
 package com.thepastimers.Worlds;
 
-import org.bukkit.entity.EntityType;
+import org.bukkit.Location;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -32,17 +35,26 @@ public class Worlds extends JavaPlugin implements Listener {
     public void spawn(CreatureSpawnEvent event) {
         EntityType type = event.getEntityType();
 
-       //getLogger().info("Creature spawning");
-        if (!"economy".equalsIgnoreCase(event.getLocation().getWorld().getName())) {
-            return;
-        }
-
         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CHUNK_GEN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
+
+            if (!"economy".equalsIgnoreCase(event.getLocation().getWorld().getName())) {
+                return;
+            }
+
             event.setCancelled(true);
             event.getEntity().setHealth(0);
         } else {
-            getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name());
+            getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name() + " type: " + event.getEntity().getType().name());
+            if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
+                Entity e = event.getEntity();
+                Location l = e.getLocation();
+                getLogger().info("Spawn egg used at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
+                for (Player p : getServer().getOnlinePlayers()) {
+                    Location l2 = p.getLocation();
+                    getLogger().info(p.getName() + " at (" + l2.getBlockX() + "," + l2.getBlockY() + "," + l2.getBlockZ() + "," + l2.getWorld().getName() + ")");
+                }
+            }
         }
     }
 }
