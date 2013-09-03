@@ -2,6 +2,7 @@ package com.thepastimers.Mail;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import java.util.List;
 public class Mail extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -43,6 +45,11 @@ public class Mail extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Permission module. Some functionality may not be available.");
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Printing table data:");
         getLogger().info(MailData.getTableInfo());
 
@@ -56,6 +63,9 @@ public class Mail extends JavaPlugin implements Listener {
 
     @EventHandler
     public void login(PlayerJoinEvent event) {
+        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+            return;
+        }
         if (database == null) {
             return;
         }
@@ -126,6 +136,10 @@ public class Mail extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

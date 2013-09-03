@@ -4,6 +4,7 @@ import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,6 +34,7 @@ public class Home extends JavaPlugin implements Listener {
     Permission permission;
     Rank rank;
     CombatLog combatLog;
+    Worlds worlds;
 
     Map<HomeData,Date> lastHome;
 
@@ -60,6 +62,11 @@ public class Home extends JavaPlugin implements Listener {
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
         if (combatLog == null) {
             getLogger().warning("Cannot load CombatLog plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         lastHome = new HashMap<HomeData,Date>();
@@ -293,6 +300,10 @@ public class Home extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

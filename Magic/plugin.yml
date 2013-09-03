@@ -1,7 +1,7 @@
 name: Magic
-version: 1.2
+version: 1.3
 main: com.thepastimers.Magic.Magic
-softdepend: [Database,Permission,ItemName]
+softdepend: [Database,Permission,ItemName,Worlds]
 commands:
     cast:
         description: cast spell

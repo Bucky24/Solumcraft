@@ -2,6 +2,7 @@ package com.thepastimers.Login;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -22,6 +23,7 @@ import java.util.List;
 public class Login extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -37,6 +39,11 @@ public class Login extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info(LoginData.getTableInfo());
@@ -57,6 +64,10 @@ public class Login extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

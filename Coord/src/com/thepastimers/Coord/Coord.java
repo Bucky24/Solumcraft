@@ -1,6 +1,7 @@
 package com.thepastimers.Coord;
 
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -28,6 +29,7 @@ import java.util.*;
  */
 public class Coord extends JavaPlugin implements Listener {
     Permission permission;
+    Worlds worlds;
 
     Map<String,Queue<CoordData>> coords;
 
@@ -45,12 +47,17 @@ public class Coord extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Permission plugin. Some functionality may not be available");
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Coord init complete");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Corrd disable");
+        getLogger().info("Coord disable");
     }
 
     public void addCoord(String player, CoordData cd) {
@@ -110,6 +117,9 @@ public class Coord extends JavaPlugin implements Listener {
      public void blockDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();
+        if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            return;
+        }
         if (permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
             if (p.getItemInHand().getType() == Material.STICK) {
                 Location l = b.getLocation();
@@ -127,6 +137,9 @@ public class Coord extends JavaPlugin implements Listener {
     @EventHandler
     public void hitBlock(PlayerInteractEvent event) {
         Player p = event.getPlayer();
+        if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            return;
+        }
         Block b = event.getClickedBlock();
         if (b == null) return;
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
@@ -147,6 +160,9 @@ public class Coord extends JavaPlugin implements Listener {
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
+        if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            return;
+        }
         Block b = event.getBlock();
         if (p.getGameMode() == GameMode.CREATIVE && permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
             if (p.getItemInHand().getType() == Material.STICK) {
@@ -170,6 +186,10 @@ public class Coord extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

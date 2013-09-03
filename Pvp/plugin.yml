@@ -1,4 +1,4 @@
 name: Pvp
-version: 0.4
+version: 0.5
 main: com.thepastimers.Pvp.Pvp
-softdepend: [Database,ItemName,Chat]
+softdepend: [Database,ItemName,Chat,Worlds]

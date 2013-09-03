@@ -9,6 +9,7 @@ import com.thepastimers.Pattern.Pattern;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Plot.Plot;
 import com.thepastimers.Plot.PlotData;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +41,7 @@ public class CastleWars extends JavaPlugin implements Listener {
     Money money;
     Pattern pattern;
     Chat chat;
+    Worlds worlds;
 
     Map<Player,ClaimCastle> claims;
 
@@ -82,6 +84,11 @@ public class CastleWars extends JavaPlugin implements Listener {
         money = (Money)getServer().getPluginManager().getPlugin("Money");
         if (money == null) {
             getLogger().warning("Unable to load Money plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         pattern = (Pattern)getServer().getPluginManager().getPlugin("Pattern");
@@ -330,6 +337,10 @@ public class CastleWars extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

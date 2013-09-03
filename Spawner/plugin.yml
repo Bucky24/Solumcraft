@@ -1,7 +1,7 @@
 name: Spawner
-version: 0.3
+version: 0.4
 main: com.thepastimers.Spawner.Spawner
-softdepend: [Database,Permission]
+softdepend: [Database,Permission,Worlds]
 commands:
     createspawn:
         description: creates a spawn point

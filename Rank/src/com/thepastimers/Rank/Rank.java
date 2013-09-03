@@ -3,6 +3,7 @@ package com.thepastimers.Rank;
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.ChatData;
 import com.thepastimers.Database.Database;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,6 +26,7 @@ import java.util.List;
 public class Rank extends JavaPlugin implements Listener {
     Database database;
     Chat chat;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -43,6 +45,11 @@ public class Rank extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
         } else {
             chat.register(Rank.class,this,1);
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -348,6 +355,10 @@ public class Rank extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

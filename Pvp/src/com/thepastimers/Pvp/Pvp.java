@@ -5,6 +5,7 @@ import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.ChatData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +28,7 @@ public class Pvp extends JavaPlugin implements Listener {
     Database database;
     ItemName itemName;
     Chat chat;
+    Worlds worlds;
     String world = "world";
 
     @Override
@@ -54,6 +56,11 @@ public class Pvp extends JavaPlugin implements Listener {
             chat.register(Pvp.class,this,2);
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Printing table data:");
         getLogger().info(Heads.getTableInfo());
         getLogger().info(HeadCount.getTableInfo());
@@ -68,6 +75,9 @@ public class Pvp extends JavaPlugin implements Listener {
 
     @EventHandler
     public void killed(PlayerDeathEvent event) {
+        if (worlds != null && worlds.getPlayerWorldType(event.getEntity().getName()) == Worlds.VANILLA) {
+            return;
+        }
         String message = event.getDeathMessage();
         //getLogger().info("Death: " + message);
         String name = null;

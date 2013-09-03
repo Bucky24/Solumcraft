@@ -3,6 +3,7 @@ package com.thepastimers.Money;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -33,6 +34,7 @@ public class Money extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     ItemName itemName;
+    Worlds worlds;
 
     String economyWorld = "economy";
 
@@ -66,6 +68,11 @@ public class Money extends JavaPlugin implements Listener {
             getLogger().warning("Unable to connection to ItemName plugin. Critical error!");
             getServer().broadcastMessage(ChatColor.RED + "Money plugin was unable to connect to ItemName plugin.");
             getServer().broadcastMessage(ChatColor.RED + "Commands such as /sell will be unavailable");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info");
@@ -234,6 +241,10 @@ public class Money extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

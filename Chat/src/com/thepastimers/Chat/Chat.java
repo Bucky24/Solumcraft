@@ -1,6 +1,7 @@
 package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import java.util.*;
  */
 public class Chat extends JavaPlugin implements Listener {
     Database database;
+    Worlds worlds;
     Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
@@ -38,6 +40,11 @@ public class Chat extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info(ChatData.getTableInfo());

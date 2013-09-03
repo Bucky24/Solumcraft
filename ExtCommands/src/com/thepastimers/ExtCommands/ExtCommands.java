@@ -5,6 +5,7 @@ import com.thepastimers.Chat.CommandData;
 import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +41,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
     Chat chat;
     VanishPlugin vanishNoPacket;
     VanishManager manager;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -69,6 +71,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Chat plugin.");
         } else {
             chat.registerCommand("setTitle",ExtCommands.class,this);
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
@@ -162,6 +169,10 @@ public class ExtCommands extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

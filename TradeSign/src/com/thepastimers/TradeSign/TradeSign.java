@@ -7,6 +7,7 @@ import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -41,6 +42,7 @@ public class TradeSign extends JavaPlugin implements Listener {
     ItemName itemName;
     Permission permission;
     Coord coord;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -79,6 +81,11 @@ public class TradeSign extends JavaPlugin implements Listener {
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
         if (coord == null) {
             getLogger().warning("Unable to load Coord plugin. Some functionality will not be available.");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -349,6 +356,10 @@ public class TradeSign extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

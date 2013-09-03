@@ -3,6 +3,7 @@ package com.thepastimers.Edit;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ import java.util.Map;
 public class Edit extends JavaPlugin {
     Permission permission;
     Coord coord;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -46,6 +48,11 @@ public class Edit extends JavaPlugin {
 
         if (coord == null) {
             getLogger().warning("Unable to load Coord plugin");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Edit init complete");
@@ -64,6 +71,10 @@ public class Edit extends JavaPlugin {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

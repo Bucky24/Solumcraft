@@ -1,7 +1,7 @@
 name: ChestProtect
-version: 1.7
+version: 1.8
 main: com.thepastimers.ChestProtect.ChestProtect
-softdepend: [Database,Permission,Coord,Plot]
+softdepend: [Database,Permission,Coord,Plot,Worlds]
 commands:
     protect:
         description: Chest protection command

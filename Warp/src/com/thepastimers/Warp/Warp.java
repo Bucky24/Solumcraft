@@ -3,6 +3,7 @@ package com.thepastimers.Warp;
 import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -24,6 +25,7 @@ public class Warp extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     CombatLog combatLog;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -46,6 +48,11 @@ public class Warp extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load CombatLog plugin. Some functionality may not be available");
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Table info:");
         getLogger().info(WarpData.getTableInfo());
 
@@ -65,6 +72,10 @@ public class Warp extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

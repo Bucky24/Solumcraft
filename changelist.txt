@@ -88,3 +88,28 @@ there is player interest in mob arena, MobArena plugin
 world-limit the max homes, so each world has separate max home for peeps
 
 raise limit on chat spam filter, to avoid people being kicked when lagging
+
+Updating plugins to not work on vanilla worlds:
+CastleWars 1
+Chat
+ChestProtect 1
+Coord 1
+Creative
+Edit 1
+ExtCommands 
+Farming 1
+Home 1
+Kit 1
+Login 1
+Magic 1
+Mail 1
+Money 1
+Pattern 1
+Plot 1
+Pvp 1
+Pyro 1
+Rank 1
+Spawner 1
+Teleport 1
+TradeSign 1
+Warp 1

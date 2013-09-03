@@ -1,7 +1,7 @@
 name: Edit
-version: 0.7
+version: 0.8
 main: com.thepastimers.Edit.Edit
-softdepend: [Permission,Coord]
+softdepend: [Permission,Coord,Worlds]
 commands:
     check:
         description: get material name of block

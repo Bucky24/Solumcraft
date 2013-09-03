@@ -6,6 +6,7 @@ import com.thepastimers.Database.Database;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.ChestProtect.ChestProtect;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,6 +48,7 @@ public class Plot extends JavaPlugin implements Listener {
     Permission permission;
     Coord coord;
     Money money;
+    Worlds worlds;
     Map<Class,JavaPlugin> plotEnterListener;
     Map<Class,JavaPlugin> plotLeaveListener;
 
@@ -80,6 +82,11 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (money == null) {
             getLogger().warning("Unable to load Money plugin. some functionality may not be available.");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -682,6 +689,10 @@ public class Plot extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

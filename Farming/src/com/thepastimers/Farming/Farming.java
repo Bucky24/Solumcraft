@@ -2,6 +2,7 @@ package com.thepastimers.Farming;
 
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -27,6 +28,7 @@ import java.util.List;
 public class Farming extends JavaPlugin implements Listener {
     Permission permission;
     ItemName itemName;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -44,6 +46,11 @@ public class Farming extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load ItemName plugin. Some functionality may not be available.");
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Farming init complete");
     }
 
@@ -54,6 +61,9 @@ public class Farming extends JavaPlugin implements Listener {
 
     @EventHandler
     public void playerThing(PlayerInteractEvent event) {
+        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+            return;
+        }
         if (event.getAction() == Action.PHYSICAL) {
             if (event.getClickedBlock().getType() == Material.SOIL) {
                 if (permission != null && permission.hasPermission(event.getPlayer().getName(),"farming_break")) {
@@ -66,6 +76,9 @@ public class Farming extends JavaPlugin implements Listener {
 
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
+        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+            return;
+        }
         Player p = event.getPlayer();
         Block b = event.getBlock();
         if (b.getType() == Material.CROPS && b.getData() == 7) {

@@ -7,6 +7,7 @@ import com.thepastimers.Permission.Permission;
 import com.thepastimers.Plot.Plot;
 import com.thepastimers.Plot.PlotData;
 import com.thepastimers.Plot.PlotPerms;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,6 +45,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
     Permission permission;
     Coord coord;
     Plot plot;
+    Worlds worlds;
     int MAX_PROTECTIONS = 2;
 
     @Override
@@ -76,6 +78,11 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
         if (plot == null) {
             getLogger().warning("Unable to connect to Plot plugin.");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -388,6 +395,10 @@ public class ChestProtect extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

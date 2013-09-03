@@ -4,6 +4,7 @@ import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -29,6 +30,7 @@ public class Pattern extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Coord coord;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -49,6 +51,11 @@ public class Pattern extends JavaPlugin implements Listener {
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
         if (coord == null) {
             getLogger().warning("Unable to load Coord plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info:");
@@ -132,6 +139,10 @@ public class Pattern extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

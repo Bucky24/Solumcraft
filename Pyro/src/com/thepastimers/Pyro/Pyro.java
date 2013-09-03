@@ -1,5 +1,6 @@
 package com.thepastimers.Pyro;
 
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,6 +21,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Pyro extends JavaPlugin implements Listener {
+    Worlds worlds;
     public String world = "world";
     int chance = 500;
 
@@ -28,6 +30,11 @@ public class Pyro extends JavaPlugin implements Listener {
         getLogger().info("Pyro init");
 
         getServer().getPluginManager().registerEvents(this,this);
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
 
         getLogger().info("Pyro init complete");
     }
@@ -39,6 +46,9 @@ public class Pyro extends JavaPlugin implements Listener {
 
     @EventHandler
     public void fireDestroy(BlockBurnEvent event) {
+        if (worlds != null && worlds.getWorldType(event.getBlock().getWorld().getName()) == Worlds.VANILLA) {
+            return;
+        }
         List<Block> neighbors = new ArrayList<Block>();
         Block b = event.getBlock();
         Location l = b.getLocation();

@@ -1,6 +1,7 @@
 package com.thepastimers.Worlds;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  * To change this template use File | Settings | File Templates.
  */
 public class Worlds extends JavaPlugin implements Listener {
+    public static int NORMAL = 1;
+    public static int VANILLA = 2;
+    public static int ECONOMY = 3;
+
     @Override
     public void onEnable() {
         getLogger().info("Worlds init");
@@ -56,5 +61,30 @@ public class Worlds extends JavaPlugin implements Listener {
                 }
             }
         }
+    }
+
+    public int getPlayerWorldType(String player) {
+        Player p = getServer().getPlayer(player);
+        if (p != null) {
+            World w = p.getLocation().getWorld();
+            String name = w.getName();
+            if ("vanilla".equalsIgnoreCase(name)) {
+                return VANILLA;
+            }
+        }
+
+        return NORMAL;
+    }
+
+    public int getWorldType(String world) {
+        World w = getServer().getWorld(world);
+        if (w != null) {
+            String name = w.getName();
+            if ("vanilla".equalsIgnoreCase(name)) {
+                return VANILLA;
+            }
+        }
+
+        return NORMAL;
     }
 }

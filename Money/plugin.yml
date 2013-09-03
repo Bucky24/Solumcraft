@@ -1,7 +1,7 @@
 name: Money
-version: 1.5
+version: 1.6
 main: com.thepastimers.Money.Money
-softdepend: [Database, Permission, ItemName]
+softdepend: [Database, Permission, ItemName, Worlds]
 commands:
     bal:
         description: show balance

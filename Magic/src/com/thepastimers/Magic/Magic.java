@@ -3,6 +3,7 @@ package com.thepastimers.Magic;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,6 +34,7 @@ public class Magic extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     ItemName itemName;
+    Worlds worlds;
 
     Map<String,Integer> mana;
     Map<String,Date> lastChecked;
@@ -61,6 +63,11 @@ public class Magic extends JavaPlugin implements Listener {
             getLogger().warning("Cannot load ItemName plugin. Some functionality may not be available.");
         }
 
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
         mana = new HashMap<String, Integer>();
         lastChecked = new HashMap<String, Date>();
 
@@ -77,6 +84,9 @@ public class Magic extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+            return;
+        }
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
             if (event.getPlayer().getItemInHand().getType() == Material.REDSTONE_TORCH_ON) {
                 updateMana(event.getPlayer().getName());
@@ -271,6 +281,10 @@ public class Magic extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

@@ -4,6 +4,7 @@ import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Mute.Mute;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,6 +26,7 @@ public class Teleport extends JavaPlugin {
     Rank rank;
     Permission permission;
     Mute mute;
+    Worlds worlds;
     Map<String,String> requests;
     CombatLog combatLog;
 
@@ -53,6 +55,11 @@ public class Teleport extends JavaPlugin {
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
         if (combatLog == null) {
             getLogger().warning("Unable to load CombatLog plugin. Some functionality will not be available.");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         requests = new HashMap<String,String>();
@@ -96,6 +103,10 @@ public class Teleport extends JavaPlugin {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();

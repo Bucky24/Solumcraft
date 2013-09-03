@@ -5,6 +5,7 @@ import com.thepastimers.Permission.Permission;
 import com.thepastimers.Plot.Plot;
 import com.thepastimers.Plot.PlotData;
 import com.thepastimers.Plot.PlotPerms;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -44,6 +45,7 @@ public class Creative extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Plot plot;
+    Worlds worlds;
 
     String allPerms = "creative_all";
     String commandPerm = "creative_command";
@@ -71,6 +73,11 @@ public class Creative extends JavaPlugin implements Listener {
         } else {
             getLogger().info("Registering plot handlers");
             plot.registerPlotLeave(Creative.class,this);
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Creative loaded");

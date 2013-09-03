@@ -2,6 +2,7 @@ package com.thepastimers.Spawner;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Worlds.Worlds;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -31,6 +32,7 @@ import java.util.*;
 public class Spawner extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    Worlds worlds;
 
     @Override
     public void onEnable() {
@@ -45,6 +47,11 @@ public class Spawner extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Cannot load Permission plugin. Some functionality may not be available");
+        }
+
+        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        if (worlds == null) {
+            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -123,6 +130,10 @@ public class Spawner extends JavaPlugin implements Listener {
             playerName = ((Player)sender).getName();
         } else {
             playerName = "CONSOLE";
+        }
+
+        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+            return false;
         }
 
         String command = cmd.getName();
