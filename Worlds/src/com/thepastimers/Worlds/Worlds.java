@@ -1,7 +1,10 @@
 package com.thepastimers.Worlds;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +12,9 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -86,5 +92,51 @@ public class Worlds extends JavaPlugin implements Listener {
         }
 
         return NORMAL;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        String playerName = "";
+
+        if (sender instanceof Player) {
+            playerName = ((Player)sender).getName();
+        } else {
+            playerName = "CONSOLE";
+        }
+
+        String command = cmd.getName();
+
+        getLogger().info("Got command " + command);
+
+        if (command.equalsIgnoreCase("go")) {
+            getLogger().info("Got command from " + playerName);
+            if (!playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (console only)");
+                return true;
+            }
+
+            if (args.length > 1) {
+                String world = args[0];
+
+                World w = getServer().getWorld(world);
+                if (w == null) {
+                    sender.sendMessage("World does not exist");
+                    return true;
+                }
+                for (int i=1;i<args.length;i++) {
+                    Player p = getServer().getPlayer(args[i]);
+                    if (p != null) {
+                        Location l = w.getSpawnLocation();
+                        p.teleport(l);
+                    }
+                }
+            } else {
+                sender.sendMessage("/goto <world> <players>");
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }

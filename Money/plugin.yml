@@ -13,5 +13,3 @@ commands:
         description: get worth of items
     price:
         description: get/set prices of items
-    give:
-        description: admin command to give/take money from a player
