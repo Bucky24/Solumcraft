@@ -9,12 +9,16 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,11 +32,15 @@ public class Worlds extends JavaPlugin implements Listener {
     public static int VANILLA = 2;
     public static int ECONOMY = 3;
 
+    static Map<Player,Location> deathLocs;
+
     @Override
     public void onEnable() {
         getLogger().info("Worlds init");
 
         getServer().getPluginManager().registerEvents(this,this);
+
+        deathLocs = new HashMap<Player, Location>();
 
         getLogger().info("Worlds init complete");
     }
@@ -92,6 +100,32 @@ public class Worlds extends JavaPlugin implements Listener {
         }
 
         return NORMAL;
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        Player p = event.getEntity();
+        if (getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            deathLocs.put(p,p.getLocation());
+        }
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        Player p = event.getPlayer();
+        //getLogger().info("Respawn event!");
+        Location dl = deathLocs.get(p);
+        if (getWorldType(dl.getWorld().getName()) == Worlds.VANILLA) {
+            //getLogger().info("Player death in vanilla world");
+            World w = dl.getWorld();
+            Location l = event.getRespawnLocation();
+            if (!l.getWorld().getName().equalsIgnoreCase(w.getName())) {
+                //getLogger().info("Player bed not set in same world");
+                event.setRespawnLocation(w.getSpawnLocation());
+            }
+        }
+
+        deathLocs.remove(p);
     }
 
     @Override

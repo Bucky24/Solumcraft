@@ -60,7 +60,7 @@
     <file path="/PlayerPerm.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371174042881" ignored="false" />
     <file path="/GroupPerm.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371174171454" ignored="false" />
     <file path="/Mute.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1371409404620" ignored="false" />
-    <file path="/Chat.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378248763340" ignored="false" />
+    <file path="/Chat.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378353343597" ignored="false" />
     <file path="/ChatData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1372813494947" ignored="false" />
     <file path="/GetChats.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376432105640" ignored="false" />
     <file path="/Login.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378248855285" ignored="false" />
@@ -77,7 +77,7 @@
     <file path="/VoteReward.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375033153340" ignored="false" />
     <file path="/ResetCarrots.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375033860906" ignored="false" />
     <file path="/Purchase.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375146650016" ignored="false" />
-    <file path="/Worlds.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378265211233" ignored="false" />
+    <file path="/Worlds.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378352803896" ignored="false" />
     <file path="/Boundry.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1375410016041" ignored="false" />
     <file path="/Pyro.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378249581282" ignored="false" />
     <file path="/SavePattern.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376765927037" ignored="false" />
@@ -111,6 +111,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
@@ -148,7 +149,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -170,7 +170,7 @@
       <file leaf-file-name="Warp.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Warp/src/com/thepastimers/Warp/Warp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="45" selection-start="2121" selection-end="2930" vertical-scroll-proportion="-20.08">
+            <state line="86" column="45" selection-start="2121" selection-end="2930" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -179,16 +179,16 @@
       <file leaf-file-name="Worlds.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="44" selection-start="3632" selection-end="3632" vertical-scroll-proportion="0.0">
+            <state line="110" column="10" selection-start="3666" selection-end="3666" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Money.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Money.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="255" column="43" selection-start="8438" selection-end="8438" vertical-scroll-proportion="0.46735394">
+            <state line="280" column="20" selection-start="9397" selection-end="9397" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -197,7 +197,27 @@
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="36" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0">
+            <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Chat.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="176" column="38" selection-start="7475" selection-end="7475" vertical-scroll-proportion="0.720339">
+              <folding>
+                <element signature="e#4744#4763#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="45" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -207,24 +227,6 @@
         <entry file="file://$PROJECT_DIR$/Money/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="14" column="44" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="372" column="9" selection-start="10589" selection-end="10589" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Spawner.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Spawner/src/com/thepastimers/Spawner/Spawner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="4940" selection-end="5064" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -258,8 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Login/src/com/thepastimers/Login/Login.java" />
-        <option value="$PROJECT_DIR$/Magic/src/com/thepastimers/Magic/Magic.java" />
         <option value="$PROJECT_DIR$/Mail/src/com/thepastimers/Mail/Mail.java" />
         <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
         <option value="$PROJECT_DIR$/Pattern/src/com/thepastimers/Pattern/Pattern.java" />
@@ -272,8 +272,10 @@
         <option value="$PROJECT_DIR$/TradeSign/src/com/thepastimers/TradeSign/TradeSign.java" />
         <option value="$PROJECT_DIR$/Money/plugin.yml" />
         <option value="$PROJECT_DIR$/Warp/src/com/thepastimers/Warp/Warp.java" />
-        <option value="$PROJECT_DIR$/Worlds/plugin.yml" />
         <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
+        <option value="$PROJECT_DIR$/Worlds/plugin.yml" />
+        <option value="$PROJECT_DIR$/Chat/plugin.yml" />
+        <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
       </list>
     </option>
   </component>
@@ -312,16 +314,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -448,6 +440,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -456,6 +484,16 @@
             <PATH_ELEMENT USER_OBJECT="Root">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -586,19 +624,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6674528" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.6666667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3170189" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3147942" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3147942" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -607,6 +644,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6829811" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -676,16 +714,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Magic/src/com/thepastimers/Magic/Magic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="287" column="9" selection-start="8804" selection-end="8804" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Mail/src/com/thepastimers/Mail/Mail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="9" selection-start="4165" selection-end="4165" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Pattern/src/com/thepastimers/Pattern/Pattern.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="145" column="9" selection-start="4718" selection-end="4718" vertical-scroll-proportion="0.0" />
@@ -693,23 +721,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pyro/src/com/thepastimers/Pyro/Pyro.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="24" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="62" column="24" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="19" selection-start="2897" selection-end="2897" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="88" column="19" selection-start="2897" selection-end="2897" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="704" column="0" selection-start="23121" selection-end="23246" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="704" column="0" selection-start="23121" selection-end="23246" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
@@ -756,29 +778,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Warp/src/com/thepastimers/Warp/Warp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="45" selection-start="2121" selection-end="2930" vertical-scroll-proportion="-20.08">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="36" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="44" selection-start="3632" selection-end="3632" vertical-scroll-proportion="0.0">
+        <state line="86" column="45" selection-start="2121" selection-end="2930" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="43" selection-start="8438" selection-end="8438" vertical-scroll-proportion="0.46735394">
+        <state line="280" column="20" selection-start="9397" selection-end="9397" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="10" selection-start="3666" selection-end="3666" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="45" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="38" selection-start="7475" selection-end="7475" vertical-scroll-proportion="0.720339">
+          <folding>
+            <element signature="e#4744#4763#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

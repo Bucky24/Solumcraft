@@ -156,12 +156,28 @@ public class Chat extends JavaPlugin implements Listener {
         String messageBak = data.getMessage();
         data.setMessage(replaceColor(data.getMessage()));
         data.setMessage(data.getMessage() + ChatColor.getByChar("r").toString());
+        String originalMessage = stripColors(data.getMessage());
 
+        String mainMessage = "";
+        String vanillaMessage = "";
         if (web) {
-            getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " <" + data.getPlayerString() + "> " + data.getMessage());
+            mainMessage = ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " <" + data.getPlayerString() + "> " + data.getMessage();
         } else {
-            getServer().broadcastMessage("<" + data.getPlayerString() + "> " + data.getMessage());
+            mainMessage = "<" + data.getPlayerString() + "> " + data.getMessage();
         }
+
+        vanillaMessage = "<" + data.getPlayer() + "> " + originalMessage;
+
+        Player[] list = getServer().getOnlinePlayers();
+
+        for (Player p : list) {
+            if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+                p.sendMessage(vanillaMessage);
+            } else {
+                p.sendMessage(mainMessage);
+            }
+        }
+        getLogger().info(mainMessage);
 
         // we want it unspoiled (without the color codes) for when it goes into db
         data.setPlayerString(bak);
@@ -177,6 +193,17 @@ public class Chat extends JavaPlugin implements Listener {
             String[] codeList = code.getKey().split(";");
             for (int i=0;i<codeList.length;i++) {
                 text = text.replace(codeList[i],code.getCode());
+            }
+        }
+        return text;
+    }
+
+    public String stripColors(String text) {
+        for (ChatCode code : codes) {
+            //getLogger().info(text + " " + code.getKey() + " " + code.getCode());
+            String[] codeList = code.getKey().split(";");
+            for (int i=0;i<codeList.length;i++) {
+                text = text.replace(codeList[i],"");
             }
         }
         return text;
