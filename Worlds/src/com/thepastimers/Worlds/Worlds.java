@@ -115,6 +115,9 @@ public class Worlds extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
         //getLogger().info("Respawn event!");
         Location dl = deathLocs.get(p);
+        if (dl == null) {
+            return;
+        }
         if (getWorldType(dl.getWorld().getName()) == Worlds.VANILLA) {
             //getLogger().info("Player death in vanilla world");
             World w = dl.getWorld();

@@ -246,6 +246,10 @@ public class Metrics extends JavaPlugin implements Listener {
             pd.setCause("Starvation");
         } else if (message.contains("blown up by Creeper")) {
             pd.setCause("Creeper");
+        } else if (message.contains("shot by")) {
+            pd.setCause("Killed");
+        } else if (message.contains("slain by")) {
+            pd.setCause("Killed");
         } else {
             getLogger().info("Unknown death: " + message);
         }
