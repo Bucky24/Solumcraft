@@ -86,7 +86,7 @@ public class Pvp extends JavaPlugin implements Listener {
             String[] parts = message.split("slain by ");
             message = parts[1];
             //getLogger().info("message now:" + message);
-            parts = message.split("\\.");
+            parts = message.split(" ");
             message = parts[0];
             //getLogger().info("message 2: " + message);
             name = message;
@@ -94,10 +94,10 @@ public class Pvp extends JavaPlugin implements Listener {
             getLogger().info("killed by player");
             String[] parts = message.split("shot by ");
             message = parts[1];
-            getLogger().info("message now:" + message);
+            //getLogger().info("message now:" + message);
             parts = message.split(" ");
             message = parts[0];
-            getLogger().info("message 2: " + message);
+            //getLogger().info("message 2: " + message);
             name = message;
         }
 
