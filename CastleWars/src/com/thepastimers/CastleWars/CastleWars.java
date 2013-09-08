@@ -53,7 +53,7 @@ public class CastleWars extends JavaPlugin implements Listener {
     // both of these in dollars
     static int INCOME_PER_LEVEL = 50;
     static int COST_PER_LEVEL = 2000;
-    static int COST_PER_DEFENSE_LEVEL = 5;
+    static int COST_PER_DEFENSE_LEVEL = 10;
 
     @Override
     public void onEnable() {

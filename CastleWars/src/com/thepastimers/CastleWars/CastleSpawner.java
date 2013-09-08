@@ -203,15 +203,11 @@ public class CastleSpawner extends Table {
     }
 
     public static void clearSpawners(World w, CastleData cd) {
-        clearSpawners(w,cd,Material.AIR);
-    }
-
-    public static void clearSpawners(World w, CastleData cd, Material m) {
         List<CastleSpawner> csList = getSpawnersForCastle(cd);
 
         for (CastleSpawner s : csList) {
             Block b = w.getBlockAt(s.getX(),s.getY(),s.getZ());
-            b.setType(m);
+            b.setType(Material.getMaterial(s.getPrevBlock()));
         }
     }
 

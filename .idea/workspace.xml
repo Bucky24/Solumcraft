@@ -97,7 +97,7 @@
     <file path="/ClearThenLoad.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376778378403" ignored="false" />
     <file path="/CastleIncome.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1377662938543" ignored="false" />
     <file path="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378264275717" ignored="false" />
-    <file path="/CastleSpawner.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378679565980" ignored="false" />
+    <file path="/CastleSpawner.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378680168920" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,10 +159,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CastleWars.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CastleWars.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="783" column="31" selection-start="32257" selection-end="32257" vertical-scroll-proportion="0.32215568">
+            <state line="55" column="42" selection-start="1648" selection-end="1648" vertical-scroll-proportion="-17.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -173,7 +173,7 @@
       <file leaf-file-name="ClaimCastle.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="24" selection-start="2433" selection-end="2433" vertical-scroll-proportion="0.0">
+            <state line="67" column="38" selection-start="2322" selection-end="2322" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#4965#4973#0" expanded="true" />
               </folding>
@@ -190,10 +190,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CastleSpawner.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CastleSpawner.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="35" selection-start="2726" selection-end="2726" vertical-scroll-proportion="0.0">
+            <state line="209" column="59" selection-start="5885" selection-end="5885" vertical-scroll-proportion="0.63001144">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2007#2022#0" expanded="true" />
@@ -280,8 +280,8 @@
         <option value="$PROJECT_DIR$/CastleWars/plugin.yml" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
-        <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java" />
+        <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java" />
       </list>
     </option>
   </component>
@@ -1135,9 +1135,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="42" selection-start="1648" selection-end="1648" vertical-scroll-proportion="-17.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="24" selection-start="2433" selection-end="2433" vertical-scroll-proportion="0.0">
+        <state line="67" column="38" selection-start="2322" selection-end="2322" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#4965#4973#0" expanded="true" />
           </folding>
@@ -1146,19 +1155,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="35" selection-start="2726" selection-end="2726" vertical-scroll-proportion="0.0">
+        <state line="209" column="59" selection-start="5885" selection-end="5885" vertical-scroll-proportion="0.63001144">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2007#2022#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="783" column="31" selection-start="32257" selection-end="32257" vertical-scroll-proportion="0.32215568">
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
