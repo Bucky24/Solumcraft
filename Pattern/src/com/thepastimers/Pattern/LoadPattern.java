@@ -70,7 +70,7 @@ public class LoadPattern extends BukkitRunnable {
         //plugin.getLogger().info(ChatColor.BLUE + "stats. We are now at: (" + curx + "," + cury + "," + curz + ") we started at (" + startx + "," + starty + "," + startz + "). Ending at (" + endx + "," + endy + "," + endz + ")");
         World w = plugin.getServer().getWorld(world);
         boolean areWeDone = false;
-        List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"pattern = '" + database.makeSafe(pattern) + "' order by y asc, x asc, z asc LIMIT " + done + ", " + blocksEach);
+        List<PatternBlock> patternBlockList = (List<PatternBlock>)database.select(PatternBlock.class,"pattern = '" + database.makeSafe(pattern) + "' order by priority asc, y asc, x asc, z asc LIMIT " + done + ", " + blocksEach);
         int i = 0;
 
         if (patternBlockList.size() == 0) {

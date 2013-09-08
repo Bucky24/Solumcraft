@@ -2,12 +2,14 @@ package com.thepastimers.Worlds;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -84,6 +86,8 @@ public class Worlds extends JavaPlugin implements Listener {
             String name = w.getName();
             if ("vanilla".equalsIgnoreCase(name)) {
                 return VANILLA;
+            } else if ("economy".equalsIgnoreCase(name)) {
+                return ECONOMY;
             }
         }
 
@@ -96,6 +100,8 @@ public class Worlds extends JavaPlugin implements Listener {
             String name = w.getName();
             if ("vanilla".equalsIgnoreCase(name)) {
                 return VANILLA;
+            } else if ("economy".equalsIgnoreCase(name)) {
+                return ECONOMY;
             }
         }
 
@@ -115,6 +121,7 @@ public class Worlds extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
         //getLogger().info("Respawn event!");
         Location dl = deathLocs.get(p);
+        if (dl == null) return;
         if (getWorldType(dl.getWorld().getName()) == Worlds.VANILLA) {
             //getLogger().info("Player death in vanilla world");
             World w = dl.getWorld();
@@ -126,6 +133,17 @@ public class Worlds extends JavaPlugin implements Listener {
         }
 
         deathLocs.remove(p);
+    }
+
+    @EventHandler
+    public void placeBlock(BlockPlaceEvent event) {
+        Player p = event.getPlayer();
+        if (getPlayerWorldType(p.getName()) == Worlds.ECONOMY) {
+            if (event.getBlockPlaced().getType() == Material.ENDER_CHEST) {
+                p.sendMessage(ChatColor.RED + "You cannot place ender chests in this world");
+                event.setCancelled(true);
+            }
+        }
     }
 
     @Override

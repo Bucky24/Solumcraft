@@ -106,6 +106,11 @@ public class SavePattern extends BukkitRunnable {
                 pb.setZ(z-startz);
                 pb.setData(b.getData());
 
+                if (b.getType() == Material.TORCH || b.getType().name().equalsIgnoreCase("WOODEN_DOOR") ||
+                        b.getType() == Material.LADDER || b.getType() == Material.STATIONARY_WATER || b.getType() == Material.WATER) {
+                    pb.setPriority(2);
+                }
+
                 count ++;
                 if (!pb.save(database)) {
                     error ++;

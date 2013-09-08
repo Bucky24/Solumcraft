@@ -21,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -124,7 +126,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         Location l = p.getLocation();
         PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
         if (pd == null) {
-            pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+            pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),false);
         }
         if (pd == null) return;
 
@@ -134,6 +136,37 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (claims.containsKey(p)) {
             ClaimCastle claimCastle = claims.get(p);
             claimCastle.cancel();
+        }
+    }
+
+    @EventHandler
+    public void leave(PlayerQuitEvent event) {
+        Player p = event.getPlayer();
+
+        if (claims.containsKey(p)) {
+            ClaimCastle claimCastle = claims.get(p);
+            claimCastle.cancel();
+            getLogger().info("Player  " + p.getName() + " is no longer capturing");
+        }
+    }
+
+    @EventHandler
+    public void login(PlayerJoinEvent event) {
+        Player p = event.getPlayer();
+        Location l = p.getLocation();
+        PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+        //getLogger().info("join event (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
+        if (pd == null) {
+            pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),false);
+        }
+        //getLogger().info("Plot: " + pd);
+        if (pd == null) return;
+
+        CastleData cd = CastleData.getCastleForPlot(pd);
+        if (cd == null) return;
+
+        if (!claims.containsKey(p)) {
+            handlePlotEnter(pd,p);
         }
     }
 
@@ -168,6 +201,38 @@ public class CastleWars extends JavaPlugin implements Listener {
         }
     }
 
+    public void createCastle(CastleData cd) {
+        if (plot == null || pattern == null || cd == null) return;
+        PlotData pd = PlotData.getPlotById(cd.getPlot());
+        if (pd == null) {
+            return;
+        }
+
+        String patternStr = "castle_l" + cd.getLevel();
+        int c_x = pattern.getXSize(patternStr);
+        int c_z = pattern.getZSize(patternStr);
+        int p_x = pd.getX2()-pd.getX1();
+        int p_z = pd.getZ2()-pd.getZ1();
+
+        if (!doesItFit(cd)) return;
+        // center the pattern in the plot
+        int p_center_x = pd.getX1() + p_x/2;
+        int p_center_z = pd.getZ1() + p_z/2;
+        int off_x = (p_x/2)-(c_x/2);
+        int off_z = (p_z/2)-(c_z/2);
+
+        int c_y = cd.getY();
+
+        //getLogger().info(pd.getX1() + " " + off_x);
+
+        off_x += pd.getX1();
+        off_z += pd.getZ1();
+
+        getLogger().info("Creating castle " + patternStr + " at (" + off_x + "," + c_y + "," + off_z + ")");
+
+        pattern.loadPattern(patternStr,off_x,c_y,off_z,pd.getWorld());
+    }
+
     public void regenerateCastle(CastleData cd) {
         removeCastle(cd);
         if (plot == null || pattern == null || cd == null) return;
@@ -198,7 +263,7 @@ public class CastleWars extends JavaPlugin implements Listener {
 
         getLogger().info("Creating castle " + patternStr + " at (" + off_x + "," + c_y + "," + off_z + ")");
 
-        pattern.loadPattern(patternStr,off_x,c_y,off_z,pd.getWorld());
+        pattern.clearThenLoadPattern(patternStr, patternStr, off_x, c_y, off_z, pd.getWorld(), off_x, c_y, off_z, pd.getWorld());
     }
 
     public void upgradeCastle(CastleData cd) {
@@ -434,7 +499,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                             sender.sendMessage(ChatColor.RED + "Unable to create Castle");
                         } else {
                             sender.sendMessage(ChatColor.GREEN + "Castle created!");
-                            regenerateCastle(cd);
+                            createCastle(cd);
                         }
                     }
                 } else if ("remove".equalsIgnoreCase(subCommand)) {
@@ -562,9 +627,39 @@ public class CastleWars extends JavaPlugin implements Listener {
                     }
 
                     triggerIncome(true);
+                } else if ("rebuild".equalsIgnoreCase(subCommand)) {
+                    if (permission == null || !permission.hasPermission(playerName,"castle_create") || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (castle_create)");
+                        return true;
+                    }
+
+                    Player p = (Player)sender;
+                    Location l = p.getLocation();
+
+                    if (plot == null) {
+                        sender.sendMessage(ChatColor.RED + "This command is not currently available");
+                        return true;
+                    }
+
+                    PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+                    if (pd == null) {
+                        pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),false);
+                    }
+                    if (pd == null) {
+                        sender.sendMessage(ChatColor.RED + "You must be inside a plot to do this");
+                        return true;
+                    }
+
+                    CastleData cd = CastleData.getCastleForPlot(pd);
+                    if (cd == null) {
+                        sender.sendMessage(ChatColor.RED + "This is not a CastleWars plot");
+                        return true;
+                    }
+
+                    regenerateCastle(cd);
                 }
             } else {
-                sender.sendMessage("/cw <create|remove|upgrade|testIncome>");
+                sender.sendMessage("/cw <create|remove|upgrade|testIncome|rebuild>");
             }
         } else {
             return false;

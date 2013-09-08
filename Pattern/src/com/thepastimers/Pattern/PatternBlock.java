@@ -22,6 +22,7 @@ public class PatternBlock extends Table {
     
     public PatternBlock() {
         id = -1;
+        priority = 1;
     }
     
     String pattern;
@@ -30,6 +31,7 @@ public class PatternBlock extends Table {
     int z;
     String block;
     byte data;
+    int priority;
 
     public int getId() {
         return id;
@@ -87,6 +89,14 @@ public class PatternBlock extends Table {
         this.data = data;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     public static List<PatternBlock> parseResult(ResultSet result) throws SQLException {
         List<PatternBlock> ret = new ArrayList<PatternBlock>();
 
@@ -104,6 +114,7 @@ public class PatternBlock extends Table {
             p.setZ(result.getInt("z"));
             p.setBlock(result.getString("block"));
             p.setData(result.getByte("data"));
+            p.setPriority(result.getInt("priority"));
 
             ret.add(p);
         }
@@ -126,8 +137,8 @@ public class PatternBlock extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(pattern,x,y,z,block,data)";
-            String values = "('" + d.makeSafe(pattern) + "'," + x + "," + y + "," + z + ",'" + d.makeSafe(block) + "'," + data + ")";
+            String columns = "(pattern,x,y,z,block,data,priority)";
+            String values = "('" + d.makeSafe(pattern) + "'," + x + "," + y + "," + z + ",'" + d.makeSafe(block) + "'," + data + "," + priority + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -152,7 +163,8 @@ public class PatternBlock extends Table {
             query.append("y = " + y + ", ");
             query.append("z = " + z + ", ");
             query.append("block = '" + d.makeSafe(block) + "', ");
-            query.append("data = " + data + " ");
+            query.append("data = " + data + ", ");
+            query.append("priority = " + priority + ", ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -162,7 +174,7 @@ public class PatternBlock extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string pattern, int x, int y, int z, string block, byte data");
+        builder.append(" int id, string pattern, int x, int y, int z, string block, byte data, int priority");
 
         return builder.toString();
     }
