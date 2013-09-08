@@ -17,6 +17,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,7 @@ public class CastleWars extends JavaPlugin implements Listener {
     // both of these in dollars
     static int INCOME_PER_LEVEL = 50;
     static int COST_PER_LEVEL = 2000;
+    static int COST_PER_DEFENSE_LEVEL = 5;
 
     @Override
     public void onEnable() {
@@ -100,6 +103,8 @@ public class CastleWars extends JavaPlugin implements Listener {
 
         getLogger().info(CastleData.getTableInfo());
         CastleData.refreshCache(database,getLogger());
+        getLogger().info(CastleSpawner.getTableInfo());
+        CastleSpawner.refreshCache(database,getLogger());
 
         CastleIncome ci = new CastleIncome(this,database);
         ci.runTaskTimer(this,0,20*60);
@@ -117,6 +122,21 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (claims.containsKey(p)) {
             ClaimCastle claimCastle = claims.get(p);
             claimCastle.cancel();
+
+            boolean anotherPlayer = false;
+            for (Player player : claims.keySet()) {
+                if (claims.get(player).getCd().getId() == cd.getId()) {
+                    anotherPlayer = true;
+                    break;
+                }
+            }
+
+            if (!anotherPlayer) {
+                List<Entity> entityList = ClaimCastle.getMobsInCastle(this,pd);
+                for (Entity e : entityList) {
+                    e.remove();
+                }
+            }
         }
     }
 
@@ -382,7 +402,9 @@ public class CastleWars extends JavaPlugin implements Listener {
                 getLogger().info("Checking castle " + cd.getId() + ". Owner: " + cd.getOwner() + ", level " + cd.getLevel());
             }
 
-            int amount = cd.getLevel()*INCOME_PER_LEVEL*100;
+            List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+            int spawnerCount = spawners.size();
+            int amount = (cd.getLevel()*INCOME_PER_LEVEL - spawnerCount*(cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL)*100;
             double d_amount = (double)amount;
             d_amount /= 100;
 
@@ -481,6 +503,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                     cd.setLevel(1);
                     cd.setOwner("Unclaimed");
                     cd.setY(c_y);
+                    cd.setUpgradeTime(new Timestamp(0));
 
                     pd.setOwner("Server");
                     pd.setPve(true);
@@ -615,7 +638,17 @@ public class CastleWars extends JavaPlugin implements Listener {
                     }
 
                     if (cd.save(database)) {
-                        sender.sendMessage(ChatColor.GREEN + "Castle upgraded");
+                        sender.sendMessage(ChatColor.GREEN + "Castle upgraded. All spawners have been removed");
+
+                        CastleSpawner.clearSpawners(getServer().getWorld(pd.getWorld()),cd);
+
+                        List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+                        for (CastleSpawner s : spawners) {
+                            s.delete(database);
+                        }
+
+                        regenerateCastle(cd);
+
                         upgradeCastle(cd);
                     } else {
                         sender.sendMessage(ChatColor.RED + "Unable to upgrade castle");
@@ -656,11 +689,162 @@ public class CastleWars extends JavaPlugin implements Listener {
                         return true;
                     }
 
+                    CastleSpawner.clearSpawners(getServer().getWorld(pd.getWorld()),cd);
+
+                    List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+                    for (CastleSpawner s : spawners) {
+                        s.delete(database);
+                    }
+
                     regenerateCastle(cd);
+                } else if ("info".equalsIgnoreCase(subCommand)) {
+                    if (playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "Console cannot use this command");
+                        return true;
+                    }
+
+                    Player p = (Player)sender;
+                    Location l = p.getLocation();
+
+                    if (plot == null) {
+                        sender.sendMessage(ChatColor.RED + "This command is not currently available");
+                        return true;
+                    }
+
+                    PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+                    if (pd == null) {
+                        pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),false);
+                    }
+                    if (pd == null) {
+                        sender.sendMessage(ChatColor.RED + "You must be inside a plot to do this");
+                        return true;
+                    }
+
+                    CastleData cd = CastleData.getCastleForPlot(pd);
+
+                    List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+                    int spawnerCount = 0;
+                    if (spawners != null) {
+                        spawnerCount = spawners.size();
+                    }
+
+                    sender.sendMessage("Castle data:");
+                    sender.sendMessage("Level: " + cd.getLevel());
+                    sender.sendMessage("Owned by: " + cd.getOwner());
+                    sender.sendMessage("Income: " + (cd.getLevel()*INCOME_PER_LEVEL - spawnerCount*(cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL));
+                    sender.sendMessage("Defense level: " + cd.getDefenseLevel());
+                } else if ("defense".equalsIgnoreCase(subCommand)) {
+                    Player p = (Player)sender;
+                    Location l = p.getLocation();
+
+                    if (plot == null) {
+                        sender.sendMessage(ChatColor.RED + "This command is not currently available");
+                        return true;
+                    }
+
+                    PlotData pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),true);
+                    if (pd == null) {
+                        pd = PlotData.getPlotAtLocation(l.getBlockX(),l.getBlockZ(),l.getWorld().getName(),false);
+                    }
+                    if (pd == null) {
+                        sender.sendMessage(ChatColor.RED + "You must be inside a plot to do this");
+                        return true;
+                    }
+
+                    CastleData cd = CastleData.getCastleForPlot(pd);
+
+                    if (args.length > 1) {
+                        String subCommand2 = args[1];
+                        if ("create".equalsIgnoreCase(subCommand2)) {
+                            List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+                            int spawnerCount = 0;
+                            if (spawners != null) {
+                                spawnerCount = spawners.size();
+                            }
+                            spawnerCount ++;
+                            int totalIncome = cd.getLevel()*INCOME_PER_LEVEL - spawnerCount*(cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL;
+
+                            if (totalIncome <= 0) {
+                                sender.sendMessage(ChatColor.RED + "You don't have enough income at this time to place another spawner (each spawner costs $" + ((cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL) + "/hr at your current defense level)");
+                                return true;
+                            }
+
+                            CastleSpawner cs = new CastleSpawner();
+                            cs.setCastle(cd.getId());
+                            cs.setX(l.getBlockX());
+                            cs.setY(l.getBlockY()-1);
+                            cs.setZ(l.getBlockZ());
+
+                            World w = getServer().getWorld(pd.getWorld());
+                            Block b = w.getBlockAt(cs.getX(),cs.getY(),cs.getZ());
+
+                            if (b.getType() == Material.SMOOTH_STAIRS || b.getType() == Material.LADDER) {
+                                sender.sendMessage(ChatColor.RED + "You cannot place a spawner here");
+                                return true;
+                            }
+
+                            cs.setPrevBlock(b.getType().name());
+
+                            if (cs.save(database)) {
+                                sender.sendMessage(ChatColor.GREEN + "You have created a spawner at (" + cs.getX() + "," + cs.getY() + "," + cs.getZ() + ")");
+
+                                spawners = CastleSpawner.getSpawnersForCastle(cd);
+                                spawnerCount = 0;
+                                if (spawners != null) {
+                                    spawnerCount = spawners.size();
+                                }
+                                totalIncome = cd.getLevel()*INCOME_PER_LEVEL - spawnerCount*(cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL;
+
+                                sender.sendMessage(ChatColor.GREEN + "You now have " + spawnerCount + " spawners and an income of $" + totalIncome + "/hour");
+
+                                b.setType(Material.GOLD_BLOCK);
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Failed to create spawner");
+                            }
+                        } else if ("remove".equalsIgnoreCase(subCommand2)) {
+                            List<CastleSpawner> spawners = CastleSpawner.getSpawnersForCastle(cd);
+
+                            for (CastleSpawner cs : spawners) {
+                                if (cs.getX() == l.getBlockX() && cs.getY() == l.getBlockY()-1 && cs.getZ() == l.getBlockZ()) {
+                                    if (cs.delete(database)) {
+                                        CastleSpawner.refreshCache(database,getLogger());
+
+                                        getLogger().info("" +CastleSpawner.castleDataMap.keySet().size());
+                                        sender.sendMessage(ChatColor.GREEN + "You have removed a spawner at (" + cs.getX() + "," + cs.getY() + "," + cs.getZ() + ")");
+
+                                        World w = getServer().getWorld(pd.getWorld());
+                                        Block b = w.getBlockAt(cs.getX(),cs.getY(),cs.getZ());
+                                        b.setType(Material.getMaterial(cs.getPrevBlock()));
+
+                                        int spawnerCount = spawners.size()-1;
+                                        int totalIncome = cd.getLevel()*INCOME_PER_LEVEL - spawnerCount*(cd.getDefenseLevel()+1)*COST_PER_DEFENSE_LEVEL;
+
+                                        sender.sendMessage(ChatColor.GREEN + "You now have " + spawnerCount + " spawners and an income of $" + totalIncome + "/hour");
+                                    } else {
+                                        sender.sendMessage(ChatColor.RED + "Failed to remove spawner");
+                                    }
+                                    return true;
+                                }
+                            }
+                            sender.sendMessage(ChatColor.RED + "No spawners were found at this location");
+                        }
+                    } else {
+                        sender.sendMessage("/cs defense <create|list|remove|upgrade|downgrade>");
+                    }
                 }
             } else {
-                sender.sendMessage("/cw <create|remove|upgrade|testIncome|rebuild>");
+                sender.sendMessage("/cw <create|remove|upgrade|testIncome|rebuild|info|defense>");
             }
+        } else if ("reloadCastles".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"castle_create") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (castle_create)");
+                return true;
+            }
+
+            CastleData.refreshCache(database,getLogger());
+            CastleSpawner.refreshCache(database,getLogger());
+
+            sender.sendMessage(ChatColor.GREEN + "Caches reloaded");
         } else {
             return false;
         }

@@ -244,6 +244,7 @@ public class Database extends JavaPlugin {
         }
         count ++;
         queryLog.put("query",count);
+        //getLogger().info(query);
 
         try {
             //if (connection.isClosed()) {

@@ -3,13 +3,15 @@ package com.thepastimers.CastleWars;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
 import com.thepastimers.Plot.PlotData;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -29,6 +31,8 @@ public class CastleData extends Table {
     int level;
     String owner;
     int y;
+    int defenseLevel;
+    String upgradeTime;
 
     public int getPlot() {
         return plot;
@@ -62,6 +66,55 @@ public class CastleData extends Table {
         this.y = y;
     }
 
+    public int getDefenseLevel() {
+        return defenseLevel;
+    }
+
+    public void setDefenseLevel(int defenseLevel) {
+        this.defenseLevel = defenseLevel;
+    }
+
+    public String getUpgradeTime() {
+        return upgradeTime;
+    }
+
+    public Timestamp getUpgradeTimestamp() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date d = format.parse(upgradeTime);
+            return new Timestamp(d.getTime());
+        } catch (ParseException e) {
+            return new Timestamp(0);
+        }
+    }
+
+    public void setUpgradeTime(String upgradeTime) {
+        this.upgradeTime = upgradeTime;
+    }
+
+    public void setUpgradeTime(Timestamp t) {
+        Date d = new Date(t.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        upgradeTime = format.format(d);
+    }
+
+    public boolean delete(Database d) {
+        if (id == -1) {
+            return true;
+        }
+        if (d == null) {
+            return false;
+        }
+        boolean result = d.query("DELETE FROM " + table + " WHERE ID = " + id);
+
+        if (result) {
+            dataMap.remove(id);
+            plotDataMap.remove(plot);
+        }
+
+        return result;
+    }
+
     public static List<CastleData> parseResult(ResultSet result) throws SQLException {
         List<CastleData> ret = new ArrayList<CastleData>();
 
@@ -77,6 +130,8 @@ public class CastleData extends Table {
             p.setLevel(result.getInt("level"));
             p.setOwner(result.getString("owner"));
             p.setY(result.getInt("y"));
+            p.setDefenseLevel(result.getInt("defenseLevel"));
+            p.setUpgradeTime(result.getString("upgradeTime"));
 
             ret.add(p);
         }
@@ -89,8 +144,9 @@ public class CastleData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(plot,level,owner,y)";
-            String values = "(" + plot + "," + level + ",'" + d.makeSafe(owner) + "'," + y + ")";
+            String columns = "(plot,level,owner,y,defenseLevel,upgradeTime)";
+            String values = "(" + plot + "," + level + ",'" + d.makeSafe(owner) + "'," + y + "," + defenseLevel
+                    + ",'" + upgradeTime + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -115,7 +171,9 @@ public class CastleData extends Table {
             query.append("plot = " + plot + ", ");
             query.append("level = " + level + ", ");
             query.append("owner = '" + owner + "', ");
-            query.append("y = " + y + " ");
+            query.append("y = " + y + ", ");
+            query.append("defenseLevel = " + defenseLevel + ", ");
+            query.append("upgradeTime = '" + upgradeTime + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -125,7 +183,7 @@ public class CastleData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, int plot, int level, string owner, int y");
+        builder.append(" int id, int plot, int level, string owner, int y, int defenseLevel, string upgradeTime");
 
         return builder.toString();
     }

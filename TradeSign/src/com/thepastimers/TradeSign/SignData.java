@@ -39,6 +39,7 @@ public class SignData extends Table {
     int dispense;
     String world;
     String name;
+    String metadata;
 
     public int getId() {
         return id;
@@ -136,6 +137,14 @@ public class SignData extends Table {
         this.name = name;
     }
 
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
+    }
+
     public static List<SignData> parseResult(ResultSet result) throws SQLException {
         List<SignData> ret = new ArrayList<SignData>();
 
@@ -156,6 +165,7 @@ public class SignData extends Table {
             p.setCost(result.getInt("cost"));
             p.setDispense(result.getInt("dispense"));
             p.setWorld(result.getString("world"));
+            p.setMetadata(result.getString("metadata"));
 
             ret.add(p);
         }
@@ -184,9 +194,10 @@ public class SignData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(player,x,y,z,contains,amount,cost,dispense,world)";
+            String columns = "(player,x,y,z,contains,amount,cost,dispense,world,metadata)";
             String values = "('" + d.makeSafe(player) + "'," + x + "," + y + "," + z
-                    +  ",'" + d.makeSafe(contains) + "'," + amount + "," + cost + "," + dispense + ",'" + d.makeSafe(world) + "')";
+                    +  ",'" + d.makeSafe(contains) + "'," + amount + "," + cost + "," + dispense
+                    + ",'" + d.makeSafe(world) + "','" + d.makeSafe(metadata) + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -215,7 +226,8 @@ public class SignData extends Table {
             query.append("amount = " + amount + ", ");
             query.append("cost = " + cost + ", ");
             query.append("dispense = " + dispense + ", ");
-            query.append("world = '" + d.makeSafe(world) + "' ");
+            query.append("world = '" + d.makeSafe(world) + "', ");
+            query.append("metadata = '" + d.makeSafe(metadata) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -225,7 +237,7 @@ public class SignData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense, string world");
+        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense, string world, string metadata");
 
         return builder.toString();
     }
