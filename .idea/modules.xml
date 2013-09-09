@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/Home/Home.iml" filepath="$PROJECT_DIR$/Home/Home.iml" />
       <module fileurl="file://$PROJECT_DIR$/ItemName/ItemName.iml" filepath="$PROJECT_DIR$/ItemName/ItemName.iml" />
       <module fileurl="file://$PROJECT_DIR$/Kit/Kit.iml" filepath="$PROJECT_DIR$/Kit/Kit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Logger/Logger.iml" filepath="$PROJECT_DIR$/Logger/Logger.iml" />
       <module fileurl="file://$PROJECT_DIR$/Login/Login.iml" filepath="$PROJECT_DIR$/Login/Login.iml" />
       <module fileurl="file://$PROJECT_DIR$/Magic/Magic.iml" filepath="$PROJECT_DIR$/Magic/Magic.iml" />
       <module fileurl="file://$PROJECT_DIR$/Mail/Mail.iml" filepath="$PROJECT_DIR$/Mail/Mail.iml" />

@@ -1,8 +1,10 @@
 package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
+import com.thepastimers.Logger.Logger;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,6 +28,7 @@ import java.util.*;
 public class Chat extends JavaPlugin implements Listener {
     Database database;
     Worlds worlds;
+    Logger logger;
     Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
@@ -45,6 +48,11 @@ public class Chat extends JavaPlugin implements Listener {
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
+        logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
+        if (logger == null) {
+            getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
         }
 
         getLogger().info(ChatData.getTableInfo());
@@ -178,6 +186,14 @@ public class Chat extends JavaPlugin implements Listener {
             }
         }
         getLogger().info(mainMessage);
+
+        if (logger != null) {
+            Player p = getServer().getPlayer(player);
+            if (p == null) {
+                p = getServer().getOfflinePlayer(player).getPlayer();
+            }
+            logger.writeEvent(p,"chat",messageBak);
+        }
 
         // we want it unspoiled (without the color codes) for when it goes into db
         data.setPlayerString(bak);
