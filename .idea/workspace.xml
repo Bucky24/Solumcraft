@@ -97,7 +97,7 @@
     <file path="/ClearThenLoad.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376778378403" ignored="false" />
     <file path="/CastleIncome.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1377662938543" ignored="false" />
     <file path="/CastleSpawner.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378739122201" ignored="false" />
-    <file path="/Logger.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378762172220" ignored="false" />
+    <file path="/Logger.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378763261249" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +162,7 @@
       <file leaf-file-name="Logger.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="247" column="6" selection-start="8907" selection-end="8907" vertical-scroll-proportion="0.87281793">
+            <state line="1" column="40" selection-start="33" selection-end="33" vertical-scroll-proportion="0.021197008">
               <folding />
             </state>
           </provider>
@@ -1008,7 +1008,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="247" column="6" selection-start="8907" selection-end="8907" vertical-scroll-proportion="0.87281793">
+        <state line="1" column="40" selection-start="33" selection-end="33" vertical-scroll-proportion="0.021197008">
           <folding />
         </state>
       </provider>

@@ -28,8 +28,8 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Logger extends JavaPlugin implements Listener {
-    public static String file = "/minecraft/serverlog.log";
-    public static String moveFile = "/minecraft/servermovelog.log";
+    public static String file = "/minecraft/serverlog-<yyyy>-<mm>-<dd>.log";
+    public static String moveFile = "/minecraft/servermovelog-<yyyy>-<mm>-<dd>-<hh>.log";
     String format = "<time>|<player>|<event>|<data>\n";
 
     @Override
@@ -77,6 +77,27 @@ public class Logger extends JavaPlugin implements Listener {
         return ret;
     }
 
+    private String formatFile(String file) {
+        String ret = file;
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy:MM:dd:HH:mm:ss");
+        Date d = new Date();
+        String formatted = format.format(d);
+        String[] dateArr = formatted.split("\\:");
+
+        String year = dateArr[0];
+        String month = dateArr[1];
+        String day = dateArr[2];
+        String hour = dateArr[3];
+
+        ret = ret.replace("<yyyy>",year);
+        ret = ret.replace("<mm>",month);
+        ret = ret.replace("<dd>",day);
+        ret = ret.replace("<hh>",hour);
+
+        return ret;
+    }
+
     public void writeEvent(String event) {
         writeEvent(new Date(),null,event);
     }
@@ -120,6 +141,8 @@ public class Logger extends JavaPlugin implements Listener {
     public void writeEvent(String logFile, Date d, String p, String event, String data) {
         String message = formatMessage(d,p,event,data);
 
+        logFile = formatFile(logFile);
+
         //getLogger().info("Writing  " + message);
         try {
             FileWriter writer = new FileWriter(logFile,true);
@@ -137,7 +160,7 @@ public class Logger extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void join(PlayerJoinEvent event) {
-        writeEvent(event.getPlayer(),"join");
+        writeEvent(event.getPlayer(), "join");
     }
 
     // this event is normally handled by Chat plugin
