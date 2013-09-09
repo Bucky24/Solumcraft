@@ -90,7 +90,7 @@
     <file path="/CommandData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376501461630" ignored="false" />
     <file path="/config.yml" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376502836886" ignored="false" />
     <file path="/PlotRent.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376599127544" ignored="false" />
-    <file path="/CastleWars.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378765480736" ignored="false" />
+    <file path="/CastleWars.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378766731280" ignored="false" />
     <file path="/CastleData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378676287917" ignored="false" />
     <file path="/ClearPattern.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376772954427" ignored="false" />
     <file path="/ClaimCastle.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378756308825" ignored="false" />
@@ -160,10 +160,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Logger.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Logger.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="243" column="32" selection-start="8450" selection-end="8450" vertical-scroll-proportion="0.5868773">
+            <state line="227" column="26" selection-start="7735" selection-end="7735" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Logger/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.020334927">
               <folding />
             </state>
           </provider>
@@ -193,7 +202,16 @@
       <file leaf-file-name="CastleWars.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="214" column="55" selection-start="7746" selection-end="7746" vertical-scroll-proportion="0.0">
+            <state line="235" column="50" selection-start="8813" selection-end="8813" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CastleWars/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="12" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -237,24 +255,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Plot.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1056" column="40" selection-start="39878" selection-end="39878" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlotData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/PlotData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="205" column="0" selection-start="4222" selection-end="4285" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -265,8 +265,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java" />
-        <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Table.java" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
         <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
         <option value="$PROJECT_DIR$/Money/plugin.yml" />
@@ -279,8 +277,10 @@
         <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
-        <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java" />
         <option value="$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java" />
+        <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java" />
+        <option value="$PROJECT_DIR$/CastleWars/plugin.yml" />
+        <option value="$PROJECT_DIR$/Logger/plugin.yml" />
       </list>
     </option>
   </component>
@@ -969,20 +969,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="50" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="9" selection-start="4852" selection-end="4852" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="209" column="18" selection-start="8687" selection-end="8687" vertical-scroll-proportion="0.0">
@@ -1079,14 +1065,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="214" column="55" selection-start="7746" selection-end="7746" vertical-scroll-proportion="0.0">
+        <state line="235" column="50" selection-start="8813" selection-end="8813" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CastleWars/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="32" selection-start="8450" selection-end="8450" vertical-scroll-proportion="0.5868773">
+        <state line="227" column="26" selection-start="7735" selection-end="7735" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Logger/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.020334927">
           <folding />
         </state>
       </provider>

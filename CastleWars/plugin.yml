@@ -1,5 +1,5 @@
 name: CastleWars
-version: 0.7
+version: 0.8
 main: com.thepastimers.CastleWars.CastleWars
 softdepend: [Database,Plot,Permission,Money,Coord,Pattern,Chat,Worlds]
 commands:

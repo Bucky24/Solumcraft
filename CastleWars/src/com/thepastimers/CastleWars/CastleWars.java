@@ -124,6 +124,8 @@ public class CastleWars extends JavaPlugin implements Listener {
             claimCastle.cancel();
             claims.remove(p);
 
+            p.sendMessage(ChatColor.RED + "You are no longer capturing this castle");
+
             boolean anotherPlayer = false;
             for (Player player : claims.keySet()) {
                 ClaimCastle cc = claims.get(player);
@@ -161,6 +163,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (claims.containsKey(p)) {
             ClaimCastle claimCastle = claims.get(p);
             claimCastle.cancel();
+            p.sendMessage(ChatColor.RED + "You are no longer capturing this castle");
         }
     }
 
@@ -171,7 +174,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (claims.containsKey(p)) {
             ClaimCastle claimCastle = claims.get(p);
             claimCastle.cancel();
-            getLogger().info("Player  " + p.getName() + " is no longer capturing");
+            //getLogger().info("Player  " + p.getName() + " is no longer capturing");
         }
     }
 
@@ -224,6 +227,19 @@ public class CastleWars extends JavaPlugin implements Listener {
             claims.put(p,cc);
             int minutes = timer/60;
             p.sendMessage(ChatColor.GREEN + "Remain in this plot for " + minutes + " minutes to capture this castle");
+        } else {
+            int count = 0;
+            for (Player player : claims.keySet()) {
+                ClaimCastle cc = claims.get(player);
+                if (cc.getCd().getId() == cd.getId()) {
+                    player.sendMessage(ChatColor.RED + "The owner has entered this castle. You are no longer claiming it.");
+                    cc.cancel();
+                    claims.remove(player);
+                    count ++;
+                    break;
+                }
+            }
+            p.sendMessage(ChatColor.RED + "You have stopped " + count + " people from claiming your castle.");
         }
     }
 
