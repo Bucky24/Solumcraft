@@ -152,9 +152,8 @@ public class Database extends JavaPlugin {
                 //}
 
                 return ret;
-            } catch (Exception e) {
-                getLogger().warning("Could not call parseResult for class " + c.getName() + ", trying Table");
-                //e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                //getLogger().warning("No such method: parseResult for class " + c.getName() + ".");
                 try {
                     // try it with Table
                     Class[] argTypes = new Class[] {ResultSet.class,Class.class};
@@ -169,6 +168,10 @@ public class Database extends JavaPlugin {
                     //killConnection(connection);
                     return ret;
                 }
+            } catch (Exception e) {
+                getLogger().warning("Could not call parseResult for class " + c.getName() + ".");
+                e.printStackTrace();
+                return ret;
             }
         } catch (Exception e) {
             getLogger().warning("select: Unable to run query:");

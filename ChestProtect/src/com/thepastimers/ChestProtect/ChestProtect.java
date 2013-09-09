@@ -364,24 +364,24 @@ public class ChestProtect extends JavaPlugin implements Listener {
         if (ih instanceof Chest) {
             Chest c = (Chest)ih;
             Block b = c.getBlock();
-            if (isProtected(b)) {
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
                 event.setCancelled(true);
             }
         } else if (ih instanceof DoubleChest) {
             DoubleChest c = (DoubleChest)ih;
             Block b = ((Chest)c.getLeftSide()).getBlock();
-            if (isProtected(b)) {
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
                 event.setCancelled(true);
             }
 
             b = ((Chest)c.getRightSide()).getBlock();
-            if (isProtected(b)) {
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
                 event.setCancelled(true);
             }
         } else if (ih instanceof Hopper) {
             Hopper c = (Hopper)ih;
             Block b = c.getBlock();
-            if (isProtected(b)) {
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
                 event.setCancelled(true);
             }
         }

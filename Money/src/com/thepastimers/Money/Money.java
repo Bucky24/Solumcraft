@@ -548,6 +548,15 @@ public class Money extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage("/price <item> <price>");
             }
+        } else if ("reloadPrices".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"money_price")) {
+                sender.sendMessage("You do not have permission to use this command (money_price)");
+                return true;
+            }
+
+            prices.clear();
+
+            sender.sendMessage("Price list has been cleared");
         } else {
             return false;
         }

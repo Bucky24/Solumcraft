@@ -1,5 +1,5 @@
 name: Money
-version: 1.6
+version: 1.7
 main: com.thepastimers.Money.Money
 softdepend: [Database, Permission, ItemName, Worlds]
 commands:
@@ -13,3 +13,5 @@ commands:
         description: get worth of items
     price:
         description: get/set prices of items
+    reloadPrices:
+        description: reloads price cache
