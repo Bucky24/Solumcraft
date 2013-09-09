@@ -122,17 +122,22 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (claims.containsKey(p)) {
             ClaimCastle claimCastle = claims.get(p);
             claimCastle.cancel();
+            claims.remove(p);
 
             boolean anotherPlayer = false;
             for (Player player : claims.keySet()) {
+                ClaimCastle cc = claims.get(player);
                 if (claims.get(player).getCd().getId() == cd.getId()) {
                     anotherPlayer = true;
                     break;
                 }
             }
 
+
+
             if (!anotherPlayer) {
                 List<Entity> entityList = ClaimCastle.getMobsInCastle(this,pd);
+                getLogger().info("" + entityList.size());
                 for (Entity e : entityList) {
                     e.remove();
                 }

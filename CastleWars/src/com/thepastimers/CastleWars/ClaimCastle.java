@@ -98,10 +98,11 @@ public class ClaimCastle extends BukkitRunnable {
             // determine if we need to spawn mobs
             List<Entity> entityList = getMobsInCastle(plugin,pd);
             List<CastleSpawner> spawnerList = CastleSpawner.getSpawnersForCastle(cd);
+            //plugin.getLogger().info(entityList.size() + " < " + (spawnerList.size()*4));
             if (entityList.size() < spawnerList.size()*4) {
                 for (CastleSpawner s : spawnerList) {
                     World w = plugin.getServer().getWorld(pd.getWorld());
-                    Location l = new Location(w,s.getX(),s.getY(),s.getZ());
+                    Location l = new Location(w,s.getX(),s.getY()+1,s.getZ());
                     Entity e = w.spawnEntity(l,EntityType.ZOMBIE);
                 }
             }
@@ -122,7 +123,7 @@ public class ClaimCastle extends BukkitRunnable {
         for (Entity e : serverEntities) {
             if (e.getType() == EntityType.ZOMBIE) {
                 Location l = e.getLocation();
-                if (l.getBlockX() >= pd.getX1() && l.getBlockX() <= pd.getX2() && l.getBlockZ() >= pd.getZ1() && l.getBlockZ() <= pd.getZ2()) {
+                if (l.getBlockX() >= pd.getX1()-1 && l.getBlockX() <= pd.getX2()+1 && l.getBlockZ() >= pd.getZ1()-1 && l.getBlockZ() <= pd.getZ2()+1) {
                     entityList.add(e);
                 }
             }

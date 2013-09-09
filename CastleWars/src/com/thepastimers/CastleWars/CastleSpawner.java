@@ -28,6 +28,12 @@ public class CastleSpawner extends Table {
     private static Map<Integer,CastleSpawner> dataMap;
     public static Map<Integer,List<CastleSpawner>> castleDataMap;
 
+    int id;
+
+    public CastleSpawner() {
+        id = -1;
+    }
+
     int castle;
     int x;
     int y;
@@ -85,6 +91,7 @@ public class CastleSpawner extends Table {
 
         if (result) {
             dataMap.remove(id);
+
             castleDataMap.remove(castle);
         }
 
@@ -106,7 +113,7 @@ public class CastleSpawner extends Table {
             p.setX(result.getInt("x"));
             p.setY(result.getInt("y"));
             p.setZ(result.getInt("z"));
-            p.setPrevBlock(result.getString("prevBlock"));
+            p.setPrevBlock(result.getString("prev_block"));
 
             ret.add(p);
         }
