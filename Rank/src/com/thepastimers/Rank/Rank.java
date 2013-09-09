@@ -55,6 +55,7 @@ public class Rank extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         getLogger().info(PlayerRank.getTableInfo());
         PlayerTitle.autoPopulate = true;
+        PlayerRank.refreshCache(database,getLogger());
         //PlayerTitle.myClass = PlayerTitle.class;
         database.select(PlayerTitle.class,"1");
         getLogger().info(PlayerTitle.getTableInfo());
@@ -75,13 +76,13 @@ public class Rank extends JavaPlugin implements Listener {
 
         player = player.replace("'","");
 
-        List<PlayerRank> ranks = (List<PlayerRank>)database.select(PlayerRank.class,"player = '" + player + "'");
+        PlayerRank rank = PlayerRank.getRankForPlayer(player);
 
-        if (ranks.size() == 0) {
+        if (rank == null) {
             return "";
         }
 
-        return ranks.get(0).getRank();
+        return rank.getRank();
     }
 
     public List<String> getRanks(String player) {
@@ -121,13 +122,9 @@ public class Rank extends JavaPlugin implements Listener {
 
         player = player.replace("'","");
 
-        List<PlayerRank> ranks = (List<PlayerRank>)database.select(PlayerRank.class,"player = '" + player + "'");
+        PlayerRank rank = PlayerRank.getRankForPlayer(player);
 
-        if (ranks.size() == 0) {
-            return null;
-        }
-
-        return ranks.get(0);
+        return rank;
     }
 
     public boolean setRank(String player, String rank) {
@@ -185,13 +182,13 @@ public class Rank extends JavaPlugin implements Listener {
             return false;
         }
 
-        List<PlayerRank> ranks = (List<PlayerRank>)database.select(PlayerRank.class,"player = '" + database.makeSafe(player));
+        PlayerRank rankObj = PlayerRank.getRankForPlayer(player);
 
-        if (ranks.size() == 0) {
+        if (rankObj == null) {
             return false;
         }
 
-        return rank.equalsIgnoreCase(ranks.get(0).getRank());
+        return rank.equalsIgnoreCase(rankObj.getRank());
     }
 
     private boolean isAuthorized(String player) {

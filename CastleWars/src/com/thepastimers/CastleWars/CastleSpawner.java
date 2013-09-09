@@ -92,7 +92,16 @@ public class CastleSpawner extends Table {
         if (result) {
             dataMap.remove(id);
 
-            castleDataMap.remove(castle);
+            List<CastleSpawner> spawnList = castleDataMap.get(castle);
+            if (spawnList != null) {
+                List<CastleSpawner> newList = new ArrayList<CastleSpawner>();
+                for (CastleSpawner s : spawnList) {
+                    if (s.getId() != id) {
+                        newList.add(s);
+                    }
+                }
+                castleDataMap.put(castle,newList);
+            }
         }
 
         return result;

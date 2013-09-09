@@ -847,7 +847,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                 sender.sendMessage("/cw <create|remove|upgrade|testIncome|rebuild|info|defense>");
             }
         } else if ("reloadCastles".equalsIgnoreCase(command)) {
-            if (permission == null || !permission.hasPermission(playerName,"castle_create") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"castle_create")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (castle_create)");
                 return true;
             }

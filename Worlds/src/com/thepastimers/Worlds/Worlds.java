@@ -66,7 +66,7 @@ public class Worlds extends JavaPlugin implements Listener {
             event.setCancelled(true);
             event.getEntity().setHealth(0);
         } else {
-            getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name() + " type: " + event.getEntity().getType().name());
+            //getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name() + " type: " + event.getEntity().getType().name());
             if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
                 Entity e = event.getEntity();
                 Location l = e.getLocation();
