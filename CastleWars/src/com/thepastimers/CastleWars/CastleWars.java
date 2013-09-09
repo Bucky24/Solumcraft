@@ -758,6 +758,11 @@ public class CastleWars extends JavaPlugin implements Listener {
 
                     CastleData cd = CastleData.getCastleForPlot(pd);
 
+                    if (!cd.getOwner().equalsIgnoreCase(playerName)) {
+                        sender.sendMessage(ChatColor.RED + "You do not own this castle");
+                        return true;
+                    }
+
                     if (args.length > 1) {
                         String subCommand2 = args[1];
                         if ("create".equalsIgnoreCase(subCommand2)) {
