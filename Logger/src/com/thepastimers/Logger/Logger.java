@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -239,6 +241,13 @@ public class Logger extends JavaPlugin implements Listener {
     public void creatureSpawn(CreatureSpawnEvent event) {
         Location l = event.getLocation();
         if (event.isCancelled()) return;
+        // we don't care about these three types
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)
+        {
+            return;
+        }
         writeEvent("spawn","Entity: " + event.getEntity().getType().getName()
                 + ", reason: " + event.getSpawnReason().name()
                 + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
@@ -266,5 +275,38 @@ public class Logger extends JavaPlugin implements Listener {
         writeEvent(event.getPlayer(), "pickup", "Item: "
                 + is.getType().name()
                 + ". Durability: " + is.getDurability() + "/" + is.getType().getMaxDurability() + ". Amount: " + is.getAmount());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void damage(EntityDamageEvent event) {
+        if (event instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent event2 = (EntityDamageByEntityEvent)event;
+
+            if (event2.getEntity() instanceof Player && event2.getDamager() instanceof Player) {
+                Player p = (Player)event2.getEntity();
+                Location l = event2.getEntity().getLocation();
+                Player p2 = (Player)event2.getDamager();
+                Location l2 = event2.getDamager().getLocation();
+                writeEvent(p,"damage","By: player, amount: " + event2.getDamage() + ", player: " + p2.getName()
+                        + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
+                writeEvent(p2,"damaged","Target: player, amount: " + event2.getDamage() + ", player: " + p.getName()
+                        + ", at (" + l2.getBlockX() + "," + l2.getBlockY() + "," + l2.getBlockZ() + "," + l.getWorld().getName() + ")");
+            } else if (event2.getEntity() instanceof Player) {
+                Player p = (Player)event2.getEntity();
+                Location l = event2.getEntity().getLocation();
+                writeEvent(p,"damage","By: entity, amount: " + event2.getDamage() + ", entity: " + ((Player) event2.getEntity()).getType().getName()
+                        + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
+            } else if (event2.getDamager() instanceof Player) {
+                Player p = (Player)event2.getDamager();
+                Location l = event2.getEntity().getLocation();
+                writeEvent(p,"damaged","Target: entity, amount: " + event2.getDamage() + ", entity: " + event2.getEntity().getType().getName()
+                        + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
+            }
+        } else {
+            if (event.getEntity() instanceof Player) {
+                Player p = (Player)event.getEntity();
+                writeEvent(p,"damage","By: " + event.getCause().name() + ", amount: " + event.getDamage());
+            }
+        }
     }
 }
