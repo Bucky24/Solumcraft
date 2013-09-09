@@ -39,7 +39,7 @@
     <file path="/AdminTools.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1366683531950" ignored="false" />
     <file path="/BanData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1366683270119" ignored="false" />
     <file path="/a.dummy" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378264577388" ignored="false" />
-    <file path="/Money.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378747208294" ignored="false" />
+    <file path="/Money.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378768547159" ignored="false" />
     <file path="/Price.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1366853403965" ignored="false" />
     <file path="/Spawner.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378248955989" ignored="false" />
     <file path="/SpawnData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1367552436711" ignored="false" />
@@ -169,23 +169,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logger/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.020334927">
+            <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerRank.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+      <file leaf-file-name="Money.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="153" column="29" selection-start="3892" selection-end="3892" vertical-scroll-proportion="-9.68">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1207#1219#0" expanded="true" />
-              </folding>
+            <state line="274" column="23" selection-start="9191" selection-end="9191" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -235,10 +232,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Worlds.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Worlds.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="24" selection-start="1360" selection-end="1360" vertical-scroll-proportion="0.0">
+            <state line="72" column="34" selection-start="2415" selection-end="2415" vertical-scroll-proportion="0.59107804">
               <folding />
             </state>
           </provider>
@@ -266,7 +263,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
-        <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
         <option value="$PROJECT_DIR$/Money/plugin.yml" />
         <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java" />
@@ -281,6 +277,7 @@
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java" />
         <option value="$PROJECT_DIR$/CastleWars/plugin.yml" />
         <option value="$PROJECT_DIR$/Logger/plugin.yml" />
+        <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
       </list>
     </option>
   </component>
@@ -512,6 +509,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Plot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Money" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Money" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Money" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -890,7 +923,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3170189" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227633" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -969,18 +1002,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="18" selection-start="8687" selection-end="8687" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5755#5774#0" expanded="true" />
-            <element signature="e#6660#6669#0" expanded="true" />
-            <element signature="e#10398#10407#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/Votes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="67" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0">
@@ -1023,13 +1044,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1207#1219#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="24" selection-start="1360" selection-end="1360" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1086,7 +1100,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logger/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.020334927">
+        <state line="1" column="12" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="274" column="23" selection-start="9191" selection-end="9191" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="34" selection-start="2415" selection-end="2415" vertical-scroll-proportion="0.59107804">
           <folding />
         </state>
       </provider>

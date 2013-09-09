@@ -255,10 +255,12 @@ public class Money extends JavaPlugin implements Listener {
                 return true;
             }
 
-            Player player2 = getServer().getPlayer(playerName);
-            if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
-                sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
-                return true;
+            if (!"CONSOLE".equalsIgnoreCase(playerName)) {
+                Player player2 = getServer().getPlayer(playerName);
+                if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
+                    sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
+                    return true;
+                }
             }
 
             String player = "";
