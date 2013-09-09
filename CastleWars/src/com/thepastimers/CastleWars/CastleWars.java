@@ -204,6 +204,7 @@ public class CastleWars extends JavaPlugin implements Listener {
         } else {
             p.sendMessage(ChatColor.GREEN + "This castle is claimed by " + cd.getOwner());
         }
+
         if (!p.getName().equalsIgnoreCase(cd.getOwner())) {
             Player player = getServer().getPlayer(cd.getOwner());
             if (player != null) {

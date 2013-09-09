@@ -67,6 +67,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
         rewards.add(new VoteReward("horse","HORSE_EGG","Horse spawn egg",1,10));
         rewards.add(new VoteReward("villager","VILLAGER_EGG","Villager spawn egg",1,20));
         rewards.add(new VoteReward("chiseled_block","CHISELED_STONE","Chiseled stone block",5,2));
+        rewards.add(new VoteReward("sheep","SHEEP_EGG","Sheep spawn egg",1,10));
 
         getLogger().info("Table info: ");
         getLogger().info(VoteSettings.getTableInfo());

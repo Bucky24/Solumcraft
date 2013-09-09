@@ -99,7 +99,7 @@ public class ClaimCastle extends BukkitRunnable {
             List<Entity> entityList = getMobsInCastle(plugin,pd);
             List<CastleSpawner> spawnerList = CastleSpawner.getSpawnersForCastle(cd);
             //plugin.getLogger().info(entityList.size() + " < " + (spawnerList.size()*4));
-            if (entityList.size() < spawnerList.size()*4) {
+            if (entityList.size() < spawnerList.size()*3) {
                 for (CastleSpawner s : spawnerList) {
                     World w = plugin.getServer().getWorld(pd.getWorld());
                     Location l = new Location(w,s.getX(),s.getY()+1,s.getZ());

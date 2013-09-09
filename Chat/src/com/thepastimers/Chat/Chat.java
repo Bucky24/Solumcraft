@@ -3,18 +3,35 @@ package com.thepastimers.Chat;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Worlds.Worlds;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationAbandonedEvent;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.*;
+import org.bukkit.map.MapView;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.util.*;
+import org.bukkit.util.Vector;
 
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -190,9 +207,13 @@ public class Chat extends JavaPlugin implements Listener {
         if (logger != null) {
             Player p = getServer().getPlayer(player);
             if (p == null) {
-                p = getServer().getOfflinePlayer(player).getPlayer();
+                //getLogger().info("Got player " + player);
+                OfflinePlayer op = getServer().getOfflinePlayer(player);
+                logger.writeEvent(op,"chat",messageBak);
+                //getLogger().info("Player is " + p);
+            } else {
+                logger.writeEvent(p,"chat",messageBak);
             }
-            logger.writeEvent(p,"chat",messageBak);
         }
 
         // we want it unspoiled (without the color codes) for when it goes into db
