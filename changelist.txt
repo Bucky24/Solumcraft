@@ -60,7 +60,6 @@ custom /help command that is actually helpful.
 update ban plugin to use server's ban for perm-bans.
 If the plugin goes down, I'm not too upset if temp-ban people come back on, but perm-ban people need to stay off.
 
-web graph showing how many players were on at what time.
 Advance the graph to show times where server staff was online, so you can match that up with peak hours.
 
 Can also show people on webchat/staff on webchat.
@@ -85,27 +84,4 @@ world-limit the max homes, so each world has separate max home for peeps
 
 raise limit on chat spam filter, to avoid people being kicked when lagging
 
-Updating plugins to not work on vanilla worlds:
-CastleWars 1
-Chat
-ChestProtect 1
-Coord 1
-Creative
-Edit 1
-ExtCommands 
-Farming 1
-Home 1
-Kit 1
-Login 1
-Magic 1
-Mail 1
-Money 1
-Pattern 1
-Plot 1
-Pvp 1
-Pyro 1
-Rank 1
-Spawner 1
-Teleport 1
-TradeSign 1
-Warp 1
+Important: cache the ban data. Someone can overload the db server really fast by trying to login (it checks if they are banned)

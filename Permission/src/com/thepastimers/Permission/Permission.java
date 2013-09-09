@@ -1,6 +1,7 @@
 package com.thepastimers.Permission;
 
 import com.thepastimers.Database.Database;
+import com.thepastimers.Database.Table;
 import com.thepastimers.Rank.Rank;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,10 +40,10 @@ public class Permission extends JavaPlugin {
 
         getLogger().info("Permission init complete");
 
+        PlayerPerm.refreshCache(database, getLogger());
         getLogger().info(PlayerPerm.getTableInfo());
-        PlayerPerm.refreshCache(database,getLogger());
+        GroupPerm.refreshCache(database, getLogger());
         getLogger().info(GroupPerm.getTableInfo());
-        GroupPerm.refreshCache(database,getLogger());
     }
 
     @Override

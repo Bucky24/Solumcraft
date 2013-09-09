@@ -23,7 +23,7 @@ public class Table {
     protected int id;
 
     public static boolean autoPopulate = false;
-    private static Map<String,String> columns = new HashMap<String, String>();
+    private static Map<Class,Map<String,String>> columns = new HashMap<Class,Map<String, String>>();
 
     public Table() {
         id = -1;
@@ -46,6 +46,11 @@ public class Table {
 
         ResultSetMetaData data = resultSet.getMetaData();
 
+        Map<String,String> newCols = columns.get(myClass);
+        if (newCols == null) {
+            newCols = new HashMap<String, String>();
+        }
+
         if (autoPopulate) {
             int count = data.getColumnCount();
             for (int i=1;i<=count;i++) {
@@ -65,10 +70,12 @@ public class Table {
                     throw new UnsupportedOperationException("Can't handle columns of type " + type);
                 }
 
-                if (!columns.containsKey(name)) {
-                    columns.put(name,typeStr);
+                if (!newCols.containsKey(name)) {
+                    newCols.put(name,typeStr);
                 }
             }
+
+            columns.put(myClass,newCols);
 
             while (resultSet.next()) {
                 Table instance = (Table)myClass.newInstance();
@@ -124,19 +131,27 @@ public class Table {
                 // can't do anything
             }
 
+            Map<String,String> colMap = columns.get(myClass);
+
+            // get column count
+            String[] keys = colMap.keySet().toArray(new String[0]);
+
             if (id == -1) {
                 StringBuilder cols = new StringBuilder();
                 cols.append("(");
                 StringBuilder values = new StringBuilder();
                 values.append("(");
 
-                String[] keys = columns.keySet().toArray(new String[0]);
                 for (int i=0;i<keys.length;i++) {
                     String name = keys[i];
-                    String type = columns.get(name);
+                    String type = colMap.get(name);
+
+                    //d.getLogger().info(name);
 
                     // don't save the ID
-                    if ("id".equalsIgnoreCase(name)) continue;
+                    if ("id".equalsIgnoreCase(name)) {
+                        continue;
+                    }
 
                     char[] stringArray = name.toCharArray();
                     stringArray[0] = Character.toUpperCase(stringArray[0]);
@@ -161,6 +176,7 @@ public class Table {
                     }
 
                     if (i < keys.length-1) {
+                        //d.getLogger().info(i + " < " + (max-1));
                         cols.append(",");
                         values.append(",");
                     }
@@ -176,13 +192,14 @@ public class Table {
                 StringBuilder query = new StringBuilder();
                 query.append("UPDATE " + table + " SET ");
 
-                String[] keys = (String[])columns.keySet().toArray();
                 for (int i=0;i<keys.length;i++) {
                     String name = keys[i];
-                    String type = columns.get(name);
+                    String type = colMap.get(name);
 
                     // don't save the id (though in an update it doesn't really matter
-                    if ("id".equalsIgnoreCase(name)) continue;
+                    if ("id".equalsIgnoreCase(name)) {
+                        continue;
+                    }
 
                     char[] stringArray = name.toCharArray();
                     stringArray[0] = Character.toUpperCase(stringArray[0]);
@@ -221,12 +238,13 @@ public class Table {
     public static String getTableInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(table);
-        if (autoPopulate) {
+        /*if (autoPopulate) {
+            Map<String,String> colMap = columns.get(myClass);
             sb.append(":");
-            for (String key : columns.keySet()) {
-                sb.append(" ").append(columns.get(key)).append(" ").append(key).append(",");
+            for (String key : colMap.keySet()) {
+                sb.append(" ").append(colMap.get(key)).append(" ").append(key).append(",");
             }
-        }
+        }         */
         return sb.toString();
     }
 

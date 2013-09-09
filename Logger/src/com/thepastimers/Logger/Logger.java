@@ -97,7 +97,7 @@ public class Logger extends JavaPlugin implements Listener {
     public void writeEvent(Date d, Player p, String event, String data) {
         String message = formatMessage(d,p,event,data);
 
-        getLogger().info("Writing  " + message);
+        //getLogger().info("Writing  " + message);
         try {
             FileWriter writer = new FileWriter(file,true);
             writer.write(message);
