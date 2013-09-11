@@ -1,0 +1,7 @@
+name: Clans
+version: 0.1
+main: com.thepastimers.Clans.Clans
+softdepend: [Database,Permission,Logger]
+commands:
+    clan:
+        description: basic clan command

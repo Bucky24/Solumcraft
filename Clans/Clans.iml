@@ -8,6 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bukkit-1.6.2-R1.0" level="project" />
+    <orderEntry type="module" module-name="Database" />
+    <orderEntry type="module" module-name="Logger" />
+    <orderEntry type="module" module-name="Permission" />
   </component>
 </module>
 
