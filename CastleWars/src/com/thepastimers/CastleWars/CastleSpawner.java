@@ -81,15 +81,22 @@ public class CastleSpawner extends Table {
     }
 
     public boolean delete(Database d) {
+        return delete(d,(Logger)null);
+    }
+
+    public boolean delete(Database d, Logger l) {
         if (id == -1) {
+            if (l != null) l.info("id is -1");
             return true;
         }
         if (d == null) {
             return false;
         }
-        boolean result = d.query("DELETE FROM " + table + " WHERE ID = " + id);
+        boolean result = d.query("DELETE FROM " + table + " WHERE id = " + id);
+        if (l != null) l.info("DELETE FROM " + table + " WHERE id = " + id);
 
         if (result) {
+            if (l != null) l.info("managed to delete");
             dataMap.remove(id);
 
             List<CastleSpawner> spawnList = castleDataMap.get(castle);

@@ -30,10 +30,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.potion.Potion;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -49,8 +46,8 @@ public class Plot extends JavaPlugin implements Listener {
     Coord coord;
     Money money;
     Worlds worlds;
-    Map<Class,JavaPlugin> plotEnterListener;
-    Map<Class,JavaPlugin> plotLeaveListener;
+    Map<Class,Map<JavaPlugin,Integer>> plotEnterListener;
+    Map<Class,Map<JavaPlugin,Integer>> plotLeaveListener;
 
     @Override
     public void onEnable() {
@@ -98,8 +95,8 @@ public class Plot extends JavaPlugin implements Listener {
         //database.select(PlotRent.class,"1");
         //getLogger().info(PlotRent.getTableInfo());
 
-        plotEnterListener = new HashMap<Class, JavaPlugin>();
-        plotLeaveListener = new HashMap<Class, JavaPlugin>();
+        plotEnterListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
+        plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
 
         getLogger().info("Plot init complete");
     }
@@ -331,11 +328,23 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     public void registerPlotEnter(Class c, JavaPlugin plugin) {
-        plotEnterListener.put(c,plugin);
+        registerPlotEnter(c,plugin,0);
+    }
+
+    public void registerPlotEnter(Class c, JavaPlugin plugin, int offset) {
+        Map<JavaPlugin,Integer> blah = new HashMap<JavaPlugin, Integer>();
+        blah.put(plugin,offset);
+        plotEnterListener.put(c,blah);
     }
 
     public void registerPlotLeave(Class c, JavaPlugin plugin) {
-        plotLeaveListener.put(c,plugin);
+        registerPlotLeave(c, plugin, 0);
+    }
+
+    public void registerPlotLeave(Class c, JavaPlugin plugin, int offset) {
+        Map<JavaPlugin,Integer> blah = new HashMap<JavaPlugin, Integer>();
+        blah.put(plugin,offset);
+        plotLeaveListener.put(c,blah);
     }
 
     @EventHandler
@@ -458,26 +467,59 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     private boolean handleMove(Location l, Location l2, Player p) {
+        for (Class c : plotEnterListener.keySet()) {
+            try {
+                Map<JavaPlugin,Integer> blah = plotEnterListener.get(c);
+                JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+                int offset = blah.get(plugin);
+
+                PlotData p1 = PlotData.getPlotAtLocation(l, true, offset);
+                if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, offset);
+                PlotData p2 = PlotData.getPlotAtLocation(l2, true, offset);
+                if (p2 == null) p2 = PlotData.getPlotAtLocation(l2, false, offset);
+
+                if (p2 != null && p1 == null) {
+                    getLogger().info("here");
+                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                    Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
+                    m.invoke(plugin,p2,p);
+                }
+            } catch (Exception e) {
+                getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
+            }
+        }
+
+        for (Class c : plotLeaveListener.keySet()) {
+            try {
+                Map<JavaPlugin,Integer> blah = plotLeaveListener.get(c);
+                JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+                int offset = blah.get(plugin);
+
+                PlotData p1 = PlotData.getPlotAtLocation(l, true, offset);
+                if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, offset);
+                PlotData p2 = PlotData.getPlotAtLocation(l2, true, offset);
+                if (p2 == null) p2 = PlotData.getPlotAtLocation(l2, false, offset);
+
+                if (p1 != null && p2 == null) {
+                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                    Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
+                    m.invoke(plugin,p1,p);
+                }
+            } catch (Exception e) {
+                getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                e.printStackTrace();
+            }
+        }
+
         PlotData p1 = plotAt(l,true);
-        if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, 1);
+        if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, 0);
         PlotData p2 = plotAt(l2,true);
-        if (p2 == null) p2 = PlotData.getPlotAtLocation(l2, false, 1);
+        if (p2 == null) p2 = PlotData.getPlotAtLocation(l2, false, 0);
 
         if (p2 != null && p1 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now entering " + p2.getName());
             if (p2.isCreative() && getPlotPerms(p2,p.getName()) > PlotPerms.NONE) {
                 p.setGameMode(GameMode.CREATIVE);
-            }
-
-            for (Class c : plotEnterListener.keySet()) {
-                try {
-                    JavaPlugin plugin = plotEnterListener.get(c);
-                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
-                    Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
-                    m.invoke(plugin,p2,p);
-                } catch (Exception e) {
-                    getLogger().warning("Unable to call handlePlotEnter for " + c.getName());
-                }
             }
         } else if (p1 != null && p2 == null) {
             p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName());
@@ -500,17 +542,6 @@ public class Plot extends JavaPlugin implements Listener {
                 }
                 p.setGameMode(GameMode.SURVIVAL);
             }
-
-            for (Class c : plotLeaveListener.keySet()) {
-                try {
-                    JavaPlugin plugin = plotLeaveListener.get(c);
-                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
-                    Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
-                    m.invoke(plugin,p1,p);
-                } catch (Exception e) {
-                    getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
-                }
-            }
         } else if (!(p1 == null && p2 == null)) {
             if (p1.getId() != p2.getId()) {
                 p.sendMessage(ChatColor.GREEN + "You are now leaving " + p1.getName() + " and entering " + p2.getName());
@@ -522,7 +553,9 @@ public class Plot extends JavaPlugin implements Listener {
 
                 for (Class c : plotLeaveListener.keySet()) {
                     try {
-                        JavaPlugin plugin = plotLeaveListener.get(c);
+                        Map<JavaPlugin,Integer> blah = plotLeaveListener.get(c);
+                        JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+
                         Class[] argTypes = new Class[] {PlotData.class,Player.class};
                         Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
                         m.invoke(plugin,p1,p);
@@ -533,7 +566,9 @@ public class Plot extends JavaPlugin implements Listener {
 
                 for (Class c : plotEnterListener.keySet()) {
                     try {
-                        JavaPlugin plugin = plotEnterListener.get(c);
+                        Map<JavaPlugin,Integer> blah = plotEnterListener.get(c);
+                        JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+
                         Class[] argTypes = new Class[] {PlotData.class,Player.class};
                         Method m = c.getDeclaredMethod("handlePlotEnter",argTypes);
                         m.invoke(plugin,p2,p);
@@ -914,7 +949,9 @@ public class Plot extends JavaPlugin implements Listener {
 
                     for (Class c : plotLeaveListener.keySet()) {
                         try {
-                            JavaPlugin plugin = plotLeaveListener.get(c);
+                            Map<JavaPlugin,Integer> blah = plotEnterListener.get(c);
+                            JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+
                             Class[] argTypes = new Class[] {PlotData.class,Player.class};
                             Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
                             m.invoke(plugin,pd,p);

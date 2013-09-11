@@ -53,7 +53,7 @@ public class CastleWars extends JavaPlugin implements Listener {
     // both of these in dollars
     static int INCOME_PER_LEVEL = 50;
     static int COST_PER_LEVEL = 2000;
-    static int COST_PER_DEFENSE_LEVEL = 10;
+    static int COST_PER_DEFENSE_LEVEL = 20;
 
     @Override
     public void onEnable() {
@@ -75,8 +75,8 @@ public class CastleWars extends JavaPlugin implements Listener {
         if (plot == null) {
             getLogger().warning("Unable to load Plot plugin. Some functionality may not be available");
         } else {
-            plot.registerPlotEnter(CastleWars.class,this);
-            plot.registerPlotLeave(CastleWars.class,this);
+            plot.registerPlotEnter(CastleWars.class,this,-1);
+            plot.registerPlotLeave(CastleWars.class,this,-1);
         }
 
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
@@ -833,7 +833,11 @@ public class CastleWars extends JavaPlugin implements Listener {
 
                             for (CastleSpawner cs : spawners) {
                                 if (cs.getX() == l.getBlockX() && cs.getY() == l.getBlockY()-1 && cs.getZ() == l.getBlockZ()) {
-                                    if (cs.delete(database)) {
+                                    //getLogger().info("Removing spawner with id of " + cs.getId());
+                                    //if (cs.delete(database,getLogger())) {
+                                    boolean result = database.query("DELETE FROM " + CastleSpawner.table + " WHERE id = " + cs.getId());
+                                    //getLogger().info("DELETE FROM " + CastleSpawner.table + " WHERE id = " + cs.getId());
+                                    if (result) {
                                         CastleSpawner.refreshCache(database,getLogger());
 
                                         getLogger().info("" +CastleSpawner.castleDataMap.keySet().size());
