@@ -46,7 +46,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
     Coord coord;
     Plot plot;
     Worlds worlds;
-    int MAX_PROTECTIONS = 2;
+    int MAX_PROTECTIONS = 6;
 
     @Override
     public void onEnable() {
@@ -444,8 +444,8 @@ public class ChestProtect extends JavaPlugin implements Listener {
                     Player p = (Player)sender;
                     World w = p.getWorld();
 
-                    if (!"world".equalsIgnoreCase(w.getName())) {
-                        sender.sendMessage(ChatColor.RED + "Chest protections can only be created in the main world");
+                    if (!"economy".equalsIgnoreCase(w.getName())) {
+                        sender.sendMessage(ChatColor.RED + "Chest protections can only be created in the economy world");
                         return true;
                     }
 

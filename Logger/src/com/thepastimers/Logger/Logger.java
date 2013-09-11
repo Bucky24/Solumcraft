@@ -233,8 +233,8 @@ public class Logger extends JavaPlugin implements Listener {
         writeEvent(event.getPlayer(),evt,"From (" + from.getBlockX() + ","
                 + from.getBlockY() + "," + from.getBlockZ() + ","
                 + from.getWorld().getName() + ") To (" + to.getBlockX() + ","
-                + from.getBlockY() + "," + from.getBlockZ() + ","
-                + from.getWorld().getName() + ")");
+                + to.getBlockY() + "," + to.getBlockZ() + ","
+                + to.getWorld().getName() + ")");
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

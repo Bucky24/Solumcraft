@@ -97,7 +97,7 @@
     <file path="/ClearThenLoad.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1376778378403" ignored="false" />
     <file path="/CastleIncome.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1377662938543" ignored="false" />
     <file path="/CastleSpawner.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378860439755" ignored="false" />
-    <file path="/Logger.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378935227251" ignored="false" />
+    <file path="/Logger.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378938028786" ignored="false" />
     <file path="/PlayerRank.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378764136853" ignored="false" />
     <file path="/Clans.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378935689123" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -164,7 +164,16 @@
       <file leaf-file-name="Logger.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="198" column="53" selection-start="6510" selection-end="6510" vertical-scroll-proportion="0.0">
+            <state line="233" column="44" selection-start="8004" selection-end="8004" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChestProtect.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="607" column="34" selection-start="21916" selection-end="21916" vertical-scroll-proportion="0.45321992">
               <folding />
             </state>
           </provider>
@@ -179,10 +188,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Clans.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Clans.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Clans/src/com/thepastimers/Clans/Clans.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="25" selection-start="1376" selection-end="1376" vertical-scroll-proportion="0.66950184">
+            <state line="30" column="71" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -230,7 +239,10 @@
         <entry file="file://$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="340" column="45" selection-start="10822" selection-end="10822" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2281#2292#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -239,15 +251,6 @@
         <entry file="file://$PROJECT_DIR$/AdminTools/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="304" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminTools.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="248" column="35" selection-start="8418" selection-end="8418" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -263,7 +266,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
         <option value="$PROJECT_DIR$/CastleWars/plugin.yml" />
         <option value="$PROJECT_DIR$/Logger/plugin.yml" />
@@ -276,9 +278,10 @@
         <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
         <option value="$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java" />
         <option value="$PROJECT_DIR$/AdminTools/plugin.yml" />
-        <option value="$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java" />
         <option value="$PROJECT_DIR$/Clans/plugin.yml" />
         <option value="$PROJECT_DIR$/Clans/src/com/thepastimers/Clans/Clans.java" />
+        <option value="$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java" />
+        <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
       </list>
     </option>
   </component>
@@ -366,6 +369,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Clans" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -679,13 +718,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleIncome.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="672" selection-end="672" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="50" column="72" selection-start="1455" selection-end="1455" vertical-scroll-proportion="0.0">
@@ -738,14 +770,10 @@
     <entry file="file://$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="340" column="45" selection-start="10822" selection-end="10822" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="198" column="53" selection-start="6510" selection-end="6510" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2281#2292#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -786,10 +814,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Clans/src/com/thepastimers/Clans/Clans.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="25" selection-start="1376" selection-end="1376" vertical-scroll-proportion="0.66950184">
+        <state line="30" column="71" selection-start="909" selection-end="909" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="233" column="44" selection-start="8004" selection-end="8004" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="607" column="34" selection-start="21916" selection-end="21916" vertical-scroll-proportion="0.45321992">
+          <folding />
         </state>
       </provider>
     </entry>
