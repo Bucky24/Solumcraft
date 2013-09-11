@@ -22,7 +22,7 @@
     <file path="/PlayerMagic.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1362277841131" ignored="false" />
     <file path="/Teleport.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378248966601" ignored="false" />
     <file path="/PlayerLogin.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1365146940083" ignored="false" />
-    <file path="/ItemName.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378093856928" ignored="false" />
+    <file path="/ItemName.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378911122369" ignored="false" />
     <file path="/ItemData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1362279611313" ignored="false" />
     <file path="/PlotData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1377456876004" ignored="false" />
     <file path="/Database.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378746162216" ignored="false" />
@@ -160,15 +160,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Logger.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="227" column="26" selection-start="7735" selection-end="7735" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Database.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -214,10 +205,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CastleWars.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CastleWars.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="843" column="53" selection-start="35620" selection-end="35620" vertical-scroll-proportion="0.39298245">
+            <state line="853" column="65" selection-start="36453" selection-end="36453" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ItemName.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="345" column="51" selection-start="11131" selection-end="11131" vertical-scroll-proportion="0.20274915">
               <folding />
             </state>
           </provider>
@@ -245,9 +245,7 @@
         <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="198" column="35" selection-start="5448" selection-end="5448" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#2297#2312#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -262,7 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Money/plugin.yml" />
         <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/ClaimCastle.java" />
         <option value="$PROJECT_DIR$/Pvp/src/com/thepastimers/Pvp/Pvp.java" />
@@ -278,6 +275,7 @@
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java" />
         <option value="$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java" />
+        <option value="$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java" />
       </list>
     </option>
   </component>
@@ -316,16 +314,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -428,26 +416,36 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$PROJECT_DIR$/Home/src/com/thepastimers/Home" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="reference.projectsettings.compiler.javacompiler" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/plugins" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bukkit-1.6.2-R1.0.jar!/" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -462,6 +460,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -489,19 +500,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -565,7 +563,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3170189" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -644,18 +642,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="27" selection-start="630" selection-end="630" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1056" column="40" selection-start="39878" selection-end="39878" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1056" column="40" selection-start="39878" selection-end="39878" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/PlotData.java">
@@ -667,19 +656,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="29" selection-start="3892" selection-end="3892" vertical-scroll-proportion="-9.68">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1207#1219#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="153" column="29" selection-start="3892" selection-end="3892" vertical-scroll-proportion="-9.68" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="19" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="34" column="19" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/plugin.yml">
@@ -727,9 +709,7 @@
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleSpawner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="198" column="35" selection-start="5448" selection-end="5448" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#2297#2312#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -756,7 +736,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="843" column="53" selection-start="35620" selection-end="35620" vertical-scroll-proportion="0.39298245">
+        <state line="853" column="65" selection-start="36453" selection-end="36453" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="345" column="51" selection-start="11131" selection-end="11131" vertical-scroll-proportion="0.20274915">
           <folding />
         </state>
       </provider>
@@ -827,7 +814,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>bukkit-1.6.2-R0.2-20130826.060127-13</last-edited>
+          <last-edited>bukkit-1.6.2-R1.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
