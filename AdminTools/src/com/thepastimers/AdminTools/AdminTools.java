@@ -1,6 +1,7 @@
 package com.thepastimers.AdminTools;
 
 import com.thepastimers.Database.Database;
+import com.thepastimers.Logger.Logger;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -28,6 +29,7 @@ import java.util.*;
 public class AdminTools extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
+    Logger logger;
 
     @Override
     public void onEnable() {
@@ -42,9 +44,13 @@ public class AdminTools extends JavaPlugin implements Listener {
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-
         if (permission == null) {
             getLogger().warning("Unable to connect to Permission plugin");
+        }
+
+        logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
+        if (logger == null) {
+            getLogger().warning("Unable to connect to Logger plugin");
         }
 
         getLogger().info("Table info: ");
@@ -242,9 +248,15 @@ public class AdminTools extends JavaPlugin implements Listener {
 
                 if (until == null) {
                     bd.setPerm(true);
+                    if (logger != null) {
+                        logger.writeEvent(Logger.file,null,name,"perm_ban","By: " + playerName + ". Reason: " + reason);
+                    }
                     sender.sendMessage("You have perm-banned " + name + " for reason: " + reason);
                 } else {
                     bd.setPerm(false);
+                    if (logger != null) {
+                        logger.writeEvent(Logger.file,null,name,"ban","By: " + playerName + ". Reason: " + reason + ". Length: " + until);
+                    }
                     sender.sendMessage("You have banned " + name + " for " + offset + " seconds. Reason: " + reason);
                 }
 
@@ -268,6 +280,10 @@ public class AdminTools extends JavaPlugin implements Listener {
             }
             if (args.length > 0) {
                 String player = args[0];
+
+                if (logger != null) {
+                    logger.writeEvent(Logger.file,null,player,"pardoned","By: " + playerName);
+                }
 
                 if (unban(player)) {
                     sender.sendMessage(player + " has been pardoned of all their crimes.");
@@ -295,6 +311,10 @@ public class AdminTools extends JavaPlugin implements Listener {
 
                 for (int i=1;i<args.length;i++) {
                     reason += args[i] + " ";
+                }
+
+                if (logger != null) {
+                    logger.writeEvent(p,"kicked","By: " + playerName + ". Reason: " + reason);
                 }
 
                 if (reason.equalsIgnoreCase("")) {

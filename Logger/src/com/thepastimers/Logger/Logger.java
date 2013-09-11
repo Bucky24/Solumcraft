@@ -30,8 +30,8 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Logger extends JavaPlugin implements Listener {
-    public static String file = "/minecraft/serverlog-<yyyy>-<mm>-<dd>.log";
-    public static String moveFile = "/minecraft/servermovelog-<yyyy>-<mm>-<dd>-<hh>.log";
+    public static String file = "/minecraft/logs/serverlog-<yyyy>-<mm>-<dd>.log";
+    public static String moveFile = "/minecraft/logs/servermovelog-<yyyy>-<mm>-<dd>-<hh>.log";
     String format = "<time>|<player>|<event>|<data>\n";
 
     @Override
@@ -219,8 +219,8 @@ public class Logger extends JavaPlugin implements Listener {
         writeEvent(moveFile, null, event.getPlayer().getName(), evt, "From (" + from.getBlockX() + ","
                 + from.getBlockY() + "," + from.getBlockZ() + ","
                 + from.getWorld().getName() + ") To (" + to.getBlockX() + ","
-                + from.getBlockY() + "," + from.getBlockZ() + ","
-                + from.getWorld().getName() + ")");
+                + to.getBlockY() + "," + to.getBlockZ() + ","
+                + to.getWorld().getName() + ")");
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -248,7 +248,7 @@ public class Logger extends JavaPlugin implements Listener {
         {
             return;
         }
-        writeEvent("spawn","Entity: " + event.getEntity().getType().getName()
+        writeEvent("spawn","Entity: " + event.getEntity().getType().name()
                 + ", reason: " + event.getSpawnReason().name()
                 + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
     }
@@ -294,12 +294,12 @@ public class Logger extends JavaPlugin implements Listener {
             } else if (event2.getEntity() instanceof Player) {
                 Player p = (Player)event2.getEntity();
                 Location l = event2.getEntity().getLocation();
-                writeEvent(p,"damage","By: entity, amount: " + event2.getDamage() + ", entity: " + ((Player) event2.getEntity()).getType().getName()
+                writeEvent(p,"damage","By: entity, amount: " + event2.getDamage() + ", entity: " + ((Player) event2.getEntity()).getType().name()
                         + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
             } else if (event2.getDamager() instanceof Player) {
                 Player p = (Player)event2.getDamager();
                 Location l = event2.getEntity().getLocation();
-                writeEvent(p,"damaged","Target: entity, amount: " + event2.getDamage() + ", entity: " + event2.getEntity().getType().getName()
+                writeEvent(p,"damaged","Target: entity, amount: " + event2.getDamage() + ", entity: " + event2.getEntity().getType().name()
                         + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
             }
         } else {
