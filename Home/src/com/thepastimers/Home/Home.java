@@ -387,8 +387,8 @@ public class Home extends JavaPlugin implements Listener {
                 Block b = w.getBlockAt(l);
                 Block b2 = w.getBlockAt(l2);
 
-                if ((b.getType() != Material.AIR && b.getType() != Material.WATER && b.getType() != Material.STATIONARY_WATER) ||
-                        (b2.getType() != Material.AIR && b2.getType() != Material.WATER && b2.getType() != Material.STATIONARY_WATER)) {
+                if ((b.getType() != Material.AIR && b.getType() != Material.WATER && b.getType() != Material.STATIONARY_WATER && b.getType() != Material.CARPET) ||
+                        (b2.getType() != Material.AIR && b2.getType() != Material.WATER && b2.getType() != Material.STATIONARY_WATER && b2.getType() != Material.CARPET)) {
                     sender.sendMessage("That location is unsafe to teleport to. Please use /forcehome " + name + " If you really want to teleport there.");
                     return true;
                 }
