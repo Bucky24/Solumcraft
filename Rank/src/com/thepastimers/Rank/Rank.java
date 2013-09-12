@@ -258,7 +258,7 @@ public class Rank extends JavaPlugin implements Listener {
 
         String title = getTitle(player);
 
-        titleObj.delete(database,PlayerTitle.class);
+        titleObj.delete(database);
 
         titleObj = getTitleObject(player);
 

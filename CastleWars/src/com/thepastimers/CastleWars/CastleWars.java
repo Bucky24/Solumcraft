@@ -584,7 +584,7 @@ public class CastleWars extends JavaPlugin implements Listener {
                     if (!pd.save(database)) {
                         sender.sendMessage(ChatColor.RED + "Unable to update plot information");
                     } else {
-                        if (!cd.delete(database,CastleData.class)) {
+                        if (!cd.delete(database)) {
                             sender.sendMessage(ChatColor.RED + "Unable to remove Castle");
                         } else {
                             sender.sendMessage(ChatColor.GREEN + "Castle removed!");
