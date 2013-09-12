@@ -235,20 +235,48 @@ public class Table {
         }
     }
 
+    protected static Class getChildClass() {
+        try {
+            // hopefully returns the name of the child class
+            String classname = (new CurClassNameGetter()).getClassName();
+            Class c = Class.forName(classname);
+            return c;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public static String getTableInfo() {
         StringBuilder sb = new StringBuilder();
         sb.append(table);
         /*if (autoPopulate) {
+            Class myClass = getChildClass();
+            if (myClass == null) return sb.toString();
             Map<String,String> colMap = columns.get(myClass);
             sb.append(":");
             for (String key : colMap.keySet()) {
                 sb.append(" ").append(colMap.get(key)).append(" ").append(key).append(",");
             }
-        }         */
+        }*/
         return sb.toString();
     }
 
-    public boolean delete(Database d,Class myClass) {
+    public static String getTableInfo(boolean blah) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(table);
+        if (autoPopulate) {
+            Class myClass = getChildClass();
+            if (myClass == null) return sb.toString();
+            Map<String,String> colMap = columns.get(myClass);
+            sb.append(":");
+            for (String key : colMap.keySet()) {
+                sb.append(" ").append(colMap.get(key)).append(" ").append(key).append(",");
+            }
+        }
+        return sb.toString();
+    }
+
+    public boolean delete(Database d) {
         if (id == -1) {
             return true;
         }
@@ -256,6 +284,7 @@ public class Table {
             return false;
         }
         if (autoPopulate) {
+            Class myClass = getChildClass();
             try {
                 table = (String)myClass.getField("table").get(null);
             } catch (Exception e) {
@@ -263,5 +292,11 @@ public class Table {
             }
         }
         return d.query("DELETE FROM " + table + " WHERE ID = " + id);
+    }
+
+    private static class CurClassNameGetter extends SecurityManager{
+        public String getClassName(){
+            return getClassContext()[1].getName();
+        }
     }
 }
