@@ -33,6 +33,7 @@ public class Worlds extends JavaPlugin implements Listener {
     public static int NORMAL = 1;
     public static int VANILLA = 2;
     public static int ECONOMY = 3;
+    public static int MAGIC = 4;
 
     static Map<Player,Location> deathLocs;
 

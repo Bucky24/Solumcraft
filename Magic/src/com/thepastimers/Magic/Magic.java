@@ -84,7 +84,7 @@ public class Magic extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+        if (worlds == null || worlds.getPlayerWorldType(event.getPlayer().getName()) != Worlds.MAGIC) {
             return;
         }
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -283,7 +283,7 @@ public class Magic extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        if (worlds != null && worlds.getPlayerWorldType(playerName) != Worlds.MAGIC) {
             return false;
         }
 
