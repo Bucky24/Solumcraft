@@ -17,10 +17,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -628,6 +625,32 @@ public class Plot extends JavaPlugin implements Listener {
                 }
             } else {
                 event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void death(PlayerDeathEvent event) {
+        Player p = event.getEntity();
+        Location l = p.getLocation();
+
+        for (Class c : plotLeaveListener.keySet()) {
+            try {
+                Map<JavaPlugin,Integer> blah = plotLeaveListener.get(c);
+                JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
+                int offset = blah.get(plugin);
+
+                PlotData p1 = PlotData.getPlotAtLocation(l, true, offset);
+                if (p1 == null) p1 = PlotData.getPlotAtLocation(l, false, offset);
+
+                if (p1 != null) {
+                    Class[] argTypes = new Class[] {PlotData.class,Player.class};
+                    Method m = c.getDeclaredMethod("handlePlotLeave",argTypes);
+                    m.invoke(plugin,p1,p);
+                }
+            } catch (Exception e) {
+                getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
+                e.printStackTrace();
             }
         }
     }
