@@ -1,0 +1,114 @@
+AdminTools
+administration tools
+ban,kick,pardon,entities
+all worlds
+
+Announce
+announcement plugin
+all worlds
+
+Boundry
+boundry plugin
+economy world
+
+CastleWars
+castle wars
+cw
+nether only
+
+Chat
+enhanced chat (aux plugin)
+all except vanilla
+
+ChestProtect
+chest protection plugin
+protect
+economy only
+
+Clans
+factions-like plugin
+normal + economy
+
+CombatLog
+prevents teleport on combat (aux plugin)
+all except vanilla
+
+Coord
+allows setting of coordinates for other things (aux plugin)
+coord
+normal + economy
+
+Creative
+allows players use of gm in various situations
+gm
+all worlds (limited to staff for vanilla)
+
+Database
+database handling code (aux plugin)
+db
+all worlds (no output)
+
+Edit
+worldedit-like plugin
+various commands
+all except vanilla
+
+ExtCommands
+random commands
+spawn, tpe, clear, itemCheck, hide
+all except vanilla (admin related commands, such as setspawn, tpe, opCheck, hide, work in vanilla)
+
+Farming
+various things to make farming easier
+economy only
+
+Home
+player homes
+sethome, listhome, delhome, home
+all except vanilla
+
+Inventory
+plugin to store and load inventories (aux plugin)
+all worlds
+
+ItemName
+plugin to give/take items as well as refer to items by name easier (aux plugin)
+all worlds
+
+Kit
+kits for players to use every x seconds
+kit
+all except vanilla
+
+Logger
+plugin to see all things (aux plugin)
+all worlds
+
+Login
+plugin to allow setting of external login so webchat can be used
+setPassword
+all worlds (doesn't make sense to hide this from vanilla)
+
+Magic
+plugin for magic stuffs
+cast
+magic world only
+
+Mail
+plugin to send server-based mail to other players
+all except vanilla
+Metrics
+Money
+Mute
+Pattern
+Permission
+Plot
+Pvp
+Pyro
+Rank
+Spawner
+Teleport
+TradeSign
+VoteHandler
+Warp
+Worlds
