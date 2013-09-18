@@ -120,6 +120,9 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void register(Class c, JavaPlugin plugin, int priority) {
+        if (listeners == null) {
+            listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
+        }
         Map<Class,JavaPlugin> listenerMap = listeners.get(priority);
         if (listenerMap == null) {
             listenerMap = new HashMap<Class, JavaPlugin>();

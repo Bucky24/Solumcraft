@@ -3,6 +3,7 @@ package com.thepastimers.Plot;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
+import com.thepastimers.Logger.Logger;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.ChestProtect.ChestProtect;
@@ -43,6 +44,7 @@ public class Plot extends JavaPlugin implements Listener {
     Coord coord;
     Money money;
     Worlds worlds;
+    Logger logger;
     Map<Class,Map<JavaPlugin,Integer>> plotEnterListener;
     Map<Class,Map<JavaPlugin,Integer>> plotLeaveListener;
 
@@ -61,19 +63,16 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-
         if (permission == null) {
             getLogger().warning("Unable to load Permission module. Some functionality may not be available.");
         }
 
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
-
         if (coord == null) {
             getLogger().warning("Unable to load Coord plugin. Some functionality may not be available.");
         }
 
         money = (Money)getServer().getPluginManager().getPlugin("Money");
-
         if (money == null) {
             getLogger().warning("Unable to load Money plugin. some functionality may not be available.");
         }
@@ -83,17 +82,22 @@ public class Plot extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
+        logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
+        if (logger == null) {
+            getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
+        }
+
+        plotEnterListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
+        plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
+
         getLogger().info("Table info: ");
-        getLogger().info(PlotData.getTableInfo());
+        //getLogger().info(PlotData.getTableInfo());
         PlotData.refreshCache(database,getLogger());
-        getLogger().info(PlotPerms.getTableInfo());
+        //getLogger().info(PlotPerms.getTableInfo());
         PlotPerms.refreshCache(database,getLogger());
         //PlotRent.autoPopulate = true;
         //database.select(PlotRent.class,"1");
         //getLogger().info(PlotRent.getTableInfo());
-
-        plotEnterListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
-        plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
 
         getLogger().info("Plot init complete");
     }
@@ -341,6 +345,9 @@ public class Plot extends JavaPlugin implements Listener {
     public void registerPlotLeave(Class c, JavaPlugin plugin, int offset) {
         Map<JavaPlugin,Integer> blah = new HashMap<JavaPlugin, Integer>();
         blah.put(plugin,offset);
+        if (plotLeaveListener == null) {
+            plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
+        }
         plotLeaveListener.put(c,blah);
     }
 
@@ -369,6 +376,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_BlockBreakEvent");
+        }
         Player p = event.getPlayer();
         Block b = event.getBlock();
 
@@ -380,6 +390,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void paintingBreak(HangingBreakByEntityEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_HangingBreakByEntityEvent");
+        }
         Entity b = event.getEntity();
 
         Player pl = null;
@@ -403,6 +416,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void blockPlace(BlockPlaceEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_BlockPlaceEvent");
+        }
         Player p = event.getPlayer();
         Block b = event.getBlock();
 
@@ -414,6 +430,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void liquid(PlayerBucketEmptyEvent event) {
+        if (logger != null) {
+        logger.logEvent("plot_PlayerBucketEmptyEvent");
+    }
         Player p = event.getPlayer();
         Block b = event.getBlockClicked();
 
@@ -425,6 +444,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void liquidMoved(BlockFromToEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_BlockFromToEvent");
+        }
         Location l1 = event.getBlock().getLocation();
         Location l2 = event.getToBlock().getLocation();
 
@@ -460,6 +482,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void playerMove(PlayerMoveEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_PlayerMoveEvent");
+        }
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }
 
@@ -581,11 +606,17 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void playerTeleport(PlayerTeleportEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_PlayerTeleportEvent");
+        }
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }
 
     @EventHandler
     public void damage(EntityDamageByEntityEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_EntityDamageByEntityEvent");
+        }
         Entity damaged  = event.getEntity();
         Entity damager = event.getDamager();
 
@@ -631,6 +662,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void death(PlayerDeathEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_PlayerDeathEvent");
+        }
         Player p = event.getEntity();
         Location l = p.getLocation();
 
@@ -657,6 +691,9 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler
     public void normalDamage(EntityDamageEvent event) {
+        if (logger != null) {
+            logger.logEvent("plot_EntityDamageEvent");
+        }
         if (event.getEntityType() != EntityType.PLAYER) {
             return;
         }

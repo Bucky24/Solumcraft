@@ -53,9 +53,9 @@ public class Rank extends JavaPlugin implements Listener {
         }
 
         getLogger().info("Table info: ");
-        getLogger().info(PlayerRank.getTableInfo());
         PlayerTitle.autoPopulate = true;
         PlayerRank.refreshCache(database,getLogger());
+        getLogger().info(PlayerRank.getTableInfo());
         //PlayerTitle.myClass = PlayerTitle.class;
         database.select(PlayerTitle.class,"1");
         getLogger().info(PlayerTitle.getTableInfo());

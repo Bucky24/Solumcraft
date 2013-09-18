@@ -8,6 +8,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -178,6 +179,15 @@ public class AdminTools extends JavaPlugin implements Listener {
 
             getLogger().info("Player " + p.getName() + " failed login because of ban. Reason: " + reason);
         }
+    }
+
+    public int ping(Player p) {
+        if (p == null) return -1;
+        CraftPlayer cp = (CraftPlayer)p;
+
+        int ping = cp.getHandle().ping;
+
+        return ping;
     }
 
     @Override
@@ -360,6 +370,35 @@ public class AdminTools extends JavaPlugin implements Listener {
                 }
             } else {
                 sender.sendMessage("/entities <report>");
+            }
+        } else if ("ping".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"admin_ping")) {
+                sender.sendMessage("You don't have permission to use this command (admin_ping)");
+                return true;
+            }
+
+            String player = "";
+            if (args.length > 0) {
+                player = args[0];
+            }
+
+            if (!"".equalsIgnoreCase(player)) {
+                Player p = getServer().getPlayer(player);
+                if (p == null) {
+                    sender.sendMessage(ChatColor.RED + "That player does not exist");
+                    return true;
+                }
+
+                int ping = ping(p);
+
+                sender.sendMessage(ChatColor.GREEN + "Ping for " + player + ": " + ping);
+            } else {
+                Player[] players = getServer().getOnlinePlayers();
+                for (Player p : players) {
+                    int ping = ping(p);
+
+                    sender.sendMessage(ChatColor.GREEN + "Ping for " + p.getName() + ": " + ping);
+                }
             }
         } else {
             return false;

@@ -1,3 +1,6 @@
 name: Logger
-version: 0.2
+version: 0.3
 main: com.thepastimers.Logger.Logger
+commands:
+    log:
+        description: log command

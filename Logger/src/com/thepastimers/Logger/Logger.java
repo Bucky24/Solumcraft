@@ -1,8 +1,11 @@
 package com.thepastimers.Logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,10 +20,12 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,11 +39,15 @@ public class Logger extends JavaPlugin implements Listener {
     public static String moveFile = "/minecraft/logs/servermovelog-<yyyy>-<mm>-<dd>-<hh>.log";
     String format = "<time>|<player>|<event>|<data>\n";
 
+    Map<String,Integer> events;
+
     @Override
     public void onEnable() {
         getLogger().info("Logger init");
 
         writeEvent("Plugin enabled");
+
+        events = new HashMap<String, Integer>();
 
         getServer().getPluginManager().registerEvents(this,this);
     }
@@ -141,7 +150,7 @@ public class Logger extends JavaPlugin implements Listener {
     }
 
     public void writeEvent(String logFile, Date d, String p, String event, String data) {
-        String message = formatMessage(d,p,event,data);
+        /*String message = formatMessage(d,p,event,data);
 
         logFile = formatFile(logFile);
 
@@ -152,7 +161,21 @@ public class Logger extends JavaPlugin implements Listener {
             writer.close();
         } catch (IOException e) {
             getLogger().info("Could not open file for writing: " + e.getMessage());
+        }*/
+    }
+
+    public void logEvent(String event) {
+        /*List<Date> eventList = events.get(event);
+        if (eventList == null) {
+            eventList = new ArrayList<Date>();
         }
+        eventList.add(new Date());*/
+        Integer num = events.get(event);
+        if (num == null) {
+            num = 0;
+        }
+        num ++;
+        events.put(event,num);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -308,5 +331,33 @@ public class Logger extends JavaPlugin implements Listener {
                 writeEvent(p,"damage","By: " + event.getCause().name() + ", amount: " + event.getDamage());
             }
         }
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        String playerName = "";
+
+        if (sender instanceof Player) {
+            playerName = ((Player)sender).getName();
+        } else {
+            playerName = "CONSOLE";
+        }
+
+        String command = cmd.getName();
+
+        if (command.equalsIgnoreCase("log")) {
+            if (!"CONSOLE".equalsIgnoreCase(playerName)) {
+                return true;
+            }
+
+            for (String key : events.keySet()) {
+                int num = events.get(key);
+
+                sender.sendMessage(key + ": " + num);
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }

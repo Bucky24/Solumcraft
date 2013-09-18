@@ -14,6 +14,7 @@
     <orderEntry type="module" module-name="ChestProtect" />
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="library" name="bukkit-1.6.2-R1.0" level="project" />
+    <orderEntry type="module" module-name="Logger" />
   </component>
 </module>
 

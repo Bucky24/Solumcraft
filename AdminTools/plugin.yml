@@ -1,5 +1,5 @@
 name: AdminTools
-version: 1.1
+version: 1.2
 main: com.thepastimers.AdminTools.AdminTools
 softdepend: [Database,Permission,Logger]
 commands:
@@ -11,3 +11,5 @@ commands:
         description: pardon user
     entities:
         description: entities command
+    ping:
+        description: get player ping
