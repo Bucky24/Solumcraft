@@ -177,19 +177,26 @@ public class Metrics extends JavaPlugin implements Listener {
         time /= 1000;
 
         p.sendMessage("Welcome to Solumcraft!");
-        p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
-        p.sendMessage("You have spent " + parseDate(time) + " seconds on this server");
+        //p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
+        //p.sendMessage("You have spent " + parseDate(time) + " seconds on this server");
 
         if (logins == 0) {
             p.teleport(getServer().getWorld("world").getSpawnLocation());
             getLogger().info("Teleporting new player " + p.getName() + " to spawn.");
         }
 
-        p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting at the following servers:");
-        p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
+        //p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting at the following servers:");
+        //p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
         //p.sendMessage(ChatColor.GREEN + "www.mcserverlist.net/servers/516ba260041b26153700019e");
-        p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
-        p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
+        //p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+        //p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
+
+        p.sendMessage(ChatColor.RED + "Important:");
+        p.sendMessage(ChatColor.RED + "Due to various reasons I have decided to shut down");
+        p.sendMessage(ChatColor.RED + "the economy world. Everyone with market stalls, please");
+        p.sendMessage(ChatColor.RED + "remove your trade signs. Everyone with plots, please");
+        p.sendMessage(ChatColor.RED + "contact pastimerbucky, and I will reimburse you. that also");
+        p.sendMessage(ChatColor.RED + "applies to anyone with a money balance.");
     }
 
     public int getLoginCount(String player) {

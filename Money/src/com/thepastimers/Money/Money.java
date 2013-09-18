@@ -100,7 +100,7 @@ public class Money extends JavaPlugin implements Listener {
 
             MoneyData data = new MoneyData();
             data.setPlayer(name);
-            data.setBalance(10000);
+            data.setBalance(0);
             if (!data.save(database)) {
                 getLogger().warning("Unable to create new money object.");
             }

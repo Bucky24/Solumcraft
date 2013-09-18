@@ -402,15 +402,14 @@ public class Plot extends JavaPlugin implements Listener {
 
         PlotData p = plotAt(b.getLocation());
 
-            if (p != null) {
-                if (!pl.getName().equalsIgnoreCase(p.getOwner())) {
-                    PlotPerms pp = getPlotPermobject(p,pl.getName());
-                    if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
-                        pl.sendMessage(ChatColor.RED + "You do not have permissions to modify hangings here");
-                        event.setCancelled(true);
-                    }
+        if (p != null) {
+            if (!pl.getName().equalsIgnoreCase(p.getOwner())) {
+                PlotPerms pp = getPlotPermobject(p,pl.getName());
+                if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
+                    pl.sendMessage(ChatColor.RED + "You do not have permissions to modify hangings here");
+                    event.setCancelled(true);
                 }
-
+            }
         }
     }
 
@@ -480,13 +479,13 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }*/
 
-    @EventHandler
+    /*@EventHandler
     public void playerMove(PlayerMoveEvent event) {
         if (logger != null) {
             logger.logEvent("plot_PlayerMoveEvent");
         }
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
-    }
+    }*/
 
     private boolean handleMove(Location l, Location l2, Player p) {
         for (Class c : plotEnterListener.keySet()) {
@@ -604,13 +603,13 @@ public class Plot extends JavaPlugin implements Listener {
         return true;
     }
 
-    @EventHandler
+    /*@EventHandler
     public void playerTeleport(PlayerTeleportEvent event) {
         if (logger != null) {
             logger.logEvent("plot_PlayerTeleportEvent");
         }
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
-    }
+    }*/
 
     @EventHandler
     public void damage(EntityDamageByEntityEvent event) {
