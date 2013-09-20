@@ -1,7 +1,7 @@
 name: ExtCommands
-version: 1.2
+version: 1.3
 main: com.thepastimers.ExtCommands.ExtCommands
-softdepend: [Permission, Metrics,Rank,Worlds]
+softdepend: [Permission, Metrics,Rank,Worlds,ItemName]
 commands:
     spawn:
         description: teleports to spawn
@@ -23,3 +23,5 @@ commands:
         description: Vanish player
     spawnDragon:
         description: Spawns Ender Dragon
+    stack:
+        description: stacks items

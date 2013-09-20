@@ -2,6 +2,7 @@ package com.thepastimers.ExtCommands;
 
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.CommandData;
+import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
@@ -25,6 +26,7 @@ import org.kitteh.vanish.VanishManager;
 import org.kitteh.vanish.VanishPlugin;
 import org.kitteh.vanish.staticaccess.VanishNoPacket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,6 +44,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
     VanishPlugin vanishNoPacket;
     VanishManager manager;
     Worlds worlds;
+    ItemName itemName;
 
     @Override
     public void onEnable() {
@@ -76,6 +79,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
+        itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
+        if (itemName == null) {
+            getLogger().warning("Unable to load ItemName plugin. Some functionality may not be available.");
         }
 
         vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
@@ -461,6 +469,43 @@ public class ExtCommands extends JavaPlugin implements Listener {
             Location l = p.getLocation();
 
             l.getWorld().spawnEntity(l,EntityType.ENDER_DRAGON);
+        } else if ("stack".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_stack") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_stack)");
+                return true;
+            }
+
+            if (itemName == null) {
+                sender.sendMessage(ChatColor.RED + "This functionality is not currently available");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            ItemStack is = p.getInventory().getItemInHand();
+            String name = itemName.getItemName(is);
+            int count = itemName.countInInventory(name,p.getName());
+            if (count > 64) {
+                sender.sendMessage(ChatColor.RED + "Can't stack over 64 at this time");
+                return true;
+            }
+
+            if (count == -1) {
+                sender.sendMessage(ChatColor.RED + "Cannot stack this item");
+                return true;
+            }
+            itemName.takeItem(p,name,count);
+            ItemStack newItem = itemName.getItemFromName(name);
+            newItem.setAmount(count);
+            // find an opening
+            ItemStack[] items = p.getInventory().getContents();
+            for (int i=0;i<items.length;i++) {
+                ItemStack ii = items[i];
+                if (ii == null) {
+                    items[i] = newItem;
+                    break;
+                }
+            }
+            p.getInventory().setContents(items);
         } else {
             return false;
         }

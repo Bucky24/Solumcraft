@@ -107,6 +107,10 @@ public class ItemName extends JavaPlugin {
     }
 
     public int countInInventory(String item, String player) {
+        return countInInventory(item,player,false);
+    }
+
+    public int countInInventory(String item, String player, boolean stopBrokeEnchanted) {
         if (item == null || player == null) {
             return 0;
         }
@@ -119,6 +123,10 @@ public class ItemName extends JavaPlugin {
         for (ItemStack is : items) {
             if (item.equalsIgnoreCase(getItemName(is))) {
                 count += is.getAmount();
+
+                if (isEnchanted(is) || ((isTool(is) || isArmor(is)))) {
+                    return -1;
+                }
             }
         }
 
@@ -282,6 +290,10 @@ public class ItemName extends JavaPlugin {
 
     public boolean isTool(String item) {
         ItemStack is = getItemFromName(item);
+        return isTool(is);
+    }
+
+    public boolean isTool(ItemStack is) {
         if (is == null) return false;
         
         Material t = is.getType();
@@ -289,7 +301,27 @@ public class ItemName extends JavaPlugin {
                 || t == Material.WOOD_AXE || t == Material.STONE_AXE || t == Material.IRON_AXE || t == Material.GOLD_AXE || t == Material.DIAMOND_AXE
                 || t == Material.WOOD_PICKAXE || t == Material.STONE_PICKAXE || t == Material.IRON_PICKAXE || t == Material.GOLD_PICKAXE || t == Material.DIAMOND_PICKAXE
                 || t == Material.WOOD_HOE || t == Material.STONE_HOE || t == Material.IRON_HOE || t == Material.GOLD_HOE || t == Material.DIAMOND_HOE
-                || t == Material.WOOD_SWORD || t == Material.STONE_SWORD || t == Material.IRON_SWORD || t == Material.GOLD_SWORD || t == Material.DIAMOND_SWORD) {
+                || t == Material.WOOD_SWORD || t == Material.STONE_SWORD || t == Material.IRON_SWORD || t == Material.GOLD_SWORD || t == Material.DIAMOND_SWORD
+                || t == Material.BOW || t == Material.ANVIL || t == Material.FLINT_AND_STEEL || t == Material.FISHING_ROD) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isArmor(String item) {
+        ItemStack is = getItemFromName(item);
+        return isArmor(is);
+    }
+
+    public boolean isArmor(ItemStack is) {
+        if (is == null) return false;
+
+        Material t = is.getType();
+        if (t == Material.IRON_BOOTS || t == Material.IRON_LEGGINGS || t == Material.IRON_CHESTPLATE || t == Material.IRON_HELMET || t == Material.IRON_BARDING
+                || t == Material.GOLD_BOOTS || t == Material.GOLD_LEGGINGS || t == Material.GOLD_CHESTPLATE || t == Material.GOLD_HELMET || t == Material.GOLD_BARDING
+                || t == Material.DIAMOND_BOOTS || t == Material.DIAMOND_LEGGINGS || t == Material.DIAMOND_CHESTPLATE || t == Material.DIAMOND_HELMET || t == Material.DIAMOND_BARDING
+                || t == Material.LEATHER_BOOTS || t == Material.LEATHER_LEGGINGS || t == Material.LEATHER_CHESTPLATE || t == Material.LEATHER_HELMET) {
             return true;
         }
 
@@ -483,7 +515,7 @@ public class ItemName extends JavaPlugin {
         dataList.add(new ItemData("NIGHT_VIS_POTION",Material.getMaterial(373),8198));
         dataList.add(new ItemData("WEAK_POTION",Material.getMaterial(373),8200));
         dataList.add(new ItemData("STR1_POTION",Material.getMaterial(373),8201));
-        dataList.add(new ItemData("SLOW1_POTION",Material.getMaterial(373),8202));
+        dataList.add(new ItemData("SLOW1_POTION",Material.getMaterial(373),8234));
         dataList.add(new ItemData("HARM1_POTION",Material.getMaterial(373),8204));
         dataList.add(new ItemData("INVIS_POTION",Material.getMaterial(373),8206));
 
