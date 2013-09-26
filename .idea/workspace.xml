@@ -14,7 +14,7 @@
     <file path="/plugin.yml" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1379639883244" ignored="false" />
     <file path="/Edit.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378248799650" ignored="false" />
     <file path="/Home.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1378963114951" ignored="false" />
-    <file path="/Metrics.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1379537500194" ignored="false" />
+    <file path="/Metrics.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1380210545248" ignored="false" />
     <file path="/fragment.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1377199339673" ignored="false" />
     <file path="/PlayerDeaths.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1361675630328" ignored="false" />
     <file path="/PlayerDeath.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1361770472181" ignored="false" />
@@ -183,10 +183,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Metrics.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Metrics.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="28" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0">
+            <state line="187" column="190" selection-start="5954" selection-end="5954" vertical-scroll-proportion="0.5811966">
               <folding />
             </state>
           </provider>
@@ -219,10 +219,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminTools.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AdminTools.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="36" selection-start="490" selection-end="490" vertical-scroll-proportion="0.37777779">
+            <state line="13" column="36" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -274,13 +274,13 @@
         <option value="$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java" />
         <option value="$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java" />
         <option value="$PROJECT_DIR$/TradeSign/src/com/thepastimers/TradeSign/TradeSign.java" />
-        <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
         <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
         <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
         <option value="$PROJECT_DIR$/ItemName/plugin.yml" />
         <option value="$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java" />
         <option value="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
         <option value="$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java" />
+        <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
       </list>
     </option>
   </component>
@@ -319,6 +319,26 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -347,6 +367,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="ItemName" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -407,26 +463,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ExtCommands" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -446,11 +482,11 @@
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -465,6 +501,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -492,19 +541,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -558,7 +594,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6674528" order="3" side_tool="false" content_ui="tabs" />
@@ -568,7 +604,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3170189" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32035595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32035595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -674,9 +710,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="784" column="9" selection-start="26556" selection-end="26556" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="784" column="9" selection-start="26556" selection-end="26556" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TradeSign/src/com/thepastimers/TradeSign/Purchase.java">
@@ -689,13 +723,6 @@
     <entry file="file://$PROJECT_DIR$/TradeSign/src/com/thepastimers/TradeSign/TradeSign.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="82" column="24" selection-start="2772" selection-end="2772" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="28" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -744,7 +771,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="36" selection-start="490" selection-end="490" vertical-scroll-proportion="0.37777779">
+        <state line="13" column="36" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="190" selection-start="5954" selection-end="5954" vertical-scroll-proportion="0.5811966">
           <folding />
         </state>
       </provider>
