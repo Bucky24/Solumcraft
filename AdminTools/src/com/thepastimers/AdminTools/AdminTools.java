@@ -1,11 +1,15 @@
 package com.thepastimers.AdminTools;
 
+import com.thepastimers.Coord.Coord;
+import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
@@ -15,6 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Timestamp;
@@ -31,6 +37,7 @@ public class AdminTools extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Logger logger;
+    Coord coord;
 
     @Override
     public void onEnable() {
@@ -52,6 +59,11 @@ public class AdminTools extends JavaPlugin implements Listener {
         logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
         if (logger == null) {
             getLogger().warning("Unable to connect to Logger plugin");
+        }
+
+        coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
+        if (coord == null) {
+            getLogger().warning("Unable to connect to Coord plugin");
         }
 
         getLogger().info("Table info: ");
@@ -400,6 +412,55 @@ public class AdminTools extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "Ping for " + p.getName() + ": " + ping);
                 }
             }
+        } else if ("spawner".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"admin_spawner")) {
+                sender.sendMessage("You don't have permission to use this command (admin_spawner)");
+                return true;
+            }
+
+            if (coord == null) {
+                sender.sendMessage(ChatColor.RED + "This command is not currently available");
+                return true;
+            }
+
+
+            List<CoordData> cd = coord.popCoords(playerName,1);
+
+            if (cd.size() < 1) {
+                sender.sendMessage(ChatColor.RED + "You must have at least 1 coord set to use this command");
+                return true;
+            }
+
+            EntityType et = null;
+            if (args.length > 0) {
+                String type = args[0];
+                if ("zombie".equalsIgnoreCase(type)) {
+                    et = EntityType.ZOMBIE;
+                } else if ("witch".equalsIgnoreCase(type)) {
+                    et = EntityType.WITCH;
+                } else if ("skeleton".equalsIgnoreCase(type)) {
+                    et = EntityType.SKELETON;
+                } else if ("spider".equalsIgnoreCase(type)) {
+                    et = EntityType.SPIDER;
+                }
+            } else {
+                sender.sendMessage("/spawner <type>");
+                sender.sendMessage("ZOMBIE,WITCH,SKELETON,SPIDER");
+            }
+
+            if (et == null) {
+                sender.sendMessage("Unknown spawner type");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            CoordData c = cd.get(0);
+
+            Block b = p.getWorld().getBlockAt((int)c.getX(),(int)c.getY(),(int)c.getZ());
+            b.setType(Material.MOB_SPAWNER);
+            CreatureSpawner spawner = (CreatureSpawner)b.getState();
+            spawner.setSpawnedType(et);
+
         } else {
             return false;
         }

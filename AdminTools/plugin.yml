@@ -1,7 +1,7 @@
 name: AdminTools
-version: 1.2
+version: 1.3
 main: com.thepastimers.AdminTools.AdminTools
-softdepend: [Database,Permission,Logger]
+softdepend: [Database,Permission,Logger,Coord]
 commands:
     ban:
         description: bans user
@@ -13,3 +13,5 @@ commands:
         description: entities command
     ping:
         description: get player ping
+    spawner:
+        description: gives spawner
