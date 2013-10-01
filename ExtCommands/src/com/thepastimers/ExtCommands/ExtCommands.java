@@ -199,7 +199,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
             sender.sendMessage("Teleporting you to spawn.");
         } else if (command.equalsIgnoreCase("tpe")) {
-            if (permission == null || !permission.hasPermission(playerName,"command_tpe") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"command_tpe")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_tpe)");
                 return true;
             }
@@ -215,7 +215,20 @@ public class ExtCommands extends JavaPlugin implements Listener {
                     return true;
                 }
 
+                if (args.length > 3) {
+                    playerName = args[3];
+                }
+
+                if ("CONSOLE".equals(playerName)) {
+                    sender.sendMessage(ChatColor.RED + "Console cannot access this command");
+                    return true;
+                }
+
                 Player p = getServer().getPlayer(playerName);
+                if (p == null) {
+                    sender.sendMessage("This player does not exist");
+                    return true;
+                }
 
                 Location l = new Location(p.getWorld(),x,y,z);
                 p.teleport(l);
@@ -281,7 +294,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/clear mobs <world>");
                     }
-                } else if ("withers".equalsIgnoreCase(subCommand)) {
+                } else if ("bosses".equalsIgnoreCase(subCommand)) {
                     if (args.length > 1) {
                         String world = args[1];
 
@@ -296,7 +309,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                         int count = 0;
 
                         for (Entity entity : entities) {
-                            if (entity.getType() == EntityType.WITHER) {
+                            if (entity.getType() == EntityType.WITHER || entity.getType() == EntityType.ENDER_DRAGON) {
                                 entity.remove();
                                 count ++;
                             }
@@ -304,7 +317,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
                         sender.sendMessage("Removed " + count + " entities.");
                     } else {
-                        sender.sendMessage("/clear withers <world>");
+                        sender.sendMessage("/clear bosses <world>");
                     }
                 } else if ("cats".equalsIgnoreCase(subCommand)) {
                     if (args.length > 1) {
@@ -358,7 +371,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                     }
                 }
             } else {
-                sender.sendMessage("/clear <mobs|withers|cats|chickens>");
+                sender.sendMessage("/clear <mobs|bosses|cats|chickens>");
             }
         } else if (command.equalsIgnoreCase("itemCheck")) {
             if (permission == null || !permission.hasPermission(playerName,"command_item_check")) {
