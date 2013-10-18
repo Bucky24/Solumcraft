@@ -70,11 +70,13 @@ public class Worlds extends JavaPlugin implements Listener {
             //getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name() + " type: " + event.getEntity().getType().name());
             if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
                 Entity e = event.getEntity();
-                Location l = e.getLocation();
-                getLogger().info("Spawn egg used at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
-                for (Player p : getServer().getOnlinePlayers()) {
-                    Location l2 = p.getLocation();
-                    getLogger().info(p.getName() + " at (" + l2.getBlockX() + "," + l2.getBlockY() + "," + l2.getBlockZ() + "," + l2.getWorld().getName() + ")");
+                if (e.getType() != EntityType.PIG_ZOMBIE) {
+                    Location l = e.getLocation();
+                    getLogger().info("Spawn egg used at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + "). Creature: " + e.getType().name());
+                    for (Player p : getServer().getOnlinePlayers()) {
+                        Location l2 = p.getLocation();
+                        getLogger().info(p.getName() + " at (" + l2.getBlockX() + "," + l2.getBlockY() + "," + l2.getBlockZ() + "," + l2.getWorld().getName() + ")");
+                    }
                 }
             }
         }

@@ -186,12 +186,12 @@ public class Chat extends JavaPlugin implements Listener {
         data.setMessage(data.getMessage() + ChatColor.getByChar("r").toString());
         String originalMessage = stripColors(data.getMessage());
 
-        String mainMessage = "";
+        Date now = new Date();
+
+        String mainMessage = "(" + now.getHours() + ":" + now.getMinutes() + ") <" + data.getPlayerString() + "> " + data.getMessage();
         String vanillaMessage = "";
         if (web) {
-            mainMessage = ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " <" + data.getPlayerString() + "> " + data.getMessage();
-        } else {
-            mainMessage = "<" + data.getPlayerString() + "> " + data.getMessage();
+            mainMessage = ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " " + mainMessage;
         }
 
         vanillaMessage = "<" + data.getPlayer() + "> " + originalMessage;

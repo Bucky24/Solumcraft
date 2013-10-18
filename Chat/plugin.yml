@@ -1,5 +1,5 @@
 name: Chat
-version: 1.5
+version: 1.6
 main: com.thepastimers.Chat.Chat
 softdepend: [Database,Worlds,Logger]
 commands:

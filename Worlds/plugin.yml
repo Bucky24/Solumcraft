@@ -1,5 +1,5 @@
 name: Worlds
-version: 0.5
+version: 0.6
 main: com.thepastimers.Worlds.Worlds
 commands:
     go:
