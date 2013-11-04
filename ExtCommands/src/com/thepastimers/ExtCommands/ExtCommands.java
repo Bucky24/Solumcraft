@@ -497,6 +497,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             ItemStack is = p.getInventory().getItemInHand();
             String name = itemName.getItemName(is);
             int count = itemName.countInInventory(name,p.getName());
+            if (name.equalsIgnoreCase("LAVA_BUCKET") || name.equalsIgnoreCase("WATER_BUCKET")) count = -1;
             if (count > 64) {
                 sender.sendMessage(ChatColor.RED + "Can't stack over 64 at this time");
                 return true;

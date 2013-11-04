@@ -128,6 +128,34 @@ public class Mail extends JavaPlugin implements Listener {
         return md;
     }
 
+    public List<MailData> messageList(String player) {
+        if (database == null || player == null) {
+            return null;
+        }
+
+        List<MailData> mailDataList = (List<MailData>)database.select(MailData.class,"player = '" + database.makeSafe(player) + "' ORDER BY id desc");
+
+        if (mailDataList.size() == 0) {
+            return null;
+        }
+
+        return mailDataList;
+    }
+
+    public MailData getMessage(String player,int num) {
+        if (database == null || player == null) {
+            return null;
+        }
+
+        List<MailData> mailDataList = (List<MailData>)database.select(MailData.class,"player = '" + database.makeSafe(player) + "' ORDER BY id desc");
+
+        if (mailDataList == null || num >= mailDataList.size() || num < 0) {
+            return null;
+        }
+
+        return mailDataList.get(num);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -154,19 +182,47 @@ public class Mail extends JavaPlugin implements Listener {
                 String subcommand = args[0];
 
                 if ("read".equalsIgnoreCase(subcommand)) {
-                    MailData md = readNextUnreadMessage(playerName);
-
-                    if (md == null) {
-                        sender.sendMessage("You have no more unread messages");
+                    if (args.length > 1) {
+                        int num;
+                        try {
+                            num = Integer.parseInt(args[1]);
+                        } catch (Exception e) {
+                            sender.sendMessage(ChatColor.RED + "Message number must be a valid integer");
+                            return true;
+                        }
+                        MailData m = getMessage(playerName,num);
+                        if (m == null) {
+                            sender.sendMessage(ChatColor.RED + "Invalid message number");
+                            return true;
+                        }
+                        m.setRead(true);
+                        m.save(database);
+                        sender.sendMessage("Message from " + m.getSender());
+                        sender.sendMessage(m.getMessage());
                     } else {
-                        sender.sendMessage("Message from " + md.getSender());
-                        sender.sendMessage(md.getMessage());
-                        sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
+                        MailData md = readNextUnreadMessage(playerName);
+
+                        if (md == null) {
+                            sender.sendMessage("You have no more unread messages");
+                        } else {
+                            sender.sendMessage("Message from " + md.getSender());
+                            sender.sendMessage(md.getMessage());
+                            sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
+                        }
                     }
                 } else if ("check".equalsIgnoreCase(subcommand)) {
                     int unread = unreadMessages(playerName);
 
                     sender.sendMessage("You have " + unread + " unread message/s");
+                    sender.sendMessage("Last 10 messages (to read use /mail read <number>:");
+                    List<MailData> md = messageList(playerName);
+                    if (md == null) {
+                        sender.sendMessage("No messages");
+                    } else {
+                        for (int i=0;i<Math.min(md.size(),10);i++) {
+                            sender.sendMessage(i + ": message from " + md.get(i).getSender());
+                        }
+                    }
                 } else if ("send".equalsIgnoreCase(subcommand)) {
                     if (args.length > 3) {
                         String player = args[1];
