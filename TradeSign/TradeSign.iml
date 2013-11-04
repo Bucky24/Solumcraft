@@ -14,7 +14,7 @@
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Coord" />
     <orderEntry type="module" module-name="Worlds" />
-    <orderEntry type="library" name="bukkit-1.6.4-R0.1-20130920.011542-1" level="project" />
+    <orderEntry type="library" name="bukkit-1.6.4-R2.0" level="project" />
   </component>
 </module>
 

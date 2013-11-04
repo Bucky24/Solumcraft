@@ -10,9 +10,9 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Logger" />
-    <orderEntry type="library" name="bukkit-1.6.4-R0.1-20130920.011542-1" level="project" />
-    <orderEntry type="library" name="craftbukkit-1.6.4-R0.1-20130920.011648-1" level="project" />
     <orderEntry type="module" module-name="Coord" />
+    <orderEntry type="library" name="bukkit-1.6.4-R2.0" level="project" />
+    <orderEntry type="library" name="craftbukkit-1.6.4-R2.0" level="project" />
   </component>
 </module>
 

@@ -13,10 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -94,6 +91,7 @@ public class Creative extends JavaPlugin implements Listener {
         String playerName = p.getName();
         if (permission == null || !permission.hasPermission(playerName,commandPerm)) {
             p.setGameMode(GameMode.SURVIVAL);
+            getLogger().info("Setting " + p.getName() + " to survival mode");
         }
     }
 
@@ -148,7 +146,7 @@ public class Creative extends JavaPlugin implements Listener {
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
-            List<Entity> entityList = event.getEntity().getNearbyEntities(10,10,10);
+            List<Entity> entityList = event.getEntity().getNearbyEntities(20,20,20);
             for (Entity e : entityList) {
                 if (e.getType() == EntityType.PLAYER) {
                     Player p = (Player)e;
@@ -156,6 +154,21 @@ public class Creative extends JavaPlugin implements Listener {
                         if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                             event.setCancelled(true);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerThrow(PlayerEggThrowEvent event) {
+        LivingEntity le = event.getEgg().getShooter();
+        if (le instanceof Player) {
+            Player p = (Player)le;
+            if (event.getHatchingType() != EntityType.CHICKEN) {
+                if (p.getGameMode() == GameMode.CREATIVE) {
+                    if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                        event.setHatching(false);
                     }
                 }
             }
@@ -175,6 +188,22 @@ public class Creative extends JavaPlugin implements Listener {
 
         if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BURNING_FURNACE
                 || block.getType() == Material.ENDER_CHEST || block.getType() == Material.TRAPPED_CHEST) {
+            if (p.getGameMode() == GameMode.CREATIVE) {
+                if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                    p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerInteract(PlayerInteractEntityEvent event) {
+        Entity e = event.getRightClicked();
+        Player p = event.getPlayer();
+
+        if (e == null) return;
+        if (e.getType() == EntityType.HORSE) {
             if (p.getGameMode() == GameMode.CREATIVE) {
                 if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                     p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
