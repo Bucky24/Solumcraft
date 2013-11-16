@@ -194,7 +194,7 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
 
 
-            p.sendMessage(ChatColor.RED + "Note: At this time economy world is shut off. Please contact pastimerbucky if there is anything you need to retrieve.");
+            //p.sendMessage(ChatColor.RED + "Note: At this time economy world is shut off. Please contact pastimerbucky if there is anything you need to retrieve.");
             /*p.sendMessage(ChatColor.RED + "Important:");
             p.sendMessage(ChatColor.RED + "Due to various reasons I have decided to shut down");
             p.sendMessage(ChatColor.RED + "the economy world. Everyone with market stalls, please");
@@ -202,6 +202,7 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "contact pastimerbucky, and I will reimburse you. that also");
             p.sendMessage(ChatColor.RED + "applies to anyone with a money balance.");*/
         }
+        p.sendMessage(ChatColor.DARK_PURPLE + "Ventrilo server now available at solumcraft.com:3784");
     }
 
     public int getLoginCount(String player) {

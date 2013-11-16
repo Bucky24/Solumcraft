@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.vanish.VanishManager;
@@ -128,6 +129,28 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 if (durab >= max-3 && durab <= max) {
                     p.sendMessage(ChatColor.RED + "Warning, your " + is.getType().name() + " will break soon! (" + durab + "/" + max + ")");
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void pourLiquid(PlayerBucketEmptyEvent event) {
+        Player p = event.getPlayer();
+        ItemStack is = p.getItemInHand();
+        //p.sendMessage("Amount in hand: " + is.getAmount());
+        if (is.getAmount() > 1) {
+            if (itemName == null) {
+                p.sendMessage(ChatColor.RED + "This action is not currently possible");
+                event.setCancelled(true);
+                return;
+            }
+            if (itemName.giveItem(p,"BUCKET",1)) {
+                is.setAmount(is.getAmount()-1);
+                event.setItemStack(is);
+            } else {
+                p.sendMessage(ChatColor.RED + "Your inventory is full, no room for the empty bucket! (The full buckets are still in your inventory-due to a client glitch, they may appear to have vanished)");
+                event.setCancelled(true);
+                p.setItemInHand(is);
             }
         }
     }
@@ -497,7 +520,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             ItemStack is = p.getInventory().getItemInHand();
             String name = itemName.getItemName(is);
             int count = itemName.countInInventory(name,p.getName());
-            if (name.equalsIgnoreCase("LAVA_BUCKET") || name.equalsIgnoreCase("WATER_BUCKET")) count = -1;
+            //if (name.equalsIgnoreCase("LAVA_BUCKET") || name.equalsIgnoreCase("WATER_BUCKET")) count = -1;
             if (count > 64) {
                 sender.sendMessage(ChatColor.RED + "Can't stack over 64 at this time");
                 return true;
