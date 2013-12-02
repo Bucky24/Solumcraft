@@ -12,7 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -368,11 +368,11 @@ public class AdminTools extends JavaPlugin implements Listener {
 
                         for (Entity entity : entities) {
                             int count = 0;
-                            if (entityCount.containsKey(entity.getType().getName())) {
-                                count = entityCount.get(entity.getType().getName());
+                            if (entityCount.containsKey(entity.getType().name())) {
+                                count = entityCount.get(entity.getType().name());
                             }
                             count ++;
-                            entityCount.put(entity.getType().getName(),count);
+                            entityCount.put(entity.getType().name(),count);
                         }
 
                         for (String key : entityCount.keySet()) {

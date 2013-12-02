@@ -10,7 +10,7 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Chat" />
     <orderEntry type="module" module-name="Worlds" />
-    <orderEntry type="library" name="bukkit-1.6.4-R2.0" level="project" />
+    <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131201.031854-2" level="project" />
   </component>
 </module>
 

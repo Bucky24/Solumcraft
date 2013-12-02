@@ -74,9 +74,9 @@ public class Warp extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
-            return false;
-        }
+        //if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        //    return false;
+        //}
 
         String command = cmd.getName();
 

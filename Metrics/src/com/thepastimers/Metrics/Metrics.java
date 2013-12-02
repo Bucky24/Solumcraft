@@ -187,11 +187,11 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
             p.sendMessage(ChatColor.GREEN + "There have been incidents in the past of experienced raiders taking advantage of new players and stealing everything from them. Be on your guard!");
         } else {
-            p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting at the following servers:");
-            p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
+            p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting! See which servers to vote at by using /vote sites");
+           //p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
             //p.sendMessage(ChatColor.GREEN + "www.mcserverlist.net/servers/516ba260041b26153700019e");
-            p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
-            p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
+            //p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+            //p.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
 
 
             //p.sendMessage(ChatColor.RED + "Note: At this time economy world is shut off. Please contact pastimerbucky if there is anything you need to retrieve.");
@@ -203,6 +203,7 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "applies to anyone with a money balance.");*/
         }
         p.sendMessage(ChatColor.DARK_PURPLE + "Ventrilo server now available at solumcraft.com:3784");
+        p.sendMessage(ChatColor.RED + "Attention! Please read http://solumcraft.com/update.html");
     }
 
     public int getLoginCount(String player) {
