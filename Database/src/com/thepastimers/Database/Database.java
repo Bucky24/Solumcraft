@@ -23,6 +23,9 @@ import java.util.logging.Logger;
  * Time: 6:46 PM
  * To change this template use File | Settings | File Templates.
  */
+
+@SuppressWarnings("unchecked")
+
 public class Database extends JavaPlugin {
     boolean enabled = true;
     String url;
@@ -105,12 +108,12 @@ public class Database extends JavaPlugin {
             where = "1";
         }
 
-        int count = 0;
+        /*int count = 0;
         if (queryLog.containsKey(c.getName())) {
             count = queryLog.get(c.getName());
         }
         count ++;
-        queryLog.put(c.getName(),count);
+        queryLog.put(c.getName(),count);*/
 
         String query = "SELECT ";
         if (!cache) {
@@ -198,12 +201,12 @@ public class Database extends JavaPlugin {
             return null;
         }
 
-        int count = 0;
+        /*int count = 0;
         if (queryLog.containsKey("raw")) {
             count = queryLog.get("raw");
         }
         count ++;
-        queryLog.put("raw",count);
+        queryLog.put("raw",count);*/
 
         try {
             Statement statement = connection.createStatement();
@@ -247,13 +250,12 @@ public class Database extends JavaPlugin {
             return false;
         }*/
 
-        int count = 0;
+        /*int count = 0;
         if (queryLog.containsKey("query")) {
             count = queryLog.get("query");
         }
         count ++;
-        queryLog.put("query",count);
-        //getLogger().info(query);
+        queryLog.put("query",count);*/
 
         try {
             //if (connection.isClosed()) {
