@@ -14,28 +14,28 @@ public class MenuItem {
     String data;
     String hover;
 
-    public void MenuItem(String text) {
+    public MenuItem(String text) {
         this.text = text;
         this.action = null;
         this.data = null;
         this.hover = null;
     }
 
-    public void MenuItem(String text, String hover) {
+    public MenuItem(String text, String hover) {
         this.text = text;
         this.action = null;
         this.data = null;
         this.hover = hover;
     }
 
-    public void MenuItem(String text,String action,String data) {
+    public MenuItem(String text,String action,String data) {
         this.text = text;
         this.action = action;
         this.data = data;
         this.hover = null;
     }
 
-    public void MenuItem(String text,String action,String data,String hover) {
+    public MenuItem(String text,String action,String data,String hover) {
         this.text = text;
         this.action = action;
         this.data = data;

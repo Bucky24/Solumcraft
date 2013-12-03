@@ -1,5 +1,8 @@
 package com.thepastimers.Mail;
 
+import com.thepastimers.Chat.Chat;
+import com.thepastimers.Chat.Menu;
+import com.thepastimers.Chat.MenuItem;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Worlds.Worlds;
@@ -26,6 +29,8 @@ public class Mail extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Worlds worlds;
+    Chat chat;
+    Menu mainMenu;
 
     @Override
     public void onEnable() {
@@ -48,6 +53,16 @@ public class Mail extends JavaPlugin implements Listener {
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat == null) {
+            getLogger().warning("Unable to load Chat plugin. Some functionality may not be available.");
+            mainMenu = null;
+        } else {
+            mainMenu = new Menu("Mail menu (clickable)");
+            mainMenu.addItem(new MenuItem("Sent mail","command","check sent"));
+            mainMenu.addItem(new MenuItem("Received mail","command","check received"));
         }
 
         getLogger().info("Printing table data:");
@@ -211,16 +226,23 @@ public class Mail extends JavaPlugin implements Listener {
                         }
                     }
                 } else if ("check".equalsIgnoreCase(subcommand)) {
-                    int unread = unreadMessages(playerName);
-
-                    sender.sendMessage("You have " + unread + " unread message/s");
-                    sender.sendMessage("Last 10 messages (to read use /mail read <number>:");
-                    List<MailData> md = messageList(playerName);
-                    if (md == null) {
-                        sender.sendMessage("No messages");
+                    Player p = (Player)sender;
+                    if (args.length == 0) {
+                        if (chat != null) {
+                            mainMenu.sendMenuTo(p);
+                        }
                     } else {
-                        for (int i=0;i<Math.min(md.size(),10);i++) {
-                            sender.sendMessage(i + ": message from " + md.get(i).getSender());
+                        int unread = unreadMessages(playerName);
+
+                        sender.sendMessage("You have " + unread + " unread message/s");
+                        sender.sendMessage("Messages 0-10 (to read use /mail read <number>:");
+                        List<MailData> md = messageList(playerName);
+                        if (md == null) {
+                            sender.sendMessage("No messages");
+                        } else {
+                            for (int i=0;i<Math.min(md.size(),10);i++) {
+                                sender.sendMessage(i + ": message from " + md.get(i).getSender());
+                            }
                         }
                     }
                 } else if ("send".equalsIgnoreCase(subcommand)) {
