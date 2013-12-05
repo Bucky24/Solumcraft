@@ -3,6 +3,7 @@ package com.thepastimers.Permission;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
 import com.thepastimers.Rank.Rank;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +31,9 @@ public class Permission extends JavaPlugin {
 
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality w ill not be available.");
+        } else {
+            PlayerPerm.createTables(database,getLogger());
+            GroupPerm.createTables(database,getLogger());
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
@@ -161,7 +165,8 @@ public class Permission extends JavaPlugin {
 
                 if (secondCommand.equalsIgnoreCase("set")) {
                     if (!hasPermission(playerName,"perms_set")) {
-                        getLogger().info(playerName + " attempted unauthorized access of /perms set");
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (perms_set)");
+                        getLogger().info(playerName + " attempted unauthorized access of /perms set (perms_set)");
                         return true;
                     }
 
@@ -241,7 +246,8 @@ public class Permission extends JavaPlugin {
 
                 if (secondCommand.equalsIgnoreCase("set")) {
                     if (!hasPermission(playerName,"groupperms_set")) {
-                        getLogger().info(playerName + " attempted unauthorized access of /groupperms set");
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (groupperms_set)");
+                        getLogger().info(playerName + " attempted unauthorized access of /groupperms set (groupperms_set)");
                         return true;
                     }
 

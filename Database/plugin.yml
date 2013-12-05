@@ -1,5 +1,5 @@
 name: Database
-version: 2.8
+version: 2.9
 main: com.thepastimers.Database.Database
 commands:
     db:

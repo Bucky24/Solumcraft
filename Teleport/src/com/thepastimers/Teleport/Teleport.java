@@ -3,7 +3,6 @@ package com.thepastimers.Teleport;
 import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Mute.Mute;
 import com.thepastimers.Permission.Permission;
-import com.thepastimers.Rank.Rank;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,7 +22,6 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class Teleport extends JavaPlugin {
-    Rank rank;
     Permission permission;
     Mute mute;
     Worlds worlds;
@@ -33,12 +31,6 @@ public class Teleport extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Teleport init");
-
-        rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
-
-        if (rank == null) {
-            getLogger().warning("Unable to load Rank plugin. Some functionality will not be available.");
-        }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
 
@@ -114,7 +106,7 @@ public class Teleport extends JavaPlugin {
         if (command.equalsIgnoreCase("tpa")) {
             if (args.length > 0) {
                 if (permission == null || !permission.hasPermission(playerName,"teleport_tpa") || playerName.equalsIgnoreCase("CONSOLE")) {
-                    getLogger().info("You do not have permissions to use this command");
+                    sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command (teleport_tpa)");
                     return true;
                 }
                 String player = args[0];
@@ -144,7 +136,7 @@ public class Teleport extends JavaPlugin {
             }
         } else if (command.equalsIgnoreCase("tpaccept")) {
             if (permission == null || !permission.hasPermission(playerName,"teleport_tpa") || playerName.equalsIgnoreCase("CONSOLE")) {
-                getLogger().info("You do not have permissions to use this command");
+                sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command (teleport_tpa)");
                 return true;
             }
             if (args.length > 0) {
@@ -181,7 +173,7 @@ public class Teleport extends JavaPlugin {
             }
         } else if (command.equalsIgnoreCase("tpdeny")) {
             if (permission == null || !permission.hasPermission(playerName,"teleport_tpa") || playerName.equalsIgnoreCase("CONSOLE")) {
-                getLogger().info("You do not have permissions to use this command");
+                sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command (teleport_tpa)");
                 return true;
             }
             if (args.length > 0) {
@@ -208,7 +200,7 @@ public class Teleport extends JavaPlugin {
             }
         } else if (command.equals("tp")) {
             if (permission == null || !permission.hasPermission(playerName,"teleport_tp")) {
-                sender.sendMessage("You do not have permissions to use this command (teleport_tp)");
+                sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command (teleport_tp)");
                 return true;
             }
 

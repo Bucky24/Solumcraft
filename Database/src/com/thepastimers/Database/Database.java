@@ -302,6 +302,25 @@ public class Database extends JavaPlugin {
         return generatedKeys;
     }
 
+    public boolean createTableIfNotExists(String table, String definition) {
+        try {
+            ResultSet set = rawSelect("SHOW TABLES LIKE '" + makeSafe(table) + "';");
+            int count = 0;
+            while (set.next()) {
+                count ++;
+            }
+            if (count == 0) {
+                getLogger().info("Unable to find database table " + table + ", attempting to create");
+                boolean result = query(definition);
+                return result;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";

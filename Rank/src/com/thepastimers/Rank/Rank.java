@@ -37,12 +37,16 @@ public class Rank extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
+        } else {
+            PlayerTitle.createTables(database,getLogger());
+            PlayerRank.createTables(database,getLogger());
+            RankData.createTables(database,getLogger());
         }
 
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
 
         if (chat == null) {
-            getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
+            getLogger().warning("Unable to load Chat plugin. Some functionality will not be available.");
         } else {
             chat.register(Rank.class,this,1);
         }
@@ -366,6 +370,7 @@ public class Rank extends JavaPlugin implements Listener {
 
                 if (secondCommand.equalsIgnoreCase("set")) {
                     if (!isAuthorized(playerName)) {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank set");
                         return true;
                     }
@@ -383,6 +388,7 @@ public class Rank extends JavaPlugin implements Listener {
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
                     if (!isAuthorized(playerName)) {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank remove");
                         return true;
                     }
@@ -397,7 +403,8 @@ public class Rank extends JavaPlugin implements Listener {
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
                     if (!isAuthorized(playerName)) {
-                        getLogger().info(playerName + " attempted unauthorized access of /rank set");
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
+                        getLogger().info(playerName + " attempted unauthorized access of /rank check");
                         return true;
                     }
                     if (args.length > 1) {
@@ -421,7 +428,8 @@ public class Rank extends JavaPlugin implements Listener {
 
                 if (secondCommand.equalsIgnoreCase("set")) {
                     if (!isAuthorized(playerName)) {
-                        getLogger().info(playerName + " attempted unauthorized access of /rank set");
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
+                        getLogger().info(playerName + " attempted unauthorized access of /title set");
                         return true;
                     }
                     if (args.length > 2) {
