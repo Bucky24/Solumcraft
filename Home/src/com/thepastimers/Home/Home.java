@@ -47,6 +47,9 @@ public class Home extends JavaPlugin implements Listener {
         database = (Database)getServer().getPluginManager().getPlugin("Database");
         if (database == null) {
             getLogger().warning("Cannot load Database plugin. Some functionality may not be available");
+        } else {
+            HomeData.createTables(database,getLogger());
+            MaxHome.createTables(database,getLogger());
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
@@ -310,7 +313,7 @@ public class Home extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("sethome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_home)");
                 return true;
             }
             Player p = getServer().getPlayer(playerName);
@@ -348,7 +351,7 @@ public class Home extends JavaPlugin implements Listener {
             }
         } else if (command.equalsIgnoreCase("home")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_home)");
                 return true;
             }
 
@@ -405,7 +408,7 @@ public class Home extends JavaPlugin implements Listener {
             }
         } else if (command.equalsIgnoreCase("forcehome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_home)");
                 return true;
             }
 
@@ -451,7 +454,7 @@ public class Home extends JavaPlugin implements Listener {
             }
         } else if (command.equalsIgnoreCase("delhome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_home)");
                 return true;
             }
 
@@ -471,14 +474,14 @@ public class Home extends JavaPlugin implements Listener {
             String player;
             if (args.length >= 1) {
                 if (permission == null || !permission.hasPermission(playerName,"home_listhomeother")) {
-                    sender.sendMessage("You don't have permission to use this command");
+                    sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_listhomeother)");
                     return true;
                 }
 
                 player = args[0];
             } else {
                 if (permission == null || !permission.hasPermission(playerName,"home_listhome") || playerName.equalsIgnoreCase("CONSOLE")) {
-                    sender.sendMessage("You don't have permission to use this command");
+                    sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_listhome)");
                     return true;
                 }
 
@@ -494,7 +497,7 @@ public class Home extends JavaPlugin implements Listener {
             }
         } else if (command.equalsIgnoreCase("maxhome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_maxhome")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_maxhome)");
                 return true;
             }
 
@@ -523,7 +526,7 @@ public class Home extends JavaPlugin implements Listener {
             }
         } else if (command.equalsIgnoreCase("groupmaxhome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_maxhome")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (home_maxhome)");
                 return true;
             }
 
