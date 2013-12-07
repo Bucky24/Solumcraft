@@ -360,6 +360,7 @@ public class Plot extends JavaPlugin implements Listener {
         if (protect != null) return;
         Player pl = event.getPlayer();
         Block bl = event.getClickedBlock();
+        if (bl == null) return;
         PlotData pd = plotAt(bl.getLocation());
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {

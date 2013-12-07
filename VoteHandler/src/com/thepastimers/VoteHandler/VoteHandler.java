@@ -342,6 +342,8 @@ public class VoteHandler extends JavaPlugin implements Listener {
                         }
                     }
                 } else if ("sites".equalsIgnoreCase(subCommand)) {
+                    Player p = (Player)sender;
+                    //p.sendMessage("{\"color\":\"green\",\"text\":\"http://www.minecraft-server-list.com/server/127787\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://www.minecraft-server-list.com/server/127787\"}}");
                     sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
                     //sender.sendMessage(ChatColor.GREEN + "http://www.mcserverlist.net/servers/516ba260041b26153700019e");
                     sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");

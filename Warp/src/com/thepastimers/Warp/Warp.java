@@ -104,6 +104,11 @@ public class Warp extends JavaPlugin implements Listener {
                 }
 
                 WarpData wd = warpDataList.get(0);
+
+                if (getServer().getWorld(wd.getWorld()) == null) {
+                    sender.sendMessage(ChatColor.RED + "The world this warp goes to does not currently exist");
+                    return true;
+                }
                 Location l = new Location(getServer().getWorld(wd.getWorld()),wd.getX(),wd.getY(),wd.getZ());
                 if (l == null) {
                     sender.sendMessage(ChatColor.RED + "This warp appears to be invalid");
