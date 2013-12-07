@@ -365,4 +365,34 @@ public class PlotData extends Table {
         }
         return null;
     }
+
+    public static boolean createTables(Database d, Logger l) {
+        if (d == null) return false;
+        StringBuilder definition = new StringBuilder("CREATE TABLE " + table + "(");
+        definition.append("`id` int(11) NOT NULL AUTO_INCREMENT,");
+
+        definition.append("`name` varchar(50) NOT NULL,");
+        definition.append("`owner` varchar(50) NOT NULL,");
+        definition.append("`x1` int(11) NOT NULL,");
+        definition.append("`z1` int(11) NOT NULL,");
+        definition.append("`x2` int(11) NOT NULL,");
+        definition.append("`z2` int(11) NOT NULL,");
+        definition.append("`world` varchar(50) NOT NULL,");
+        definition.append("`subPlot` tinyint(1) NOT NULL,");
+        definition.append("`parent` int(11) NOT NULL,");
+        definition.append("`pvp` tinyint(1) NOT NULL,");
+        definition.append("`pve` tinyint(1) NOT NULL,");
+        definition.append("`creative` tinyint(1) NOT NULL,");
+        definition.append("`chestProtect` tinyint(1) NOT NULL,");
+
+        definition.append("PRIMARY KEY (`id`)");
+        definition.append(");");
+        boolean result = d.createTableIfNotExists(table,definition.toString());
+
+        if (!result && l != null) {
+            l.warning("Unable to create table " + table);
+        }
+
+        return result;
+    }
 }

@@ -60,6 +60,9 @@ public class Plot extends JavaPlugin implements Listener {
             getLogger().warning("Warning! Unable to load Database module! Critical failure!");
             getServer().broadcastMessage(ChatColor.RED + "Warning, Plot plugin was unable to connect to Database.");
             getServer().broadcastMessage(ChatColor.RED + "To prevent griefing of protected plots, server is entering lockdown.");
+        } else {
+            PlotData.createTables(database,getLogger());
+            PlotPerms.createTables(database,getLogger());
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");

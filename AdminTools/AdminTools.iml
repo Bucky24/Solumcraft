@@ -12,7 +12,7 @@
     <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="Coord" />
     <orderEntry type="library" name="craftbukkit-1.7.2-R0.1-20131201.220431-9" level="project" />
-    <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131205.042047-3" level="project" />
+    <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131206.225244-4" level="project" />
   </component>
 </module>
 
