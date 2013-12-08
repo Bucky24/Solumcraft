@@ -107,8 +107,12 @@ public class Worlds extends JavaPlugin implements Listener {
     }
 
     public int getPlayerWorldType(String player) {
+        return getPlayerWorldType(player,true);
+    }
+
+    public int getPlayerWorldType(String player, boolean useRank) {
         Player p = getServer().getPlayer(player);
-        if (rank != null) {
+        if (rank != null && useRank) {
             String type = rank.getRank(player);
             if (type.equalsIgnoreCase("owner") || type.equalsIgnoreCase("admin")) {
                 return NORMAL;

@@ -3,7 +3,6 @@ package com.thepastimers.Rank;
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.ChatData;
 import com.thepastimers.Database.Database;
-import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -47,15 +46,14 @@ public class Rank extends JavaPlugin implements Listener {
         if (chat == null) {
             getLogger().warning("Unable to load Chat plugin. Some functionality will not be available.");
         } else {
+            getLogger().info("Registering chat handler");
             chat.register(Rank.class,this,1);
         }
 
         getLogger().info("Table info: ");
-        PlayerTitle.autoPopulate = true;
         PlayerRank.refreshCache(database,getLogger());
+        PlayerTitle.refreshCache(database,getLogger());
         getLogger().info(PlayerRank.getTableInfo());
-        //PlayerTitle.myClass = PlayerTitle.class;
-        database.select(PlayerTitle.class,"1");
         getLogger().info(PlayerTitle.getTableInfo());
         getLogger().info(RankData.getTableInfo());
 
@@ -319,7 +317,10 @@ public class Rank extends JavaPlugin implements Listener {
     @EventHandler
     public void chatEvent(AsyncPlayerChatEvent event) {
         if (chat != null) return;
-        String title = getTitle(event.getPlayer().getName());
+        PlayerTitle pt = PlayerTitle.getTitle(event.getPlayer().getName());
+        String title = "";
+        if (pt != null) title = pt.getTitle();
+
 
         title = title.replace(":red:",ChatColor.RED.toString());
         title = title.replace(":blue:",ChatColor.BLUE.toString());
@@ -333,7 +334,10 @@ public class Rank extends JavaPlugin implements Listener {
     }
 
     public void doChat(ChatData cd) {
-        String title = getTitle(cd.getPlayer());
+        PlayerTitle pt = PlayerTitle.getTitle(cd.getPlayer());
+        getLogger().info(pt + "");
+        String title = "";
+        if (pt != null) title = pt.getTitle();
 
         //ChatColor textColor = getTitleColor(title);
 

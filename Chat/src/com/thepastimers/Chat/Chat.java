@@ -78,8 +78,8 @@ public class Chat extends JavaPlugin implements Listener {
 
         BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,60);
         BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,60);
-        listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
-        commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
+        if (listeners == null) listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
+        if (commandListeners == null) commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
         menuList = new HashMap<String, Menu>();
 
         codes = new ArrayList<ChatCode>();
@@ -136,6 +136,9 @@ public class Chat extends JavaPlugin implements Listener {
     public void registerCommand(String command, Class c, JavaPlugin plugin) {
         Map<Class,JavaPlugin> classMap = new HashMap<Class, JavaPlugin>();
         classMap.put(c,plugin);
+        if (commandListeners == null) {
+            commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
+        }
         commandListeners.put(command, classMap);
     }
 
@@ -195,13 +198,13 @@ public class Chat extends JavaPlugin implements Listener {
         if (web) {
             mainMessage = ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " " + mainMessage;
         }
-
         vanillaMessage = "<" + data.getPlayer() + "> " + originalMessage;
+        //getLogger().info(vanillaMessage);
 
         Player[] list = getServer().getOnlinePlayers();
 
         for (Player p : list) {
-            if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            if (worlds != null && worlds.getPlayerWorldType(p.getName(),false) == Worlds.VANILLA) {
                 p.sendMessage(vanillaMessage);
             } else {
                 p.sendMessage(mainMessage);

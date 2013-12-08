@@ -142,6 +142,7 @@ public class Database extends JavaPlugin {
 
         try {
             Statement statement = connection.createStatement();
+            //getLogger().info(query);
             ResultSet results = statement.executeQuery(query);
 
             try {

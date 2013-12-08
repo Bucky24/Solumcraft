@@ -135,7 +135,7 @@ public class PlayerRank extends Table {
             return;
         }
         @SuppressWarnings("unchecked")
-        List<PlayerRank> PlayerRankList = (List<PlayerRank>)d.select(PlayerRank.class,"");
+        List<PlayerRank> PlayerRankList = (List<PlayerRank>)d.select(PlayerRank.class,"1");
 
         dataMap = new HashMap<Integer, PlayerRank>();
 
