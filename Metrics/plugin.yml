@@ -1,5 +1,5 @@
 name: Metrics
-version: 2.2
+version: 2.3
 main: com.thepastimers.Metrics.Metrics
 softdepend: [Database,Chat,Director]
 commands:

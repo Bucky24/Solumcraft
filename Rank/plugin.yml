@@ -1,7 +1,7 @@
 name: Rank
 version: 1.2
 main: com.thepastimers.Rank.Rank
-softdepend: [Database,Chat,Worlds]
+softdepend: [Database,Chat]
 commands:
     rank:
         description: rank command

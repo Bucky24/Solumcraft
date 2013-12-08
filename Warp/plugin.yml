@@ -1,5 +1,5 @@
 name: Warp
-version: 0.3
+version: 0.4
 main: com.thepastimers.Warp.Warp
 softdepend: [Database,Permission,CombatLog,Worlds]
 commands:
@@ -7,3 +7,5 @@ commands:
         description: warp command
     setwarp:
         description: set warps
+    delwarp:
+        description: remove warps

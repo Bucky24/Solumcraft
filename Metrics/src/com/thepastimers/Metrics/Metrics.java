@@ -4,6 +4,7 @@ import com.thepastimers.Chat.Chat;
 import com.thepastimers.Database.Database;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -181,11 +182,14 @@ public class Metrics extends JavaPlugin implements Listener {
         p.sendMessage("You have spent " + parseDate(time) + " seconds on this server");
 
         if (logins == 0) {
-            p.teleport(getServer().getWorld("world").getSpawnLocation());
+            World w = getServer().getWorld("vanilla");
+            if (w == null) {
+                w = getServer().getWorld("main");
+            }
+            p.teleport(w.getSpawnLocation());
             getLogger().info("Teleporting new player " + p.getName() + " to spawn.");
             p.sendMessage(ChatColor.GREEN + "According to records, you are a new player. Welcome!");
             p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
-            p.sendMessage(ChatColor.GREEN + "There have been incidents in the past of experienced raiders taking advantage of new players and stealing everything from them. Be on your guard!");
         } else {
             p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting! See which servers to vote at by using /vote sites");
            //p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
@@ -203,7 +207,7 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "applies to anyone with a money balance.");*/
         }
         p.sendMessage(ChatColor.DARK_PURPLE + "Ventrilo server now available at solumcraft.com:3784");
-        p.sendMessage(ChatColor.RED + "Attention! Please read http://solumcraft.com/update.html");
+        //p.sendMessage(ChatColor.RED + "Attention! Please read http://solumcraft.com/update.html");
     }
 
     public int getLoginCount(String player) {

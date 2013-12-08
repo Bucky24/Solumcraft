@@ -1,5 +1,8 @@
 package com.thepastimers.Worlds;
 
+import com.thepastimers.CombatLog.CombatLog;
+import com.thepastimers.Database.Database;
+import com.thepastimers.Rank.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,11 +40,32 @@ public class Worlds extends JavaPlugin implements Listener {
 
     static Map<Player,Location> deathLocs;
 
+    Database database;
+    CombatLog combatLog;
+    Rank rank;
+
     @Override
     public void onEnable() {
         getLogger().info("Worlds init");
 
         getServer().getPluginManager().registerEvents(this,this);
+
+        database = (Database)getServer().getPluginManager().getPlugin("Database");
+        if (database == null) {
+            getLogger().warning("Unable to load database plugin. Some functionality may be unavailable.");
+        } else {
+            WorldCoords.createTables(database,getLogger());
+        }
+
+        combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
+        if (combatLog == null) {
+            getLogger().warning("Cannot load CombatLog plugin. Some functionality may not be available");
+        }
+
+        rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
+        if (rank == null) {
+            getLogger().warning("Cannot load Rank plugin. Some functionality may not be available");
+        }
 
         deathLocs = new HashMap<Player, Location>();
 
@@ -84,6 +108,12 @@ public class Worlds extends JavaPlugin implements Listener {
 
     public int getPlayerWorldType(String player) {
         Player p = getServer().getPlayer(player);
+        if (rank != null) {
+            String type = rank.getRank(player);
+            if (type.equalsIgnoreCase("owner") || type.equalsIgnoreCase("admin")) {
+                return NORMAL;
+            }
+        }
         if (p != null) {
             World w = p.getLocation().getWorld();
             String name = w.getName();
@@ -149,6 +179,29 @@ public class Worlds extends JavaPlugin implements Listener {
         }
     }
 
+    public boolean updatePlayerLocation(Player p) {
+        Location pl = p.getLocation();
+        World w = pl.getWorld();
+
+        List<WorldCoords> worldList = (List<WorldCoords>)database.select(WorldCoords.class,"world = \"" + database.makeSafe(w.getName()) + "\" AND player = \"" + database.makeSafe(p.getName()) + "\"");
+
+        WorldCoords wc;
+        if (worldList.size() > 0) {
+            wc = worldList.get(0);
+            wc.setX(pl.getX());
+            wc.setY(pl.getY());
+            wc.setZ(pl.getZ());
+        } else {
+            wc = new WorldCoords();
+            wc.setPlayer(p.getName());
+            wc.setWorld(p.getWorld().getName());
+            wc.setX(pl.getX());
+            wc.setY(pl.getY());
+            wc.setZ(pl.getZ());
+        }
+        return wc.save(database);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -165,28 +218,52 @@ public class Worlds extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("go")) {
             getLogger().info("Got command from " + playerName);
-            if (!playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (console only)");
-                return true;
-            }
 
-            if (args.length > 1) {
+            if (args.length > 0) {
                 String world = args[0];
+                if (world.equalsIgnoreCase("main")) {
+                    world = "world";
+                }
 
                 World w = getServer().getWorld(world);
                 if (w == null) {
                     sender.sendMessage("World does not exist");
                     return true;
                 }
-                for (int i=1;i<args.length;i++) {
-                    Player p = getServer().getPlayer(args[i]);
-                    if (p != null) {
-                        Location l = w.getSpawnLocation();
-                        p.teleport(l);
+
+                boolean force = false;
+                if (args.length > 1) {
+                    if (args[1].equalsIgnoreCase("force")) force = true;
+                }
+
+                if (combatLog != null) {
+                    int seconds = combatLog.secondsSinceCombat(playerName);
+                    if (seconds > -1 && seconds < 10) {
+                        sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can use /home");
+                        return true;
                     }
                 }
+
+                Player p = (Player)sender;
+
+                if (!updatePlayerLocation(p) && !force) {
+                    sender.sendMessage(ChatColor.RED + "Cannot connect to database-your position in this world cannot be saved. Use /go " + world + " force to go anyway");
+                    return true;
+                }
+
+                List<WorldCoords> worldList = (List<WorldCoords>)database.select(WorldCoords.class,"world = \"" + database.makeSafe(world) + "\" AND player = \"" + database.makeSafe(p.getName()) + "\"");
+
+                Location l = w.getSpawnLocation();
+
+                if (worldList.size() > 0) {
+                    WorldCoords wc = worldList.get(0);
+                    l = new Location(getServer().getWorld(wc.getWorld()),wc.getX(),wc.getY(),wc.getZ());
+                }
+
+                p.teleport(l);
             } else {
-                sender.sendMessage("/goto <world> <players>");
+                sender.sendMessage("/go <world> [force]");
+                sender.sendMessage("Worlds: main,vanilla");
             }
         } else {
             return false;

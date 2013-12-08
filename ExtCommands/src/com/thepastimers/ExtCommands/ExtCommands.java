@@ -25,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.vanish.VanishManager;
 import org.kitteh.vanish.VanishPlugin;
-import org.kitteh.vanish.staticaccess.VanishNoPacket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,9 +89,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
         vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
         if (vanishNoPacket == null) {
             getLogger().warning("Unable to load VanishNoPacket plugin.");
+        } else {
+            manager = vanishNoPacket.getManager();
         }
 
-        manager = vanishNoPacket.getManager();
+
 
         getLogger().info("ExtCommands init complete");
     }

@@ -145,7 +145,7 @@ public class Warp extends JavaPlugin implements Listener {
                 Player p = (Player)sender;
                 Location l = p.getLocation();
 
-                List<WarpData> warpDataList = (List<WarpData>)database.select(WarpData.class,"name = '" + database.makeSafe(name) + "'");
+                List<WarpData> warpDataList = (List<WarpData>)database.select(WarpData.class,"warp = '" + database.makeSafe(name) + "'");
                 if (warpDataList.size() != 0) {
                     sender.sendMessage(ChatColor.RED + "A warp by that name already exists");
                     return true;
@@ -161,6 +161,32 @@ public class Warp extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "Warp " + name + " created at " + l.getWorld().getName() + " (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ")");
                 } else {
                     sender.sendMessage(ChatColor.RED + "Unable to save warp");
+                }
+            } else {
+                sender.sendMessage("/setwarp <name>");
+            }
+        } else if ("delwarp".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"warp_setwarp") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (warp_setwarp)");
+                return true;
+            }
+
+            if (args.length > 0) {
+                String name = args[0];
+                Player p = (Player)sender;
+                Location l = p.getLocation();
+
+                List<WarpData> warpDataList = (List<WarpData>)database.select(WarpData.class,"warp = '" + database.makeSafe(name) + "'");
+                if (warpDataList.size() == 0) {
+                    sender.sendMessage(ChatColor.RED + "That warp does not exist");
+                    return true;
+                }
+
+                WarpData wd = warpDataList.get(0);
+                if (wd.delete(database)) {
+                    sender.sendMessage(ChatColor.GREEN + "Warp " + name + " removed");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Unable to remove warp");
                 }
             } else {
                 sender.sendMessage("/setwarp <name>");
