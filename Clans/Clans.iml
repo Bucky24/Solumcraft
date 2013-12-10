@@ -10,7 +10,7 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131206.225244-4" level="project" />
+    <orderEntry type="library" name="bukkit-1.7.2-R0.1-20131209.222727-6" level="project" />
   </component>
 </module>
 
