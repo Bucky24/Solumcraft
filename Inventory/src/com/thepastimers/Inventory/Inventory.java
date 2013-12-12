@@ -12,7 +12,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,8 @@ public class Inventory extends JavaPlugin implements Listener {
         database = (Database)getServer().getPluginManager().getPlugin("Database");
         if (database == null) {
             getLogger().warning("Cannot load Database plugin. Some functionality may not be available");
+        } else {
+            InventoryItem.createTables(database,getLogger());
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
@@ -49,10 +50,6 @@ public class Inventory extends JavaPlugin implements Listener {
             getLogger().warning("Cannot load ItemName plugin. Some functionality may not be available");
         }
 
-        InventoryItem.autoPopulate = true;
-        if (database != null) {
-            database.select(InventoryItem.class,"1 LIMIT 1");
-        }
         getLogger().info("Table data:");
         getLogger().info(InventoryItem.getTableInfo(true));
 
@@ -76,28 +73,57 @@ public class Inventory extends JavaPlugin implements Listener {
         for (int i=0;i<iss.length;i++) {
             ItemStack is = iss[i];
             if (is == null) continue;
-
-            String in = itemName.getItemName(is);
-
-            InventoryItem ii = new InventoryItem();
+            InventoryItem ii = InventoryItem.process(itemName,is);
             ii.setSlot("standard_" + i);
             ii.setInvName(name);
-            ii.setAmount(is.getAmount());
-            ii.setDurability(is.getDurability());
-            ii.setItem(in);
-
-            String enchants = "";
-            Map<Enchantment,Integer> enchantMap = is.getEnchantments();
-
-            for (Enchantment e : enchantMap.keySet()) {
-                int level = enchantMap.get(e);
-                enchants += e.getName() + "||" + level + ",";
-            }
-            ii.setEnchants(enchants);
 
             iiList.add(ii);
         }
 
+        iss = pi.getArmorContents();
+        for (int i=0;i<iss.length;i++) {
+            ItemStack is = iss[i];
+            if (is == null) continue;
+            InventoryItem ii = InventoryItem.process(itemName,is);
+            ii.setSlot("armor_" + i);
+            ii.setInvName(name);
+
+            iiList.add(ii);
+        }
+
+        List<InventoryItem> iis = (List<InventoryItem>)database.select(InventoryItem.class,"invName = \"" + database.makeSafe(name) + "\"");
+        for (int i=0;i<iis.size();i++) {
+            if (!iis.get(i).delete(database)) {
+                return false;
+            }
+        }
+
+        for (int i=0;i<iiList.size();i++) {
+            if (!iiList.get(i).save(database)) {
+                return false;
+            }
+        }
+
         return true;
+    }
+
+    public void clearInventory(Player p) {
+        PlayerInventory pi = p.getInventory();
+        ItemStack[] is = new ItemStack[0];
+        pi.setContents(is);
+        pi.setArmorContents(is);
+    }
+
+    public boolean loadInventory(Player p, String name) {
+        if (database == null || itemName == null || p == null || name == null) {
+            return false;
+        }
+
+        List<InventoryItem> iiList = (List<InventoryItem>)database.select(InventoryItem.class, "invName = \"" + database.makeSafe(name) + "\"");
+
+        List<InventoryItem> inv = new ArrayList<InventoryItem>();
+        List<InventoryItem> armorInv = new ArrayList<InventoryItem>();
+
+        return false;
     }
 }

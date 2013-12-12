@@ -217,7 +217,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
             Player p = getServer().getPlayer(playerName);
 
-            World w = getServer().getWorld("world");
+            World w = p.getWorld();
+            //getLogger().info(w.getName());
+            if (!w.getName().equalsIgnoreCase("vanilla")) {
+                w = getServer().getWorld("world");
+            }
 
             p.teleport(w.getSpawnLocation());
 

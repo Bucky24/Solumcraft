@@ -335,7 +335,7 @@ public class Rank extends JavaPlugin implements Listener {
 
     public void doChat(ChatData cd) {
         PlayerTitle pt = PlayerTitle.getTitle(cd.getPlayer());
-        getLogger().info(pt + "");
+        //getLogger().info(pt + "");
         String title = "";
         if (pt != null) title = pt.getTitle();
 

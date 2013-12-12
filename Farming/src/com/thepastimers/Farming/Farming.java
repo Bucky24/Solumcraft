@@ -3,21 +3,18 @@ package com.thepastimers.Farming;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Worlds.Worlds;
+import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.material.Crops;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: solum
@@ -79,23 +76,36 @@ public class Farming extends JavaPlugin implements Listener {
         if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
             return;
         }
-        Player p = event.getPlayer();
-        Block b = event.getBlock();
-        if (b.getType() == Material.CROPS && b.getData() == 7) {
-            if (permission != null && permission.hasPermission(event.getPlayer().getName(),"farming_replant")) {
-                if (itemName.countInInventory(Material.SEEDS.name(),p.getName()) > 0) {
-                    if (itemName.takeItem(p,Material.SEEDS.name(),1)) {
-                        BukkitTask task = new ResetWheat(this,b).runTaskLater(this, 2);
-                    }
-                }
-            }
-        }
 
-        if (b.getType() == Material.CARROT && b.getData() == 7) {
-            if (permission != null && permission.hasPermission(event.getPlayer().getName(),"farming_replant")) {
-                if (itemName.countInInventory(Material.CARROT_ITEM.name(),p.getName()) > 0) {
-                    if (itemName.takeItem(p,Material.CARROT_ITEM.name(),1)) {
-                        BukkitTask task = new ResetCarrots(this,b).runTaskLater(this, 2);
+        if (permission != null && permission.hasPermission(event.getPlayer().getName(),"farming_replant")) {
+            Player p = event.getPlayer();
+            Block b = event.getBlock();
+            Material m = null;
+
+            //getLogger().info(b.getType().name());
+            if (b.getType() == Material.CROPS) m = Material.SEEDS;
+            if (b.getType() == Material.CARROT) m = Material.CARROT_ITEM;
+            if (b.getType() == Material.POTATO) m = Material.POTATO_ITEM;
+
+            if (m != null) {
+                // right now there appears to be no method for all crops.
+                if (m == Material.SEEDS) {
+                    Crops c = (Crops)b.getState().getData();
+                    if (c.getState() == CropState.RIPE) {
+                        if (itemName.countInInventory(m.name(), p.getName()) > 0) {
+                            if (itemName.takeItem(p,m.name(),1)) {
+                                BukkitTask task = new ResetCrop(this,b,b.getType()).runTaskLater(this, 2);
+                            }
+                        }
+                    }
+                } else {
+                    //getLogger().info(b.getData() + "");
+                    if (b.getData() == 7) {
+                        if (itemName.countInInventory(m.name(), p.getName()) > 0) {
+                            if (itemName.takeItem(p,m.name(),1)) {
+                                BukkitTask task = new ResetCrop(this,b,b.getType()).runTaskLater(this, 2);
+                            }
+                        }
                     }
                 }
             }

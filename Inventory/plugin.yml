@@ -1,5 +1,5 @@
 name: Inventory
-version: 0.1
+version: 0.2
 main: com.thepastimers.Inventory.Inventory
 softdepend: [Database,Permission,ItemName]
 commands:

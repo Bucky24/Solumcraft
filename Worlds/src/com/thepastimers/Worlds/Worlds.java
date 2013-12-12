@@ -2,6 +2,7 @@ package com.thepastimers.Worlds;
 
 import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
+import com.thepastimers.Inventory.Inventory;
 import com.thepastimers.Rank.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,6 +44,7 @@ public class Worlds extends JavaPlugin implements Listener {
     Database database;
     CombatLog combatLog;
     Rank rank;
+    Inventory inventory;
 
     @Override
     public void onEnable() {
@@ -60,6 +62,11 @@ public class Worlds extends JavaPlugin implements Listener {
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
         if (combatLog == null) {
             getLogger().warning("Cannot load CombatLog plugin. Some functionality may not be available");
+        }
+
+        inventory = (Inventory)getServer().getPluginManager().getPlugin("Inventory");
+        if (inventory == null) {
+            getLogger().warning("Cannot load Inventory plugin. Some functionality may not be available");
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
@@ -249,11 +256,26 @@ public class Worlds extends JavaPlugin implements Listener {
                 }
 
                 Player p = (Player)sender;
+                World currWorld = p.getWorld();
 
                 if (!updatePlayerLocation(p) && !force) {
                     sender.sendMessage(ChatColor.RED + "Cannot connect to database-your position in this world cannot be saved. Use /go " + world + " force to go anyway");
                     return true;
                 }
+
+                boolean saved = false;
+                if (inventory != null) {
+                    saved = inventory.saveInventory(p,currWorld.getName() + "_" + p.getName());
+                }
+
+                if (!saved) {
+                    sender.sendMessage(ChatColor.RED + "Cannot save your inventory. Use /go " + world + " force to go anyway. Warning: If you do this you may lose your entire inventory. It is recommended that you empty it before attempting to go to another world.");
+                    return true;
+                } else {
+                    //inventory.clearInventory(p);
+                }
+
+
 
                 List<WorldCoords> worldList = (List<WorldCoords>)database.select(WorldCoords.class,"world = \"" + database.makeSafe(world) + "\" AND player = \"" + database.makeSafe(p.getName()) + "\"");
 
