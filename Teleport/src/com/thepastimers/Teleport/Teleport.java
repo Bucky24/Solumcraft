@@ -104,11 +104,13 @@ public class Teleport extends JavaPlugin {
         String command = cmd.getName();
 
         if (command.equalsIgnoreCase("tpa")) {
+            //getLogger().info(playerName + " attempting teleport");
             if (args.length > 0) {
                 if (permission == null || !permission.hasPermission(playerName,"teleport_tpa") || playerName.equalsIgnoreCase("CONSOLE")) {
                     sender.sendMessage(ChatColor.RED + "You do not have permissions to use this command (teleport_tpa)");
                     return true;
                 }
+                //getLogger().info(playerName + " has permission to teleport");
                 String player = args[0];
 
                 if (mute != null && mute.isMutedBy(playerName,player)) {
@@ -122,10 +124,13 @@ public class Teleport extends JavaPlugin {
                     sender.sendMessage("This player is not online");
                     return true;
                 }
+                //getLogger().info(playerName + " is teleporting to valid player");
 
                 if (hasRequest(playerName,player)) {
+                    getLogger().info(playerName + " has active request");
                     sender.sendMessage("You already have an active teleport request to " + p.getName());
                 } else {
+                    //getLogger().info(playerName + " adding request....");
                     p.sendMessage(playerName + " has requested to teleport to you. Use /tpaccept "
                             + playerName + " or /tpdeny " + playerName + " to accept or deny this request");
                     requests.put(playerName,p.getName());
