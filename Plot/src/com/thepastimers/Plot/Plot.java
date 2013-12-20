@@ -728,7 +728,7 @@ public class Plot extends JavaPlugin implements Listener {
         if (type == EntityType.BLAZE || type == EntityType.CAVE_SPIDER || type ==  EntityType.CREEPER
                 || type ==  EntityType.ENDERMAN || type ==  EntityType.GHAST || type == EntityType.MAGMA_CUBE
                 || type ==  EntityType.PIG_ZOMBIE || type ==  EntityType.SILVERFISH || type ==  EntityType.SKELETON
-                || type == EntityType.SLIME || type ==  EntityType.SPIDER || type ==  EntityType.ZOMBIE) {
+                || type == EntityType.SLIME || type ==  EntityType.SPIDER || type ==  EntityType.ZOMBIE || type == EntityType.WITCH) {
             if (!pd.isPve()) {
                 event.setCancelled(true);
             }
