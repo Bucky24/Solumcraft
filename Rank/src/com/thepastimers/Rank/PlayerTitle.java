@@ -90,7 +90,9 @@ public class PlayerTitle extends Table {
         if (id == -1) {
             String columns = "(player,title)";
             String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(title)  + "')";
-            boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
+            String query = "INSERT INTO " + table + columns + " VALUES" + values;
+            boolean result = d.query(query);
+
 
             ResultSet keys = d.getGeneratedKeys();
 

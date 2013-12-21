@@ -177,6 +177,8 @@ public class Metrics extends JavaPlugin implements Listener {
         long time = timeSpent(p.getName());
         time /= 1000;
 
+        getLogger().info("Player " + p.getName() + " has joined, with " + logins + " logins");
+
         p.sendMessage("Welcome to Solumcraft!");
         p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
         p.sendMessage("You have spent " + parseDate(time) + " seconds on this server");
@@ -187,7 +189,7 @@ public class Metrics extends JavaPlugin implements Listener {
                 w = getServer().getWorld("main");
             }
             p.teleport(w.getSpawnLocation());
-            getLogger().info("Teleporting new player " + p.getName() + " to spawn.");
+            getLogger().info("Teleporting new player " + p.getName() + " to spawn on world " + w.getName());
             p.sendMessage(ChatColor.GREEN + "According to records, you are a new player. Welcome!");
             p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
         } else {

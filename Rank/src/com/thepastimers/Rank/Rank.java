@@ -286,7 +286,7 @@ public class Rank extends JavaPlugin implements Listener {
         pt.setPlayer(player);
         pt.setTitle(title);
 
-        if (pt.save(database,PlayerTitle.class)) {
+        if (pt.save(database)) {
             title = getTitle(player);
             if (chat != null) {
                 title = chat.replaceColor(title);
