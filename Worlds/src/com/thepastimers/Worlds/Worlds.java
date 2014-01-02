@@ -71,7 +71,7 @@ public class Worlds extends JavaPlugin implements Listener {
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
-            getLogger().warning("Cannot load Rank plugin. Some functionality may not be available");
+            // ignore, will attempt to load whenever it is required.
         }
 
         deathLocs = new HashMap<Player, Location>();
@@ -119,6 +119,9 @@ public class Worlds extends JavaPlugin implements Listener {
 
     public int getPlayerWorldType(String player, boolean useRank) {
         Player p = getServer().getPlayer(player);
+        if (rank == null) {
+            rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
+        }
         if (rank != null && useRank) {
             String type = rank.getRank(player);
             if (type.equalsIgnoreCase("owner") || type.equalsIgnoreCase("admin")) {
@@ -155,9 +158,8 @@ public class Worlds extends JavaPlugin implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
-        if (getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
-            deathLocs.put(p,p.getLocation());
-        }
+        deathLocs.put(p,p.getLocation());
+        //getLogger().info("Player dead, adding to deathLocs: " + deathLocs.keySet().size());
     }
 
     @EventHandler
@@ -166,8 +168,9 @@ public class Worlds extends JavaPlugin implements Listener {
         //getLogger().info("Respawn event!");
         Location dl = deathLocs.get(p);
         if (dl == null) return;
+        //getLogger().info("Player died in " + dl.getWorld().getName());
         if (getWorldType(dl.getWorld().getName()) == Worlds.VANILLA) {
-            //getLogger().info("Player death in vanilla world");
+           // getLogger().info("Player death in vanilla world");
             World w = dl.getWorld();
             Location l = event.getRespawnLocation();
             if (!l.getWorld().getName().equalsIgnoreCase(w.getName())) {

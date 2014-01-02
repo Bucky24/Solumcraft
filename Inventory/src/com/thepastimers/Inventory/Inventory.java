@@ -12,6 +12,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,8 @@ public class Inventory extends JavaPlugin implements Listener {
             return false;
         }
 
+        getLogger().info("Saving inventory for " + p.getName());
+
         List<InventoryItem> iiList = new ArrayList<InventoryItem>();
 
         PlayerInventory pi = p.getInventory();
@@ -73,7 +76,12 @@ public class Inventory extends JavaPlugin implements Listener {
         for (int i=0;i<iss.length;i++) {
             ItemStack is = iss[i];
             if (is == null) continue;
+
+            getLogger().info("Item " + i + ": " + is.getType().name() + ", durability:" + is.getDurability() + ", amount:" + is.getAmount() + ", enchants: " + Arrays.toString(is.getEnchantments().entrySet().toArray()));
+
             InventoryItem ii = InventoryItem.process(itemName,is);
+
+            getLogger().info("Resulting data: " + ii.getItem() + ", durability: " + ii.getDurability() + ", amount:" + ii.getAmount() + ", enchants: " + ii.getEnchants());
             ii.setSlot("standard_" + i);
             ii.setInvName(name);
 
@@ -121,9 +129,29 @@ public class Inventory extends JavaPlugin implements Listener {
 
         List<InventoryItem> iiList = (List<InventoryItem>)database.select(InventoryItem.class, "invName = \"" + database.makeSafe(name) + "\"");
 
-        List<InventoryItem> inv = new ArrayList<InventoryItem>();
-        List<InventoryItem> armorInv = new ArrayList<InventoryItem>();
+        ItemStack[] inv = new ItemStack[p.getInventory().getContents().length];
+        ItemStack[] armorInv = new ItemStack[p.getInventory().getArmorContents().length];
 
-        return false;
+        for (int i=0;i<iiList.size();i++) {
+            InventoryItem ii = iiList.get(i);
+            if (ii.getSlot().contains("standard_")) {
+                String slot = ii.getSlot();
+                slot.replace("standard_","");
+                Integer slotId = Integer.parseInt(slot);
+                inv[slotId] = ii.toItem(itemName);
+            }
+            if (ii.getSlot().contains("armor_")) {
+                String slot = ii.getSlot();
+                slot.replace("armor_","");
+                Integer slotId = Integer.parseInt(slot);
+                armorInv[slotId] = ii.toItem(itemName);
+            }
+        }
+
+        PlayerInventory pi = p.getInventory();
+        pi.setContents(inv);
+        pi.setArmorContents(armorInv);
+
+        return true;
     }
 }

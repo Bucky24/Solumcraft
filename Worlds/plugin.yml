@@ -1,7 +1,7 @@
 name: Worlds
-version: 0.8
+version: 0.9
 main: com.thepastimers.Worlds.Worlds
-softdepend: [Database,CombatLog,Rank,Inventory]
+softdepend: [Database,CombatLog,Inventory]
 commands:
     go:
         description: sends players to world

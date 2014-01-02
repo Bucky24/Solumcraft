@@ -1,5 +1,7 @@
 package com.thepastimers.Chat;
 
+import org.json.simple.JSONObject;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rwijtman
@@ -42,26 +44,29 @@ public class MenuItem {
         this.hover = hover;
     }
 
-    public String getJson(int count) {
-        String ret = "{text:\"";
+    public JSONObject getJson(int count) {
+        JSONObject ret = new JSONObject();
         if (parent != null && parent.useNumbers) {
-            ret += count;
+            ret.put("text",count + ": " + text);
+        } else {
+            ret.put("text",text);
         }
-        ret += text + "\"";
         if (action != null && !action.equals("")) {
+            JSONObject a = new JSONObject();
             if (action.equalsIgnoreCase("menu")) {
-                ret += " clickEvent:{action:run_command,value:\"/menu " + data + "\"}";
+                a.put("action","run_command");
+                a.put("value","/menu " + data);
             } else if (action.equalsIgnoreCase("command")) {
-                ret += " clickEvent:{action:run_command,value:\"/" + data + "\"}";
+                a.put("action","run_command");
+                a.put("value","/" + data);
             } else if (action.equalsIgnoreCase("suggest")) {
-                ret += " clickEvent:{action:suggest_command,value:\"/" + data + "\"}";
+                a.put("action","suggest_command");
+                a.put("value","/" + data);
+            }
+            if (a.keySet().size() > 0) {
+                ret.put("clickEvent",a);
             }
         }
-        if (hover != null && !hover.equalsIgnoreCase("")) {
-            ret += " hoverEvent:{action:show_text,value:\"" + hover + "\"}";
-        }
-
-        ret += "}";
 
         return ret;
     }

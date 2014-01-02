@@ -3,12 +3,16 @@ package com.thepastimers.Chat;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Worlds.Worlds;
+import net.minecraft.server.v1_7_R1.ChatSerializer;
+import net.minecraft.server.v1_7_R1.IChatBaseComponent;
+import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,6 +33,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.*;
 import org.bukkit.util.Vector;
+import org.json.simple.JSONObject;
 
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
@@ -288,6 +293,12 @@ public class Chat extends JavaPlugin implements Listener {
         menuList.put(identifier,m);
     }
 
+    public void sendRaw(JSONObject obj, Player player) {
+        IChatBaseComponent comp = ChatSerializer.a(obj.toString());
+        PacketPlayOutChat packet = new PacketPlayOutChat(comp, true);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -314,7 +325,7 @@ public class Chat extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.RED + "Menu '" + menu + "' does not exist");
                 } else {
                     Player p = (Player)sender;
-                    m.sendMenuTo(p);
+                    m.sendMenuTo(p,this);
                 }
             } else {
                 sender.sendMessage(ChatColor.BLUE + "/menu <menu name>");

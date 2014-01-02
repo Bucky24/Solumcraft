@@ -229,7 +229,7 @@ public class Mail extends JavaPlugin implements Listener {
                     Player p = (Player)sender;
                     if (args.length == 0) {
                         if (chat != null) {
-                            mainMenu.sendMenuTo(p);
+                            mainMenu.sendMenuTo(p,chat);
                         }
                     } else {
                         int unread = unreadMessages(playerName);

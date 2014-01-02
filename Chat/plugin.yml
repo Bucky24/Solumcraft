@@ -1,7 +1,7 @@
 name: Chat
 version: 1.7
 main: com.thepastimers.Chat.Chat
-softdepend: [Database,Worlds,Logger]
+softdepend: [Database,Logger]
 commands:
     codes:
         description: lists allowed chat codes

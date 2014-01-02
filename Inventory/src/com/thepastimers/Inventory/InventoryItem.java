@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -140,7 +141,7 @@ public class InventoryItem extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string invName, string slot, string item, int amount, int durability, text enchants");
+        builder.append(" int id, string invName, string slot, string item, int amount, int durability, text enchants, int data");
 
         return builder.toString();
     }
@@ -188,5 +189,23 @@ public class InventoryItem extends Table {
         ii.setEnchants(enchants);
 
         return ii;
+    }
+
+    public ItemStack toItem(ItemName itemName) {
+        ItemStack is = itemName.getItemFromName(item);
+        is.setAmount(amount);
+        is.setDurability((short)durability);
+        Map<Enchantment, Integer> enMap = new HashMap<Enchantment, Integer>();
+
+        String[] enchantList = enchants.split(",");
+        for (int i=0;i<enchantList.length;i++) {
+            if (enchantList[i] != "") {
+                String[] list2 = enchantList[i].split("||");
+                enMap.put(Enchantment.getByName(list2[0]),Integer.parseInt(list2[1]));
+            }
+        }
+        is.addEnchantments(enMap);
+
+        return is;
     }
 }

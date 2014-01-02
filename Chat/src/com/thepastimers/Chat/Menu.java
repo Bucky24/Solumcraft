@@ -27,10 +27,10 @@ public class Menu {
         items.add(item);
     }
 
-    public void sendMenuTo(Player p) {
+    public void sendMenuTo(Player p, Chat chat) {
         p.sendMessage(header);
         for (int i=0;i<items.size();i++) {
-            p.sendRawMessage(items.get(i).getJson(i));
+            chat.sendRaw(items.get(i).getJson(i),p);
         }
     }
 
