@@ -2,6 +2,8 @@ package com.thepastimers.ExtCommands;
 
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.CommandData;
+import com.thepastimers.Coord.Coord;
+import com.thepastimers.Coord.CoordData;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
@@ -45,6 +47,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
     VanishManager manager;
     Worlds worlds;
     ItemName itemName;
+    Coord coord;
 
     @Override
     public void onEnable() {
@@ -93,7 +96,10 @@ public class ExtCommands extends JavaPlugin implements Listener {
             manager = vanishNoPacket.getManager();
         }
 
-
+        coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
+        if (coord == null) {
+            getLogger().warning("Unable to load Coord plugin.");
+        }
 
         getLogger().info("ExtCommands init complete");
     }
@@ -510,6 +516,35 @@ public class ExtCommands extends JavaPlugin implements Listener {
             Location l = p.getLocation();
 
             l.getWorld().spawnEntity(l,EntityType.ENDER_DRAGON);
+        } else if ("spawnCrystal".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_dragon") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_dragon)");
+                return true;
+            }
+            if (coord == null) {
+                sender.sendMessage("This functionality is not currently available.");
+                return true;
+            }
+
+            List<CoordData> coords = coord.popCoords(playerName,1);
+
+            if (coords.size() < 1) {
+                sender.sendMessage("You must have 1 coord set in order to do this");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            World w = p.getWorld();
+            CoordData cd = coords.get(0);
+            double x = Math.floor(cd.getX());
+            x += 0.5d;
+            double y = Math.floor(cd.getY());
+            y += 0.5d;
+            double z = Math.floor(cd.getZ());
+            z += 0.5d;
+            Location l = new Location(w,x,y,z);
+
+            w.spawnEntity(l,EntityType.ENDER_CRYSTAL);
         } else if ("stack".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_stack") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_stack)");
