@@ -7,37 +7,21 @@ import net.minecraft.server.v1_7_R1.ChatSerializer;
 import net.minecraft.server.v1_7_R1.IChatBaseComponent;
 import net.minecraft.server.v1_7_R1.PacketPlayOutChat;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.conversations.Conversation;
-import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.*;
-import org.bukkit.map.MapView;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.util.*;
-import org.bukkit.util.Vector;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.lang.reflect.Method;
-import java.net.InetSocketAddress;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -291,6 +275,15 @@ public class Chat extends JavaPlugin implements Listener {
 
     public void addMenu(String identifier, Menu m) {
         menuList.put(identifier,m);
+    }
+
+    public void sendRaw(String string, Player player) {
+        try {
+            JSONObject jsonObject = (JSONObject)new JSONParser().parse(string);
+            sendRaw(jsonObject,player);
+        } catch (Exception e) {
+            // ignore
+        }
     }
 
     public void sendRaw(JSONObject obj, Player player) {

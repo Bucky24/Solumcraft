@@ -1,5 +1,6 @@
 package com.thepastimers.VoteHandler;
 
+import com.thepastimers.Chat.Chat;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
@@ -34,6 +35,7 @@ public class VoteHandler extends JavaPlugin implements Listener {
     Rank rank;
     Permission permission;
     ItemName itemName;
+    Chat chat;
     List<VoteReward> rewards;
 
     @Override
@@ -60,6 +62,11 @@ public class VoteHandler extends JavaPlugin implements Listener {
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
         if (itemName == null) {
             getLogger().warning("Cannot load ItemName plugin. Some functionality may not be available");
+        }
+
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat == null) {
+            getLogger().warning("Cannot load Chat plugin. Some functionality may not be available");
         }
 
         rewards = new ArrayList<VoteReward>();
@@ -345,10 +352,17 @@ public class VoteHandler extends JavaPlugin implements Listener {
                     Player p = (Player)sender;
                     //getServer().dispatchCommand(getServer().getConsoleSender(),"/tellraw {\\\"color\\\":\\\"green\\\",\\\"text\\\":\\\"http://www.minecraft-server-list.com/server/127787\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"open_url\\\",\\\"value\\\":\\\"http://www.minecraft-server-list.com/server/127787\\\"}}");
                     //p.sendMessage("{\"color\":\"green\",\"text\":\"http://www.minecraft-server-list.com/server/127787\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://www.minecraft-server-list.com/server/127787\"}}");
-                    sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
+                    //sender.sendMessage(ChatColor.GREEN + "http://www.minecraft-server-list.com/server/127787");
+                    if (chat != null) {
+                        chat.sendRaw("{\"color\":\"green\",\"text\":\"http://www.minecraft-server-list.com/server/127787\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://www.minecraft-server-list.com/server/127787\"}}",p);
+                        chat.sendRaw("{\"color\":\"green\",\"text\":\"http://minecraftservers.org/server/68085\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://minecraftservers.org/server/68085\"}}",p);
+                        chat.sendRaw("{\"color\":\"green\",\"text\":\"http://minecraftservers.net/server/64066/\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://minecraftservers.net/server/64066/\"}}",p);
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "That functionality is not currently available.");
+                    }
                     //sender.sendMessage(ChatColor.GREEN + "http://www.mcserverlist.net/servers/516ba260041b26153700019e");
-                    sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
-                    sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
+                    //sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
+                    //sender.sendMessage(ChatColor.GREEN + "http://minecraftservers.net/server/64066/");
                 } else if ("credits".equalsIgnoreCase(subCommand)) {
                     List<VoteCredits> voteCreditsList = (List<VoteCredits>)database.select(VoteCredits.class,"player = '" + database.makeSafe(playerName) + "'");
                     VoteCredits credits = null;
