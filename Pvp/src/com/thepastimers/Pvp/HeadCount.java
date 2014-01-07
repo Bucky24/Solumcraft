@@ -6,7 +6,10 @@ import com.thepastimers.Database.Table;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +20,8 @@ import java.util.List;
  */
 public class HeadCount extends Table {
     public static String table = "head_count";
+
+    private static Map<Integer,HeadCount> dataMap;
 
     int id;
 
@@ -70,6 +75,22 @@ public class HeadCount extends Table {
         return ret;
     }
 
+    public boolean delete(Database d) {
+        if (id == -1) {
+            return true;
+        }
+        if (d == null) {
+            return false;
+        }
+        boolean result = d.query("DELETE FROM " + table + " WHERE ID = " + id);
+
+        if (result) {
+            dataMap.remove(id);
+        }
+
+        return result;
+    }
+
     public boolean save(Database d) {
         if (d == null) {
             return false;
@@ -77,7 +98,20 @@ public class HeadCount extends Table {
         if (id == -1) {
             String columns = "(player,head_count)";
             String values = "('" + d.makeSafe(player) + "'," + headCount + ")";
-            return d.query("INSERT INTO " + table + columns + " VALUES" + values);
+            boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
+            ResultSet keys = d.getGeneratedKeys();
+            if (keys != null && result) {
+                try {
+                    if (keys.next()) {
+                        setId(keys.getInt(1));
+                        dataMap.put(getId(),this);
+                    }
+                } catch (SQLException e) {
+                    // fallback method
+                    refreshCache(d,null);
+                }
+            }
+            return result;
         } else {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE " + table + " SET ");
@@ -96,5 +130,38 @@ public class HeadCount extends Table {
         ret.append(": int id, string player, int head_count");
 
         return ret.toString();
+    }
+
+    public static void refreshCache(Database d, Logger l) {
+        if (d == null) {
+            return;
+        }
+        List<HeadCount> HeadCountList = (List<HeadCount>)d.select(HeadCount.class,"");
+
+        dataMap = new HashMap<Integer, HeadCount>();
+
+        if (HeadCountList == null) {
+            return;
+        }
+
+        for (HeadCount pd : HeadCountList) {
+            dataMap.put(pd.getId(),pd);
+        }
+
+        if (l != null) {
+            l.info("Cache refresh complete, have " + dataMap.keySet().size() + " entries.");
+        }
+    }
+
+    public static HeadCount getHeadsForPlayer(String player) {
+        if (player == null) return null;
+        for (Integer i : dataMap.keySet()) {
+            HeadCount hc = dataMap.get(i);
+
+            if (hc.getPlayer().equalsIgnoreCase(player)) {
+                return hc;
+            }
+        }
+        return null;
     }
 }

@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.Skull;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -41,6 +40,8 @@ public class Pvp extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Unable to load Database module. Some functionality may not be available.");
+        } else {
+            UniqueHead.createTables(database,getLogger());
         }
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
@@ -62,8 +63,10 @@ public class Pvp extends JavaPlugin implements Listener {
         }
 
         getLogger().info("Printing table data:");
-        getLogger().info(Heads.getTableInfo());
         getLogger().info(HeadCount.getTableInfo());
+        HeadCount.refreshCache(database,getLogger());
+        getLogger().info(UniqueHead.getTableInfo());
+        UniqueHead.refreshCache(database,getLogger());
 
         getLogger().info("Pvp loaded");
     }
@@ -111,18 +114,30 @@ public class Pvp extends JavaPlugin implements Listener {
                 meta.setDisplayName(killed + "'s head");
                 is.setItemMeta(meta);
                 itemName.giveItem(p,is,1);
-                List<HeadCount> countList = (List<HeadCount>)database.select(HeadCount.class,"player = '" + database.makeSafe(p.getName()) + "'");
-                HeadCount count = null;
-                if (countList.size() == 0) {
+                HeadCount count = HeadCount.getHeadsForPlayer(p.getName());
+                if (count == null) {
                     count = new HeadCount();
                     count.setPlayer(p.getName());
                     count.setHeadCount(0);
-                } else {
-                    count = countList.get(0);
                 }
 
                 count.setHeadCount(count.getHeadCount() + 1);
                 count.save(database);
+
+                // add unique
+                boolean found = false;
+                List<UniqueHead> heads = UniqueHead.getUniqueHeadsForPlayer(p.getName());
+                for (UniqueHead head : heads) {
+                    if (head.getKilled().equalsIgnoreCase(killed)) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    UniqueHead h = new UniqueHead();
+                    h.setPlayer(p.getName());
+                    h.setKilled(killed);
+                    h.save(database);
+                }
             }
         }
     }
@@ -130,14 +145,15 @@ public class Pvp extends JavaPlugin implements Listener {
     public void doChat(ChatData cd) {
         int count = 0;
 
-        List<HeadCount> countList = (List<HeadCount>)database.select(HeadCount.class,"player = '" + database.makeSafe(cd.getPlayer()) + "'");
-        if (countList.size() != 0) {
-            HeadCount c = countList.get(0);
-            count = c.getHeadCount();
+        HeadCount hc = HeadCount.getHeadsForPlayer(cd.getPlayer());
+        if (hc != null) {
+            count = hc.getHeadCount();
         }
+        List<UniqueHead> heads = UniqueHead.getUniqueHeadsForPlayer(cd.getPlayer());
+        int unique = heads.size();
 
         if (count > 0) {
-            cd.setPlayerString(":purple:[" + count + "]:reset: " + cd.getPlayerString());
+            cd.setPlayerString(":purple:[" + count + ":" + unique + "]:reset: " + cd.getPlayerString());
         }
     }
 }
