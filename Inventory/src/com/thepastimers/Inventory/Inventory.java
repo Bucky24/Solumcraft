@@ -79,7 +79,7 @@ public class Inventory extends JavaPlugin implements Listener {
 
             getLogger().info("Item " + i + ": " + is.getType().name() + ", durability:" + is.getDurability() + ", amount:" + is.getAmount() + ", enchants: " + Arrays.toString(is.getEnchantments().entrySet().toArray()));
 
-            InventoryItem ii = InventoryItem.process(itemName,is);
+            InventoryItem ii = InventoryItem.process(itemName,is,getLogger());
 
             getLogger().info("Resulting data: " + ii.getItem() + ", durability: " + ii.getDurability() + ", amount:" + ii.getAmount() + ", enchants: " + ii.getEnchants());
             ii.setSlot("standard_" + i);
@@ -92,7 +92,7 @@ public class Inventory extends JavaPlugin implements Listener {
         for (int i=0;i<iss.length;i++) {
             ItemStack is = iss[i];
             if (is == null) continue;
-            InventoryItem ii = InventoryItem.process(itemName,is);
+            InventoryItem ii = InventoryItem.process(itemName,is,getLogger());
             ii.setSlot("armor_" + i);
             ii.setInvName(name);
 
@@ -136,15 +136,16 @@ public class Inventory extends JavaPlugin implements Listener {
             InventoryItem ii = iiList.get(i);
             if (ii.getSlot().contains("standard_")) {
                 String slot = ii.getSlot();
-                slot.replace("standard_","");
+                slot = slot.replace("standard_","");
+                //getLogger().info("Slot: " + slot);
                 Integer slotId = Integer.parseInt(slot);
-                inv[slotId] = ii.toItem(itemName);
+                inv[slotId] = ii.toItem(itemName,getLogger());
             }
             if (ii.getSlot().contains("armor_")) {
                 String slot = ii.getSlot();
-                slot.replace("armor_","");
+                slot = slot.replace("armor_","");
                 Integer slotId = Integer.parseInt(slot);
-                armorInv[slotId] = ii.toItem(itemName);
+                armorInv[slotId] = ii.toItem(itemName,getLogger());
             }
         }
 

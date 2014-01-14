@@ -235,6 +235,7 @@ public class Worlds extends JavaPlugin implements Listener {
 
             if (args.length > 0) {
                 String world = args[0];
+                String origWorld = world;
                 if (world.equalsIgnoreCase("main")) {
                     world = "world";
                 }
@@ -262,7 +263,7 @@ public class Worlds extends JavaPlugin implements Listener {
                 World currWorld = p.getWorld();
 
                 if (!updatePlayerLocation(p) && !force) {
-                    sender.sendMessage(ChatColor.RED + "Cannot connect to database-your position in this world cannot be saved. Use /go " + world + " force to go anyway");
+                    sender.sendMessage(ChatColor.RED + "Cannot connect to database-your position in this world cannot be saved. Use /go " + origWorld + " force to go anyway");
                     return true;
                 }
 
@@ -271,11 +272,18 @@ public class Worlds extends JavaPlugin implements Listener {
                     saved = inventory.saveInventory(p,currWorld.getName() + "_" + p.getName());
                 }
 
-                if (!saved) {
-                    sender.sendMessage(ChatColor.RED + "Cannot save your inventory. Use /go " + world + " force to go anyway. Warning: If you do this you may lose your entire inventory. It is recommended that you empty it before attempting to go to another world.");
+                if (!saved && !force) {
+                    sender.sendMessage(ChatColor.RED + "Cannot save your inventory. Use /go " + origWorld + " force to go anyway. Warning: If you do this you may lose your entire inventory. It is recommended that you empty it before attempting to go to another world.");
                     return true;
                 } else {
-                    //inventory.clearInventory(p);
+                    inventory.clearInventory(p);
+                    try {
+                        inventory.loadInventory(p,world + "_" + p.getName());
+                        sender.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
+                    } catch (Exception e) {
+                        inventory.loadInventory(p,currWorld.getName() + "_" + p.getName());
+                        sender.sendMessage(ChatColor.RED + "There was a problem teleporting to the other world");
+                    }
                 }
 
 

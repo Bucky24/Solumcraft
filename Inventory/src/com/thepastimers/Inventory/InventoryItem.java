@@ -5,6 +5,7 @@ import com.thepastimers.Database.Table;
 import com.thepastimers.ItemName.ItemName;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -169,7 +170,7 @@ public class InventoryItem extends Table {
         return result;
     }
 
-    public static InventoryItem process(ItemName itemName, ItemStack is) {
+    public static InventoryItem process(ItemName itemName, ItemStack is, Logger logger) {
         if (is == null) return null;
 
         String in = itemName.getItemName(is);
@@ -182,6 +183,12 @@ public class InventoryItem extends Table {
         String enchants = "";
         Map<Enchantment,Integer> enchantMap = is.getEnchantments();
 
+        if (in.equalsIgnoreCase("ENCHANTED_BOOK")) {
+            EnchantmentStorageMeta bookmeta = (EnchantmentStorageMeta)is.getItemMeta();
+            enchantMap = bookmeta.getStoredEnchants();
+            logger.info("Here!");
+        }
+
         for (Enchantment e : enchantMap.keySet()) {
             int level = enchantMap.get(e);
             enchants += e.getName() + "||" + level + ",";
@@ -192,6 +199,10 @@ public class InventoryItem extends Table {
     }
 
     public ItemStack toItem(ItemName itemName) {
+        return toItem(itemName,null);
+    }
+
+    public ItemStack toItem(ItemName itemName, Logger logger) {
         ItemStack is = itemName.getItemFromName(item);
         is.setAmount(amount);
         is.setDurability((short)durability);
@@ -200,11 +211,25 @@ public class InventoryItem extends Table {
         String[] enchantList = enchants.split(",");
         for (int i=0;i<enchantList.length;i++) {
             if (enchantList[i] != "") {
-                String[] list2 = enchantList[i].split("||");
+                String[] list2 = enchantList[i].split("\\|\\|");
+                //if (logger != null) {
+                //    logger.info(list2[0] + " " + list2[1]);
+                //}
                 enMap.put(Enchantment.getByName(list2[0]),Integer.parseInt(list2[1]));
             }
         }
-        is.addEnchantments(enMap);
+        if (item.equalsIgnoreCase("ENCHANTED_BOOK")) {
+            EnchantmentStorageMeta bookmeta = (EnchantmentStorageMeta)is.getItemMeta();
+            for (Enchantment e : enMap.keySet()) {
+                //if (logger != null) {
+                   // logger.info(e.getName() + " " + enMap.get(e));
+               // }
+                bookmeta.addStoredEnchant(e,enMap.get(e),true);
+                is.setItemMeta(bookmeta);
+            }
+        } else {
+            is.addUnsafeEnchantments(enMap);
+        }
 
         return is;
     }
