@@ -162,7 +162,7 @@ public class Creative extends JavaPlugin implements Listener {
 
     @EventHandler
     public void playerThrow(PlayerEggThrowEvent event) {
-        LivingEntity le = event.getEgg().getShooter();
+        LivingEntity le = (LivingEntity)event.getEgg().getShooter();
         if (le instanceof Player) {
             Player p = (Player)le;
             if (event.getHatchingType() != EntityType.CHICKEN) {
