@@ -6,7 +6,9 @@ import com.thepastimers.Database.Table;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -18,6 +20,8 @@ import java.util.logging.Logger;
  */
 public class RankData extends Table {
     public static String table = "rank_data";
+
+    private static Map<Integer,RankData> dataMap;
     
     int id;
     
@@ -27,6 +31,8 @@ public class RankData extends Table {
     
     String rank;
     String parentRank;
+    String code;
+    String format;
 
     public int getId() {
         return id;
@@ -52,6 +58,22 @@ public class RankData extends Table {
         this.parentRank = parentRank;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
     public static List<RankData> parseResult(ResultSet result) throws SQLException {
         List<RankData> ret = new ArrayList<RankData>();
 
@@ -64,6 +86,8 @@ public class RankData extends Table {
             r.setId(result.getInt("id"));
             r.setParentRank(result.getString("parent_rank"));
             r.setRank(result.getString("rank"));
+            r.setCode(result.getString("code"));
+            r.setFormat(result.getString("format"));
 
             ret.add(r);
         }
@@ -86,15 +110,17 @@ public class RankData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(parent_rank,rank)";
-            String values = "('" + d.makeSafe(parentRank) + "','" + d.makeSafe(rank)  + "')";
+            String columns = "(parent_rank,rank,code,format)";
+            String values = "('" + d.makeSafe(parentRank) + "','" + d.makeSafe(rank)  + "','" + d.makeSafe(code) + "','" + d.makeSafe(format) + "')";
             return d.query("INSERT INTO " + table + columns + " VALUES" + values);
         } else {
             StringBuilder query = new StringBuilder();
             query.append("UPDATE " + table + " SET ");
 
             query.append("parent_rank = '" + d.makeSafe(parentRank) + "'" + ", ");
-            query.append("rank = '" + d.makeSafe(rank) + "'");
+            query.append("rank = '" + d.makeSafe(rank) + "', ");
+            query.append("code = '" + d.makeSafe(code) + "', ");
+            query.append("format = '" + d.makeSafe(format) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -103,9 +129,42 @@ public class RankData extends Table {
 
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
-        builder.append(" int id, string parent_rank, string rank");
+        builder.append(" int id, string parent_rank, string rank, string code, string format");
 
         return builder.toString();
+    }
+
+    public static void refreshCache(Database d, Logger l) {
+        if (d == null) {
+            return;
+        }
+        @SuppressWarnings("unchecked")
+        List<RankData> RankDataList = (List<RankData>)d.select(RankData.class,"1");
+
+        dataMap = new HashMap<Integer, RankData>();
+
+        if (RankDataList == null) {
+            return;
+        }
+
+        for (RankData rd : RankDataList) {
+            dataMap.put(rd.getId(),rd);
+        }
+
+        if (l != null) {
+            l.info("Cache refresh complete, have " + dataMap.keySet().size() + " entries.");
+        }
+    }
+
+    public static RankData getDataForRank(String rank) {
+        for (Integer i : dataMap.keySet()) {
+            RankData r = dataMap.get(i);
+            if (r.getRank().equalsIgnoreCase(rank)) {
+                return r;
+            }
+        }
+
+        return null;
     }
 
     public static boolean createTables(Database d, Logger l) {
@@ -115,6 +174,8 @@ public class RankData extends Table {
 
         definition.append("`parent_rank` varchar(100) NOT NULL,");
         definition.append("`rank` varchar(100) NOT NULL,");
+        definition.append("`code` varchar(20) NOT NULL,");
+        definition.append("`format` varchar(100) NOT NULL,");
 
         definition.append("PRIMARY KEY (`id`)");
         definition.append(");");

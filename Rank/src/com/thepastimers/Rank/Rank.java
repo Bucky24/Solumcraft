@@ -53,6 +53,7 @@ public class Rank extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         PlayerRank.refreshCache(database,getLogger());
         PlayerTitle.refreshCache(database,getLogger());
+        RankData.refreshCache(database,getLogger());
         getLogger().info(PlayerRank.getTableInfo());
         getLogger().info(PlayerTitle.getTableInfo());
         getLogger().info(RankData.getTableInfo());
@@ -291,58 +292,32 @@ public class Rank extends JavaPlugin implements Listener {
             if (chat != null) {
                 title = chat.replaceColor(title);
             }
-            getServer().broadcastMessage(player + " now has title " + title);
+            getServer().broadcastMessage(player + " now has tit le " + title);
             return true;
         }
 
         return false;
     }
 
-    public ChatColor getTitleColor(String title) {
-        if ("pope".equalsIgnoreCase(title)) {
-            return ChatColor.DARK_GREEN;
-        } else if (title.toLowerCase().contains("lava")) {
-            return ChatColor.GOLD;
-        } else if ("Oldtimer".equalsIgnoreCase(title)) {
-            return ChatColor.DARK_GRAY;
-        } else if (title.toLowerCase().contains("sea")) {
-            return ChatColor.BLUE;
-        } else if ("Mod".equalsIgnoreCase(title) || "Moderator".equalsIgnoreCase(title)) {
-            return ChatColor.BLUE;
-        }
-
-        return ChatColor.WHITE;
-    }
-
-    @EventHandler
-    public void chatEvent(AsyncPlayerChatEvent event) {
-        if (chat != null) return;
-        PlayerTitle pt = PlayerTitle.getTitle(event.getPlayer().getName());
-        String title = "";
-        if (pt != null) title = pt.getTitle();
-
-
-        title = title.replace(":red:",ChatColor.RED.toString());
-        title = title.replace(":blue:",ChatColor.BLUE.toString());
-        title = title.replace(":green:",ChatColor.GREEN.toString());
-        title = title.replace(":dark green:",ChatColor.DARK_GREEN.toString());
-        title = title.replaceAll(":.*?:","");
-
-        if (!"".equalsIgnoreCase(title)) {
-            event.setFormat("<" + title + ChatColor.WHITE + " %1$s> %2$s");
-        }
-    }
-
     public void doChat(ChatData cd) {
         PlayerTitle pt = PlayerTitle.getTitle(cd.getPlayer());
+        PlayerRank pr = PlayerRank.getRankForPlayer(cd.getPlayer());
+        RankData rd = pr == null ? null : RankData.getDataForRank(pr.getRank());
         //getLogger().info(pt + "");
         String title = "";
+        String rank = "";
         if (pt != null) title = pt.getTitle();
+        if (rd != null) rank = rd.getFormat() + rd.getCode() + ":reset:";
 
-        //ChatColor textColor = getTitleColor(title);
-
+        String added = "";
+        if (!"".equalsIgnoreCase(rank)) {
+            added = "[" + rank + "] ";
+        }
         if (!"".equalsIgnoreCase(title)) {
-            cd.setPlayerString(title + " :white:" + cd.getPlayerString());
+            added += title + ":reset: ";
+        }
+        if (!"".equalsIgnoreCase(added)) {
+            cd.setPlayerString(added + cd.getPlayerString());
         }
     }
 
