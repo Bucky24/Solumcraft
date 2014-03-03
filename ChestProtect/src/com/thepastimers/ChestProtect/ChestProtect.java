@@ -133,7 +133,6 @@ public class ChestProtect extends JavaPlugin implements Listener {
                     if (pd == null) {
                         pd = plot.plotAt(b.getLocation());
                     }
-                    //getLogger().info("" + pd);
                     if (pd != null && pd.isChestProtect()) {
                         return true;
                     }
@@ -325,6 +324,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
             Block b = event.getClickedBlock();
             Player p = event.getPlayer();
 
+            getLogger().info("here");
             if (isProtected(b)) {
                 if (!hasPerms(p.getName(),b.getX(),b.getY(),b.getZ(),b.getWorld().getName())) {
                     event.setCancelled(true);
