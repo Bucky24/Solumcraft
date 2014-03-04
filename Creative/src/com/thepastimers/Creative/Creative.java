@@ -189,7 +189,7 @@ public class Creative extends JavaPlugin implements Listener {
         if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BURNING_FURNACE
                 || block.getType() == Material.ENDER_CHEST || block.getType() == Material.TRAPPED_CHEST
                 || block.getType() == Material.DISPENSER || block.getType() == Material.HOPPER
-                || block.getType() == Material.HOPPER_MINECART) {
+                || block.getType() == Material.HOPPER_MINECART || block.getType() == Material.DROPPER) {
             if (p.getGameMode() == GameMode.CREATIVE) {
                 if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                     p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
@@ -347,7 +347,7 @@ public class Creative extends JavaPlugin implements Listener {
                         } else {
                             p.sendMessage(ChatColor.GREEN + mode + " is in an unknown mode");
                         }
-                        }
+                    }
                 }
             } else {
                 sender.sendMessage("/gm <0|1>");

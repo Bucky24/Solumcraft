@@ -12,10 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
-import org.bukkit.block.Hopper;
+import org.bukkit.block.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -171,7 +168,8 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
     public boolean canBeProtected(Block b) {
         return (b.getType() == Material.CHEST || b.getType() == Material.WOOD_DOOR || b.getType() == Material.HOPPER
-        || b.getType() == Material.FURNACE || b.getType() == Material.BURNING_FURNACE);
+        || b.getType() == Material.FURNACE || b.getType() == Material.BURNING_FURNACE || b.getType() == Material.DISPENSER
+        || b.getType() == Material.DROPPER);
     }
 
     private ProtectData addProtection(Block b, Player owner) {
@@ -380,6 +378,18 @@ public class ChestProtect extends JavaPlugin implements Listener {
             }
         } else if (ih instanceof Hopper) {
             Hopper c = (Hopper)ih;
+            Block b = c.getBlock();
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
+                event.setCancelled(true);
+            }
+        } else if (ih instanceof Dispenser) {
+            Dispenser c = (Dispenser)ih;
+            Block b = c.getBlock();
+            if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
+                event.setCancelled(true);
+            }
+        } else if (ih instanceof Dropper) {
+            Dropper c = (Dropper)ih;
             Block b = c.getBlock();
             if (isProtected(b) && (plot == null || plot.plotAt(b.getLocation()) == null)) {
                 event.setCancelled(true);
