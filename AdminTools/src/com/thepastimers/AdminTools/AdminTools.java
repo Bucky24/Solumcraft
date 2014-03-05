@@ -267,6 +267,7 @@ public class AdminTools extends JavaPlugin implements Listener {
                 bd.setPlayer(name);
                 bd.setReason(reason);
                 bd.setUntil(until);
+                bd.setAdmin(playerName);
 
                 if (until == null) {
                     bd.setPerm(true);

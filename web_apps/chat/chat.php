@@ -1,8 +1,6 @@
 <?php
-	$url = "localhost";
-	$username = "pluginuser";
-	$password = "R6r7UEYy4X26t44E";
-	$database = "minecraft";
+	// expects $url, $username, $password, $database
+	include_once("setup.php");
 	
 	$dbh = mysql_connect($url,$username,$password);
 	

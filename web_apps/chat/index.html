@@ -9,9 +9,9 @@ var username;
 var sessionId;
 
 function getColor(text) {
-	var tokStyles = {"blue":"color: #0000ff","red":"color:#ff0000","white":"color:#000","dark green":"color:#009900","dark red":"color:#990000","gold":"color:#ff9933","yellow":"color:#ffff00","obf":"","strike":"text-decoration:line-through","purple":"color:#ff00ff"};
+	var tokStyles = {"blue":"color: #0000ff","red":"color:#ff0000","white":"color:#000","dark green":"color:#009900","dark red":"color:#990000","gold":"color:#ff9933","yellow":"color:#ffff00","obf":"","strike":"text-decoration:line-through","purple":"color:#ff00ff","italic":"font-style: italic","reset":"RESET","gray":"color: #999","bold":"font-weight: bold"};
 	try {
-		var inColor = false;
+		var inColor = 0;
 		
 		var player = "";
 		var playerArr = text.split(":");
@@ -19,17 +19,20 @@ function getColor(text) {
 		for (var j=0;j<playerArr.length;j++) {
 			var tok = playerArr[j];
 			if (tokStyles[tok] !== undefined) {
-				if (inColor) {
-					player += "</span>";
+				if (tokStyles[tok] !== "RESET") {
+					inColor ++;
+					player += "<span style='" + tokStyles[tok] + "'>";
+				} else {
+					for (var i=0;i<inColor;i++) {
+						player += "</span>";
+					}
+					inColor = 0;
 				}
-				player += "<span style='" + tokStyles[tok] + "'>";
-				inColor = true;
 			} else {
 				player += tok;
-				lastColor = false;
 			}
 		}
-		if (inColor) {
+		for (var i=0;i<inColor;i++) {
 			player += "</span>";
 		}
 		

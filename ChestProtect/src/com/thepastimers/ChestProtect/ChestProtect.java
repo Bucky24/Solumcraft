@@ -322,7 +322,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
             Block b = event.getClickedBlock();
             Player p = event.getPlayer();
 
-            getLogger().info("here");
+            //getLogger().info("here");
             if (isProtected(b)) {
                 if (!hasPerms(p.getName(),b.getX(),b.getY(),b.getZ(),b.getWorld().getName())) {
                     event.setCancelled(true);

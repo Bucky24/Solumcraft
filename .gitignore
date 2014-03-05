@@ -2,3 +2,4 @@ plugins/*
 plugins
 *.class
 out
+web_apps/chat/setup.php

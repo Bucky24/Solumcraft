@@ -32,6 +32,7 @@ public class BanData extends Table {
     Timestamp until;
     boolean active;
     boolean perm;
+    String admin;
 
     public int getId() {
         return id;
@@ -89,6 +90,14 @@ public class BanData extends Table {
         this.perm = perm;
     }
 
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
     public static List<BanData> parseResult(ResultSet result) throws SQLException {
         List<BanData> ret = new ArrayList<BanData>();
 
@@ -106,6 +115,7 @@ public class BanData extends Table {
             p.setUntil(result.getTimestamp("until"));
             p.setActive(result.getBoolean("active"));
             p.setPerm(result.getBoolean("perm"));
+            p.setAdmin(result.getString("admin"));
 
             ret.add(p);
         }
@@ -132,9 +142,9 @@ public class BanData extends Table {
         String untilString = "null";
         if (until != null) untilString = "'" + until + "'";
         if (id == -1) {
-            String columns = "(player,reason,entered,until,active,perm)";
+            String columns = "(player,reason,entered,until,active,perm,admin)";
             String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(reason) + "'," + enterString + ","
-                    + untilString + "," + active + "," + perm + ")";
+                    + untilString + "," + active + "," + perm + ",'" + d.makeSafe(admin) + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -159,7 +169,8 @@ public class BanData extends Table {
             query.append("entered = " + enterString + ", ");
             query.append("until = " + untilString + ", ");
             query.append("active = " + active + ", ");
-            query.append("perm = " + perm + " ");
+            query.append("perm = " + perm + ", ");
+            query.append("admin = '" + d.makeSafe(admin) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -169,7 +180,7 @@ public class BanData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, string reason, timestamp entered, timestamp until, boolean active, boolean perm");
+        builder.append(" int id, string player, string reason, timestamp entered, timestamp until, boolean active, boolean perm, string admin");
 
         return builder.toString();
     }
