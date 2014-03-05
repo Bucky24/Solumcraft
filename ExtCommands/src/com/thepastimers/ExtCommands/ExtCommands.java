@@ -583,6 +583,20 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 }
             }
             p.getInventory().setContents(items);
+        } else if ("fly".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_fly") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_fly)");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            if (p.getAllowFlight()) {
+                p.setAllowFlight(false);
+                p.sendMessage(ChatColor.BLUE + "Flying is now disabled");
+            } else {
+                p.setAllowFlight(true);
+                p.sendMessage(ChatColor.BLUE + "Flying is now enabled");
+            }
         } else {
             return false;
         }

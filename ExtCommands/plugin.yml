@@ -1,5 +1,5 @@
 name: ExtCommands
-version: 1.5
+version: 1.6
 main: com.thepastimers.ExtCommands.ExtCommands
 softdepend: [Permission, Metrics,Rank,Worlds,ItemName,Coord]
 commands:
@@ -27,3 +27,5 @@ commands:
         description: stacks items
     spawnCrystal:
         description: Spawns Ender Crystal
+    fly:
+        description: toggles flying

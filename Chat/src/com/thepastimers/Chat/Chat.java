@@ -199,7 +199,8 @@ public class Chat extends JavaPlugin implements Listener {
                 p.sendMessage(mainMessage);
             }
         }
-        getLogger().info(mainMessage);
+        //getLogger().info(mainMessage);
+        getLogger().info(vanillaMessage);
 
         if (logger != null) {
             Player p = getServer().getPlayer(player);
