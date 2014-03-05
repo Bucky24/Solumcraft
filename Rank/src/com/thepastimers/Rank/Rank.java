@@ -292,7 +292,7 @@ public class Rank extends JavaPlugin implements Listener {
             if (chat != null) {
                 title = chat.replaceColor(title);
             }
-            getServer().broadcastMessage(player + " now has tit le " + title);
+            getServer().broadcastMessage(player + " now has title " + title);
             return true;
         }
 
@@ -310,7 +310,7 @@ public class Rank extends JavaPlugin implements Listener {
         if (rd != null) rank = rd.getFormat() + rd.getCode() + ":reset:";
 
         String added = "";
-        if (!"".equalsIgnoreCase(rank)) {
+        if (!rd.getCode().equalsIgnoreCase("")) {
             added = "[" + rank + "] ";
         }
         if (!"".equalsIgnoreCase(title)) {

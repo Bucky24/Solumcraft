@@ -191,6 +191,20 @@ public class PlotPerms extends Table {
         return pp;
     }
 
+    public static List<PlotPerms> getPermsForPlot(int plot) {
+        List<PlotPerms> pp = new ArrayList<PlotPerms>();
+
+        for (Integer i : dataMap.keySet()) {
+            PlotPerms data = dataMap.get(i);
+
+            if (data.getPlot() == plot) {
+                pp.add(data);
+            }
+        }
+
+        return pp;
+    }
+
     public static boolean createTables(Database d, Logger l) {
         if (d == null) return false;
         StringBuilder definition = new StringBuilder("CREATE TABLE " + table + "(");

@@ -1049,6 +1049,26 @@ public class Plot extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("You are in " + pd.getName() + ", owned by " + pd.getOwner() + ". Bounds: (" + pd.getX1() + "," + pd.getZ1() + ") to (" + pd.getX2() + "," + pd.getZ2() + ")");
                         sender.sendMessage("Pvp: " + pd.isPvp() + ", pve: " + pd.isPve());
+                        String coOwner = "";
+                        String resident = "";
+                        String worker = "";
+
+                        List<PlotPerms> pp = PlotPerms.getPermsForPlot(pd.getId());
+                        for (PlotPerms plotPerms : pp) {
+                            if (plotPerms.getPerm() == PlotPerms.COOWNER) {
+                                coOwner += plotPerms.getPlayer() + ", ";
+                            }
+                            if (plotPerms.getPerm() == PlotPerms.RESIDENT) {
+                                resident += plotPerms.getPlayer() + ", ";
+                            }
+                            if (plotPerms.getPerm() == PlotPerms.WORKER) {
+                                worker += plotPerms.getPlayer() + ", ";
+                            }
+                        }
+
+                        sender.sendMessage("Players with coowner: " + coOwner);
+                        sender.sendMessage("Players with resident: " + resident);
+                        sender.sendMessage("Players with worker: " + worker);
                     }
                 } else if (subCommand.equalsIgnoreCase("setperm")) {
                     Player p = (Player)sender;
