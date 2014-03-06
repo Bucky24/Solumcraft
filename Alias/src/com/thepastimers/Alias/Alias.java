@@ -1,9 +1,12 @@
 package com.thepastimers.Alias;
 
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Rank.Rank;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +18,7 @@ import java.util.HashMap;
  */
 public class Alias extends JavaPlugin implements Listener {
     Permission permission;
+    Rank rank;
 
     Map<String,String> aliasMap;
 
@@ -27,6 +31,11 @@ public class Alias extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin. Some functionality may not be available");
+        }
+
+        rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
+        if (rank == null) {
+            getLogger().warning("Unable to load Rank plugin. Some functionality may not be available");
         }
 
         aliasMap = new HashMap<String,String>();
@@ -76,6 +85,14 @@ public class Alias extends JavaPlugin implements Listener {
                 String alias = "";
                 if (args.length > 1) {
                     alias = args[1];
+                }
+
+                if (rank != null) {
+                    String r = rank.getRank(alias);
+                    if ("owner".equalsIgnoreCase(r) || "admin".equalsIgnoreCase(r)) {
+                        sender.sendMessage(ChatColor.RED + "You may not impersonate server staff above mod.");
+                        return true;
+                    }
                 }
 
                 if ("".equalsIgnoreCase(alias)) {

@@ -9,6 +9,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bukkit-1.7.2-R0.2" level="project" />
     <orderEntry type="module" module-name="Permission" />
+    <orderEntry type="module" module-name="Rank" />
+    <orderEntry type="library" name="craftbukkit-1.7.2-R0.2" level="project" />
   </component>
 </module>
 
