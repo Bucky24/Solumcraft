@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AdminTools/AdminTools.iml" filepath="$PROJECT_DIR$/AdminTools/AdminTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Alias/Alias.iml" filepath="$PROJECT_DIR$/Alias/Alias.iml" />
       <module fileurl="file://$PROJECT_DIR$/Announce/Announce.iml" filepath="$PROJECT_DIR$/Announce/Announce.iml" />
       <module fileurl="file://$PROJECT_DIR$/Boundry/Boundry.iml" filepath="$PROJECT_DIR$/Boundry/Boundry.iml" />
       <module fileurl="file://$PROJECT_DIR$/CastleWars/CastleWars.iml" filepath="$PROJECT_DIR$/CastleWars/CastleWars.iml" />

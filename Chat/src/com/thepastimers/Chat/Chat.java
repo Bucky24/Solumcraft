@@ -1,5 +1,6 @@
 package com.thepastimers.Chat;
 
+import com.thepastimers.Alias.Alias;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Worlds.Worlds;
@@ -35,6 +36,8 @@ public class Chat extends JavaPlugin implements Listener {
     Database database;
     Worlds worlds;
     Logger logger;
+    Alias alias;
+
     Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
@@ -59,6 +62,11 @@ public class Chat extends JavaPlugin implements Listener {
 
         logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
         if (logger == null) {
+            getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
+        }
+
+        alias = (Alias)getServer().getPluginManager().getPlugin("Alias");
+        if (alias == null) {
             getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
         }
 
@@ -146,6 +154,9 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void sendChat(String message, String player, boolean save, boolean web) {
+        if (alias != null) {
+            player = alias.getAlias(player);
+        }
         ChatData data = new ChatData();
         data.setPlayer(player);
         data.setPlayerString(player);
@@ -245,6 +256,9 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void saveMessage(String message, String player) {
+        if (alias != null) {
+            player = alias.getAlias(player);
+        }
         ChatData data = new ChatData();
         data.setPlayer(player);
         data.setPlayerString(player);

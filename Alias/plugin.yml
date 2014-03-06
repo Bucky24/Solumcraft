@@ -1,0 +1,7 @@
+name: Alias
+version: 0.1
+main: com.thepastimers.Alias.Alias
+softdepend: [Permissions]
+commands:
+    alias:
+        description: allows aliasing of user names

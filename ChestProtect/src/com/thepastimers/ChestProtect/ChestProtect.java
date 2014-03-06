@@ -415,7 +415,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("protect")) {
             if (permission == null || !permission.hasPermission(playerName,"protect_protect") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You don't have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (protect_protect)");
                 return true;
             }
             if (args.length > 0) {
