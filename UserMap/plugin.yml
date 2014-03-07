@@ -1,0 +1,4 @@
+name: UserMap
+version: 0.1
+main: com.thepastimers.UserMap.UserMap
+softdepend: [Database]
