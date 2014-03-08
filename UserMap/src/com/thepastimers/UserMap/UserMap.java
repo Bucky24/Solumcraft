@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -31,6 +32,12 @@ public class UserMap extends JavaPlugin implements Listener {
         getLogger().info(UserMapping.getTableInfo());
         UserMapping.refreshCache(database,getLogger());
 
+        // now map every user that's currently on the server
+
+        for (Player p : getServer().getOnlinePlayers()) {
+            updateUUID(p);
+        }
+
         getLogger().info("UserMap init complete");
     }
 
@@ -39,8 +46,8 @@ public class UserMap extends JavaPlugin implements Listener {
         getLogger().info("UserMap disabled");
     }
 
-    @EventHandler(priority= EventPriority.LOWEST)
-    public void onLogin(PlayerJoinEvent event) {
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onJoin(PlayerJoinEvent event) {
         updateUUID(event.getPlayer());
     }
 
