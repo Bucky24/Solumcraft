@@ -307,10 +307,10 @@ public class Rank extends JavaPlugin implements Listener {
         String title = "";
         String rank = "";
         if (pt != null) title = pt.getTitle();
-        if (rd != null) rank = rd.getFormat() + rd.getCode() + ":reset:";
+        if (rd != null && !rd.getCode().equalsIgnoreCase("")) rank = rd.getFormat() + rd.getCode() + ":reset:";
 
         String added = "";
-        if (!rd.getCode().equalsIgnoreCase("")) {
+        if (!rank.equalsIgnoreCase("")) {
             added = "[" + rank + "] ";
         }
         if (!"".equalsIgnoreCase(title)) {

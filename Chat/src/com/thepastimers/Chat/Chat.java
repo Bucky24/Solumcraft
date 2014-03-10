@@ -172,11 +172,14 @@ public class Chat extends JavaPlugin implements Listener {
                 try {
                     JavaPlugin p = classMap.get(c);
                     Class[] argTypes = new Class[] {ChatData.class};
+                    getLogger().info("Calling do Chat for" + c.getName());
                     Method m = c.getDeclaredMethod("doChat",argTypes);
                     m.invoke(p,data);
+                    getLogger().info("Dochat called");
                 } catch (Exception e) {
+                    Throwable t = e.getCause();
                     getLogger().warning("Unable to call doChat for " + c.getName());
-                    e.printStackTrace();
+                    t.printStackTrace();
                 }
             }
         }
@@ -277,8 +280,9 @@ public class Chat extends JavaPlugin implements Listener {
                     Method m = c.getDeclaredMethod("doChat",argTypes);
                     m.invoke(p,data);
                 } catch (Exception e) {
+                    Throwable t = e.getCause();
                     getLogger().warning("Unable to call doChat for " + c.getName());
-                    getLogger().warning(e.getMessage());
+                    t.printStackTrace();
                 }
             }
         }
