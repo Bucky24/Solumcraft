@@ -167,6 +167,18 @@ public class RankData extends Table {
         return null;
     }
 
+    public static List<RankData> getRankChain(String rank) {
+        List<RankData> ranks = new ArrayList<RankData>();
+
+        RankData rd = RankData.getDataForRank(rank);
+        while (rd != null) {
+            ranks.add(rd);
+            rd = RankData.getDataForRank(rd.getParentRank());
+        }
+
+        return ranks;
+    }
+
     public static boolean createTables(Database d, Logger l) {
         if (d == null) return false;
         StringBuilder definition = new StringBuilder("CREATE TABLE " + table + "(");

@@ -112,6 +112,32 @@ public class Rank extends JavaPlugin implements Listener {
         return ranks;
     }
 
+    // returns -1 if rank2 is a parent of rank1
+    // returns 1 if rank1 is a parent of rank2
+    // returns 0 if they are equivalent or cannot be compared (not in the same permissions chain)
+    public int compareRanks(String rank1, String rank2) {
+        if (rank1 == null || rank2 == null) return 0;
+
+        List<RankData> r1 = RankData.getRankChain(rank1);
+        List<RankData> r2 = RankData.getRankChain(rank2);
+
+        if (rank1.equalsIgnoreCase(rank2))return 0;
+
+        for (RankData rd : r1) {
+            if (rd.getRank().equalsIgnoreCase(rank2)) {
+                return -1;
+            }
+        }
+
+        for (RankData rd : r2) {
+            if (rd.getRank().equalsIgnoreCase(rank1)) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
     public PlayerRank getRankObject(String player) {
         if (player == null || database == null) {
             return null;
