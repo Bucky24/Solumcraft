@@ -10,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +24,7 @@ import java.util.List;
 public class Permission extends JavaPlugin {
     Database database;
     Rank rank;
+    Map<String,Integer> permMap;
 
     @Override
     public void onEnable() {
@@ -42,6 +45,29 @@ public class Permission extends JavaPlugin {
             getLogger().warning("Unable to load Rank plugin. Some functionality will not be available.");
         }
 
+        permMap = new HashMap<String, Integer>();
+
+        this.registerPermission("perms_set",2);
+        this.registerPermission("perms_remove",2);
+        this.registerPermission("groupperms_set",2);
+        this.registerPermission("groupperms_set",2);
+        this.registerPermission("perms_level1",1);
+        this.registerPermission("perms_level2",1);
+        this.registerPermission("perms_level3",1);
+        this.registerPermission("perms_level4",1);
+        this.registerPermission("perms_level5",1);
+        this.registerPermission("perms_level6",1);
+        this.registerPermission("perms_level7",1);
+        this.registerPermission("perms_level8",1);
+        this.registerPermission("perms_level9",1);
+        this.registerPermission("perms_level10",1);
+        this.registerPermission("perms_level11",1);
+        this.registerPermission("perms_level12",1);
+        this.registerPermission("perms_level13",1);
+        this.registerPermission("perms_level14",1);
+        this.registerPermission("perms_level15",1);
+        this.registerPermission("perms_level16",1);
+
         getLogger().info("Permission init complete");
 
         PlayerPerm.refreshCache(database, getLogger());
@@ -53,6 +79,10 @@ public class Permission extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Permission disabled");
+    }
+
+    public void registerPermission(String perm, int level) {
+        permMap.put(perm,level);
     }
 
     public boolean hasPermission(String player, String permission) {
@@ -174,6 +204,21 @@ public class Permission extends JavaPlugin {
                         String player = args[1];
                         String perm = args[2];
 
+                        if (permMap.containsKey(perm)) {
+                            int level = permMap.get(perm);
+                            boolean found = false;
+                            for (int i=1;i<=level;i++) {
+                                if (hasPermission(playerName,"perms_level" + i)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                sender.sendMessage(ChatColor.RED + "You do not have permission to grant this level of perms (perms_level" + level + ")");
+                                return true;
+                            }
+                        }
+
                         if (!setPermission(player,perm)) {
                             sender.sendMessage("Unable to set permission");
                         } else {
@@ -191,6 +236,21 @@ public class Permission extends JavaPlugin {
                     if (args.length > 2) {
                         String player = args[1];
                         String perm = args[2];
+
+                        if (permMap.containsKey(perm)) {
+                            int level = permMap.get(perm);
+                            boolean found = false;
+                            for (int i=1;i<=level;i++) {
+                                if (hasPermission(playerName,"perms_level" + i)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                sender.sendMessage(ChatColor.RED + "You do not have permission to revoke this level of perms (perms_level" + level + ")");
+                                return true;
+                            }
+                        }
 
                         if (!removePermission(player,perm)) {
                             sender.sendMessage("Unable to remove permission");
@@ -255,6 +315,21 @@ public class Permission extends JavaPlugin {
                         String group = args[1];
                         String perm = args[2];
 
+                        if (permMap.containsKey(perm)) {
+                            int level = permMap.get(perm);
+                            boolean found = false;
+                            for (int i=1;i<=level;i++) {
+                                if (hasPermission(playerName,"perms_level" + i)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                sender.sendMessage(ChatColor.RED + "You do not have permission to grant this level of perms (min perms_level" + level + ")");
+                                return true;
+                            }
+                        }
+
                         if (!groupSetPermission(group,perm)) {
                             sender.sendMessage("Unable to set permission");
                         } else {
@@ -272,6 +347,21 @@ public class Permission extends JavaPlugin {
                     if (args.length > 2) {
                         String group = args[1];
                         String perm = args[2];
+
+                        if (permMap.containsKey(perm)) {
+                            int level = permMap.get(perm);
+                            boolean found = false;
+                            for (int i=1;i<=level;i++) {
+                                if (hasPermission(playerName,"perms_level" + i)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                sender.sendMessage(ChatColor.RED + "You do not have permission to revoke this level of perms (min perms_level" + level + ")");
+                                return true;
+                            }
+                        }
 
                         if (!groupRemovePermission(group,perm)) {
                             sender.sendMessage("Unable to remove permission");

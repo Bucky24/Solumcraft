@@ -12,12 +12,12 @@
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="" />
     <ignored path="Solumcraft.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394844837336" ignored="false" />
+    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394854111737" ignored="false" />
     <file path="/TeleportPlayer.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394845315812" ignored="false" />
     <file path="/Metrics.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394845342434" ignored="false" />
     <file path="/Rank.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394846049617" ignored="false" />
     <file path="/RankData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394845935454" ignored="false" />
-    <file path="/Permission.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394846096044" ignored="false" />
+    <file path="/Permission.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1394854844654" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,15 +84,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UserMap.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="9" selection-start="2180" selection-end="2180" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Chat.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -115,9 +106,7 @@
         <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="176" column="9" selection-start="4605" selection-end="4605" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#4410#4420#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,16 +114,25 @@
       <file leaf-file-name="Rank.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="29" selection-start="3318" selection-end="3318" vertical-scroll-proportion="-9.64">
+            <state line="110" column="29" selection-start="3318" selection-end="3318" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Permission.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Permission.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="14" selection-start="623" selection-end="623" vertical-scroll-proportion="0.3137584">
+            <state line="59" column="53" selection-start="1996" selection-end="1996" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Permission/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="12" selection-start="29" selection-end="29" vertical-scroll-proportion="0.019473081">
               <folding />
             </state>
           </provider>
@@ -194,7 +192,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
         <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
         <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
         <option value="$PROJECT_DIR$/Chat/plugin.yml" />
@@ -210,6 +207,7 @@
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
         <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java" />
+        <option value="$PROJECT_DIR$/Permission/plugin.yml" />
       </list>
     </option>
   </component>
@@ -452,11 +450,11 @@
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -491,19 +489,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -529,6 +514,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -625,7 +623,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3114572" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30812013" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30812013" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -713,25 +711,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TradeSign/src/com/thepastimers/TradeSign/TradeSign.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="5" selection-start="1336" selection-end="3395" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="100" column="5" selection-start="1336" selection-end="3395" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMapping.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="23" selection-start="4202" selection-end="4202" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="167" column="23" selection-start="4202" selection-end="4202" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/BanData.java">
@@ -741,9 +728,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1425" selection-end="1425" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="42" column="0" selection-start="1425" selection-end="1425" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
@@ -803,22 +788,27 @@
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="176" column="9" selection-start="4605" selection-end="4605" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#4410#4420#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="29" selection-start="3318" selection-end="3318" vertical-scroll-proportion="-9.64">
+        <state line="110" column="29" selection-start="3318" selection-end="3318" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="14" selection-start="623" selection-end="623" vertical-scroll-proportion="0.3137584">
+        <state line="59" column="53" selection-start="1996" selection-end="1996" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Permission/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="29" selection-end="29" vertical-scroll-proportion="0.019473081">
           <folding />
         </state>
       </provider>

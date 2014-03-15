@@ -1,5 +1,5 @@
 name: Permission
-version: 1.3
+version: 1.4
 main: com.thepastimers.Permission.Permission
 softdepend: [Database,Rank]
 commands:
