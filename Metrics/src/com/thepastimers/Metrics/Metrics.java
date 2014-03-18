@@ -2,9 +2,12 @@ package com.thepastimers.Metrics;
 
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Database.Database;
+import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +35,7 @@ import java.util.Map;
 public class Metrics extends JavaPlugin implements Listener {
     Database database;
     Chat chat;
+    Permission permission;
 
     @Override
     public void onEnable() {
@@ -46,6 +50,11 @@ public class Metrics extends JavaPlugin implements Listener {
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
         if (chat == null) {
             getLogger().warning("Cannot load Chat plugin. Some functionality may not be available");
+        }
+
+        permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
+        if (permission == null) {
+            getLogger().warning("Cannot load Permission plugin. Some functionality may not be available");
         }
 
         getLogger().info("Table info: ");
@@ -181,7 +190,7 @@ public class Metrics extends JavaPlugin implements Listener {
 
         p.sendMessage("Welcome to Solumcraft!");
         p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
-        p.sendMessage("You have spent " + parseDate(time) + " seconds on this server");
+        p.sendMessage("You have spent " + parseDate(time) + " on this server");
 
         if (logins == 0) {
             World w = getServer().getWorld("vanilla");
@@ -362,5 +371,48 @@ public class Metrics extends JavaPlugin implements Listener {
         if (chat != null) {
             chat.saveMessage("Player " + p.getName() + " has left.",":red:Server");
         }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        String playerName = "";
+
+        if (sender instanceof Player) {
+            playerName = ((Player)sender).getName();
+        } else {
+            playerName = "CONSOLE";
+        }
+
+        String command = cmd.getName();
+
+        if ("playerinfo".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"player_info")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to do this (player_info)");
+                return true;
+            }
+
+            String player = playerName;
+            if (args.length > 0) {
+                if (permission == null || !permission.hasPermission(playerName,"player_info_other")) {
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to do this (player_info_other)");
+                    return true;
+                }
+                player = args[0];
+            }
+
+            sender.sendMessage("Info for " + player);
+
+            int logins = getLoginCount(player);
+
+            long time = timeSpent(player);
+            time /= 1000;
+
+            sender.sendMessage("Logged in " + logins + " time/s and died " + getDeathCount(player) + " times.");
+            sender.sendMessage("Spent " + parseDate(time) + " on this server");
+        } else {
+            return false;
+        }
+
+        return true;
     }
 }
