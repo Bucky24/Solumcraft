@@ -69,6 +69,10 @@ public class AdminTools extends JavaPlugin implements Listener {
         getLogger().info("Table info: ");
         getLogger().info(BanData.getTableInfo());
 
+        permission.registerPermission("admin_ban",2);
+        permission.registerPermission("admin_permban",2);
+        permission.registerPermission("admin_kick",2);
+
         getLogger().info("AdminTools init complete");
     }
 

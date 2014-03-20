@@ -39,9 +39,11 @@ public class Edit extends JavaPlugin {
         getLogger().info("Edit init");
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin");
+        } else {
+            //permission.registerPermission("edit_fill",2);
+            //permission.registerPermission("edit_shift",2);
         }
 
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");

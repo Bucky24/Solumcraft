@@ -205,10 +205,12 @@ public class Permission extends JavaPlugin {
                         String perm = args[2];
 
                         if (permMap.containsKey(perm)) {
+                            getLogger().info(perm + " is in the map");
                             int level = permMap.get(perm);
                             boolean found = false;
                             for (int i=1;i<=level;i++) {
                                 if (hasPermission(playerName,"perms_level" + i)) {
+                                    getLogger().info("Player has perms level " + i);
                                     found = true;
                                     break;
                                 }
