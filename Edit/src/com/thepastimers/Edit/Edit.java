@@ -9,12 +9,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.material.Stairs;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -42,8 +39,8 @@ public class Edit extends JavaPlugin {
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin");
         } else {
-            //permission.registerPermission("edit_fill",2);
-            //permission.registerPermission("edit_shift",2);
+            permission.registerPermission("edit_fill",2);
+            permission.registerPermission("edit_shift",2);
         }
 
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");

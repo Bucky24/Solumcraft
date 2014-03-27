@@ -68,12 +68,12 @@ public class Permission extends JavaPlugin {
         this.registerPermission("perms_level15",1);
         this.registerPermission("perms_level16",1);
 
-        getLogger().info("Permission init complete");
-
         PlayerPerm.refreshCache(database, getLogger());
-        getLogger().info(PlayerPerm.getTableInfo());
+        //getLogger().info(PlayerPerm.getTableInfo());
         GroupPerm.refreshCache(database, getLogger());
-        getLogger().info(GroupPerm.getTableInfo());
+        //getLogger().info(GroupPerm.getTableInfo());
+
+        getLogger().info("Permission init complete");
     }
 
     @Override
