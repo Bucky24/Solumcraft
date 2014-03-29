@@ -2,11 +2,9 @@ package com.thepastimers.Alias;
 
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
-import net.minecraft.server.v1_7_R1.EntityPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
