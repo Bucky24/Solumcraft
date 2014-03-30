@@ -76,6 +76,12 @@ public class Worlds extends JavaPlugin implements Listener {
 
         deathLocs = new HashMap<Player, Location>();
 
+        for (World w : getServer().getWorlds()) {
+            if (getWorldType(w.getName()) == ECONOMY) {
+                w.setSpawnFlags(false,true);
+            }
+        }
+
         getLogger().info("Worlds init complete");
     }
 
@@ -88,27 +94,20 @@ public class Worlds extends JavaPlugin implements Listener {
     public void spawn(CreatureSpawnEvent event) {
         EntityType type = event.getEntityType();
 
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CHUNK_GEN
-                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DEFAULT) {
-
-            if (!"economy".equalsIgnoreCase(event.getLocation().getWorld().getName())) {
-                return;
-            }
-
-            event.setCancelled(true);
-            event.getEntity().setHealth(0);
-        } else {
-            //getLogger().info("CREATURE_SPAWN: " + event.getSpawnReason().name() + " type: " + event.getEntity().getType().name());
-            if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG) {
-                Entity e = event.getEntity();
-                if (e.getType() != EntityType.PIG_ZOMBIE) {
-                    Location l = e.getLocation();
-                    getLogger().info("Spawn egg used at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + "). Creature: " + e.getType().name());
-                    for (Player p : getServer().getOnlinePlayers()) {
-                        Location l2 = p.getLocation();
-                        getLogger().info(p.getName() + " at (" + l2.getBlockX() + "," + l2.getBlockY() + "," + l2.getBlockZ() + "," + l2.getWorld().getName() + ")");
-                    }
-                }
+        if (getWorldType(event.getLocation().getWorld().getName()) == ECONOMY) {
+            if (type == EntityType.BLAZE ||
+                    type == EntityType.ZOMBIE ||
+                    type == EntityType.CAVE_SPIDER ||
+                    type == EntityType.CREEPER ||
+                    type == EntityType.ENDERMAN ||
+                    type == EntityType.GHAST ||
+                    type == EntityType.MAGMA_CUBE ||
+                    type == EntityType.PIG_ZOMBIE ||
+                    type == EntityType.SILVERFISH ||
+                    type == EntityType.SKELETON ||
+                    type == EntityType.SPIDER ||
+                    type == EntityType.WITCH) {
+                event.setCancelled(true);
             }
         }
     }
@@ -122,16 +121,17 @@ public class Worlds extends JavaPlugin implements Listener {
         if (rank == null) {
             rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         }
+        boolean rankNormal = false;
         if (rank != null && useRank) {
             String type = rank.getRank(player);
             if (type.equalsIgnoreCase("owner") || type.equalsIgnoreCase("admin")) {
-                return NORMAL;
+                rankNormal = true;
             }
         }
         if (p != null) {
             World w = p.getLocation().getWorld();
             String name = w.getName();
-            if ("vanilla".equalsIgnoreCase(name)) {
+            if ("vanilla".equalsIgnoreCase(name) && !rankNormal) {
                 return VANILLA;
             } else if ("economy".equalsIgnoreCase(name)) {
                 return ECONOMY;

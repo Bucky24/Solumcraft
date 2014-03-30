@@ -59,6 +59,8 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin.");
+        } else {
+            permission.registerPermission("command_seed",2);
         }
 
         metrics = (Metrics)getServer().getPluginManager().getPlugin("Metrics");
@@ -597,6 +599,16 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 p.setAllowFlight(true);
                 p.sendMessage(ChatColor.BLUE + "Flying is now enabled");
             }
+        } else if ("seed".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_seed") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_seed)");
+                return true;
+            }
+
+            Player p = (Player)sender;
+            World w = p.getWorld();
+            sender.sendMessage(ChatColor.BLUE + "Seed for " + w.getName() + ": " + w.getSeed());
+
         } else {
             return false;
         }
