@@ -31,7 +31,6 @@ public class Permission extends JavaPlugin {
         getLogger().info("Permission init");
 
         database = (Database)getServer().getPluginManager().getPlugin("Database");
-
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality w ill not be available.");
         } else {
@@ -40,13 +39,13 @@ public class Permission extends JavaPlugin {
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
-
         if (rank == null) {
             getLogger().warning("Unable to load Rank plugin. Some functionality will not be available.");
         }
 
         permMap = new HashMap<String, Integer>();
 
+        getLogger().info("Registering permissions");
         this.registerPermission("perms_set",2);
         this.registerPermission("perms_remove",2);
         this.registerPermission("groupperms_set",2);
@@ -82,6 +81,7 @@ public class Permission extends JavaPlugin {
     }
 
     public void registerPermission(String perm, int level) {
+        getLogger().info("Adding perm " + perm  + " at level " + level);
         permMap.put(perm,level);
     }
 
@@ -205,17 +205,15 @@ public class Permission extends JavaPlugin {
                         String perm = args[2];
 
                         if (permMap.containsKey(perm)) {
-                            getLogger().info(perm + " is in the map");
                             int level = permMap.get(perm);
                             boolean found = false;
                             for (int i=1;i<=level;i++) {
                                 if (hasPermission(playerName,"perms_level" + i)) {
-                                    getLogger().info("Player has perms level " + i);
                                     found = true;
                                     break;
                                 }
                             }
-                            if (found) {
+                            if (!found) {
                                 sender.sendMessage(ChatColor.RED + "You do not have permission to grant this level of perms (perms_level" + level + ")");
                                 return true;
                             }
@@ -248,7 +246,7 @@ public class Permission extends JavaPlugin {
                                     break;
                                 }
                             }
-                            if (found) {
+                            if (!found) {
                                 sender.sendMessage(ChatColor.RED + "You do not have permission to revoke this level of perms (perms_level" + level + ")");
                                 return true;
                             }
@@ -326,7 +324,7 @@ public class Permission extends JavaPlugin {
                                     break;
                                 }
                             }
-                            if (found) {
+                            if (!found) {
                                 sender.sendMessage(ChatColor.RED + "You do not have permission to grant this level of perms (min perms_level" + level + ")");
                                 return true;
                             }
@@ -359,7 +357,7 @@ public class Permission extends JavaPlugin {
                                     break;
                                 }
                             }
-                            if (found) {
+                            if (!found) {
                                 sender.sendMessage(ChatColor.RED + "You do not have permission to revoke this level of perms (min perms_level" + level + ")");
                                 return true;
                             }

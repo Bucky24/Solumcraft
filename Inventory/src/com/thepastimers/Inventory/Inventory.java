@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class Inventory extends JavaPlugin implements Listener {
     Database database;
-    Permission permission;
     ItemName itemName;
 
     @Override
@@ -39,11 +38,6 @@ public class Inventory extends JavaPlugin implements Listener {
             getLogger().warning("Cannot load Database plugin. Some functionality may not be available");
         } else {
             InventoryItem.createTables(database,getLogger());
-        }
-
-        permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-        if (permission == null) {
-            getLogger().warning("Cannot load Permission plugin. Some functionality may not be available");
         }
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");

@@ -133,7 +133,7 @@ public class PlayerTitle extends Table {
         }
         @SuppressWarnings("unchecked")
         List<PlayerTitle> PlayerTitleList = (List<PlayerTitle>)d.select(PlayerTitle.class,"1");
-        l.info(PlayerTitleList.size() + "");
+        //l.info(PlayerTitleList.size() + "");
 
         dataMap = new HashMap<Integer, PlayerTitle>();
 

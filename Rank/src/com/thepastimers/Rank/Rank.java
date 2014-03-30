@@ -50,10 +50,10 @@ public class Rank extends JavaPlugin implements Listener {
             chat.register(Rank.class,this,1);
         }
 
-        getLogger().info("Table info: ");
         PlayerRank.refreshCache(database,getLogger());
         PlayerTitle.refreshCache(database,getLogger());
         RankData.refreshCache(database,getLogger());
+        getLogger().info("Table info: ");
         getLogger().info(PlayerRank.getTableInfo());
         getLogger().info(PlayerTitle.getTableInfo());
         getLogger().info(RankData.getTableInfo());
