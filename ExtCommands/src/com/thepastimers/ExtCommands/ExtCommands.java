@@ -609,6 +609,13 @@ public class ExtCommands extends JavaPlugin implements Listener {
             World w = p.getWorld();
             sender.sendMessage(ChatColor.BLUE + "Seed for " + w.getName() + ": " + w.getSeed());
 
+        } else if ("killzig".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"command_killzig") || "CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_killzig)");
+                return true;
+            }
+
+            sender.sendMessage(ChatColor.LIGHT_PURPLE + "Zigx89 has died at your hand!");
         } else {
             return false;
         }

@@ -19,6 +19,7 @@ public class Alias extends JavaPlugin implements Listener {
     Rank rank;
 
     Map<String,String> aliasMap;
+    Map<String,String> retitleMap;
 
     @Override
     public void onEnable() {
@@ -37,6 +38,7 @@ public class Alias extends JavaPlugin implements Listener {
         }
 
         aliasMap = new HashMap<String,String>();
+        retitleMap = new HashMap<String, String>();
 
         getLogger().info("Alias init complete");
     }
@@ -59,6 +61,21 @@ public class Alias extends JavaPlugin implements Listener {
 
     public void removeAlias(String player) {
         aliasMap.remove(player);
+    }
+
+    public String getRetitle(String player) {
+        if (retitleMap.containsKey(player)) {
+            return retitleMap.get(player);
+        }
+        return player;
+    }
+
+    public void setRetitle(String player, String alias) {
+        retitleMap.put(player,alias);
+    }
+
+    public void removeRetitle(String player) {
+        retitleMap.remove(player);
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -102,6 +119,37 @@ public class Alias extends JavaPlugin implements Listener {
                 }
             } else {
                 sender.sendMessage("/alias <player> <alias, leave blank to remove alias>");
+            }
+        } else if ("retitle".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"retitle_command") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (retitle_command)");
+                return true;
+            }
+
+            if (args.length > 0) {
+                String player = args[0];
+                String alias = "";
+                if (args.length > 1) {
+                    alias = args[1];
+                }
+
+                if (rank != null) {
+                    String r = rank.getRank(alias);
+                    if ("owner".equalsIgnoreCase(r) || "admin".equalsIgnoreCase(r)) {
+                        sender.sendMessage(ChatColor.RED + "You may not retitle anyone as server staff above mod.");
+                        return true;
+                    }
+                }
+
+                if ("".equalsIgnoreCase(alias)) {
+                    removeRetitle(player);
+                    sender.sendMessage(ChatColor.GREEN + "Player " + player + "'s retitle has been removed (if there ever was one)");
+                } else {
+                    setRetitle(player,alias);
+                    sender.sendMessage(ChatColor.GREEN + "Player " + player + " is now named " + alias);
+                }
+            } else {
+                sender.sendMessage("/retitle <player> <name, leave blank to remove name>");
             }
         } else {
             return false;
