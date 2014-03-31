@@ -10,7 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" afterPath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java" afterPath="$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java" afterPath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" afterPath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Creative/plugin.yml" afterPath="$PROJECT_DIR$/Creative/plugin.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/plugin.yml" afterPath="$PROJECT_DIR$/Rank/plugin.yml" />
     </list>
     <ignored path="Solumcraft.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,46 +84,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Alias.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Alias/src/com/thepastimers/Alias/Alias.java">
+      <file leaf-file-name="Creative.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="135" column="35" selection-start="4572" selection-end="4572" vertical-scroll-proportion="0.0" vertical-offset="1419" max-vertical-offset="2355">
+            <state line="58" column="38" selection-start="1848" selection-end="1848" vertical-scroll-proportion="0.0" vertical-offset="66" max-vertical-offset="5550">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Rank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="420" column="52" selection-start="12861" selection-end="12861" vertical-scroll-proportion="0.0" vertical-offset="5685" max-vertical-offset="7305">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plugin.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="32" selection-start="56" selection-end="56" vertical-scroll-proportion="0.046801873" vertical-offset="0" max-vertical-offset="641">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerRank.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="165" column="31" selection-start="4224" selection-end="4224" vertical-scroll-proportion="0.0" vertical-offset="1779" max-vertical-offset="2715">
+              <folding>
+                <element signature="e#3424#3454#1" expanded="true" />
+                <element signature="e#4297#4305#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Alias/plugin.yml">
+        <entry file="file://$PROJECT_DIR$/Creative/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="12" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="26" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminTools.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="449" column="17" selection-start="16595" selection-end="16595" vertical-scroll-proportion="0.0" vertical-offset="6735" max-vertical-offset="7215">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExtCommands.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="9" selection-start="2041" selection-end="2041" vertical-scroll-proportion="0.66614664" vertical-offset="98" max-vertical-offset="9045">
+            <state line="8" column="36" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
               <folding />
             </state>
           </provider>
@@ -137,7 +144,7 @@
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="43" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="180">
+            <state line="6" column="43" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="180">
               <folding />
             </state>
           </provider>
@@ -164,7 +171,7 @@
       <file leaf-file-name="Chat.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="49" selection-start="7322" selection-end="7322" vertical-scroll-proportion="-7.0384617" vertical-offset="2082" max-vertical-offset="5010">
+            <state line="174" column="49" selection-start="7322" selection-end="7322" vertical-scroll-proportion="0.0" vertical-offset="2610" max-vertical-offset="5355">
               <folding />
             </state>
           </provider>
@@ -192,7 +199,6 @@
         <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
         <option value="$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java" />
         <option value="$PROJECT_DIR$/Edit/src/com/thepastimers/Edit/Edit.java" />
-        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java" />
         <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/GroupPerm.java" />
         <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/PlayerPerm.java" />
@@ -207,6 +213,11 @@
         <option value="$PROJECT_DIR$/Alias/src/com/thepastimers/Alias/Alias.java" />
         <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
         <option value="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
+        <option value="$PROJECT_DIR$/Creative/plugin.yml" />
+        <option value="$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java" />
+        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java" />
+        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
+        <option value="$PROJECT_DIR$/Rank/plugin.yml" />
       </list>
     </option>
   </component>
@@ -250,16 +261,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -288,6 +289,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="ExtCommands" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -311,6 +348,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ExtCommands" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Creative" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Creative" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Creative" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -384,6 +457,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Alias" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -454,6 +537,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -479,19 +575,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -605,8 +688,8 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6674528" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6829811" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -630,6 +713,79 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Alias/src/com/thepastimers/Alias/Alias.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="35" selection-start="4572" selection-end="4572" vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="2490">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Alias/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="12" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="26" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="600">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="449" column="17" selection-start="16595" selection-end="16595" vertical-scroll-proportion="0.0" vertical-offset="6735" max-vertical-offset="7215">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#13450#13466#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="9" selection-start="2041" selection-end="2041" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="9045">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExtCommands/ExtCommands.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="43" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="450" column="43" selection-start="16057" selection-end="16057" vertical-scroll-proportion="0.0" vertical-offset="6750" max-vertical-offset="13365">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Edit/src/com/thepastimers/Edit/Edit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="19" selection-start="1070" selection-end="1070" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="12375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="49" selection-start="7322" selection-end="7322" vertical-scroll-proportion="0.0" vertical-offset="2610" max-vertical-offset="5355">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="50" column="50" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="6390">
@@ -639,9 +795,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="30" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="4755">
-          <folding />
-        </state>
+        <state line="78" column="30" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="4755" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
@@ -653,15 +807,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Worlds/Worlds.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="444" column="25" selection-start="16391" selection-end="16391" vertical-scroll-proportion="0.0" vertical-offset="6660" max-vertical-offset="7155">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#13450#13466#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -705,11 +860,6 @@
         <state line="6" column="24" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Inventory/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="31" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
@@ -720,18 +870,9 @@
         <state line="41" column="42" selection-start="1278" selection-end="1278" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="20" selection-start="1334" selection-end="1334" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="35" selection-start="92" selection-end="98" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="3" column="35" selection-start="92" selection-end="98" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Edit/src/com/thepastimers/Edit/Edit.java">
@@ -748,51 +889,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="450" column="43" selection-start="16057" selection-end="16057" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="449" column="17" selection-start="16595" selection-end="16595" vertical-scroll-proportion="0.0" vertical-offset="6735" max-vertical-offset="7215">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Worlds/Worlds.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="43" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="180">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="30" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="78" column="30" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Alias/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="12" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="49" selection-start="7322" selection-end="7322" vertical-scroll-proportion="-7.0384617" vertical-offset="2082" max-vertical-offset="5010">
           <folding />
         </state>
       </provider>
@@ -804,13 +913,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExtCommands/ExtCommands.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="641">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="26" selection-start="240" selection-end="240" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
@@ -818,9 +920,85 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="49" selection-start="7322" selection-end="7322" vertical-scroll-proportion="0.0" vertical-offset="2610" max-vertical-offset="5355">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="9" selection-start="2041" selection-end="2041" vertical-scroll-proportion="0.66614664" vertical-offset="98" max-vertical-offset="9045">
+        <state line="112" column="5" selection-start="3757" selection-end="3757" vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="9045">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Creative/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="36" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="444" column="42" selection-start="16361" selection-end="16361" vertical-scroll-proportion="0.0" vertical-offset="5574" max-vertical-offset="6855">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#13450#13466#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CastleWars/src/com/thepastimers/CastleWars/CastleWars.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="450" column="43" selection-start="16057" selection-end="16057" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="43" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExtCommands/ExtCommands.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="641">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="38" selection-start="1848" selection-end="1848" vertical-scroll-proportion="0.0" vertical-offset="66" max-vertical-offset="5550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="31" selection-start="4224" selection-end="4224" vertical-scroll-proportion="0.0" vertical-offset="1779" max-vertical-offset="2715">
+          <folding>
+            <element signature="e#3424#3454#1" expanded="true" />
+            <element signature="e#4297#4305#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="420" column="52" selection-start="12861" selection-end="12861" vertical-scroll-proportion="0.0" vertical-offset="5685" max-vertical-offset="7305">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="32" selection-start="56" selection-end="56" vertical-scroll-proportion="0.046801873" vertical-offset="0" max-vertical-offset="641">
           <folding />
         </state>
       </provider>

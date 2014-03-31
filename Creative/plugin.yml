@@ -1,7 +1,9 @@
 name: Creative
-version: 1.3
+version: 1.4
 main: com.thepastimers.Creative.Creative
 softdepend: [Database,Permission,Plot,Worlds]
 commands:
     gm:
         description: Game Mode
+    gmcheck:
+        description: Check game mode

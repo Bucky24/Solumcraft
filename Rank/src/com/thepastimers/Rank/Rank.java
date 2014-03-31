@@ -379,7 +379,7 @@ public class Rank extends JavaPlugin implements Listener {
 
                         return true;
                     } else {
-                        sender.sendMessage("/rank set <player> <rank>");
+                        sender.sendMessage(ChatColor.RED + "/rank set <player> <rank>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
                     if (!isAuthorized(playerName)) {
@@ -395,6 +395,8 @@ public class Rank extends JavaPlugin implements Listener {
                         }
 
                         return true;
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "/rank remove <player>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
                     if (!isAuthorized(playerName)) {
@@ -412,10 +414,30 @@ public class Rank extends JavaPlugin implements Listener {
                         } else {
                             sender.sendMessage(player + " has no rank");
                         }
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "/rank check <player>");
+                    }
+                } else if (secondCommand.equalsIgnoreCase("list")) {
+                    if (!isAuthorized(playerName)) {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
+                        getLogger().info(playerName + " attempted unauthorized access of /rank list");
+                        return true;
+                    }
+                    if (args.length > 1) {
+                        String rank = args[1];
+
+                        List<String> players = PlayerRank.getPlayersForRank(rank);
+
+                        sender.sendMessage(ChatColor.BLUE + "List of players who have rank " + rank + ":");
+                        for (String player: players) {
+                            sender.sendMessage(player);
+                        }
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "/rank list <rank>");
                     }
                 }
             } else {
-                sender.sendMessage("/rank <set|remove|check>");
+                sender.sendMessage("/rank <set|remove|check|list>");
             }
         } else if(command.equalsIgnoreCase("title")) {
             if (args.length > 0) {
