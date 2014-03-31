@@ -10,11 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Alias/src/com/thepastimers/Alias/Alias.java" afterPath="$PROJECT_DIR$/Alias/src/com/thepastimers/Alias/Alias.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" afterPath="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" afterPath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Alias/plugin.yml" afterPath="$PROJECT_DIR$/Alias/plugin.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExtCommands/plugin.yml" afterPath="$PROJECT_DIR$/ExtCommands/plugin.yml" />
     </list>
     <ignored path="Solumcraft.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -123,7 +119,7 @@
       <file leaf-file-name="ExtCommands.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="597" column="20" selection-start="25568" selection-end="25568" vertical-scroll-proportion="0.36817473" vertical-offset="8284" max-vertical-offset="9030">
+            <state line="64" column="9" selection-start="2041" selection-end="2041" vertical-scroll-proportion="0.66614664" vertical-offset="98" max-vertical-offset="9045">
               <folding />
             </state>
           </provider>
@@ -824,7 +820,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="597" column="20" selection-start="25568" selection-end="25568" vertical-scroll-proportion="0.36817473" vertical-offset="8284" max-vertical-offset="9030">
+        <state line="64" column="9" selection-start="2041" selection-end="2041" vertical-scroll-proportion="0.66614664" vertical-offset="98" max-vertical-offset="9045">
           <folding />
         </state>
       </provider>

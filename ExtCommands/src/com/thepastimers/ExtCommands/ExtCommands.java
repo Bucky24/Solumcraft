@@ -61,6 +61,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Permission plugin.");
         } else {
             permission.registerPermission("command_seed",2);
+            permission.registerPermission("command_fly",2);
         }
 
         metrics = (Metrics)getServer().getPluginManager().getPlugin("Metrics");
