@@ -90,7 +90,7 @@ public class Alias extends JavaPlugin implements Listener {
         String command = cmd.getName();
 
         if ("alias".equalsIgnoreCase(command)) {
-            if (permission == null || !permission.hasPermission(playerName,"alias_command") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"alias_command")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (alias_command)");
                 return true;
             }
@@ -121,7 +121,7 @@ public class Alias extends JavaPlugin implements Listener {
                 sender.sendMessage("/alias <player> <alias, leave blank to remove alias>");
             }
         } else if ("retitle".equalsIgnoreCase(command)) {
-            if (permission == null || !permission.hasPermission(playerName,"retitle_command") || playerName.equalsIgnoreCase("CONSOLE")) {
+            if (permission == null || !permission.hasPermission(playerName,"retitle_command")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (retitle_command)");
                 return true;
             }
