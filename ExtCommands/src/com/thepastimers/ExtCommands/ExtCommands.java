@@ -61,6 +61,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Permission plugin.");
         } else {
             permission.registerPermission("command_seed",2);
+            permission.registerPermission("command_dragon",1);
         }
 
         metrics = (Metrics)getServer().getPluginManager().getPlugin("Metrics");
@@ -227,8 +228,10 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
             World w = p.getWorld();
             //getLogger().info(w.getName());
-            if (!w.getName().equalsIgnoreCase("vanilla")) {
-                w = getServer().getWorld("world");
+            if (worlds != null) {
+                if (worlds.getWorldType(w.getName()) == Worlds.NORMAL) {
+                    w = getServer().getWorld("world");
+                }
             }
 
             p.teleport(w.getSpawnLocation());
