@@ -1,7 +1,7 @@
 name: Permission
 version: 1.5
 main: com.thepastimers.Permission.Permission
-softdepend: [Database,Rank]
+softdepend: [Database,Rank,UserMap]
 commands:
     perms:
         description: give/remove/check perms

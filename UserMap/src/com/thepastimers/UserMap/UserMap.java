@@ -1,6 +1,7 @@
 package com.thepastimers.UserMap;
 
 import com.thepastimers.Database.Database;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class UserMap extends JavaPlugin implements Listener {
     Database database;
 
-    public static int NO_USER = -1;
+    public static String NO_USER = "";
 
     @Override
     public void onEnable() {
@@ -62,7 +63,7 @@ public class UserMap extends JavaPlugin implements Listener {
         return um;
     }
 
-    public int getUUID(Player player) {
+    public String getUUID(Player player) {
         if (player == null) {
             return NO_USER;
         }
@@ -73,9 +74,22 @@ public class UserMap extends JavaPlugin implements Listener {
         return um.getUuid();
     }
 
-    public int getUUID(String player) {
+    public String getUUID(String player) {
         if (player == null) {
             return NO_USER;
+        }
+
+        Player p = getServer().getPlayer(player);
+        if (p != null) {
+            return p.getUniqueId().toString();
+        }
+
+        OfflinePlayer op = getServer().getOfflinePlayer(player);
+        if (op != null) {
+            Player pop = op.getPlayer();
+            if (pop != null) {
+                return pop.getUniqueId().toString();
+            }
         }
 
         UserMapping um = UserMapping.getMappingForPlayer(player);
@@ -92,9 +106,17 @@ public class UserMap extends JavaPlugin implements Listener {
             um = new UserMapping();
         }
         um.setUserName(p.getName());
-        um.setUuid(p.getUniqueId().hashCode());
+        um.setUuid(p.getUniqueId().toString());
         if (!um.save(database)) {
             getLogger().warning("Warning: cannot update player's user mapping for " + p.getName());
         }
+    }
+
+    public String getPlayer(String uuid) {
+        UserMapping map = UserMapping.getPlayerForMapping(uuid);
+        if (map == null) {
+            return UserMap.NO_USER;
+        }
+        return map.getUserName();
     }
 }

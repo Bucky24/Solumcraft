@@ -1,7 +1,7 @@
 name: Rank
-version: 1.4
+version: 1.5
 main: com.thepastimers.Rank.Rank
-softdepend: [Database,Chat]
+softdepend: [Database,Chat,UserMap]
 commands:
     rank:
         description: rank command

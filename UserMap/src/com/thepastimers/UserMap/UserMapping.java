@@ -27,7 +27,7 @@ public class UserMapping extends Table {
     }
 
     String userName;
-    int uuid;
+    String uuid;
 
     public int getId() {
         return id;
@@ -45,11 +45,11 @@ public class UserMapping extends Table {
         this.userName = userName;
     }
 
-    public int getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(int uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -65,7 +65,7 @@ public class UserMapping extends Table {
 
             p.setId(result.getInt("id"));
             p.setUserName(result.getString("userName"));
-            p.setUuid(result.getInt("uuid"));
+            p.setUuid(result.getString("uuid"));
 
             ret.add(p);
         }
@@ -95,7 +95,7 @@ public class UserMapping extends Table {
         }
         if (id == -1) {
             String columns = "(userName,uuid)";
-            String values = "('" + d.makeSafe(userName) + "'," + uuid + ")";
+            String values = "('" + d.makeSafe(userName) + "','" + d.makeSafe(uuid) + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -117,7 +117,7 @@ public class UserMapping extends Table {
             query.append("UPDATE " + table + " SET ");
 
             query.append("userName = '" + d.makeSafe(userName) + "'" + ", ");
-            query.append("uuid = " + uuid + " ");
+            query.append("uuid = '" + d.makeSafe(uuid) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -154,10 +154,10 @@ public class UserMapping extends Table {
     }
 
     public static UserMapping getMappingForPlayer(Player p) {
-        int id = p.getUniqueId().hashCode();
+        String id = p.getUniqueId().toString();
         for (Integer i : dataMap.keySet()) {
             UserMapping um = dataMap.get(i);
-            if (um.getUuid() == id) {
+            if (um.getUuid().equalsIgnoreCase(id)) {
                 return um;
             }
         }
@@ -168,6 +168,16 @@ public class UserMapping extends Table {
         for (Integer i : dataMap.keySet()) {
             UserMapping um = dataMap.get(i);
             if (um.getUserName().equalsIgnoreCase(p)) {
+                return um;
+            }
+        }
+        return null;
+    }
+
+    public static UserMapping getPlayerForMapping(String uuid) {
+        for (Integer i : dataMap.keySet()) {
+            UserMapping um = dataMap.get(i);
+            if (um.getUuid().equalsIgnoreCase(uuid)) {
                 return um;
             }
         }

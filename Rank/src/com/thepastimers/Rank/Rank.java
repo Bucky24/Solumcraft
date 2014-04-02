@@ -3,6 +3,7 @@ package com.thepastimers.Rank;
 import com.thepastimers.Chat.Chat;
 import com.thepastimers.Chat.ChatData;
 import com.thepastimers.Database.Database;
+import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,6 +26,7 @@ import java.util.List;
 public class Rank extends JavaPlugin implements Listener {
     Database database;
     Chat chat;
+    UserMap userMap;
 
     @Override
     public void onEnable() {
@@ -48,6 +50,11 @@ public class Rank extends JavaPlugin implements Listener {
         } else {
             getLogger().info("Registering chat handler");
             chat.register(Rank.class,this,1);
+        }
+
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Unable to load UserMap plugin. Some functionality will not be available.");
         }
 
         PlayerRank.refreshCache(database,getLogger());
@@ -166,8 +173,13 @@ public class Rank extends JavaPlugin implements Listener {
         newRank.setRank(rank);
         newRank.setPlayer(player);
 
+        String playerName = "";
+        if (userMap != null) {
+            playerName = userMap.getPlayer(player);
+        }
+
         if (newRank.save(database)) {
-            getServer().broadcastMessage(player + " is now in group " + rank);
+            getServer().broadcastMessage(ChatColor.BLUE + playerName + " is now in group " + rank);
             return true;
         }
 
@@ -196,7 +208,12 @@ public class Rank extends JavaPlugin implements Listener {
             return false;
         }
 
-        getServer().broadcastMessage(player + " is no longer in group " + rank);
+        String playerName = "";
+        if (userMap != null) {
+            playerName = userMap.getPlayer(player);
+        }
+
+        getServer().broadcastMessage(ChatColor.BLUE + playerName + " is no longer in group " + rank);
         return true;
     }
 
@@ -225,7 +242,7 @@ public class Rank extends JavaPlugin implements Listener {
 
         String rank = getRank(player);
 
-        if (rank.equalsIgnoreCase("admin") || rank.equalsIgnoreCase("owner")) {
+        if (rank.equalsIgnoreCase("gameadmin") || rank.equalsIgnoreCase("admin") || rank.equalsIgnoreCase("owner")) {
             return true;
         }
 
@@ -293,7 +310,11 @@ public class Rank extends JavaPlugin implements Listener {
         if (chat != null) {
             title = chat.replaceColor(title);
         }
-        getServer().broadcastMessage(player + " no longer has title " + title);
+        String playerName = "";
+        if (userMap != null) {
+            playerName = userMap.getPlayer(player);
+        }
+        getServer().broadcastMessage(playerName + " no longer has title " + title);
         return true;
     }
 
@@ -318,7 +339,12 @@ public class Rank extends JavaPlugin implements Listener {
             if (chat != null) {
                 title = chat.replaceColor(title);
             }
-            getServer().broadcastMessage(player + " now has title " + title);
+
+            String playerName = "";
+            if (userMap != null) {
+                playerName = userMap.getPlayer(player);
+            }
+            getServer().broadcastMessage(playerName + " now has title " + title);
             return true;
         }
 
@@ -351,11 +377,19 @@ public class Rank extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
 
+        String uuid = "";
         if (sender instanceof Player) {
-            playerName = ((Player)sender).getName();
+            Player p = (Player)sender;
+            playerName = p.getName();
+            uuid = p.getUniqueId().toString();
         } else {
             playerName = "CONSOLE";
+            uuid = playerName;
         }
+        if ("".equalsIgnoreCase(uuid)) {
+            sender.sendMessage(ChatColor.RED + "Could not get a proper UUID for you, aborting command.");
+        }
+
 
         String command = cmd.getName();
 
@@ -364,16 +398,25 @@ public class Rank extends JavaPlugin implements Listener {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!isAuthorized(playerName)) {
+                    if (!isAuthorized(uuid)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank set");
                         return true;
                     }
                     if (args.length > 2) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
                         String newRank = args[2].toLowerCase();
 
-                        if (!setRank(player,newRank)) {
+                        if (!setRank(playerUuid,newRank)) {
                             sender.sendMessage("Unable to set rank");
                         }
 
@@ -382,15 +425,23 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank set <player> <rank>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!isAuthorized(playerName)) {
+                    if (!isAuthorized(uuid)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank remove");
                         return true;
                     }
                     if (args.length > 1) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                        }
 
-                        if (!removeRank(player)) {
+                        if (!removeRank(playerUuid)) {
                             sender.sendMessage("Unable to remove rank.");
                         }
 
@@ -399,15 +450,23 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank remove <player>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!isAuthorized(playerName)) {
+                    if (!isAuthorized(uuid)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank check");
                         return true;
                     }
                     if (args.length > 1) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                        }
 
-                        String rank = getRank(player);
+                        String rank = getRank(playerUuid);
 
                         if (!"".equals(rank)) {
                             sender.sendMessage(player + " has a rank of " + rank);
@@ -418,7 +477,7 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank check <player>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("list")) {
-                    if (!isAuthorized(playerName)) {
+                    if (!isAuthorized(uuid)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank list");
                         return true;
@@ -429,7 +488,12 @@ public class Rank extends JavaPlugin implements Listener {
                         List<String> players = PlayerRank.getPlayersForRank(rank);
 
                         sender.sendMessage(ChatColor.BLUE + "List of players who have rank " + rank + ":");
-                        for (String player: players) {
+                        for (String playerUuid: players) {
+                            String player = UserMap.NO_USER;
+                            if (userMap != null) {
+                                player = userMap.getPlayer(playerUuid);
+                            }
+                            if (UserMap.NO_USER.equalsIgnoreCase(player)) player = playerUuid;
                             sender.sendMessage(player);
                         }
                     } else {
@@ -444,13 +508,23 @@ public class Rank extends JavaPlugin implements Listener {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!isAuthorized(playerName)) {
+                    if (!isAuthorized(uuid)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /title set");
                         return true;
                     }
                     if (args.length > 2) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
+
                         String title = "";
                         for (int i=2;i<args.length;i++) {
                             title += args[i] + " ";
@@ -459,11 +533,11 @@ public class Rank extends JavaPlugin implements Listener {
                         title = title.substring(0,title.length()-1);
 
                         if (title == "") {
-                            if (!removeTitle(player)) {
+                            if (!removeTitle(playerUuid)) {
                                 sender.sendMessage("Unable to remove title for player " + player);
                             }
                         } else {
-                            if (!setTitle(player,title)) {
+                            if (!setTitle(playerUuid,title)) {
                                 sender.sendMessage("Unable to set title " + title + " for player " + player);
                             }
                         }
@@ -474,8 +548,17 @@ public class Rank extends JavaPlugin implements Listener {
                 } else if (secondCommand.equalsIgnoreCase("check")) {
                     if (args.length > 1) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
 
-                        String title = getTitle(player);
+                        String title = getTitle(playerUuid);
 
                         sender.sendMessage("Title for " + player + ": " + title);
                     } else {

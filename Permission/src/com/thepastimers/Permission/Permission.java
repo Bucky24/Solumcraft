@@ -3,6 +3,7 @@ package com.thepastimers.Permission;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class Permission extends JavaPlugin {
     Database database;
     Rank rank;
+    UserMap userMap;
     Map<String,Integer> permMap;
 
     @Override
@@ -41,6 +43,11 @@ public class Permission extends JavaPlugin {
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
             getLogger().warning("Unable to load Rank plugin. Some functionality will not be available.");
+        }
+
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Unable to load UserMap plugin. Some functionality will not be available.");
         }
 
         permMap = new HashMap<String, Integer>();
@@ -181,10 +188,17 @@ public class Permission extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
 
+        String uuid = "";
         if (sender instanceof Player) {
-            playerName = ((Player)sender).getName();
+            Player p = (Player)sender;
+            playerName = p.getName();
+            uuid = p.getUniqueId().toString();
         } else {
             playerName = "CONSOLE";
+            uuid = playerName;
+        }
+        if ("".equalsIgnoreCase(uuid)) {
+            sender.sendMessage(ChatColor.RED + "Could not get a proper UUID for you, aborting command.");
         }
 
         String command = cmd.getName();
@@ -194,7 +208,7 @@ public class Permission extends JavaPlugin {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!hasPermission(playerName,"perms_set")) {
+                    if (!hasPermission(uuid,"perms_set")) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (perms_set)");
                         getLogger().info(playerName + " attempted unauthorized access of /perms set (perms_set)");
                         return true;
@@ -202,13 +216,22 @@ public class Permission extends JavaPlugin {
 
                     if (args.length > 2) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
                         String perm = args[2];
 
                         if (permMap.containsKey(perm)) {
                             int level = permMap.get(perm);
                             boolean found = false;
                             for (int i=1;i<=level;i++) {
-                                if (hasPermission(playerName,"perms_level" + i)) {
+                                if (hasPermission(uuid,"perms_level" + i)) {
                                     found = true;
                                     break;
                                 }
@@ -219,7 +242,7 @@ public class Permission extends JavaPlugin {
                             }
                         }
 
-                        if (!setPermission(player,perm)) {
+                        if (!setPermission(playerUuid,perm)) {
                             sender.sendMessage("Unable to set permission");
                         } else {
                             sender.sendMessage(player + " now has permission " + perm);
@@ -228,20 +251,29 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms set <player> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!hasPermission(playerName,"perms_remove")) {
+                    if (!hasPermission(uuid,"perms_remove")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms remove");
                         return true;
                     }
 
                     if (args.length > 2) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
                         String perm = args[2];
 
                         if (permMap.containsKey(perm)) {
                             int level = permMap.get(perm);
                             boolean found = false;
                             for (int i=1;i<=level;i++) {
-                                if (hasPermission(playerName,"perms_level" + i)) {
+                                if (hasPermission(uuid,"perms_level" + i)) {
                                     found = true;
                                     break;
                                 }
@@ -252,7 +284,7 @@ public class Permission extends JavaPlugin {
                             }
                         }
 
-                        if (!removePermission(player,perm)) {
+                        if (!removePermission(playerUuid,perm)) {
                             sender.sendMessage("Unable to remove permission");
                         } else {
                             sender.sendMessage(player + " no longer has permission " + perm);
@@ -261,16 +293,25 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms remove <player> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(playerName,"perms_check")) {
+                    if (!hasPermission(uuid,"perms_check")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms check");
                         return true;
                     }
 
                     if (args.length > 2) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
                         String perm = args[2];
 
-                        if (!hasPermission(player,perm)) {
+                        if (!hasPermission(playerUuid,perm)) {
                             sender.sendMessage(player + " does not  have permission " + perm);
                         } else {
                             sender.sendMessage(player + " has permission " + perm);
@@ -280,15 +321,24 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms check <player> <perm>");
                     }
                 } else if ("list".equalsIgnoreCase(secondCommand)) {
-                    if (!hasPermission(playerName,"perms_set")) {
+                    if (!hasPermission(uuid,"perms_set")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms list");
                         return true;
                     }
 
                     if (args.length > 1) {
                         String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                            return true;
+                        }
 
-                        List<PlayerPerm> perms = (List<PlayerPerm>)database.select(PlayerPerm.class,"player = '" + database.makeSafe(player) + "'");
+                        List<PlayerPerm> perms = (List<PlayerPerm>)database.select(PlayerPerm.class,"player = '" + database.makeSafe(playerUuid) + "'");
                         sender.sendMessage("Perms for " + player + ":");
                         for (PlayerPerm perm : perms) {
                             sender.sendMessage(perm.getPermission());
@@ -305,7 +355,7 @@ public class Permission extends JavaPlugin {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!hasPermission(playerName,"groupperms_set")) {
+                    if (!hasPermission(uuid,"groupperms_set")) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (groupperms_set)");
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms set (groupperms_set)");
                         return true;
@@ -339,7 +389,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms set <group> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!hasPermission(playerName,"groupperms_remove")) {
+                    if (!hasPermission(uuid,"groupperms_remove")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms remove (groupperms_remove)");
                         return true;
                     }
@@ -366,13 +416,13 @@ public class Permission extends JavaPlugin {
                         if (!groupRemovePermission(group,perm)) {
                             sender.sendMessage("Unable to remove permission");
                         } else {
-                            sender.sendMessage(group+ " no longer has permission " + perm);
+                            sender.sendMessage(group + " no longer has permission " + perm);
                         }
                     } else {
                         sender.sendMessage("/groupperms remove <group> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(playerName,"groupperms_check")) {
+                    if (!hasPermission(uuid,"groupperms_check")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms check");
                         return true;
                     }
@@ -391,7 +441,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms check <group> <perm>");
                     }
                 } else if ("list".equalsIgnoreCase(secondCommand)) {
-                    if (!hasPermission(playerName,"groupperms_set")) {
+                    if (!hasPermission(uuid,"groupperms_set")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms list");
                         return true;
                     }

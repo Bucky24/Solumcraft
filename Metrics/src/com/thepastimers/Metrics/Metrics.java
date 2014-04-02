@@ -189,8 +189,8 @@ public class Metrics extends JavaPlugin implements Listener {
         getLogger().info("Player " + p.getName() + " has joined, with " + logins + " logins");
 
         p.sendMessage("Welcome to Solumcraft!");
-        p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
-        p.sendMessage("You have spent " + parseDate(time) + " on this server");
+        //p.sendMessage("You have logged in " + (logins+1) + " time/s and died " + getDeathCount(p.getName()) + " times.");
+        //p.sendMessage("You have spent " + parseDate(time) + " on this server");
 
         if (logins == 0) {
             World w = getServer().getWorld("vanilla");
@@ -201,10 +201,10 @@ public class Metrics extends JavaPlugin implements Listener {
             TeleportPlayer pt = new TeleportPlayer(this,p,w);
             pt.runTaskLater(this,1);
             getLogger().info("Teleporting new player " + p.getName() + " to spawn on world " + w.getName());
-            p.sendMessage(ChatColor.GREEN + "According to records, you are a new player. Welcome!");
-            p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
+           // p.sendMessage(ChatColor.GREEN + "According to records, you are a new player. Welcome!");
+            //p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
         } else {
-            p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting! See which servers to vote at by using /vote sites");
+            //p.sendMessage(ChatColor.GREEN + "Get 2 diamonds each by voting! See which servers to vote at by using /vote sites");
            //p.sendMessage(ChatColor.GREEN + "www.minecraft-server-list.com/server/127787");
             //p.sendMessage(ChatColor.GREEN + "www.mcserverlist.net/servers/516ba260041b26153700019e");
             //p.sendMessage(ChatColor.GREEN + "http://minecraftservers.org/server/68085");
@@ -219,9 +219,12 @@ public class Metrics extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "contact pastimerbucky, and I will reimburse you. that also");
             p.sendMessage(ChatColor.RED + "applies to anyone with a money balance.");*/
         }
-        p.sendMessage(ChatColor.DARK_PURPLE + "Ventrilo server now available at solumcraft.com:3784");
+        //p.sendMessage(ChatColor.DARK_PURPLE + "Ventrilo server now available at solumcraft.com:3784");
         //p.sendMessage(ChatColor.RED + "Attention! Please read http://solumcraft.com/update.html");
-    }
+        p.sendMessage(ChatColor.DARK_PURPLE + "ATTENTION: I am currently in the process of converting all plugins on this server from name-based data storage to UUID based storage, in anticipation of changes that will be made to Minecraft in 1.8.");
+        chat.sendRaw("{\"color\":\"dark_purple\",\"text\":\"For more info visit http://solumcraft.com/solumcraft/uuid.html\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://solumcraft.com/solumcraft/uuid.html\"}}",p);
+
+        }
 
     public int getLoginCount(String player) {
         if (database == null || player == null) {

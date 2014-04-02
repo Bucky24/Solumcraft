@@ -51,6 +51,8 @@ public class VoteHandler extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Cannot load Permission plugin. Some functionality may not be available");
+        } else {
+            permission.registerPermission("vote_test",1);
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");

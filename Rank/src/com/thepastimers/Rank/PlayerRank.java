@@ -94,7 +94,7 @@ public class PlayerRank extends Table {
         }
         if (id == -1) {
             String columns = "(player,rank)";
-            String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(rank)  + "'')";
+            String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(rank)  + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
