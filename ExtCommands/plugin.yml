@@ -1,5 +1,5 @@
 name: ExtCommands
-version: 1.7
+version: 1.8
 main: com.thepastimers.ExtCommands.ExtCommands
 softdepend: [Permission, Metrics,Rank,Worlds,ItemName,Coord]
 commands:
@@ -31,3 +31,5 @@ commands:
         description: toggles flying
     seed:
         description: shows current world seed
+    killzig:
+        description: "kills" zig

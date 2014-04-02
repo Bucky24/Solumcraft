@@ -163,6 +163,18 @@ public class PlayerRank extends Table {
         return null;
     }
 
+    public static List<String> getPlayersForRank(String rank) {
+        List<String> ret = new ArrayList<String>();
+        for (Integer i : dataMap.keySet()) {
+            PlayerRank r = dataMap.get(i);
+            if (r.getRank().equalsIgnoreCase(rank)) {
+                ret.add(r.getPlayer());
+            }
+        }
+
+        return ret;
+    }
+
     public static boolean createTables(Database d, Logger l) {
         if (d == null) return false;
         StringBuilder definition = new StringBuilder("CREATE TABLE " + table + "(");

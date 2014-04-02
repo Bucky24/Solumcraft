@@ -154,8 +154,10 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void sendChat(String message, String player, boolean save, boolean web) {
+        String playerName = player;
         if (alias != null) {
             player = alias.getAlias(player);
+            playerName = alias.getRetitle(player);
         }
         ChatData data = new ChatData();
         data.setPlayer(player);
@@ -186,6 +188,7 @@ public class Chat extends JavaPlugin implements Listener {
         String bak = data.getPlayerString();
         data.setPlayerString(replaceColor(data.getPlayerString()));
         data.setPlayerString(data.getPlayerString() + ChatColor.getByChar("r").toString());
+        data.setPlayerString(data.getPlayerString().replace(player,playerName));
 
         String messageBak = data.getMessage();
         data.setMessage(replaceColor(data.getMessage()));

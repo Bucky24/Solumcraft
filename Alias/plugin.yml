@@ -1,7 +1,9 @@
 name: Alias
-version: 0.1
+version: 0.2
 main: com.thepastimers.Alias.Alias
 softdepend: [Permissions,Rank]
 commands:
     alias:
         description: allows aliasing of user names
+    retitle:
+        description: allows changing player names temporariliy

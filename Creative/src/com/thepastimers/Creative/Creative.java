@@ -62,6 +62,10 @@ public class Creative extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Unable to load Permission module. Some functionality may not be available.");
+        } else {
+            permission.registerPermission(allPerms,2);
+            permission.registerPermission(commandPerm,2);
+            permission.registerPermission(creativePlot,2);
         }
 
         plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
@@ -351,6 +355,34 @@ public class Creative extends JavaPlugin implements Listener {
                 }
             } else {
                 sender.sendMessage("/gm <0|1>");
+            }
+        } else if ("gmcheck".equalsIgnoreCase(command)) {
+            if (permission == null || !permission.hasPermission(playerName,"creative_check")) {
+                sender.sendMessage("You do not have permissions to use this command (creative_check)");
+                return true;
+            }
+
+            if (args.length > 0) {
+                String player = args[0];
+                Player p = getServer().getPlayer(player);
+                if (p == null) {
+                    p = getServer().getOfflinePlayer(player).getPlayer();
+                }
+                if (p == null) {
+                    sender.sendMessage(ChatColor.RED + player + " has never played on this server");
+                } else {
+                    if (p.getGameMode() == GameMode.ADVENTURE) {
+                        sender.sendMessage(ChatColor.BLUE + player + " is in adventure mode");
+                    } else if (p.getGameMode() == GameMode.SURVIVAL) {
+                        sender.sendMessage(ChatColor.BLUE + player + " is in survival mode");
+                    } else if (p.getGameMode() == GameMode.CREATIVE) {
+                        sender.sendMessage(ChatColor.BLUE + player + " is in creative mode");
+                    } else {
+                        sender.sendMessage(ChatColor.BLUE + player + " is in an unknown mode");
+                    }
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "/gmcheck <player>");
             }
         } else {
             return false;
