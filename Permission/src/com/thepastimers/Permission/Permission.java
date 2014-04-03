@@ -101,6 +101,11 @@ public class Permission extends JavaPlugin {
             return true;
         }
 
+        Player p = getServer().getPlayer(player);
+        if (p != null) {
+            player = p.getUniqueId().toString();
+        }
+
         if (PlayerPerm.hasPermission(player,permission)) {
             return true;
         }
