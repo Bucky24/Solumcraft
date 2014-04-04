@@ -1,7 +1,7 @@
 name: Home
-version: 1.6
+version: 1.7
 main: com.thepastimers.Home.Home
-softdepend: [Database,Permission,Rank,CombatLog,Worlds]
+softdepend: [Database,Permission,Rank,CombatLog,Worlds,UserMap]
 commands:
     home:
         description: home command

@@ -94,9 +94,9 @@ public class UserMap extends JavaPlugin implements Listener {
 
         UserMapping um = UserMapping.getMappingForPlayer(player);
         if (um == null) {
-            return NO_USER;
+            um = UserMapping.getPlayerForMapping(player);
         }
-        return um.getUuid();
+        return um == null? NO_USER : um.getUuid();
     }
 
     public void updateUUID(Player p) {

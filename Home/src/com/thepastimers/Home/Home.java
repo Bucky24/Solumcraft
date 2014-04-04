@@ -4,6 +4,7 @@ import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.UserMap.UserMap;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.*;
@@ -35,6 +37,7 @@ public class Home extends JavaPlugin implements Listener {
     Rank rank;
     CombatLog combatLog;
     Worlds worlds;
+    UserMap userMap;
 
     Map<HomeData,Date> lastHome;
 
@@ -60,6 +63,11 @@ public class Home extends JavaPlugin implements Listener {
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
             getLogger().warning("Cannot load Rank plugin. Some functionality may not be available");
+        }
+
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Cannot load UserMap plugin. Some functionality may not be available");
         }
 
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
@@ -113,6 +121,16 @@ public class Home extends JavaPlugin implements Listener {
         }
     }
 
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+        String query = "UPDATE " + HomeData.table + " SET player = \"" + database.makeSafe(uuid) + "\" WHERE player = \"" + p.getName() + "\"";
+        database.query(query);
+    }
+
     public int getMaxHomes(String player) {
         return getMaxHomes(player,false);
     }
@@ -122,11 +140,16 @@ public class Home extends JavaPlugin implements Listener {
             return 0;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return 0;
+        }
+
         int playerMax = 0;
         String group = "";
         List<MaxHome> list;
 
-        if (groupOnly == false) {
+        if (!groupOnly) {
 
             list = (List<MaxHome>)database.select(MaxHome.class,"name = '"
                     + database.makeSafe(player) + "' AND `group` = false");
@@ -171,6 +194,11 @@ public class Home extends JavaPlugin implements Listener {
             return null;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return null;
+        }
+
         List<HomeData> data = (List<HomeData>)database.select(HomeData.class,"player = '"
                 + database.makeSafe(player) + "' AND name = '" + database.makeSafe(name) + "'");
 
@@ -192,6 +220,11 @@ public class Home extends JavaPlugin implements Listener {
             return ret;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return null;
+        }
+
         List<HomeData> data = (List<HomeData>)database.select(HomeData.class,"player = '"
                 + database.makeSafe(player) + "'");
 
@@ -209,6 +242,11 @@ public class Home extends JavaPlugin implements Listener {
         List<String> ret = new ArrayList<String>();
         if (database == null) {
             return 0;
+        }
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return 0;
         }
 
         List<HomeData> data = (List<HomeData>)database.select(HomeData.class,"player = '"
@@ -231,6 +269,11 @@ public class Home extends JavaPlugin implements Listener {
             return false;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return false;
+        }
+
         HomeData hd = new HomeData();
         hd.setPlayer(player);
         hd.setName(name);
@@ -247,6 +290,11 @@ public class Home extends JavaPlugin implements Listener {
             return null;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return null;
+        }
+
         HomeData hd = new HomeData();
         hd.setPlayer(player);
         hd.setName(name);
@@ -261,6 +309,11 @@ public class Home extends JavaPlugin implements Listener {
     public boolean deleteHome(String player, String name) {
         if (database == null) {
             return false;
+        }
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return false;
         }
 
         HomeData hd = getHome(player,name);
@@ -299,14 +352,17 @@ public class Home extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
 
+        String uuid = "";
         if (sender instanceof Player) {
-            playerName = ((Player)sender).getName();
+            Player p = (Player)sender;
+            playerName = p.getName();
+            uuid = p.getUniqueId().toString();
         } else {
             playerName = "CONSOLE";
+            uuid = playerName;
         }
-
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
-            return false;
+        if ("".equalsIgnoreCase(uuid)) {
+            sender.sendMessage(ChatColor.RED + "Could not get a proper UUID for you, aborting command.");
         }
 
         String command = cmd.getName();
@@ -331,7 +387,7 @@ public class Home extends JavaPlugin implements Listener {
 
             if (hd == null) {
                 if (getHomeCount(playerName) >= getMaxHomes(playerName)) {
-                    sender.sendMessage("You are at the maximum number of homes you can set");
+                    sender.sendMessage(ChatColor.RED + "You are at the maximum number of homes you can set");
                     return true;
                 }
 
@@ -344,10 +400,10 @@ public class Home extends JavaPlugin implements Listener {
             hd.setWorld(world);
 
             if (hd != null && hd.save(database)) {
-                sender.sendMessage("Home set. You can set " + (getMaxHomes(playerName)-getHomeCount(playerName))
+                sender.sendMessage(ChatColor.GREEN + "Home set. You can set " + (getMaxHomes(uuid)-getHomeCount(uuid))
                         + " more home/s");
             } else {
-                sender.sendMessage("Unable to set home");
+                sender.sendMessage(ChatColor.RED + "Unable to set home");
             }
         } else if (command.equalsIgnoreCase("home")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
@@ -373,9 +429,9 @@ public class Home extends JavaPlugin implements Listener {
 
             if (hd == null) {
                 if (!"".equalsIgnoreCase(name)) {
-                    sender.sendMessage("You have no home named " + name);
+                    sender.sendMessage(ChatColor.RED + "You have no home named " + name);
                 } else {
-                    sender.sendMessage("You have no default home set");
+                    sender.sendMessage(ChatColor.RED + "You have no default home set");
                 }
                 return true;
             }
@@ -392,19 +448,19 @@ public class Home extends JavaPlugin implements Listener {
 
                 if ((b.getType() != Material.AIR && b.getType() != Material.WATER && b.getType() != Material.STATIONARY_WATER && b.getType() != Material.CARPET) ||
                         (b2.getType() != Material.AIR && b2.getType() != Material.WATER && b2.getType() != Material.STATIONARY_WATER && b2.getType() != Material.CARPET)) {
-                    sender.sendMessage("That location is unsafe to teleport to. Please use /forcehome " + name + " If you really want to teleport there.");
+                    sender.sendMessage(ChatColor.RED + "That location is unsafe to teleport to. Please use /forcehome " + name + " If you really want to teleport there.");
                     return true;
                 }
 
                 p.teleport(l);
                 lastHome.put(hd,new Date());
                 if (!"".equalsIgnoreCase(hd.getName())) {
-                    sender.sendMessage("Teleporting you to " + hd.getName());
+                    sender.sendMessage(ChatColor.GREEN + "Teleporting you to " + hd.getName());
                 } else {
-                    sender.sendMessage("Teleporting you to default home");
+                    sender.sendMessage(ChatColor.GREEN + "Teleporting you to default home");
                 }
             } catch (Exception e) {
-                sender.sendMessage("Unable to teleport you");
+                sender.sendMessage(ChatColor.RED + "Unable to teleport you");
             }
         } else if (command.equalsIgnoreCase("forcehome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
