@@ -5,8 +5,10 @@ import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -18,6 +20,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
@@ -38,6 +41,7 @@ public class AdminTools extends JavaPlugin implements Listener {
     Permission permission;
     Logger logger;
     Coord coord;
+    UserMap userMap;
 
     @Override
     public void onEnable() {
@@ -66,6 +70,11 @@ public class AdminTools extends JavaPlugin implements Listener {
             getLogger().warning("Unable to connect to Coord plugin");
         }
 
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Unable to load UserMap plugin.");
+        }
+
         getLogger().info("Table info: ");
         getLogger().info(BanData.getTableInfo());
 
@@ -81,9 +90,36 @@ public class AdminTools extends JavaPlugin implements Listener {
         getLogger().info("AdminTools disable");
     }
 
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+        String query = "UPDATE " + BanData.table + " SET player = \"" + database.makeSafe(uuid) + "\" WHERE player = \"" + p.getName() + "\"";
+        database.query(query);
+    }
+
     public boolean isPlayerBanned(String player) {
         if (database == null) {
             return false;
+        }
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                return false;
+            }
+        }
+
+        Player p = getServer().getPlayer(player);
+        if (p != null) {
+            if (p.isBanned()) return true;
+        } else {
+            OfflinePlayer op = getServer().getOfflinePlayer(player);
+            if (op != null) {
+                if (op.isBanned()) return true;
+            }
         }
 
         List<BanData> banList = (List<BanData>)database.select(BanData.class,"player = '" + database.makeSafe(player) + "' and active = true");
@@ -103,6 +139,13 @@ public class AdminTools extends JavaPlugin implements Listener {
     public long getTimeLeft(String player) {
         if (!isPlayerBanned(player)) return 0;
         if (database == null) return 0;
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                return 0;
+            }
+        }
 
         List<BanData> banList = (List<BanData>)database.select(BanData.class,"player = '" + database.makeSafe(player) + "' and active = true");
 
@@ -125,6 +168,13 @@ public class AdminTools extends JavaPlugin implements Listener {
         if (!isPlayerBanned(player)) return "";
         if (database == null) return "";
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                return "";
+            }
+        }
+
         List<BanData> banList = (List<BanData>)database.select(BanData.class,"player = '" + database.makeSafe(player) + "' and active = true");
 
         Date nowDate = new Date();
@@ -143,6 +193,13 @@ public class AdminTools extends JavaPlugin implements Listener {
         if (!isPlayerBanned(player)) return null;
         if (database == null) return null;
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                return null;
+            }
+        }
+
         List<BanData> banList = (List<BanData>)database.select(BanData.class,"player = '" + database.makeSafe(player) + "' and active = true");
 
         Date nowDate = new Date();
@@ -160,6 +217,23 @@ public class AdminTools extends JavaPlugin implements Listener {
     public boolean unban(String player) {
         if (!isPlayerBanned(player)) return true;
         if (database == null) return false;
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                return false;
+            }
+        }
+
+        Player p = getServer().getPlayer(player);
+        if (p != null) {
+            p.setBanned(false);
+        } else {
+            OfflinePlayer op = getServer().getOfflinePlayer(player);
+            if (op != null) {
+                op.setBanned(false);
+            }
+        }
 
         List<BanData> banList = (List<BanData>)database.select(BanData.class,"player = '" + database.makeSafe(player) + "' and active = true");
 
@@ -278,6 +352,7 @@ public class AdminTools extends JavaPlugin implements Listener {
                     if (logger != null) {
                         logger.writeEvent(Logger.file,null,name,"perm_ban","By: " + playerName + ". Reason: " + reason);
                     }
+
                     sender.sendMessage("You have perm-banned " + name + " for reason: " + reason);
                 } else {
                     bd.setPerm(false);

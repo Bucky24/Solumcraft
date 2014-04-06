@@ -1,7 +1,7 @@
 name: AdminTools
-version: 1.3
+version: 1.4
 main: com.thepastimers.AdminTools.AdminTools
-softdepend: [Database,Permission,Logger,Coord]
+softdepend: [Database,Permission,Logger,Coord,UserMap]
 commands:
     ban:
         description: bans user

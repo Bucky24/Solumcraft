@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -19,6 +20,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -193,6 +195,18 @@ public class Worlds extends JavaPlugin implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void teleport(PlayerTeleportEvent event) {
+        Location l1 = event.getFrom();
+        Location l2 = event.getTo();
+        int type1 = getWorldType(l1.getWorld().getName());
+        int type2 = getWorldType(l2.getWorld().getName());
+        if (type1 != type2) {
+            updatePlayerLocation(event.getPlayer());
+            handleMove(event.getPlayer(),false,event.getTo().getWorld());
+        }
+    }
+
     public boolean updatePlayerLocation(Player p) {
         Location pl = p.getLocation();
         World w = pl.getWorld();
@@ -214,6 +228,31 @@ public class Worlds extends JavaPlugin implements Listener {
             wc.setZ(pl.getZ());
         }
         return wc.save(database);
+    }
+
+    public boolean handleMove(Player p, boolean force,World to) {
+        if (p == null || to == null) return false;
+        World currWorld = p.getWorld();
+        boolean saved = false;
+        if (inventory != null) {
+            saved = inventory.saveInventory(p,currWorld.getName() + "_" + p.getName());
+        }
+
+        if (!saved && !force) {
+            p.sendMessage(ChatColor.RED + "Cannot save your inventory. Use /go <world> force to go anyway. Warning: If you do this you may lose your entire inventory. It is recommended that you empty it before attempting to go to another world.");
+            return false;
+        } else {
+            inventory.clearInventory(p);
+            try {
+                inventory.loadInventory(p,to.getName() + "_" + p.getName());
+                p.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
+            } catch (Exception e) {
+                inventory.loadInventory(p,currWorld.getName() + "_" + p.getName());
+                p.sendMessage(ChatColor.RED + "Your inventory could not be properly saved.");
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -260,33 +299,6 @@ public class Worlds extends JavaPlugin implements Listener {
                 }
 
                 Player p = (Player)sender;
-                World currWorld = p.getWorld();
-
-                if (!updatePlayerLocation(p) && !force) {
-                    sender.sendMessage(ChatColor.RED + "Cannot connect to database-your position in this world cannot be saved. Use /go " + origWorld + " force to go anyway");
-                    return true;
-                }
-
-                boolean saved = false;
-                if (inventory != null) {
-                    saved = inventory.saveInventory(p,currWorld.getName() + "_" + p.getName());
-                }
-
-                if (!saved && !force) {
-                    sender.sendMessage(ChatColor.RED + "Cannot save your inventory. Use /go " + origWorld + " force to go anyway. Warning: If you do this you may lose your entire inventory. It is recommended that you empty it before attempting to go to another world.");
-                    return true;
-                } else {
-                    inventory.clearInventory(p);
-                    try {
-                        inventory.loadInventory(p,world + "_" + p.getName());
-                        sender.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
-                    } catch (Exception e) {
-                        inventory.loadInventory(p,currWorld.getName() + "_" + p.getName());
-                        sender.sendMessage(ChatColor.RED + "There was a problem teleporting to the other world");
-                    }
-                }
-
-
 
                 List<WorldCoords> worldList = (List<WorldCoords>)database.select(WorldCoords.class,"world = \"" + database.makeSafe(world) + "\" AND player = \"" + database.makeSafe(p.getName()) + "\"");
 
