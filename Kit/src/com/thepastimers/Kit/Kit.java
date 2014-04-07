@@ -3,12 +3,15 @@ package com.thepastimers.Kit;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.UserMap.UserMap;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONArray;
@@ -30,6 +33,7 @@ public class Kit extends JavaPlugin implements Listener {
     ItemName itemName;
     Permission permission;
     Worlds worlds;
+    UserMap userMap;
 
     @Override
     public void onEnable() {
@@ -50,7 +54,6 @@ public class Kit extends JavaPlugin implements Listener {
         }
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
-
         if (itemName == null) {
             getLogger().warning("Unable to load ItemName module. Some functionality may not be available.");
         }
@@ -58,6 +61,11 @@ public class Kit extends JavaPlugin implements Listener {
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Unable to load UserMap plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -70,6 +78,16 @@ public class Kit extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getLogger().info("Kit disabled");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+        String query = "UPDATE " + UserKit.table + " SET player = \"" + database.makeSafe(uuid) + "\" WHERE player = \"" + p.getName() + "\"";
+        database.query(query);
     }
 
     public KitData getKit(String name) {
@@ -103,6 +121,11 @@ public class Kit extends JavaPlugin implements Listener {
     public int timesUsed(int kit, String player) {
         if (player == null || database == null) return 0;
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return 0;
+        }
+
         List<UserKit> kits = (List<UserKit>)database.select(UserKit.class,"player = '" + database.makeSafe(player) + "' and kit = " + kit);
 
         return kits.size();
@@ -112,6 +135,12 @@ public class Kit extends JavaPlugin implements Listener {
         if (kitName == null || player == null || database == null) return false;
         KitData kit = getKit(kitName);
         if (kit == null) return false;
+        String origPlayer = player;
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return false;
+        }
 
         List<UserKit> kits = (List<UserKit>)database.select(UserKit.class,"player = '" + database.makeSafe(player) + "' and kit = " + kit.getId() + " order by last_used desc");
 
@@ -122,7 +151,7 @@ public class Kit extends JavaPlugin implements Listener {
         long diff = now.getTime()-userKit.getLastUsed().getTime();
         diff /= 1000;
         if (diff < kit.getTimeout()) {
-            getServer().getPlayer(player).sendMessage(ChatColor.RED + "You cannot use that kit for another " + (kit.getTimeout() - diff) + " seconds");
+            getServer().getPlayer(origPlayer).sendMessage(ChatColor.RED + "You cannot use that kit for another " + (kit.getTimeout() - diff) + " seconds");
         }
         return (diff >= kit.getTimeout());
     }
@@ -143,6 +172,11 @@ public class Kit extends JavaPlugin implements Listener {
             String item = (String)array.get(i);
 
             itemName.giveItem(p,item,1);
+        }
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) player = p.getName();
         }
 
         UserKit uk = new UserKit();

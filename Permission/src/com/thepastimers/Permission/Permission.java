@@ -26,7 +26,7 @@ public class Permission extends JavaPlugin {
     Database database;
     Rank rank;
     UserMap userMap;
-    Map<String,Integer> permMap;
+    Map<String,Integer> permMap = null;
 
     @Override
     public void onEnable() {
@@ -50,7 +50,7 @@ public class Permission extends JavaPlugin {
             getLogger().warning("Unable to load UserMap plugin. Some functionality will not be available.");
         }
 
-        permMap = new HashMap<String, Integer>();
+        if (permMap == null) permMap = new HashMap<String, Integer>();
 
         getLogger().info("Registering permissions");
         this.registerPermission("perms_set",2);
@@ -88,6 +88,7 @@ public class Permission extends JavaPlugin {
     }
 
     public void registerPermission(String perm, int level) {
+        if (permMap == null) permMap = new HashMap<String, Integer>();
         getLogger().info("Adding perm " + perm  + " at level " + level);
         permMap.put(perm,level);
     }

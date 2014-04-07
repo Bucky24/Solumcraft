@@ -1,7 +1,7 @@
 name: Kit
-version: 0.3
+version: 0.4
 main: com.thepastimers.Kit.Kit
-softdepend: [Permission, Database, ItemName,Worlds]
+softdepend: [Permission, Database, ItemName,Worlds,UserMap]
 commands:
     kit:
         description: kit commands
