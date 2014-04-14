@@ -44,7 +44,6 @@ public class Rank extends JavaPlugin implements Listener {
         }
 
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
-
         if (chat == null) {
             getLogger().warning("Unable to load Chat plugin. Some functionality will not be available.");
         } else {

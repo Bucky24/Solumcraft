@@ -181,6 +181,11 @@ public class ProtectData extends Table {
         return builder.toString();
     }
 
+    public static void init(Database d) {
+        if (d == null) return;
+        d.createTableIfNotExists(table,"CREATE TABLE `protect` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `owner` varchar(50) NOT NULL,  `x` int(11) NOT NULL,  `y` int(11) NOT NULL,  `z` int(11) NOT NULL,  `world` varchar(50) NOT NULL,  `link` int(11) NOT NULL,  PRIMARY KEY (`id`))");
+    }
+
     public static void refreshCache(Database d, Logger l) {
         if (d == null) {
             return;

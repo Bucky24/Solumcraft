@@ -29,6 +29,7 @@ public class UserMap extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
         }
 
+        UserMapping.init(database);
         getLogger().info("Table info: ");
         getLogger().info(UserMapping.getTableInfo());
         UserMapping.refreshCache(database,getLogger());

@@ -30,6 +30,14 @@ public class TeleportPlayer extends BukkitRunnable {
     }
 
     public void run() {
+        if (player == null) {
+            plugin.getLogger().info("Can't teleport player, null player given");
+            return;
+        }
+        if (world == null) {
+            plugin.getLogger().info("Can't teleport player, null world given");
+            return;
+        }
         player.teleport(world.getSpawnLocation());
         Location l = player.getLocation();
         plugin.getLogger().info("Teleported " + player.getName() + " to " + world.getName() + " spawn. They are now at (" + l.getX() + "," + l.getY() + "," + l.getZ() + "," + l.getWorld().getName() + ")");

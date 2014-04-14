@@ -82,6 +82,8 @@ public class ChestProtect extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
+        ProtectData.init(database);
+        ProtectPerm.init(database);
         getLogger().info("Table info: ");
         getLogger().info(ProtectData.getTableInfo());
         ProtectData.refreshCache(database,getLogger());
@@ -336,10 +338,10 @@ public class ChestProtect extends JavaPlugin implements Listener {
     public void blockBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
         if (isProtected(b)) {
-            if (!hasPerms(event.getPlayer().getName(), b.getX(), b.getY(), b.getZ(), b.getWorld().getName())) {
+            //if (!hasPerms(event.getPlayer().getName(), b.getX(), b.getY(), b.getZ(), b.getWorld().getName())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "This block cannot be removed until its protection has been removed.");
-            }
+            //}
         }
     }
 
@@ -424,17 +426,17 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 if (subCommand.equalsIgnoreCase("create")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectcreate")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectcreate)");
                         return true;
                     }
                     if (coord == null) {
-                        sender.sendMessage("This functionality is not currently available.");
+                        sender.sendMessage(ChatColor.RED + "This functionality is not currently available.");
                         return true;
                     }
 
                     int protections = numberOfProtections(playerName);
                     if (protections >= MAX_PROTECTIONS) {
-                        sender.sendMessage("You are already at the max protections. (" + protections + "/" + MAX_PROTECTIONS + ")");
+                        sender.sendMessage(ChatColor.RED + "You are already at the max protections. (" + protections + "/" + MAX_PROTECTIONS + ")");
                         return true;
                     }
 
@@ -456,13 +458,13 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
                     if (!"economy".equalsIgnoreCase(w.getName())) {
                         sender.sendMessage(ChatColor.RED + "Chest protections can only be created in the economy world");
-                        return true;
+                        //return true;
                     }
 
                     Block b = w.getBlockAt(x,y,z);
 
                     if (isProtected(b)) {
-                        sender.sendMessage("This block is already protected.");
+                        sender.sendMessage(ChatColor.RED + "This block is already protected.");
                         return true;
                     }
 
@@ -537,7 +539,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 } else if (subCommand.equalsIgnoreCase("remove")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectcreate")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectcreate)");
                         return true;
                     }
                     if (coord == null) {
@@ -595,7 +597,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 } else if (subCommand.equalsIgnoreCase("info")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectinfo")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectinfo)");
                         return true;
                     }
                     if (coord == null) {
@@ -636,7 +638,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 } else if (subCommand.equalsIgnoreCase("allow")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectallow")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectallow)");
                         return true;
                     }
 
@@ -698,7 +700,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 } else if (subCommand.equalsIgnoreCase("deny")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectallow")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectallow)");
                         return true;
                     }
 
@@ -760,7 +762,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
                 } else if (subCommand.equalsIgnoreCase("list")) {
                     if (permission == null || !permission.hasPermission(playerName,"protect_protectcreate")
                             || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You don't have permission to do this");
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to do this (protect_protectcreate)");
                         return true;
                     }
 

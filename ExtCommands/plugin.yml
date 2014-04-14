@@ -32,4 +32,4 @@ commands:
     seed:
         description: shows current world seed
     killzig:
-        description: "kills" zig
+        description: kills zig

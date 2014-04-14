@@ -6,19 +6,27 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" line="538" />
+    <bookmark url="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" line="540" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="" />
     <ignored path="Solumcraft.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396804863401" ignored="false" />
+    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397433342753" ignored="false" />
     <file path="/AdminTools.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396808457770" ignored="false" />
     <file path="/plugin.yml" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396833289498" ignored="false" />
     <file path="/Worlds.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396813621902" ignored="false" />
     <file path="/a.dummy" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396833683258" ignored="false" />
     <file path="/Kit.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396834085420" ignored="false" />
     <file path="/Permission.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396833730490" ignored="false" />
+    <file path="/pluginList.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1396834499442" ignored="false" />
+    <file path="/Chat.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397433446342" ignored="false" />
+    <file path="/Rank.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397434463012" ignored="false" />
+    <file path="/UserMap.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397436818312" ignored="false" />
+    <file path="/UserMapping.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397436828058" ignored="false" />
+    <file path="/ChestProtect.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397437326011" ignored="false" />
+    <file path="/ProtectData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397437076809" ignored="false" />
+    <file path="/TeleportPlayer.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397437926093" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +46,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -75,6 +82,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -85,91 +93,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Home.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/src/com/thepastimers/Home/Home.java">
+      <file leaf-file-name="UserMap.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="0" selection-start="4916" selection-end="5070" vertical-scroll-proportion="0.0">
+            <state line="31" column="22" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Worlds.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
+      <file leaf-file-name="UserMapping.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMapping.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="302" column="42" selection-start="10776" selection-end="10776" vertical-scroll-proportion="0.0">
+            <state line="135" column="29" selection-start="3342" selection-end="3342" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kit.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
+      <file leaf-file-name="ChestProtect.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="21" selection-start="5139" selection-end="5139" vertical-scroll-proportion="0.5308848">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserKit.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/UserKit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="18" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
+            <state line="764" column="59" selection-start="29358" selection-end="29358" vertical-scroll-proportion="-10.88">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Kit/plugin.yml">
+        <entry file="file://$PROJECT_DIR$/ChestProtect/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="48" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
+            <state line="6" column="5" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtCommands.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="26" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Creative/plugin.yml">
+        <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="23" selection-start="92" selection-end="92" vertical-scroll-proportion="-2.04">
+            <state line="27" column="20" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Creative.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
+      <file leaf-file-name="TeleportPlayer.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/TeleportPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="32" selection-start="2213" selection-end="2213" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Permission.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="34" selection-start="3455" selection-end="3455" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Logger.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="204" column="29" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.0">
+            <state line="31" column="23" selection-start="801" selection-end="801" vertical-scroll-proportion="0.44788086">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="plugin.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
+        <entry file="file://$PROJECT_DIR$/Database/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="71" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
+            <state line="5" column="25" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProtectData.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectData.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="186" column="5" selection-start="4675" selection-end="4675" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProtectPerm.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectPerm.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="106" column="59" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -193,22 +201,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Rank/plugin.yml" />
-        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
-        <option value="$PROJECT_DIR$/Permission/plugin.yml" />
-        <option value="$PROJECT_DIR$/VoteHandler/src/com/thepastimers/VoteHandler/VoteHandler.java" />
-        <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/Metrics.java" />
-        <option value="$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java" />
-        <option value="$PROJECT_DIR$/UserMap/plugin.yml" />
-        <option value="$PROJECT_DIR$/Home/plugin.yml" />
-        <option value="$PROJECT_DIR$/Home/src/com/thepastimers/Home/Home.java" />
-        <option value="$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java" />
-        <option value="$PROJECT_DIR$/AdminTools/plugin.yml" />
-        <option value="$PROJECT_DIR$/Worlds/plugin.yml" />
         <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
         <option value="$PROJECT_DIR$/Kit/plugin.yml" />
         <option value="$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java" />
         <option value="$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java" />
+        <option value="$PROJECT_DIR$/pluginList.txt" />
+        <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
+        <option value="$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java" />
+        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
+        <option value="$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java" />
+        <option value="$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMapping.java" />
+        <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectData.java" />
+        <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectPerm.java" />
+        <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
+        <option value="$PROJECT_DIR$/ChestProtect/plugin.yml" />
+        <option value="$PROJECT_DIR$/ExtCommands/plugin.yml" />
+        <option value="$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/TeleportPlayer.java" />
       </list>
     </option>
   </component>
@@ -234,11 +242,6 @@
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
-  <component name="ProjectStructureProblems">
-    <ignored-problems>
-      <problem id="module-circular-dependency(project:general)" />
-    </ignored-problems>
-  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
@@ -252,6 +255,26 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -316,6 +339,114 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="UserMap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserMap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserMap" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Metrics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Kit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -388,6 +519,78 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="ExtCommands" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtCommands" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtCommands" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Creative" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -424,6 +627,78 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ChestProtect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="AdminTools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -448,26 +723,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="AdminTools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -477,21 +732,21 @@
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$PROJECT_DIR$/Home/src/com/thepastimers/Home" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="fileTemplates" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/plugins" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/craftbukkit-1.7.8-R0.1-20140413.093438-6.jar!/" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -526,6 +781,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -551,19 +819,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -649,19 +904,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20244716" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6674528" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.6666667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3070078" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3047831" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3047831" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -673,6 +927,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32105264" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32703003" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6829811" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -748,114 +1003,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/CommandData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="418" selection-end="418" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="25" selection-start="654" selection-end="654" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="38" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="206" column="47" selection-start="5951" selection-end="5951" vertical-scroll-proportion="-20.12">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="313" column="39" selection-start="9966" selection-end="9966" vertical-scroll-proportion="-17.4">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="18" selection-start="2616" selection-end="2616" vertical-scroll-proportion="0.65384614">
+        <state line="31" column="22" selection-start="974" selection-end="974" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UserMap/plugin.yml">
+    <entry file="file://$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMapping.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="15" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0">
+        <state line="135" column="29" selection-start="3342" selection-end="3342" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/BanData.java">
+    <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
+        <state line="186" column="5" selection-start="4675" selection-end="4675" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AdminTools/src/com/thepastimers/AdminTools/AdminTools.java">
+    <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ProtectPerm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="286" column="39" selection-start="8975" selection-end="8975" vertical-scroll-proportion="0.0">
+        <state line="106" column="59" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AdminTools/plugin.yml">
+    <entry file="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="21" selection-start="400" selection-end="400" vertical-scroll-proportion="0.0">
+        <state line="764" column="59" selection-start="29358" selection-end="29358" vertical-scroll-proportion="-10.88">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Home/plugin.yml">
+    <entry file="file://$PROJECT_DIR$/ChestProtect/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="61" selection-start="118" selection-end="118" vertical-scroll-proportion="0.0">
+        <state line="6" column="5" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
+    <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="71" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
+        <state line="26" column="26" selection-start="978" selection-end="978" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
+    <entry file="file://$PROJECT_DIR$/Database/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="29" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.0">
+        <state line="5" column="25" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
+    <entry file="file://$PROJECT_DIR$/ExtCommands/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="302" column="42" selection-start="10776" selection-end="10776" vertical-scroll-proportion="0.0">
+        <state line="27" column="20" selection-start="764" selection-end="764" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/UserKit.java">
+    <entry file="file://$PROJECT_DIR$/Metrics/src/com/thepastimers/Metrics/TeleportPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="18" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/src/com/thepastimers/Home/Home.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="0" selection-start="4916" selection-end="5070" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Kit/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="48" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Creative/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="23" selection-start="92" selection-end="92" vertical-scroll-proportion="-2.04">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Creative/src/com/thepastimers/Creative/Creative.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="32" selection-start="2213" selection-end="2213" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Permission/src/com/thepastimers/Permission/Permission.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="34" selection-start="3455" selection-end="3455" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="21" selection-start="5139" selection-end="5139" vertical-scroll-proportion="0.5308848">
+        <state line="31" column="23" selection-start="801" selection-end="801" vertical-scroll-proportion="0.44788086">
           <folding />
         </state>
       </provider>
@@ -866,7 +1121,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>Permission:jar</last-edited>
+          <last-edited>Database:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -914,7 +1169,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Kit</last-edited>
+          <last-edited>AdminTools</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -938,7 +1193,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>mysql-connector-java-5.1.7-bin</last-edited>
+          <last-edited>craftbukkit-1.7.8-R0.1-20140413.093438-6</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

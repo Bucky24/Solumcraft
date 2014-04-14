@@ -107,4 +107,9 @@ public class ProtectPerm extends Table {
 
         return builder.toString();
     }
+
+    public static void init(Database d) {
+        if (d == null) return;
+        d.createTableIfNotExists(table,"CREATE TABLE `protect_perm` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `player` varchar(50) NOT NULL,  `protect` int(11) NOT NULL,  PRIMARY KEY (`id`))");
+    }
 }

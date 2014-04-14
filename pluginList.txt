@@ -1,3 +1,10 @@
+Currently migrated:
+Permissions
+Ranks
+Home
+Kit
+AdminTools (not on server yet)
+
 AdminTools
 administration tools
 ban,kick,pardon,entities
