@@ -351,8 +351,12 @@ public class Rank extends JavaPlugin implements Listener {
     }
 
     public void doChat(ChatData cd) {
-        PlayerTitle pt = PlayerTitle.getTitle(cd.getPlayer());
-        PlayerRank pr = PlayerRank.getRankForPlayer(cd.getPlayer());
+        String uuid = "";
+        if (userMap != null) {
+            uuid = userMap.getUUID(cd.getPlayer());
+        }
+        PlayerTitle pt = PlayerTitle.getTitle(uuid);
+        PlayerRank pr = PlayerRank.getRankForPlayer(uuid);
         RankData rd = pr == null ? null : RankData.getDataForRank(pr.getRank());
         //getLogger().info(pt + "");
         String title = "";

@@ -50,7 +50,6 @@ public class AdminTools extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this,this);
 
         database = (Database)getServer().getPluginManager().getPlugin("Database");
-
         if (database == null) {
             getLogger().warning("Warning, unable to load Database plugin. Critical error.");
         }
@@ -101,22 +100,26 @@ public class AdminTools extends JavaPlugin implements Listener {
     }
 
     public boolean isPlayerBanned(String player) {
+        getLogger().info("Is player banned?");
         if (database == null) {
+            getLogger().info("Database is null");
             return false;
         }
 
         if (userMap != null) {
             player = userMap.getUUID(player);
             if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                getLogger().info("Could not get UUID");
                 return false;
             }
         }
 
-        Player p = getServer().getPlayer(player);
+        UUID uuid = UUID.fromString(player);
+        Player p = getServer().getPlayer(uuid);
         if (p != null) {
             if (p.isBanned()) return true;
         } else {
-            OfflinePlayer op = getServer().getOfflinePlayer(player);
+            OfflinePlayer op = getServer().getOfflinePlayer(uuid);
             if (op != null) {
                 if (op.isBanned()) return true;
             }
@@ -128,6 +131,7 @@ public class AdminTools extends JavaPlugin implements Listener {
         Timestamp now = new Timestamp(nowDate.getTime());
 
         for (BanData b : banList) {
+            getLogger().info("We have ban data!" + b.getUntil() + " " + b.isPerm());
             if (b.isPerm() || b.getUntil().after(now)) {
                 return true;
             }
@@ -225,11 +229,12 @@ public class AdminTools extends JavaPlugin implements Listener {
             }
         }
 
-        Player p = getServer().getPlayer(player);
+        UUID uuid = UUID.fromString(player);
+        Player p = getServer().getPlayer(uuid);
         if (p != null) {
             p.setBanned(false);
         } else {
-            OfflinePlayer op = getServer().getOfflinePlayer(player);
+            OfflinePlayer op = getServer().getOfflinePlayer(uuid);
             if (op != null) {
                 op.setBanned(false);
             }
@@ -256,6 +261,7 @@ public class AdminTools extends JavaPlugin implements Listener {
     public void onLogin(PlayerLoginEvent event) {
         Player p = event.getPlayer();
 
+        getLogger().info("Checking if player is banned");
         if (isPlayerBanned(p.getName())) {
             long time = getTimeLeft(p.getName());
             long niceTime = getTimeLeft(p.getName())/1000;
@@ -340,9 +346,18 @@ public class AdminTools extends JavaPlugin implements Listener {
                     }
                 }
 
+                if (userMap == null) {
+                    sender.sendMessage(ChatColor.RED + "This functionality is currently unavailable");
+                    return true;
+                }
+                String playerUuid = userMap.getUUID(name);
+                if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                    sender.sendMessage(ChatColor.RED + "That user cannot be found");
+                }
+
                 BanData bd = new BanData();
                 bd.setEntered(new Timestamp((new Date()).getTime()));
-                bd.setPlayer(name);
+                bd.setPlayer(playerUuid);
                 bd.setReason(reason);
                 bd.setUntil(until);
                 bd.setAdmin(playerName);
