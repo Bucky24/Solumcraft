@@ -31,11 +31,11 @@ public class TeleportPlayer extends BukkitRunnable {
 
     public void run() {
         if (player == null) {
-            plugin.getLogger().info("Can't teleport player, null player given");
+            plugin.getLogger().warning("Can't teleport player, null player given");
             return;
         }
         if (world == null) {
-            plugin.getLogger().info("Can't teleport player, null world given");
+            plugin.getLogger().warning("Can't teleport player, null world given");
             return;
         }
         player.teleport(world.getSpawnLocation());

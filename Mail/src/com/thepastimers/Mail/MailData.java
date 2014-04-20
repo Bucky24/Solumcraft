@@ -131,4 +131,9 @@ public class MailData extends Table {
 
         return ret.toString();
     }
+
+    public static void init(Database d) {
+        if (d == null) return;
+        d.createTableIfNotExists(table,"CREATE TABLE `mail` ( `id` int(11) NOT NULL AUTO_INCREMENT,  `sender` varchar(100) NOT NULL,  `read` tinyint(1) NOT NULL,  `player` varchar(100) NOT NULL,  `message` text NOT NULL,  PRIMARY KEY (`id`))");
+    }
 }

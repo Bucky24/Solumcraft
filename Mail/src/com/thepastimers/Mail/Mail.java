@@ -65,6 +65,7 @@ public class Mail extends JavaPlugin implements Listener {
             mainMenu.addItem(new MenuItem("Received mail","command","check received"));
         }
 
+        MailData.init(database);
         getLogger().info("Printing table data:");
         getLogger().info(MailData.getTableInfo());
 

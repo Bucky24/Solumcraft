@@ -221,7 +221,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("spawn")) {
             if (permission == null || !permission.hasPermission(playerName,"command_spawn") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You do not have permission to use this command");
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_spawn)");
                 return true;
             }
 
@@ -291,7 +291,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             sender.sendMessage("Set spawn for this world to (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ")");
         } else if (command.equalsIgnoreCase("clear")) {
             if (permission == null || !permission.hasPermission(playerName,"command_clear")) {
-                sender.sendMessage("You do not have permission to use this command (command_clear)");
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_clear)");
                 return true;
             }
 
