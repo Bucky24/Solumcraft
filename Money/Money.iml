@@ -12,6 +12,7 @@
     <orderEntry type="module" module-name="ItemName" />
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="library" name="bukkit-1.7.9-R0.1-20140418.155157-4" level="project" />
+    <orderEntry type="module" module-name="UserMap" />
   </component>
 </module>
 

@@ -355,6 +355,27 @@ public class ItemName extends JavaPlugin {
                 String name = getItemName(inHand);
                 sender.sendMessage("The item in your hand is " + name);
             }
+        } else if (command.equalsIgnoreCase("listitems")) {
+            if (permission == null || !permission.hasPermission(playerName,"item_name") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (item_name)");
+                return true;
+            }
+
+            int start = 0;
+            int length = 10;
+            if (args.length > 0) {
+                start = (Integer.parseInt(args[0]))-1;
+                start *= length;
+            }
+
+            int count = 0;
+            for (ItemData data : dataList) {
+                if (count >= start && count <= start+length) {
+                    sender.sendMessage(data.getRealName());
+                }
+                count ++;
+            }
+            sender.sendMessage("Page " + (1+(start/length)));
         } else {
             return false;
         }

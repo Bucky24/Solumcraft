@@ -1,5 +1,5 @@
 name: Money
-version: 1.7
+version: 1.8
 main: com.thepastimers.Money.Money
 softdepend: [Database, Permission, ItemName, Worlds]
 commands:

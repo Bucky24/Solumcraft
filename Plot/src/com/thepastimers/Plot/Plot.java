@@ -1140,8 +1140,8 @@ public class Plot extends JavaPlugin implements Listener {
                     }
                 } else if ("flag".equalsIgnoreCase(subCommand)) {
                     Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
-                        sender.sendMessage("You don't have permissions for this command (plot_plotcreate)");
+                    if (!permission.hasPermission(playerName,"plot_plotflag")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plotflag)");
                         return true;
                     }
 

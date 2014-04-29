@@ -7,6 +7,7 @@ import com.thepastimers.Permission.Permission;
 import com.thepastimers.Plot.Plot;
 import com.thepastimers.Plot.PlotData;
 import com.thepastimers.Plot.PlotPerms;
+import com.thepastimers.UserMap.UserMap;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -43,6 +44,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
     Coord coord;
     Plot plot;
     Worlds worlds;
+    UserMap userMap;
     int MAX_PROTECTIONS = 6;
 
     @Override

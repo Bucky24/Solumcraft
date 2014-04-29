@@ -1,7 +1,9 @@
 name: ItemName
-version: 1.4
+version: 1.5
 main: com.thepastimers.ItemName.ItemName
 softdepend: [Permission]
 commands:
     nameitem:
         description: Names item in hand
+    listitems:
+        description: Lists all items in the game

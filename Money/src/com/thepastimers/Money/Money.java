@@ -3,6 +3,7 @@ package com.thepastimers.Money;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.UserMap.UserMap;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -10,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -35,6 +37,7 @@ public class Money extends JavaPlugin implements Listener {
     Permission permission;
     ItemName itemName;
     Worlds worlds;
+    UserMap userMap;
 
     String economyWorld = "economy";
 
@@ -75,6 +78,11 @@ public class Money extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Unable to load UserMap plugin. Some functionality may not be available.");
+        }
+
         getLogger().info("Table info");
         getLogger().info(MoneyData.getTableInfo());
         getLogger().info(Price.getTableInfo());
@@ -90,10 +98,14 @@ public class Money extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onLogin(PlayerLoginEvent event) {
-        if (database == null) {
-            return;
-        }
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+        String query = "UPDATE " + MoneyData.table + " SET player = \"" + database.makeSafe(uuid) + "\" WHERE player = \"" + p.getName() + "\"";
+        database.query(query);
+
         String name = event.getPlayer().getName();
         if (getMoneyObject(name) == null) {
             getLogger().info("Creating money object for " + name);
@@ -112,6 +124,11 @@ public class Money extends JavaPlugin implements Listener {
             return 0.0;
         }
 
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return 0.0;
+        }
+
         List<MoneyData> data = (List<MoneyData>)database.select(MoneyData.class,"player = '"
                 + database.makeSafe(player) + "'");
 
@@ -128,6 +145,11 @@ public class Money extends JavaPlugin implements Listener {
     private MoneyData getMoneyObject(String player) {
         if (database == null) {
             return null;
+        }
+
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return null;
         }
 
         List<MoneyData> data = (List<MoneyData>)database.select(MoneyData.class,"player = '"
@@ -156,8 +178,6 @@ public class Money extends JavaPlugin implements Listener {
         if (amount < 0) {
             return false;
         }
-
-
 
         md.setBalance(amount);
 
