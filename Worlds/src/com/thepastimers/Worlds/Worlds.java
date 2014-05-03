@@ -4,10 +4,7 @@ import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Inventory.Inventory;
 import com.thepastimers.Rank.Rank;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
@@ -81,6 +78,7 @@ public class Worlds extends JavaPlugin implements Listener {
         for (World w : getServer().getWorlds()) {
             if (getWorldType(w.getName()) == ECONOMY) {
                 w.setSpawnFlags(false,true);
+                w.setDifficulty(Difficulty.EASY);
             }
         }
 
@@ -188,8 +186,9 @@ public class Worlds extends JavaPlugin implements Listener {
     public void placeBlock(BlockPlaceEvent event) {
         Player p = event.getPlayer();
         if (getPlayerWorldType(p.getName()) == Worlds.ECONOMY) {
-            if (event.getBlockPlaced().getType() == Material.ENDER_CHEST) {
-                p.sendMessage(ChatColor.RED + "You cannot place ender chests in this world");
+            if (event.getBlockPlaced().getType() == Material.ENDER_CHEST || event.getBlockPlaced().getType() == Material.PISTON_BASE
+                    || event.getBlockPlaced().getType() == Material.PISTON_STICKY_BASE) {
+                p.sendMessage(ChatColor.RED + "You cannot place that block in this world");
                 event.setCancelled(true);
             }
         }

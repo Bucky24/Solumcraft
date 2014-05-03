@@ -151,7 +151,12 @@ public class Kit extends JavaPlugin implements Listener {
         long diff = now.getTime()-userKit.getLastUsed().getTime();
         diff /= 1000;
         if (diff < kit.getTimeout()) {
-            getServer().getPlayer(origPlayer).sendMessage(ChatColor.RED + "You cannot use that kit for another " + (kit.getTimeout() - diff) + " seconds");
+            long left = kit.getTimeout() - diff;
+            long minutes = left/60;
+            long seconds = left-(minutes*60);
+            long hours = minutes/60;
+            minutes = minutes - hours*60;
+            getServer().getPlayer(origPlayer).sendMessage(ChatColor.RED + "You cannot use that kit for another " + hours + " hours, " + minutes + " minutes and " + seconds + " seconds");
         }
         return (diff >= kit.getTimeout());
     }
