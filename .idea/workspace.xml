@@ -12,7 +12,7 @@
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="" />
     <ignored path="Solumcraft.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1399142619327" ignored="false" />
+    <file path="/Dummy.txt" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1399418666391" ignored="false" />
     <file path="/AdminTools.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1397747524975" ignored="false" />
     <file path="/plugin.yml" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1398738520293" ignored="false" />
     <file path="/Worlds.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1399143950975" ignored="false" />
@@ -31,7 +31,7 @@
     <file path="/ExtCommands.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1398012975630" ignored="false" />
     <file path="/MailData.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1398013241668" ignored="false" />
     <file path="/Mail.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1398013346976" ignored="false" />
-    <file path="/Money.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1398738177570" ignored="false" />
+    <file path="/Money.java" changelist="55640f23-dc61-4070-8499-96331c59ddd8" time="1399418715674" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,10 +98,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Money.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Money.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="557" column="134" selection-start="21036" selection-end="21036" vertical-scroll-proportion="0.0">
+            <state line="64" column="41" selection-start="2250" selection-end="2250" vertical-scroll-proportion="0.8230384">
               <folding />
             </state>
           </provider>
@@ -152,10 +152,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kit.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Kit.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="160" column="100" selection-start="5606" selection-end="5606" vertical-scroll-proportion="0.70951587">
+            <state line="160" column="100" selection-start="5606" selection-end="5606" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -217,11 +217,11 @@
         <option value="$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" />
         <option value="$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java" />
         <option value="$PROJECT_DIR$/Money/plugin.yml" />
-        <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
         <option value="$PROJECT_DIR$/ItemName/plugin.yml" />
         <option value="$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java" />
         <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
         <option value="$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java" />
+        <option value="$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java" />
       </list>
     </option>
   </component>
@@ -260,12 +260,12 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -794,12 +794,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
+      <pane id="PackagesPane">
+        <subPane>
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -819,11 +819,11 @@
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -858,6 +858,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -883,19 +896,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1111,9 +1111,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1147" column="24" selection-start="43705" selection-end="43705" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1147" column="24" selection-start="43705" selection-end="43705" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
@@ -1165,13 +1163,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="557" column="134" selection-start="21036" selection-end="21036" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="78" column="55" selection-start="2694" selection-end="2694" vertical-scroll-proportion="0.0">
@@ -1181,7 +1172,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Kit/src/com/thepastimers/Kit/Kit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="100" selection-start="5606" selection-end="5606" vertical-scroll-proportion="0.70951587">
+        <state line="160" column="100" selection-start="5606" selection-end="5606" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Money/src/com/thepastimers/Money/Money.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="41" selection-start="2250" selection-end="2250" vertical-scroll-proportion="0.8230384">
           <folding />
         </state>
       </provider>

@@ -63,6 +63,8 @@ public class Money extends JavaPlugin implements Listener {
             getLogger().warning("Unable to connection to Permission plugin. Critical error!");
             getServer().broadcastMessage(ChatColor.RED + "Money plugin was unable to connect to Permission plugin.");
             getServer().broadcastMessage(ChatColor.RED + "Any money commands (such as /bal) will be unavailable");
+        } else {
+            permission.registerPermission("money_setprice",1);
         }
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
@@ -571,8 +573,8 @@ public class Money extends JavaPlugin implements Listener {
                 sender.sendMessage("/price <item> <price>");
             }
         } else if ("reloadPrices".equalsIgnoreCase(command)) {
-            if (permission == null || !permission.hasPermission(playerName,"money_price")) {
-                sender.sendMessage("You do not have permission to use this command (money_price)");
+            if (permission == null || !permission.hasPermission(playerName,"money_setprice")) {
+                sender.sendMessage("You do not have permission to use this command (money_setprice)");
                 return true;
             }
 
