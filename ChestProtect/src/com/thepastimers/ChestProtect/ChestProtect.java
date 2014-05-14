@@ -99,6 +99,13 @@ public class ChestProtect extends JavaPlugin implements Listener {
         getLogger().info("ChestProtect disable");
     }
 
+    private ProtectData getProtection(Block b) {
+        if (b == null) {
+            return null;
+        }
+        return getProtection(b.getX(),b.getY(),b.getZ(),b.getWorld().getName());
+    }
+
     private ProtectData getProtection(int x, int y, int z, String world) {
         if (database == null || world == null) {
             return null;
@@ -145,6 +152,12 @@ public class ChestProtect extends JavaPlugin implements Listener {
         }
     }
 
+    public boolean isTrulyProtected(Block b) {
+        if (!isProtected(b)) return false;
+        ProtectData pd = getProtection(b);
+        return pd != null;
+    }
+
     public boolean canUserAccess(Block b, String player) {
         if (isProtected(b)) {
             return true;
@@ -187,8 +200,29 @@ public class ChestProtect extends JavaPlugin implements Listener {
         }
 
         if (isProtected(b)) {
-            owner.sendMessage("This block is already protected");
-            return null;
+            ProtectData pd = getProtection(b);
+            if (pd != null) {
+                owner.sendMessage("This block is already protected");
+                return null;
+            } else {
+                // now we have to determine if this person has perms in this plot
+                PlotData pld = null;
+                if (plot != null) {
+                    pld = plot.plotAt(b.getLocation(),true);
+                    if (pld == null) {
+                        pld = plot.plotAt(b.getLocation());
+                    }
+                }
+                if (pld == null) {
+                    // well... shit. I guess just carry on then?
+                } else {
+                    int perm = plot.getPlotPerms(pld,owner.getName());
+                    if (perm < PlotPerms.RESIDENT) {
+                        owner.sendMessage("You cannot protect blocks in this plot");
+                        return null;
+                    }
+                }
+            }
         }
 
         int x = b.getX();
@@ -340,10 +374,13 @@ public class ChestProtect extends JavaPlugin implements Listener {
     public void blockBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
         if (isProtected(b)) {
-            //if (!hasPerms(event.getPlayer().getName(), b.getX(), b.getY(), b.getZ(), b.getWorld().getName())) {
+            ProtectData pd = getProtection(b);
+            // if we don't actually have protection data, then it's a plot protected block, and we'll let the plot
+            // plugin decide if it should be removed or not.
+            if (pd != null) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "This block cannot be removed until its protection has been removed.");
-            //}
+            }
         }
     }
 
@@ -465,7 +502,7 @@ public class ChestProtect extends JavaPlugin implements Listener {
 
                     Block b = w.getBlockAt(x,y,z);
 
-                    if (isProtected(b)) {
+                    if (isTrulyProtected(b)) {
                         sender.sendMessage(ChatColor.RED + "This block is already protected.");
                         return true;
                     }
