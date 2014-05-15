@@ -4,6 +4,7 @@ import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Inventory.Inventory;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.UserMap.UserMap;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -44,6 +45,7 @@ public class Worlds extends JavaPlugin implements Listener {
     CombatLog combatLog;
     Rank rank;
     Inventory inventory;
+    UserMap userMap;
 
     @Override
     public void onEnable() {
@@ -71,6 +73,11 @@ public class Worlds extends JavaPlugin implements Listener {
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
             // ignore, will attempt to load whenever it is required.
+        }
+
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+        if (userMap == null) {
+            getLogger().warning("Cannot load Usermap plugin. Some functionality may not be available.");
         }
 
         deathLocs = new HashMap<Player, Location>();
@@ -233,8 +240,15 @@ public class Worlds extends JavaPlugin implements Listener {
         if (p == null || to == null) return false;
         World currWorld = p.getWorld();
         boolean saved = false;
+
+        String player = p.getName();
+        if (userMap != null) {
+            player = userMap.getUUID(player);
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) return false;
+        }
+
         if (inventory != null) {
-            saved = inventory.saveInventory(p,currWorld.getName() + "_" + p.getName());
+            saved = inventory.saveInventory(p,currWorld.getName() + "_" + player);
         }
 
         if (!saved && !force) {
@@ -243,10 +257,10 @@ public class Worlds extends JavaPlugin implements Listener {
         } else {
             inventory.clearInventory(p);
             try {
-                inventory.loadInventory(p,to.getName() + "_" + p.getName());
+                inventory.loadInventory(p,to.getName() + "_" + player);
                 p.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
             } catch (Exception e) {
-                inventory.loadInventory(p,currWorld.getName() + "_" + p.getName());
+                inventory.loadInventory(p,currWorld.getName() + "_" + player);
                 p.sendMessage(ChatColor.RED + "Your inventory could not be properly saved.");
             }
         }
@@ -311,7 +325,7 @@ public class Worlds extends JavaPlugin implements Listener {
                 p.teleport(l);
             } else {
                 sender.sendMessage("/go <world> [force]");
-                sender.sendMessage("Worlds: main,vanilla");
+                sender.sendMessage("Worlds: main,vanilla,economy");
             }
         } else {
             return false;

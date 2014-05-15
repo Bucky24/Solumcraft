@@ -150,11 +150,8 @@ public class Home extends JavaPlugin implements Listener {
         List<MaxHome> list;
 
         if (!groupOnly) {
-
             list = (List<MaxHome>)database.select(MaxHome.class,"name = '"
                     + database.makeSafe(player) + "' AND `group` = false");
-
-
 
             if (list.size() > 0) {
                 playerMax = list.get(0).getMax();
@@ -328,6 +325,11 @@ public class Home extends JavaPlugin implements Listener {
     public boolean setMax(String name, int max, boolean group) {
         if (database == null) {
             return false;
+        }
+
+        if (userMap != null) {
+            name = userMap.getUUID(name);
+            if (UserMap.NO_USER.equalsIgnoreCase(name)) return false;
         }
 
         List<MaxHome> data = (List<MaxHome>)database.select(MaxHome.class,"name = '"

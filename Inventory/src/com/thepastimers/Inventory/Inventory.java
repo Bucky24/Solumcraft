@@ -1,12 +1,11 @@
 package com.thepastimers.Inventory;
 
 import com.thepastimers.Database.Database;
-import com.thepastimers.Database.Table;
 import com.thepastimers.ItemName.ItemName;
-import com.thepastimers.Permission.Permission;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,6 +49,23 @@ public class Inventory extends JavaPlugin implements Listener {
         getLogger().info("Inventory init complete");
     }
 
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+
+        List<InventoryItem> iiList = (List<InventoryItem>)database.select(InventoryItem.class, "invName LIKE \"%%" + database.makeSafe(p.getName()) + "\"");
+        for (InventoryItem ii : iiList) {
+            String name = ii.getInvName();
+            name = name.replace(p.getName(),"");
+            name += uuid;
+            ii.setInvName(name);
+            ii.save(database);
+        }
+    }
+
     @Override
     public void onDisable() {
         getLogger().info("Inventory disabled");
@@ -61,7 +76,9 @@ public class Inventory extends JavaPlugin implements Listener {
             return false;
         }
 
-        getLogger().info("Saving inventory for " + p.getName());
+        String player = p.getName();
+
+        getLogger().info("Saving inventory for " + player);
 
         List<InventoryItem> iiList = new ArrayList<InventoryItem>();
 
