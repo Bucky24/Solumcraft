@@ -1,0 +1,5 @@
+name: AnimalEgg
+version: 0.1
+main: com.thepastimers.AnimalEgg.AnimalEgg
+softdepend: [Permission,Worlds,ItemName]
+commands:

@@ -119,6 +119,14 @@ public class Worlds extends JavaPlugin implements Listener {
         }
     }
 
+    public int getPlayerWorldType(Player player, boolean useRank) {
+        return getPlayerWorldType(player.getName(),useRank);
+    }
+
+    public int getPlayerWorldType(Player player) {
+        return getPlayerWorldType(player.getName(),true);
+    }
+
     public int getPlayerWorldType(String player) {
         return getPlayerWorldType(player,true);
     }
