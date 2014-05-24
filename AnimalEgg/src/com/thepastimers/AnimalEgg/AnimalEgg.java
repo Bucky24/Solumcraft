@@ -76,17 +76,20 @@ public class AnimalEgg extends JavaPlugin implements Listener {
             Entity ent = event.getEntity();
             String egg = "";
             if (ent.getType() == EntityType.COW) egg = "COW_EGG";
-            if (ent.getType() == EntityType.HORSE) egg  = "HORSE_EGG";
-            if (ent.getType() == EntityType.PIG) egg  = "PIG_EGG";
+            if (ent.getType() == EntityType.HORSE) egg = "HORSE_EGG";
+            if (ent.getType() == EntityType.PIG) egg = "PIG_EGG";
             if (ent.getType() == EntityType.WOLF) egg  = "WOLF_EGG";
-            if (ent.getType() == EntityType.MUSHROOM_COW) egg  = "MOOSHROOM_EGG";
-            if (ent.getType() == EntityType.SHEEP) egg  = "SHEEP_EGG";
-            if (ent.getType() == EntityType.CHICKEN) egg  = "CHICKEN_EGG";
+            if (ent.getType() == EntityType.MUSHROOM_COW) egg = "MOOSHROOM_EGG";
+            if (ent.getType() == EntityType.SHEEP) egg = "SHEEP_EGG";
+            if (ent.getType() == EntityType.CHICKEN) egg = "CHICKEN_EGG";
 
             if (!"".equalsIgnoreCase(egg)) {
                 event.setCancelled(true);
                 Animals a = (Animals)ent;
                 if (!a.isAdult()) {
+                    return;
+                }
+                if (!a.canBreed()) {
                     return;
                 }
                 ItemStack is = itemName.getItemFromName(egg);

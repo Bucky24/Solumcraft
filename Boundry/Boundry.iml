@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="library" name="bukkit-1.7.9-R0.1-20140418.155157-4" level="project" />
+    <orderEntry type="library" name="bukkit-1.7.9-R0.1" level="project" />
   </component>
 </module>
 

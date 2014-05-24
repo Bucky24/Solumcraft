@@ -11,8 +11,8 @@
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="Alias" />
-    <orderEntry type="library" name="bukkit-1.7.9-R0.1-20140418.155157-4" level="project" />
-    <orderEntry type="library" name="craftbukkit-1.7.9-R0.1-20140418.182938-15" level="project" />
+    <orderEntry type="library" name="bukkit-1.7.9-R0.1" level="project" />
+    <orderEntry type="library" name="craftbukkit-1.7.9-R0.1" level="project" />
   </component>
 </module>
 
