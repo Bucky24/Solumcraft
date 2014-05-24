@@ -312,6 +312,12 @@ public class Chat extends JavaPlugin implements Listener {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 
+    public void sendRaw(ChatObject obj, Player player) {
+        IChatBaseComponent comp = ChatSerializer.a(obj.toString());
+        PacketPlayOutChat packet = new PacketPlayOutChat(comp, true);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -343,6 +349,17 @@ public class Chat extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage(ChatColor.BLUE + "/menu <menu name>");
             }
+        } else if ("testChat".equalsIgnoreCase(command)) {
+            Player p = (Player)sender;
+            ChatObject obj = new ChatObject();
+            obj.text("Some text").text("Colored text", ChatColor.BLUE);
+            sendRaw(obj, p);
+            obj = new ChatObject();
+            obj.url("A url","http://www.google.com").url("http://www.yahoo.com").url("http://www.ruinsofchaos.com",ChatColor.AQUA).url("Another url","http://mail.google.com",ChatColor.DARK_GREEN);
+            sendRaw(obj,p);
+            obj = new ChatObject();
+            obj.command("A command","/go main").command("Another command","/go economy",ChatColor.DARK_GREEN);
+            sendRaw(obj,p);
         } else {
             return false;
         }

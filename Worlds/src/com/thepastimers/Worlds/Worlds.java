@@ -255,8 +255,13 @@ public class Worlds extends JavaPlugin implements Listener {
             if (UserMap.NO_USER.equalsIgnoreCase(player)) return false;
         }
 
+        String cWorld = currWorld.getName();
+        if (getWorldType(cWorld) == NORMAL) {
+            cWorld = "world";
+        }
+
         if (inventory != null) {
-            saved = inventory.saveInventory(p,currWorld.getName() + "_" + player);
+            saved = inventory.saveInventory(p,cWorld + "_" + player);
         }
 
         if (!saved && !force) {
@@ -268,7 +273,7 @@ public class Worlds extends JavaPlugin implements Listener {
                 inventory.loadInventory(p,to.getName() + "_" + player);
                 p.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
             } catch (Exception e) {
-                inventory.loadInventory(p,currWorld.getName() + "_" + player);
+                inventory.loadInventory(p,cWorld + "_" + player);
                 p.sendMessage(ChatColor.RED + "Your inventory could not be properly saved.");
             }
         }
