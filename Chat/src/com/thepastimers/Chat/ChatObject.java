@@ -1,6 +1,7 @@
 package com.thepastimers.Chat;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -16,6 +17,10 @@ public class ChatObject {
 
     public ChatObject() {
         array = new JSONArray();
+    }
+
+    public static ChatObject make() {
+        return new ChatObject();
     }
 
     public ChatObject text(String text) {
@@ -68,6 +73,26 @@ public class ChatObject {
         obj.put("color",color.name().toLowerCase());
         array.add(obj);
         return this;
+    }
+
+    public ChatObject suggest(String text, String command) {
+        return suggest(text,command,ChatColor.WHITE);
+    }
+
+    public ChatObject suggest(String text, String command, ChatColor color) {
+        JSONObject obj = new JSONObject();
+        obj.put("text",text);
+        JSONObject urlObj = new JSONObject();
+        urlObj.put("action","suggest_command");
+        urlObj.put("value",command);
+        obj.put("clickEvent",urlObj);
+        obj.put("color",color.name().toLowerCase());
+        array.add(obj);
+        return this;
+    }
+
+    public void send(Chat c, Player p) {
+        c.sendRaw(this,p);
     }
 
     public String toString() {

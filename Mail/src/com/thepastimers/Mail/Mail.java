@@ -1,6 +1,7 @@
 package com.thepastimers.Mail;
 
 import com.thepastimers.Chat.Chat;
+import com.thepastimers.Chat.ChatObject;
 import com.thepastimers.Chat.Menu;
 import com.thepastimers.Chat.MenuItem;
 import com.thepastimers.Database.Database;
@@ -16,6 +17,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,6 +34,8 @@ public class Mail extends JavaPlugin implements Listener {
     Worlds worlds;
     Chat chat;
     Menu mainMenu;
+
+    HashMap<String,MailData> compose;
 
     @Override
     public void onEnable() {
@@ -64,6 +69,8 @@ public class Mail extends JavaPlugin implements Listener {
             mainMenu.addItem(new MenuItem("Sent mail","command","check sent"));
             mainMenu.addItem(new MenuItem("Received mail","command","check received"));
         }
+
+        compose = new HashMap<String, MailData>();
 
         MailData.init(database);
         getLogger().info("Printing table data:");
@@ -172,6 +179,51 @@ public class Mail extends JavaPlugin implements Listener {
         return mailDataList.get(num);
     }
 
+    public void drawComposeMenu(Player player) {
+        MailData md = compose.get(player.getName());
+        if (md == null) {
+            md = new MailData();
+            md.setSender(player.getName());
+            md.setPlayer("");
+            md.setSubject("");
+            md.setMessage("");
+            compose.put(player.getName(),md);
+        }
+        if ("".equalsIgnoreCase(md.getPlayer())) {
+            ChatObject.make().text("To: ",ChatColor.BLUE).suggest("<click to add recipient>","/mail compose to ",ChatColor.GREEN).send(chat,player);
+        } else {
+            ChatObject.make().text("To: ", ChatColor.BLUE).suggest(md.getPlayer(), "/mail compose to ", ChatColor.GREEN).send(chat, player);
+        }
+        if ("".equalsIgnoreCase(md.getSubject())) {
+            ChatObject.make().text("Subject: ",ChatColor.BLUE).suggest("<click to add subject>","/mail compose subject ",ChatColor.GREEN).send(chat,player);
+        } else {
+            ChatObject.make().text("Subject: ", ChatColor.BLUE).suggest(md.getSubject(), "/mail compose subject ", ChatColor.GREEN).send(chat, player);
+        }
+        ChatObject.make().text("Content: ",ChatColor.BLUE).send(chat,player);
+        String[] content = md.getMessage().split("NEWLINE");
+        for (int i=0;i<content.length;i++) {
+            String line = content[i];
+            line = line.replace("NEWLINE","");
+            if ("".equalsIgnoreCase(line)) continue;
+            ChatObject.make().text(line).command(" [Remove]","/mail compose removeLine " + i,ChatColor.RED).send(chat,player);
+        }
+        ChatObject.make().suggest("<click to add line>","/mail compose body ",ChatColor.GREEN).send(chat,player);
+        ChatObject.make().command("[Send] ","/mail compose send",ChatColor.BLUE).command("[Cancel]","/mail compose clear",ChatColor.RED).send(chat,player);
+    }
+
+    public void drawMessage(Player player, MailData md) {
+        ChatObject.make().text("From: ", ChatColor.BLUE).text(md.getPlayer(),ChatColor.GREEN).send(chat, player);
+        ChatObject.make().text("Subject: ", ChatColor.BLUE).text(md.getSubject(),ChatColor.GREEN).send(chat, player);
+        ChatObject.make().text("Content: ",ChatColor.BLUE).send(chat,player);
+        String[] content = md.getMessage().split("NEWLINE");
+        for (int i=0;i<content.length;i++) {
+            String line = content[i];
+            line = line.replace("NEWLINE","");
+            if ("".equalsIgnoreCase(line)) continue;
+            ChatObject.make().text(line).send(chat,player);
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -198,6 +250,7 @@ public class Mail extends JavaPlugin implements Listener {
                 String subcommand = args[0];
 
                 if ("read".equalsIgnoreCase(subcommand)) {
+                    Player player = (Player)sender;
                     if (args.length > 1) {
                         int num;
                         try {
@@ -213,16 +266,14 @@ public class Mail extends JavaPlugin implements Listener {
                         }
                         m.setRead(true);
                         m.save(database);
-                        sender.sendMessage("Message from " + m.getSender());
-                        sender.sendMessage(m.getMessage());
+                        drawMessage(player,m);
                     } else {
                         MailData md = readNextUnreadMessage(playerName);
 
                         if (md == null) {
                             sender.sendMessage("You have no more unread messages");
                         } else {
-                            sender.sendMessage("Message from " + md.getSender());
-                            sender.sendMessage(md.getMessage());
+                            drawMessage(player,md);
                             sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
                         }
                     }
@@ -267,11 +318,95 @@ public class Mail extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/mail send <player> <message>");
                     }
+                } else if ("compose".equalsIgnoreCase(subcommand)) {
+                    Player player = (Player)sender;
+                    boolean drawMenu = true;
+                    if (args.length > 1) {
+                        String subSubCommand = args[1];
+                        if ("to".equalsIgnoreCase(subSubCommand)) {
+                            if (args.length > 2) {
+                                MailData md = compose.get(player.getName());
+                                if (md != null) {
+                                    md.setPlayer(args[2]);
+                                }
+                            }
+                        } else if ("subject".equalsIgnoreCase(subSubCommand)) {
+                            if (args.length > 2) {
+                                MailData md = compose.get(player.getName());
+                                if (md != null) {
+                                    StringBuilder subject = new StringBuilder();
+                                    for (int i=2;i<args.length;i++) {
+                                        subject.append(args[i]).append(" ");
+                                    }
+                                    md.setSubject(subject.toString());
+                                }
+                            }
+                        } else if ("body".equalsIgnoreCase(subSubCommand)) {
+                            if (args.length > 2) {
+                                MailData md = compose.get(player.getName());
+                                if (md != null) {
+                                    StringBuilder body = new StringBuilder();
+                                    for (int i=2;i<args.length;i++) {
+                                        body.append(args[i]).append(" ");
+                                    }
+                                    md.setMessage(md.getMessage() + body.toString() + "NEWLINE");
+                                    getLogger().info(md.getMessage());
+                                }
+                            }
+                        } else if ("removeLine".equalsIgnoreCase(subSubCommand)) {
+                            if (args.length > 2) {
+                                MailData md = compose.get(player.getName());
+                                if (md != null) {
+                                    int line = Integer.parseInt(args[2]);
+                                    String[] body = md.getMessage().split("NEWLINE");
+                                    String newBody = "";
+                                    for (int i=0;i<body.length;i++) {
+                                        if (i != line) {
+                                            newBody += body[i] + "NEWLINE";
+                                        }
+                                    }
+                                    md.setMessage(newBody);
+                                }
+                            }
+                        } else if ("send".equalsIgnoreCase(subSubCommand)) {
+                            MailData md = compose.get(player.getName());
+                            if (md != null) {
+                                if ("".equalsIgnoreCase(md.getPlayer())) {
+                                    player.sendMessage(ChatColor.RED + "You cannot send a message to nobody");
+                                } else if ("".equalsIgnoreCase(md.getMessage())) {
+                                    player.sendMessage(ChatColor.RED + "You cannot send a blank message");
+                                } else {
+                                    boolean result = md.save(database);
+                                    if (result) {
+                                        player.sendMessage(ChatColor.GREEN + "Mail sent!");
+                                        drawMenu = false;
+                                        compose.remove(player.getName());
+                                    } else {
+                                        player.sendMessage(ChatColor.RED + "Could not send mail, try again later.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (drawMenu) drawComposeMenu(player);
                 } else {
                     sender.sendMessage("/mail <read|check|send>");
                 }
             } else {
                 sender.sendMessage("/mail <read|check|send>");
+                ChatObject obj;
+                List<MailData> mds = messageList(playerName);
+                if (mds == null) {
+                    sender.sendMessage("No messages");
+                } else {
+                    Player p = (Player)sender;
+                    for (int i=0;i<Math.min(mds.size(),10);i++) {
+                        obj = new ChatObject();
+                        MailData md = mds.get(i);
+                        obj.command(i + ": " + md.getSender() + "-" + md.getSubject(),"/mail read " + i,ChatColor.BLUE);
+                        chat.sendRaw(obj,p);
+                    }
+                }
             }
         } else {
             return false;

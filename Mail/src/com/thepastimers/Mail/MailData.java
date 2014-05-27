@@ -27,6 +27,7 @@ public class MailData extends Table {
     String player;
     String message;
     String sender;
+    String subject;
     boolean read;
 
     public int getId() {
@@ -69,6 +70,14 @@ public class MailData extends Table {
         this.read = read;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public static List<MailData> parseResult(ResultSet result) throws SQLException {
         List<MailData> ret = new ArrayList<MailData>();
 
@@ -84,6 +93,7 @@ public class MailData extends Table {
             p.setMessage(result.getString("message"));
             p.setSender(result.getString("sender"));
             p.setRead(result.getBoolean("read"));
+            p.setSubject(result.getString("subject"));
 
             ret.add(p);
         }
@@ -106,9 +116,9 @@ public class MailData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(player,message,sender,`read`)";
+            String columns = "(player,message,sender,`read`,subject)";
             String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(message) + "','" + d.makeSafe(sender)
-                    +  "'," + read + ")";
+                    +  "'," + read + ",'" + d.makeSafe(subject) + "')";
             return d.query("INSERT INTO " + table + columns + " VALUES" + values);
         } else {
             StringBuilder query = new StringBuilder();
@@ -117,7 +127,8 @@ public class MailData extends Table {
             query.append("player = '" + d.makeSafe(player) + "'" + ", ");
             query.append("message = '" + d.makeSafe(message) + "', ");
             query.append("sender = '" + d.makeSafe(sender) + "', ");
-            query.append("`read` = " + read + " ");
+            query.append("`read` = " + read + ", ");
+            query.append("subject = '" + d.makeSafe(subject) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -127,13 +138,13 @@ public class MailData extends Table {
     public static String getTableInfo() {
         StringBuilder ret = new StringBuilder();
         ret.append(table);
-        ret.append(": int id,  string player, text message, string sender, boolean read");
+        ret.append(": int id,  string player, text message, string sender, boolean read, string subject");
 
         return ret.toString();
     }
 
     public static void init(Database d) {
         if (d == null) return;
-        d.createTableIfNotExists(table,"CREATE TABLE `mail` ( `id` int(11) NOT NULL AUTO_INCREMENT,  `sender` varchar(100) NOT NULL,  `read` tinyint(1) NOT NULL,  `player` varchar(100) NOT NULL,  `message` text NOT NULL,  PRIMARY KEY (`id`))");
+        d.createTableIfNotExists(table,"CREATE TABLE `mail` ( `id` int(11) NOT NULL AUTO_INCREMENT,  `sender` varchar(100) NOT NULL,  `read` tinyint(1) NOT NULL,  `player` varchar(100) NOT NULL,  `message` text NOT NULL, `subject` varchar(150), PRIMARY KEY (`id`))");
     }
 }
