@@ -102,9 +102,9 @@ public class Permission extends JavaPlugin {
             return true;
         }
 
-        Player p = getServer().getPlayer(player);
-        if (p != null) {
-            player = p.getUniqueId().toString();
+        player = userMap.getUUID(player);
+        if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+            return false;
         }
 
         if (PlayerPerm.hasPermission(player,permission)) {
@@ -135,6 +135,11 @@ public class Permission extends JavaPlugin {
             return true;
         }
 
+        player = userMap.getUUID(player);
+        if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+            return false;
+        }
+
         PlayerPerm p = new PlayerPerm();
         p.setPlayer(player);
         p.setPermission(permission);
@@ -160,6 +165,11 @@ public class Permission extends JavaPlugin {
         }
         if (!hasPermission(player,permission)) {
             return true;
+        }
+
+        player = userMap.getUUID(player);
+        if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+            return false;
         }
 
         List<PlayerPerm> perms = (List<PlayerPerm>)database.select(PlayerPerm.class,"player = '"

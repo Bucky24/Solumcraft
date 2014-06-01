@@ -98,7 +98,7 @@ public class Mail extends JavaPlugin implements Listener {
         int count = unreadMessages(p.getName());
 
         if (count > 0) {
-            p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail read to read it.");
+            p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail to read it.");
         }
     }
 
@@ -277,47 +277,6 @@ public class Mail extends JavaPlugin implements Listener {
                             sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
                         }
                     }
-                } else if ("check".equalsIgnoreCase(subcommand)) {
-                    Player p = (Player)sender;
-                    if (args.length == 0) {
-                        if (chat != null) {
-                            mainMenu.sendMenuTo(p,chat);
-                        }
-                    } else {
-                        int unread = unreadMessages(playerName);
-
-                        sender.sendMessage("You have " + unread + " unread message/s");
-                        sender.sendMessage("Messages 0-10 (to read use /mail read <number>:");
-                        List<MailData> md = messageList(playerName);
-                        if (md == null) {
-                            sender.sendMessage("No messages");
-                        } else {
-                            for (int i=0;i<Math.min(md.size(),10);i++) {
-                                sender.sendMessage(i + ": message from " + md.get(i).getSender());
-                            }
-                        }
-                    }
-                } else if ("send".equalsIgnoreCase(subcommand)) {
-                    if (args.length > 3) {
-                        String player = args[1];
-
-                        StringBuilder sb = new StringBuilder();
-
-                        for (int i=2;i<args.length;i++) {
-                            sb.append(args[i]).append(" ");
-                        }
-
-                        sender.sendMessage("Sending mail to " + player + ". Message: ");
-                        sender.sendMessage(sb.toString());
-
-                        if (!sendMessage(player,playerName,sb.toString())) {
-                            sender.sendMessage(ChatColor.RED + "Unable to send mail");
-                        } else {
-                            sender.sendMessage(ChatColor.GREEN + "Mail sent!");
-                        }
-                    } else {
-                        sender.sendMessage("/mail send <player> <message>");
-                    }
                 } else if ("compose".equalsIgnoreCase(subcommand)) {
                     Player player = (Player)sender;
                     boolean drawMenu = true;
@@ -386,6 +345,10 @@ public class Mail extends JavaPlugin implements Listener {
                                     }
                                 }
                             }
+                        } else if ("clear".equalsIgnoreCase(subSubCommand)) {
+                            drawMenu = false;
+                            compose.remove(player.getName());
+                            player.sendMessage(ChatColor.GREEN + "Your draft has been removed");
                         }
                     }
                     if (drawMenu) drawComposeMenu(player);
@@ -393,17 +356,21 @@ public class Mail extends JavaPlugin implements Listener {
                     sender.sendMessage("/mail <read|check|send>");
                 }
             } else {
-                sender.sendMessage("/mail <read|check|send>");
+                Player p = (Player)sender;
+                ChatObject.make().command("[Compose]","/mail compose",ChatColor.BLUE).send(chat,p);
                 ChatObject obj;
                 List<MailData> mds = messageList(playerName);
                 if (mds == null) {
                     sender.sendMessage("No messages");
                 } else {
-                    Player p = (Player)sender;
                     for (int i=0;i<Math.min(mds.size(),10);i++) {
                         obj = new ChatObject();
                         MailData md = mds.get(i);
-                        obj.command(i + ": " + md.getSender() + "-" + md.getSubject(),"/mail read " + i,ChatColor.BLUE);
+                        String title = i + ": " + md.getSender() + "-" + md.getSubject();
+                        if (!md.isRead()) {
+                            title += " *UNREAD*";
+                        }
+                        obj.command(title,"/mail read " + i,ChatColor.BLUE);
                         chat.sendRaw(obj,p);
                     }
                 }
