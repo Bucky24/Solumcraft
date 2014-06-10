@@ -73,7 +73,7 @@ public class ItemName extends JavaPlugin {
             }
         }
 
-        Material mat = Material.getMaterial(name);
+        Material mat = Material.getMaterial(name.toUpperCase());
         if (mat == null) {
             return null;
         }
@@ -139,11 +139,15 @@ public class ItemName extends JavaPlugin {
         }
 
         ItemStack is = getItemFromName(item);
+        if (is == null) {
+            getLogger().warning("Unable to get valid item for " + item);
+        }
         return giveItem(p,is,amount);
     }
 
     public boolean giveItem(Player p, ItemStack is, int amount) {
         int empty = 0;
+        if (is == null) return false;
 
         PlayerInventory inv = p.getInventory();
 
