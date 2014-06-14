@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -156,5 +157,21 @@ public class Purchase extends Table {
         builder.append(" int id, string from_player, string purchaser, string item, int amount, int count, int sign, timestamp time");
 
         return builder.toString();
+    }
+
+    public static boolean createTables(Database d, Logger l) {
+        if (d == null) return false;
+        String definition = "CREATE TABLE `purchase` (  `id` int(11) NOT NULL AUTO_INCREMENT,  " +
+                "`from_player` varchar(100) NOT NULL,  `purchaser` varchar(100) NOT NULL,  " +
+                "`item` varchar(100) NOT NULL,  `amount` int(11) NOT NULL,  `count` int(11) NOT NULL,  " +
+                "`sign` int(11) NOT NULL,  " +
+                "`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  " +
+                "PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=4943 DEFAULT CHARSET=latin1";
+        boolean result = d.createTableIfNotExists(table,definition);
+        if (!result && l != null) {
+            l.warning("Unable to create table " + table);
+        }
+
+        return result;
     }
 }

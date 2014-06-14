@@ -1,7 +1,9 @@
 name: Worlds
-version: 1.4
+version: 1.5
 main: com.thepastimers.Worlds.Worlds
 softdepend: [Database,CombatLog,Inventory,UserMap]
 commands:
     go:
         description: sends players to world
+    world:
+        description: allows changing of world parameters

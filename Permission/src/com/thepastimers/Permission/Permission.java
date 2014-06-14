@@ -116,9 +116,7 @@ public class Permission extends JavaPlugin {
         if (rank != null) {
             playerRanks = rank.getRanks(player);
         }
-        if (playerRanks.size() == 0) {
-            playerRanks.add("all");
-        }
+        playerRanks.add("all");
 
         for (String playerRank : playerRanks) {
             if (GroupPerm.hasPermission(playerRank, permission)) {

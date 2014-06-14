@@ -6,4 +6,4 @@ commands:
     alias:
         description: allows aliasing of user names
     retitle:
-        description: allows changing player names temporariliy
+        description: allows changing player names temporarily

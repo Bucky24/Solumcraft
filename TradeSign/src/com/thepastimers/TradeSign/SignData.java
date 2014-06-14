@@ -27,6 +27,7 @@ public class SignData extends Table {
     
     public SignData() {
         id = -1;
+        serverSign = false;
     }
     
     String player;
@@ -40,6 +41,7 @@ public class SignData extends Table {
     String world;
     String name;
     String metadata;
+    boolean serverSign;
 
     public int getId() {
         return id;
@@ -145,6 +147,14 @@ public class SignData extends Table {
         this.metadata = metadata;
     }
 
+    public boolean isServerSign() {
+        return serverSign;
+    }
+
+    public void setServerSign(boolean serverSign) {
+        this.serverSign = serverSign;
+    }
+
     public static List<SignData> parseResult(ResultSet result) throws SQLException {
         List<SignData> ret = new ArrayList<SignData>();
 
@@ -166,6 +176,7 @@ public class SignData extends Table {
             p.setDispense(result.getInt("dispense"));
             p.setWorld(result.getString("world"));
             p.setMetadata(result.getString("metadata"));
+            p.setServerSign(result.getBoolean("server"));
 
             ret.add(p);
         }
@@ -194,10 +205,10 @@ public class SignData extends Table {
             return false;
         }
         if (id == -1) {
-            String columns = "(player,x,y,z,contains,amount,cost,dispense,world,metadata)";
+            String columns = "(player,x,y,z,contains,amount,cost,dispense,world,metadata,server)";
             String values = "('" + d.makeSafe(player) + "'," + x + "," + y + "," + z
                     +  ",'" + d.makeSafe(contains) + "'," + amount + "," + cost + "," + dispense
-                    + ",'" + d.makeSafe(world) + "','" + d.makeSafe(metadata) + "')";
+                    + ",'" + d.makeSafe(world) + "','" + d.makeSafe(metadata) + "'," + serverSign + ")";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -227,7 +238,8 @@ public class SignData extends Table {
             query.append("cost = " + cost + ", ");
             query.append("dispense = " + dispense + ", ");
             query.append("world = '" + d.makeSafe(world) + "', ");
-            query.append("metadata = '" + d.makeSafe(metadata) + "' ");
+            query.append("metadata = '" + d.makeSafe(metadata) + "', ");
+            query.append("server = " + serverSign + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -237,7 +249,7 @@ public class SignData extends Table {
     public static String getTableInfo() {
         StringBuilder builder = new StringBuilder(table);
 
-        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense, string world, string metadata");
+        builder.append(" int id, string player, int x, int y, int z, string contains, int amount, int cost, int dispense, string world, string metadata, boolean server");
 
         return builder.toString();
     }
@@ -263,6 +275,22 @@ public class SignData extends Table {
         }
     }
 
+    public static boolean createTables(Database d, Logger l) {
+        if (d == null) return false;
+        String definition = "CREATE TABLE `sign_data` (" +
+                "`id` int(11) NOT NULL AUTO_INCREMENT,`player` varchar(50) NOT NULL,  " +
+                "`x` int(11) NOT NULL,  `y` int(11) NOT NULL,  `z` int(11) NOT NULL,  " +
+                "`contains` varchar(50) NOT NULL,  `amount` int(11) NOT NULL,  `cost` int(11) NOT NULL,  " +
+                "`dispense` int(11) NOT NULL,  `world` varchar(100) NOT NULL,  `metadata` varchar(100) NOT NULL,  " +
+                "`server` int(1) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=887 DEFAULT CHARSET=latin1";
+        boolean result = d.createTableIfNotExists(table,definition);
+        if (!result && l != null) {
+            l.warning("Unable to create table " + table);
+        }
+
+        return result;
+    }
+
     // table specific get instructions
 
     public static SignData getData(int id) {
@@ -285,5 +313,17 @@ public class SignData extends Table {
         }
 
         return null;
+    }
+
+    public static List<SignData> getPlayerSigns(String player) {
+        List<SignData> ret = new ArrayList<SignData>();
+        if (player == null) return ret;
+        for (Integer i : dataMap.keySet()) {
+            SignData sd = dataMap.get(i);
+            if (player.equalsIgnoreCase(sd.getPlayer())) {
+                ret.add(sd);
+            }
+        }
+        return ret;
     }
 }

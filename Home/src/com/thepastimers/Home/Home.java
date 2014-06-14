@@ -548,7 +548,7 @@ public class Home extends JavaPlugin implements Listener {
 
             List<HomeData> homes = getHomes(player);
 
-            sender.sendMessage("Home list:");
+            sender.sendMessage("Home list (" + getHomeCount(playerName) + "/" + getMaxHomes(playerName) + "):");
 
             for (HomeData h : homes) {
                 sender.sendMessage(h.getName() + " (" + (int)h.getX() + "," + (int)h.getY() + "," + (int)h.getZ() + "), in " + h.getWorld());

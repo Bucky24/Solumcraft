@@ -424,7 +424,8 @@ public class ExtCommands extends JavaPlugin implements Listener {
             if (s == null) {
                 sender.sendMessage(ChatColor.GREEN + "You have nothing in your hand");
             } else {
-                sender.sendMessage(ChatColor.GREEN + "The item in your hand is: " + s.getType().name() + ", durability " + s.getDurability() + "/" + s.getType().getMaxDurability());
+                sender.sendMessage(ChatColor.GREEN + "The item in your hand is: " + s.getType().name() + " (" + s.getType().getId() + "), durability " + s.getDurability() + "/" + s.getType().getMaxDurability());
+                sender.sendMessage(ChatColor.GREEN + "ItemName plugin knows it as: " + itemName.getItemName(s));
             }
         } else if ("opCheck".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_op_check")) {
@@ -495,6 +496,9 @@ public class ExtCommands extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.RED + "This command is not currently available");
                     return true;
                 }
+
+                Player p = (Player)sender;
+                playerName = p.getUniqueId().toString();
 
                 if (!rank.setTitle(playerName,title.toString())) {
                     sender.sendMessage(ChatColor.RED + "Unable to set title");

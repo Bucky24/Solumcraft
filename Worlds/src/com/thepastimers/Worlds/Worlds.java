@@ -58,6 +58,7 @@ public class Worlds extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load database plugin. Some functionality may be unavailable.");
         } else {
             WorldCoords.createTables(database,getLogger());
+            WorldTypes.createTables(database,getLogger());
         }
 
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
@@ -81,6 +82,7 @@ public class Worlds extends JavaPlugin implements Listener {
         }
 
         deathLocs = new HashMap<Player, Location>();
+        WorldTypes.refreshCache(database,getLogger());
 
         for (World w : getServer().getWorlds()) {
             if (getWorldType(w.getName()) == ECONOMY) {
@@ -151,6 +153,11 @@ public class Worlds extends JavaPlugin implements Listener {
             } else if ("economy".equalsIgnoreCase(name)) {
                 return ECONOMY;
             }
+
+            WorldTypes type = WorldTypes.getData(w.getName());
+            if (type != null) {
+                return type.getWorldType();
+            }
         }
 
         return NORMAL;
@@ -164,6 +171,11 @@ public class Worlds extends JavaPlugin implements Listener {
                 return VANILLA;
             } else if ("economy".equalsIgnoreCase(name)) {
                 return ECONOMY;
+            }
+
+            WorldTypes type = WorldTypes.getData(w.getName());
+            if (type != null) {
+                return type.getWorldType();
             }
         }
 
@@ -340,7 +352,44 @@ public class Worlds extends JavaPlugin implements Listener {
                 sender.sendMessage("/go <world> [force]");
                 sender.sendMessage("Worlds: main,vanilla,economy");
             }
-        } else {
+        } else if (command.equalsIgnoreCase("world")) {
+            if ("CONSOLE".equalsIgnoreCase(playerName)) {
+                sender.sendMessage("This command not available to console");
+                return true;
+            }
+            Player player = (Player)sender;
+            if (!player.isOp()) {
+                sender.sendMessage(ChatColor.RED + "You do not have permissions to run this command (must be op)");
+                return true;
+            }
+            if (args.length > 0) {
+                String typeStr = args[0];
+                int type;
+                if ("NORMAL".equalsIgnoreCase(typeStr)) type = NORMAL;
+                else if ("VANILLA".equalsIgnoreCase(typeStr)) type = VANILLA;
+                else if ("ECONOMY".equalsIgnoreCase(typeStr)) type = ECONOMY;
+                else if ("MAGIC".equalsIgnoreCase(typeStr)) type = MAGIC;
+                else {
+                    sender.sendMessage(ChatColor.RED + "Invalid type " + typeStr);
+                    return true;
+                }
+
+                World w = player.getWorld();
+                WorldTypes wt = WorldTypes.getData(w.getName());
+                if (wt == null) {
+                    wt = new WorldTypes();
+                    wt.setWorldName(w.getName());
+                }
+                wt.setWorldType(type);
+                if (wt.save(database)) {
+                    sender.sendMessage(ChatColor.GREEN + "Type of world " + w.getName() + " changed to " + typeStr);
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Unable to save data");
+                }
+            } else {
+                sender.sendMessage("/world <NORMAL|VANILLA|ECONOMY|MAGIC>");
+            }
+
             return false;
         }
 

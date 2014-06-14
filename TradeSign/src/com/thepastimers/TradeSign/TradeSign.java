@@ -7,6 +7,7 @@ import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
+import com.thepastimers.UserMap.UserMap;
 import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -21,9 +22,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -43,6 +46,9 @@ public class TradeSign extends JavaPlugin implements Listener {
     Permission permission;
     Coord coord;
     Worlds worlds;
+    UserMap userMap;
+
+    long updateMinutes = 10;
 
     @Override
     public void onEnable() {
@@ -57,9 +63,11 @@ public class TradeSign extends JavaPlugin implements Listener {
         }
 
         database = (Database)getServer().getPluginManager().getPlugin("Database");
-
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality will not be available.");
+        } else {
+            SignData.createTables(database,getLogger());
+            Purchase.createTables(database,getLogger());
         }
 
         money = (Money)getServer().getPluginManager().getPlugin("Money");
@@ -76,6 +84,9 @@ public class TradeSign extends JavaPlugin implements Listener {
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin. Some functionality will not be available.");
+        } else {
+            permission.registerPermission("sign_server",1);
+            permission.registerPermission("sign_override",1);
         }
 
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
@@ -88,9 +99,14 @@ public class TradeSign extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
+        userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
+
         getLogger().info("Table info: ");
         getLogger().info(SignData.getTableInfo());
         SignData.refreshCache(database,getLogger());
+
+        BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this,new UpdateSigns(this),1,updateMinutes*60*20);
 
         getLogger().info("TradeSign init complete");
     }
@@ -98,6 +114,21 @@ public class TradeSign extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getLogger().info("TradeSign disabled");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (database == null) return;
+        Player p = event.getPlayer();
+        String uuid = p.getUniqueId().toString();
+        getLogger().info("Updating UUID for " + p.getName());
+
+        String query = "UPDATE " + SignData.table + " SET player = \"" + database.makeSafe(uuid) + "\" WHERE player = \"" + p.getName() + "\"";
+        database.query(query);
+        query = "UPDATE " + Purchase.table + " SET purchaser = \"" + database.makeSafe(uuid) + "\" WHERE purchaser = \"" + p.getName() + "\"";
+        database.query(query);
+        query = "UPDATE " + Purchase.table + " SET from_player = \"" + database.makeSafe(uuid) + "\" WHERE from_player = \"" + p.getName() + "\"";
+        database.query(query);
     }
 
     public SignData getSignAt(int x, int y, int z, String world) {
@@ -137,6 +168,11 @@ public class TradeSign extends JavaPlugin implements Listener {
             SignData data = getSignAt(event.getBlock().getX(),event.getBlock().getY(),event.getBlock().getZ(),event.getBlock().getWorld().getName());
             if (data != null) {
                 //getLogger().info("Trade sign broken");
+                if (data.isServerSign() && permission.hasPermission(event.getPlayer().getName(),"sign_server")) {
+                    event.getPlayer().sendMessage(ChatColor.GREEN + "Server trade sign removed");
+                    data.delete(database);
+                    return;
+                }
                 if (event.getPlayer().getName().equals(data.getPlayer())) {
                     Player p = event.getPlayer();
                     if (itemName == null) {
@@ -198,7 +234,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                 return lines;
             }
 
-            if (!"economy".equalsIgnoreCase(p.getWorld().getName())){
+            if (worlds.getWorldType(p.getWorld().getName()) != Worlds.ECONOMY) {
                 p.sendMessage(ChatColor.RED + "You can only place trade signs in the economy world.");
                 return lines;
             }
@@ -231,6 +267,44 @@ public class TradeSign extends JavaPlugin implements Listener {
             } else {
                 p.sendMessage(ChatColor.RED + "Failed to create sign");
             }
+        } else if ("[SERVER]".equalsIgnoreCase(line1)) {
+            if (permission == null || !permission.hasPermission(p.getName(),"sign_server")) {
+                p.sendMessage(ChatColor.RED + "You do not have permission to create server trade signs (sign_server)");
+                return lines;
+            }
+
+            if (worlds.getWorldType(p.getWorld().getName()) != Worlds.ECONOMY){
+                p.sendMessage(ChatColor.RED + "You can only place trade signs in the economy world.");
+                return lines;
+            }
+
+            // creating a sell sign!
+            String contains = line2;
+
+            SignData sd = new SignData();
+            sd.setAmount(0);
+            sd.setCost(0);
+            sd.setDispense(0);
+            sd.setContains(contains);
+            sd.setX(s.getX());
+            sd.setY(s.getY());
+            sd.setZ(s.getZ());
+            sd.setPlayer("SERVER");
+            sd.setWorld(s.getWorld().getName());
+            sd.setServerSign(true);
+
+            if (sd.save(database)) {
+                p.sendMessage(ChatColor.GREEN + "Successfully created server trade sign");
+                retLines[0] = "[SERVER]";
+                if ("".equals(contains)) {
+                    contains = "EMPTY";
+                }
+                retLines[1] = contains;
+                s.setLine(2,"N/A");
+                s.update(true);
+            } else {
+                p.sendMessage(ChatColor.RED + "Failed to create sign");
+            }
         } else {
             return lines;
         }
@@ -245,7 +319,15 @@ public class TradeSign extends JavaPlugin implements Listener {
         }
         Sign s = (Sign)b.getState();
         boolean owner = false;
+
         if (p.getName().equalsIgnoreCase(data.getPlayer())) {
+            owner = true;
+        }
+        if ("SERVER".equalsIgnoreCase(data.getPlayer())) {
+            owner = false;
+        }
+
+        if (owner) {
             ItemStack is = p.getItemInHand();
             boolean purchase = false;
             if (is == null || is.getType() == Material.AIR) {
@@ -253,7 +335,6 @@ public class TradeSign extends JavaPlugin implements Listener {
             }
             //getLogger().info("Player is owner of sign");
 
-            owner = true;
             if (!purchase) {
                 //getLogger().info("Owner is adding");
                 if (itemName == null) {
@@ -312,7 +393,9 @@ public class TradeSign extends JavaPlugin implements Listener {
                     itemName.takeItem(p,data.getContains(),data.getDispense());
                     return;
                 }
-                money.setBalance(data.getPlayer(),money.getBalance(data.getPlayer())+data.getCost());
+                if (!"SERVER".equalsIgnoreCase(data.getPlayer())) {
+                    money.setBalance(data.getPlayer(),money.getBalance(data.getPlayer())+data.getCost());
+                }
             }
 
             data.setAmount(data.getAmount()-data.getDispense());
@@ -321,6 +404,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                 itemName.takeItem(p,data.getContains(),data.getDispense());
                 money.setBalance(p.getName(),money.getBalance(p.getName())+data.getCost());
             } else {
+                money.addStock(data.getContains(),-1);
                 s.setLine(2,"Has: " + data.getAmount());
                 s.update();
                 String purchaseString = ChatColor.GREEN + "You have purchased " + data.getDispense() + " " + data.getContains() + " for $" + data.getCost();
@@ -383,9 +467,15 @@ public class TradeSign extends JavaPlugin implements Listener {
                     sender.sendMessage("To purchase/withdraw from a sign, if you are the owner, left click the sign with an empty hand. You will not be charged.");
                     sender.sendMessage("Anyone else purchasing from the sign can left click it with anything in their hand");
                     sender.sendMessage(ChatColor.RED + "Please report any unusual behavior from any trade sign to a staff member");
+                    if (permission != null && permission.hasPermission(playerName,"sign_server")) {
+                        sender.sendMessage("Format for an server sell sign:");
+                        sender.sendMessage("Line 1: [SERVER]");
+                        sender.sendMessage("Line 2: item to sell");
+                        sender.sendMessage("Then to set a price, use /sign price");
+                    }
                 } else if ("price".equalsIgnoreCase(subCommand)) {
-                    if (permission == null || !permission.hasPermission(playerName,"sign_place") || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_place)");
+                    if (permission == null || (!permission.hasPermission(playerName,"sign_place") && !permission.hasPermission(playerName,"sign_server")) || playerName.equalsIgnoreCase("CONSOLE")) {
+                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command (sign_place or sign_server)");
                         return true;
                     }
 
@@ -426,7 +516,12 @@ public class TradeSign extends JavaPlugin implements Listener {
                             return true;
                         }
 
-                        if (!playerName.equalsIgnoreCase(sd.getPlayer())) {
+                        boolean owner = false;
+                        if (playerName.equalsIgnoreCase(sd.getPlayer())) {
+                            owner = true;
+                        }
+
+                        if (!owner) {
                             sender.sendMessage(ChatColor.RED + "You do not have permission to edit this sign");
                             return true;
                         }
@@ -508,7 +603,7 @@ public class TradeSign extends JavaPlugin implements Listener {
 
                 }
             } else {
-                sender.sendMessage("/sign <format" + /*|price|restore*/ "|report|reload>");
+                sender.sendMessage("/sign <format|price" + /*|restore*/ "|report|reload>");
             }
         } else {
             return false;

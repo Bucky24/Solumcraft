@@ -1,5 +1,6 @@
 package com.thepastimers.Money;
 
+import com.thepastimers.Alias.Alias;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
@@ -38,6 +39,7 @@ public class Money extends JavaPlugin implements Listener {
     ItemName itemName;
     Worlds worlds;
     UserMap userMap;
+    Alias alias;
 
     String economyWorld = "economy";
 
@@ -55,6 +57,11 @@ public class Money extends JavaPlugin implements Listener {
             getLogger().warning("Unable to connect to Database plugin. Critical error!");
             getServer().broadcastMessage(ChatColor.RED + "Money plugin was unable to connect to Database.");
             getServer().broadcastMessage(ChatColor.RED + "Any server function involving money will not be available.");
+        } else {
+            ServerStock.createTables(database,getLogger());
+            Price.createTables(database,getLogger());
+            MoneyData.createTables(database,getLogger());
+            Sale.createTables(database,getLogger());
         }
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
@@ -85,9 +92,16 @@ public class Money extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load UserMap plugin. Some functionality may not be available.");
         }
 
+        alias = (Alias)getServer().getPluginManager().getPlugin("Alias");
+        if (alias == null) {
+            getLogger().warning("Unable to load Alias plugin");
+        }
+
         getLogger().info("Table info");
         getLogger().info(MoneyData.getTableInfo());
         getLogger().info(Price.getTableInfo());
+        getLogger().info(ServerStock.getTableInfo());
+        ServerStock.refreshCache(database, getLogger());
 
         prices = new HashMap<String,Integer>();
 
@@ -196,6 +210,26 @@ public class Money extends JavaPlugin implements Listener {
         return setBalance(player,getBalance(player) + amount);
     }
 
+    public int getStock(String item) {
+        if (item == null) return 0;
+        ServerStock stock = ServerStock.getStockForItem(item);
+        if (stock == null) return 0;
+        return stock.getQuantity();
+    }
+
+    public void addStock(String item, int quantity) {
+        if (item == null) return;
+        ServerStock stock = ServerStock.getStockForItem(item);
+        if (stock == null) {
+            stock = new ServerStock();
+            stock.setItem(item);
+            stock.setQuantity(0);
+        }
+        stock.setQuantity(stock.getQuantity()+quantity);
+        if (stock.getQuantity() < 0) stock.setQuantity(0);
+        stock.save(database);
+    }
+
     public int getPrice(String name) {
         ItemStack is = itemName.getItemFromName(name);
         int price = -1;
@@ -265,6 +299,8 @@ public class Money extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
+        playerName = alias.getAlias(playerName);
+
         if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
             return false;
         }
@@ -279,7 +315,7 @@ public class Money extends JavaPlugin implements Listener {
 
             if (!"CONSOLE".equalsIgnoreCase(playerName)) {
                 Player player2 = getServer().getPlayer(playerName);
-                if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
+                if (worlds.getWorldType(player2.getWorld().getName()) != Worlds.ECONOMY) {
                     sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                     return true;
                 }
@@ -311,7 +347,7 @@ public class Money extends JavaPlugin implements Listener {
             }
 
             Player player2 = getServer().getPlayer(playerName);
-            if (!economyWorld.equalsIgnoreCase(player2.getWorld().getName())) {
+            if (worlds.getWorldType(player2.getWorld().getName()) != Worlds.ECONOMY) {
                 sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
@@ -364,12 +400,12 @@ public class Money extends JavaPlugin implements Listener {
                 sender.sendMessage("This command is not currently available");
                 return true;
             }
-            if (permission == null || !permission.hasPermission(playerName,"money_pay") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage("You do not have permission to use this command (money_pay)");
+            if (permission == null || !permission.hasPermission(playerName,"money_sell") || playerName.equalsIgnoreCase("CONSOLE")) {
+                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (money_sell)");
                 return true;
             }
 
-            Player p = getServer().getPlayer(playerName);
+            Player p = (Player)sender;
 
             if (p.getGameMode() == GameMode.CREATIVE) {
                 p.sendMessage(ChatColor.RED + "You cannot use /sell while in creative mode");
@@ -377,7 +413,7 @@ public class Money extends JavaPlugin implements Listener {
             }
 
             Player player = getServer().getPlayer(playerName);
-            if (!economyWorld.equalsIgnoreCase(player.getWorld().getName())) {
+            if (worlds.getWorldType(player.getWorld().getName()) != Worlds.ECONOMY) {
                 sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
@@ -407,10 +443,10 @@ public class Money extends JavaPlugin implements Listener {
                 }
 
                 if (amount == -1) {
-                    amount = itemName.countInInventory(from,playerName);
+                    amount = itemName.countInInventory(from,p.getName());
                 }
 
-                int inHand = itemName.countInInventory(from,playerName);
+                int inHand = itemName.countInInventory(from,p.getName());
                 if (inHand < amount) {
                     sender.sendMessage("You don't have " + amount + " of " + from);
                     return true;
@@ -439,6 +475,7 @@ public class Money extends JavaPlugin implements Listener {
                 } else {
                     if (!itemName.takeItem(p,from,amount)) {
                         sender.sendMessage("Unable to sell.");
+                        give(playerName,-price);
                     } else {
                         sender.sendMessage("Sale complete. Balance: $" + getBalance(playerName));
                         Sale sale = new Sale();
@@ -447,6 +484,7 @@ public class Money extends JavaPlugin implements Listener {
                         sale.setPrice(total);
                         sale.setPlayer(playerName);
                         sale.save(database);
+                        addStock(from,amount);
                     }
                 }
             } else {
@@ -463,7 +501,7 @@ public class Money extends JavaPlugin implements Listener {
             }
 
             Player player = getServer().getPlayer(playerName);
-            if (!economyWorld.equalsIgnoreCase(player.getWorld().getName())) {
+            if (worlds.getWorldType(player.getWorld().getName()) != Worlds.ECONOMY) {
                 sender.sendMessage(ChatColor.RED + "This command is only available in the economy world");
                 return true;
             }
