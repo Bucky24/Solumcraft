@@ -327,6 +327,10 @@ public class TradeSign extends JavaPlugin implements Listener {
             owner = false;
         }
 
+        if (!owner && data.getCost() == 0) {
+            p.sendMessage(ChatColor.RED + "Cannot purchase from this sign-invalid price set");
+        }
+
         if (owner) {
             ItemStack is = p.getItemInHand();
             boolean purchase = false;

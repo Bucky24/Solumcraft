@@ -265,7 +265,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms set <player> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!hasPermission(uuid,"perms_remove")) {
+                    if (!hasPermission(uuid,"perms_set")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms remove");
                         return true;
                     }
@@ -307,7 +307,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms remove <player> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(uuid,"perms_check")) {
+                    if (!hasPermission(uuid,"perms_set")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms check");
                         return true;
                     }
@@ -403,8 +403,8 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms set <group> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!hasPermission(uuid,"groupperms_remove")) {
-                        getLogger().info(playerName + " attempted unauthorized access of /groupperms remove (groupperms_remove)");
+                    if (!hasPermission(uuid,"groupperms_set")) {
+                        getLogger().info(playerName + " attempted unauthorized access of /groupperms remove (groupperms_set)");
                         return true;
                     }
 
@@ -436,7 +436,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms remove <group> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(uuid,"groupperms_check")) {
+                    if (!hasPermission(uuid,"groupperms_set")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms check");
                         return true;
                     }

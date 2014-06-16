@@ -290,6 +290,8 @@ public class Worlds extends JavaPlugin implements Listener {
             }
         }
 
+        p.setGameMode(GameMode.SURVIVAL);
+
         return true;
     }
 

@@ -29,6 +29,7 @@ public class UpdateSigns extends BukkitRunnable {
         List<SignData> dataList = SignData.getPlayerSigns("SERVER");
         for (SignData sd : dataList) {
             String type = sd.getContains();
+            plugin.getLogger().info("Running type " + type);
             TradeSign ts = (TradeSign)plugin;
             int stock = ts.money.getStock(type);
             World w = plugin.getServer().getWorld(sd.getWorld());
@@ -37,10 +38,18 @@ public class UpdateSigns extends BukkitRunnable {
                 continue;
             }
             sd.setAmount(stock);
-            double cost = ts.money.getPrice(type);
-            cost *= 0.8;
+            double price = ts.money.getPrice(type);
+            if (price <= 0) price = 0;
+            double cost = price;
+            cost *= 1.5;
+            int dispense = 1;
+            int intcost = (int)cost;
+            plugin.getLogger().info(type + " " + intcost + " " + price);
+            if (intcost == price && price != 0) {
+                cost = price*2;
+            }
             sd.setCost((int)cost);
-            sd.setDispense(1);
+            sd.setDispense(dispense);
             Block b = w.getBlockAt(sd.getX(),sd.getY(),sd.getZ());
             if (b.getType() !=  Material.SIGN_POST && b.getType() != Material.SIGN && b.getType() != Material.WALL_SIGN) {
                 plugin.getLogger().warning("Trade sign " + sd.getId() + " has coords that point to a non-sign block");

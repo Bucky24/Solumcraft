@@ -47,6 +47,7 @@ public class Creative extends JavaPlugin implements Listener {
     String allPerms = "creative_all";
     String commandPerm = "creative_command";
     String creativePlot = "creative_plot_only";
+    String economyCreative = "creative_economy";
 
     @Override
     public void onEnable() {
@@ -66,6 +67,7 @@ public class Creative extends JavaPlugin implements Listener {
             permission.registerPermission(allPerms,2);
             permission.registerPermission(commandPerm,2);
             permission.registerPermission(creativePlot,2);
+            permission.registerPermission(economyCreative,2);
         }
 
         plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
@@ -274,6 +276,13 @@ public class Creative extends JavaPlugin implements Listener {
                     if (permission == null || !permission.hasPermission(playerName,commandPerm) || playerName.equalsIgnoreCase("CONSOLE")) {
                         sender.sendMessage("You do not have permissions to use this command (" + commandPerm + ")");
                         return true;
+                    }
+
+                    if (worlds.getWorldType(p.getWorld().getName()) == Worlds.ECONOMY) {
+                        if (!permission.hasPermission(playerName,economyCreative)) {
+                            sender.sendMessage(ChatColor.RED + "You cannot use creative in economy world (" + economyCreative + ")");
+                            return true;
+                        }
                     }
                     PlayerInventory inv = p.getInventory();
 
