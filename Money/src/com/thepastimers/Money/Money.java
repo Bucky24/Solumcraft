@@ -598,6 +598,8 @@ public class Money extends JavaPlugin implements Listener {
                     }
                     price.setPrice(amount);
                     price.save(database);
+                    prices.remove(item);
+                    prices.put(item,amount);
                 }
 
                 double price = ((double)getPrice(item))/100;

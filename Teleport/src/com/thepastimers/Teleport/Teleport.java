@@ -114,14 +114,19 @@ public class Teleport extends JavaPlugin {
                 String player = args[0];
 
                 if (mute != null && mute.isMutedBy(playerName,player)) {
-                    sender.sendMessage("This player has muted you");
+                    sender.sendMessage(ChatColor.RED + "This player has muted you");
                     return true;
                 }
 
                 Player p = getServer().getPlayer(player);
 
                 if (p == null) {
-                    sender.sendMessage("This player is not online");
+                    sender.sendMessage(ChatColor.RED + "This player is not online");
+                    return true;
+                }
+
+                if (worlds.getWorldType(p.getWorld().getName()) == Worlds.VANILLA) {
+                    sender.sendMessage(ChatColor.RED + "That player is currently in the vanilla world and cannot accept teleports at this time");
                     return true;
                 }
                 //getLogger().info(playerName + " is teleporting to valid player");

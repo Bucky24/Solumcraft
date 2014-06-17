@@ -1,5 +1,5 @@
 name: Teleport
-version: 0.6
+version: 0.7
 main: com.thepastimers.Teleport.Teleport
 softdepend: [Permission,Mute,CombatLog,Worlds]
 commands:
