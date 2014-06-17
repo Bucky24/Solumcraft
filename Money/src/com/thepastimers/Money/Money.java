@@ -568,6 +568,7 @@ public class Money extends JavaPlugin implements Listener {
 
             if (args.length > 0) {
                 String item = args[0];
+                item = item.toUpperCase();
 
                 if (itemName.getItemFromName(item) == null) {
                     sender.sendMessage(item + " is not a real item");

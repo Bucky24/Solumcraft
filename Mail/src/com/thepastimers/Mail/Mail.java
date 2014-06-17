@@ -212,7 +212,7 @@ public class Mail extends JavaPlugin implements Listener {
     }
 
     public void drawMessage(Player player, MailData md) {
-        ChatObject.make().text("From: ", ChatColor.BLUE).text(md.getPlayer(),ChatColor.GREEN).send(chat, player);
+        ChatObject.make().text("From: ", ChatColor.BLUE).text(md.getSender(),ChatColor.GREEN).send(chat, player);
         ChatObject.make().text("Subject: ", ChatColor.BLUE).text(md.getSubject(),ChatColor.GREEN).send(chat, player);
         ChatObject.make().text("Content: ",ChatColor.BLUE).send(chat,player);
         String[] content = md.getMessage().split("NEWLINE");
@@ -222,6 +222,7 @@ public class Mail extends JavaPlugin implements Listener {
             if ("".equalsIgnoreCase(line)) continue;
             ChatObject.make().text(line).send(chat,player);
         }
+
     }
 
     @Override
