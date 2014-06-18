@@ -1,3 +1,7 @@
+IMPORTANT:
+Let people set multiple bed spawns in multiple worlds. This is mportant for vanilla, since people cna't use home set.
+Without this, anyone dying in vanilla, who has set a bed in another world, will be teleported to vanilla spawn
+
 large plot owned by owner, sublet out subplots for people
 
 chest limit, start at 1, allow people to pay extra

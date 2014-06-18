@@ -186,24 +186,21 @@ public class Worlds extends JavaPlugin implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
         deathLocs.put(p,p.getLocation());
-        //getLogger().info("Player dead, adding to deathLocs: " + deathLocs.keySet().size());
+        getLogger().info("Player dead, adding to deathLocs: " + deathLocs.keySet().size());
     }
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Player p = event.getPlayer();
-        //getLogger().info("Respawn event!");
+        getLogger().info("Respawn event!");
         Location dl = deathLocs.get(p);
         if (dl == null) return;
-        //getLogger().info("Player died in " + dl.getWorld().getName());
-        if (getWorldType(dl.getWorld().getName()) == Worlds.VANILLA) {
-           // getLogger().info("Player death in vanilla world");
-            World w = dl.getWorld();
-            Location l = event.getRespawnLocation();
-            if (!l.getWorld().getName().equalsIgnoreCase(w.getName())) {
-                //getLogger().info("Player bed not set in same world");
-                event.setRespawnLocation(w.getSpawnLocation());
-            }
+        getLogger().info("Player died in " + dl.getWorld().getName());
+        World w = dl.getWorld();
+        Location l = event.getRespawnLocation();
+        if (!l.getWorld().getName().equalsIgnoreCase(w.getName())) {
+            getLogger().info("Player bed not set in same world");
+            event.setRespawnLocation(w.getSpawnLocation());
         }
 
         deathLocs.remove(p);
