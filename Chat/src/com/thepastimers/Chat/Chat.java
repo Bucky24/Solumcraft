@@ -20,6 +20,9 @@ import org.bukkit.scheduler.BukkitTask;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -42,6 +45,8 @@ public class Chat extends JavaPlugin implements Listener {
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
     Map<String,Menu> menuList;
+
+    PrintWriter chatLog = null;
 
     @Override
     public void onEnable() {
@@ -73,8 +78,8 @@ public class Chat extends JavaPlugin implements Listener {
         getLogger().info(ChatData.getTableInfo());
         getLogger().info(CommandData.getTableInfo());
 
-        BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,60);
-        BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,60);
+        //BukkitTask task = new GetChats(this,database).runTaskTimer(this,0,60);
+        //BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,60);
         if (listeners == null) listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
         if (commandListeners == null) commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
         menuList = new HashMap<String, Menu>();
@@ -106,12 +111,33 @@ public class Chat extends JavaPlugin implements Listener {
 
         codes.add(new ChatCode(":reset:;&r",ChatColor.getByChar("r").toString(),"Reset formatting"));
 
+        File dataFolder = getDataFolder();
+        if (!dataFolder.exists()) {
+            dataFolder.mkdir();
+        }
+        File chatFile = new File(dataFolder,"chatLog.txt");
+        try {
+            if (!chatFile.exists()) {
+                chatFile.createNewFile();
+            }
+            FileWriter fw = new FileWriter(chatFile,true);
+            chatLog = new PrintWriter(fw);
+        } catch (Exception e) {
+            getLogger().warning("Unable to create chatLog");
+        }
+
         getLogger().info("Chat init complete");
     }
 
     @Override
     public void onDisable() {
+        chatLog.close();
         getLogger().info("Chat disable");
+    }
+
+    public void writeChatLine(String line) {
+        chatLog.write(line);
+        chatLog.flush();
     }
 
     public void register(Class c, JavaPlugin plugin) {
@@ -193,6 +219,7 @@ public class Chat extends JavaPlugin implements Listener {
         String messageBak = data.getMessage();
         data.setMessage(replaceColor(data.getMessage()));
         data.setMessage(data.getMessage() + ChatColor.getByChar("r").toString());
+        String fancyMessage = data.getMessage();
         String originalMessage = stripColors(data.getMessage());
 
         Date now = new Date();
@@ -229,12 +256,7 @@ public class Chat extends JavaPlugin implements Listener {
             }
         }
 
-        // we want it unspoiled (without the color codes) for when it goes into db
-        data.setPlayerString(bak);
-        data.setMessage(messageBak);
-        if (database != null && save) {
-            data.save(database);
-        }
+        writeChatLine(mainMessage + "\n");
     }
     
     public String replaceColor(String text) {

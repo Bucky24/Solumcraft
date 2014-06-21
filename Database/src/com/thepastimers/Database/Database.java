@@ -30,12 +30,16 @@ public class Database extends JavaPlugin {
     String url;
     String username;
     String password;
+    boolean debugMode = false;
 
     Connection connection;
 
     ResultSet generatedKeys;
 
     Map<String,Integer> queryLog;
+
+    int connections = 0;
+    int totalConn = 0;
 
     @Override
     public void onEnable() {
@@ -60,6 +64,9 @@ public class Database extends JavaPlugin {
         getLogger().info("Making connection");
         try {
             connection = DriverManager.getConnection(url,username,password);
+            connections ++;
+            //totalConn ++;
+            killConnection(connection);
         } catch (Exception e) {
             getLogger().warning("Unable to connect to database!");
             e.printStackTrace();
@@ -107,12 +114,14 @@ public class Database extends JavaPlugin {
             where = "1";
         }
 
-        /*int count = 0;
-        if (queryLog.containsKey(c.getName())) {
-            count = queryLog.get(c.getName());
+        if (debugMode) {
+            int count = 0;
+            if (queryLog.containsKey(c.getName())) {
+                count = queryLog.get(c.getName());
+            }
+            count ++;
+            queryLog.put(c.getName(),count);
         }
-        count ++;
-        queryLog.put(c.getName(),count);*/
 
         String query = "SELECT ";
         if (!cache) {
@@ -130,8 +139,10 @@ public class Database extends JavaPlugin {
         try {
             //if (connection.isClosed()) {
                 //getLogger().warning("Connection closed, attempting reconnect");
-                killConnection(connection);
-                connection = DriverManager.getConnection(url,username,password);
+            killConnection(connection);
+            connection = DriverManager.getConnection(url,username,password);
+            connections ++;
+            //totalConn ++;
             //}
         } catch (Exception e) {
             getLogger().warning("Unable to re-open connection");
@@ -148,7 +159,7 @@ public class Database extends JavaPlugin {
                 Class[] argTypes = new Class[] {ResultSet.class};
                 Method m = c.getDeclaredMethod("parseResult",argTypes);
                 ret = (List<? extends Table>)m.invoke(null,results);
-                //killConnection(connection);
+                killConnection(connection);
 
                 //for (Table t : ret) {
                 //    getLogger().info("About to return data: " + t.getId());
@@ -162,13 +173,13 @@ public class Database extends JavaPlugin {
                     Class[] argTypes = new Class[] {ResultSet.class,Class.class};
                     Method m = Table.class.getDeclaredMethod("parseResult",argTypes);
                     ret = (List<? extends Table>)m.invoke(null,results,c);
-                    //killConnection(connection);
+                    killConnection(connection);
 
                     return ret;
                 } catch (Exception e2) {
                     getLogger().warning("select: Unable to invoke parseResult for " + c.getName());
                     e2.printStackTrace();
-                    //killConnection(connection);
+                    killConnection(connection);
                     return ret;
                 }
             } catch (Exception e) {
@@ -195,23 +206,28 @@ public class Database extends JavaPlugin {
         try {
             killConnection(connection);
             connection = DriverManager.getConnection(url,username,password);
+            connections ++;
+            //totalConn ++;
         } catch (Exception e) {
             getLogger().warning("Unable to re-open connection");
             getLogger().warning(e.getMessage());
             return null;
         }
 
-        /*int count = 0;
-        if (queryLog.containsKey("raw")) {
-            count = queryLog.get("raw");
+        if (debugMode) {
+            int count = 0;
+            if (queryLog.containsKey("raw")) {
+                count = queryLog.get("raw");
+            }
+            count ++;
+            queryLog.put("raw",count);
         }
-        count ++;
-        queryLog.put("raw",count);*/
 
         try {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
 
+            killConnection(connection);
             return results;
         } catch (Exception e) {
             getLogger().warning("select: Unable to run query:");
@@ -227,7 +243,9 @@ public class Database extends JavaPlugin {
 
     private void killConnection(Connection c) {
         try {
+            if (c.isClosed()) return;
             c.close();
+            connections --;
         } catch (Exception e) {
             getLogger().warning("Cannot close connection");
         }
@@ -250,18 +268,22 @@ public class Database extends JavaPlugin {
             return false;
         }*/
 
-        /*int count = 0;
-        if (queryLog.containsKey("query")) {
-            count = queryLog.get("query");
+        if (debugMode) {
+            int count = 0;
+            if (queryLog.containsKey("query")) {
+                count = queryLog.get("query");
+            }
+            count ++;
+            queryLog.put("query",count);
         }
-        count ++;
-        queryLog.put("query",count);*/
 
         try {
             //if (connection.isClosed()) {
                 //getLogger().warning("Connection closed, attempting reconnect");
                 killConnection(connection);
                 connection = DriverManager.getConnection(url,username,password);
+                connections ++;
+                //totalConn ++;
             //}
         } catch (Exception e) {
             getLogger().warning("Unable to re-open connection");
@@ -273,7 +295,7 @@ public class Database extends JavaPlugin {
             Statement statement = connection.createStatement();
             statement.execute(query,Statement.RETURN_GENERATED_KEYS);
             generatedKeys = statement.getGeneratedKeys();
-            //killConnection(connection);
+            killConnection(connection);
         } catch (Exception e) {
             getLogger().warning("query: Unable to run query:");
             getLogger().warning(query);
@@ -349,9 +371,27 @@ public class Database extends JavaPlugin {
                     for (String key : queryLog.keySet()) {
                         sender.sendMessage(key + ": " + queryLog.get(key));
                     }
+                } else if ("connections".equalsIgnoreCase(subCommand)) {
+                    sender.sendMessage("Current open connections: " + connections);
+                    sender.sendMessage("Total connections: " + totalConn);
+                } else if ("debug".equalsIgnoreCase(subCommand)) {
+                    if (args.length > 1) {
+                        if ("on".equalsIgnoreCase(args[1])) {
+                            debugMode = true;
+                        } else if ("off".equalsIgnoreCase(args[1])) {
+                            debugMode = false;
+                        }
+                    } else {
+                        sender.sendMessage("/db debug <on|off>");
+                    }
+                    if (debugMode) {
+                        sender.sendMessage("Debug mode is on");
+                    } else {
+                        sender.sendMessage("Debug mode is off");
+                    }
                 }
             } else {
-                sender.sendMessage("/db <clearLog|showLog>");
+                sender.sendMessage("/db <clearLog|showLog|connections|debug>");
             }
         } else {
             return false;

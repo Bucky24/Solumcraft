@@ -28,6 +28,7 @@ public class UpdateSigns extends BukkitRunnable {
         plugin.getLogger().info("Updating signs!");
         List<SignData> dataList = SignData.getPlayerSigns("SERVER");
         for (SignData sd : dataList) {
+            if (!sd.isServerSign()) continue;
             String type = sd.getContains();
             plugin.getLogger().info("Running type " + type);
             TradeSign ts = (TradeSign)plugin;
@@ -56,6 +57,7 @@ public class UpdateSigns extends BukkitRunnable {
                 continue;
             }
             Sign s = (Sign)b.getState();
+            s.setLine(0,"[SERVER]");
             s.setLine(2,"Has: " + sd.getAmount());
             s.setLine(3,"$" + sd.getCost() + " for " + sd.getDispense());
             s.update(true);

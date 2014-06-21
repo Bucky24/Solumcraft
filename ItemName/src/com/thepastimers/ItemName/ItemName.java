@@ -388,10 +388,13 @@ public class ItemName extends JavaPlugin {
     }
 
     private void fillList() {
+        // http://www.minecraftforum.net/topic/1994759-new-item-id-system/ for new IDs
         dataList.add(new ItemData("OAK_PLANK",Material.getMaterial(5),0));
         dataList.add(new ItemData("SPRUCE_PLANK",Material.getMaterial(5),1));
         dataList.add(new ItemData("BIRCH_PLANK",Material.getMaterial(5),2));
         dataList.add(new ItemData("JUNGLE_PLANK",Material.getMaterial(5),3));
+        dataList.add(new ItemData("ACACIA_PLANK",Material.getMaterial(5),4));
+        dataList.add(new ItemData("DK_OAK_PLANK",Material.getMaterial(5),5));
 
         dataList.add(new ItemData("OAK_SAPLING",Material.getMaterial(6),0));
         dataList.add(new ItemData("SPRUCE_SAPLING",Material.getMaterial(6),1));
