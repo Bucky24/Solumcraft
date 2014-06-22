@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
+
 /**
  * Created by rwijtman on 3/7/14.
  */
@@ -98,6 +100,11 @@ public class UserMap extends JavaPlugin implements Listener {
             um = UserMapping.getPlayerForMapping(player);
         }
         return um == null? NO_USER : um.getUuid();
+    }
+
+    public UUID getId(String uuid) {
+        UUID id = UUID.fromString(uuid);
+        return id;
     }
 
     public void updateUUID(Player p) {

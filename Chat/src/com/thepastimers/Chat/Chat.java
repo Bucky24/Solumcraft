@@ -44,7 +44,6 @@ public class Chat extends JavaPlugin implements Listener {
     Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
     Map<String,Map<Class,JavaPlugin>> commandListeners;
-    Map<String,Menu> menuList;
 
     PrintWriter chatLog = null;
 
@@ -82,7 +81,6 @@ public class Chat extends JavaPlugin implements Listener {
         //BukkitTask task2 = new GetCommands(this,database).runTaskTimer(this,0,60);
         if (listeners == null) listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
         if (commandListeners == null) commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
-        menuList = new HashMap<String, Menu>();
 
         codes = new ArrayList<ChatCode>();
 
@@ -315,10 +313,6 @@ public class Chat extends JavaPlugin implements Listener {
         }
     }
 
-    public void addMenu(String identifier, Menu m) {
-        menuList.put(identifier,m);
-    }
-
     public void sendRaw(String string, Player player) {
         try {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(string);
@@ -357,19 +351,6 @@ public class Chat extends JavaPlugin implements Listener {
             for (ChatCode code : codes) {
                 String key = code.getKey().replace(";"," or ");
                 sender.sendMessage(key + " = " + code.getDescription());
-            }
-        } else if (command.equalsIgnoreCase("menu")) {
-            if (args.length > 0) {
-                String menu = args[0];
-                Menu m = menuList.get(menu);
-                if (m == null) {
-                    sender.sendMessage(ChatColor.RED + "Menu '" + menu + "' does not exist");
-                } else {
-                    Player p = (Player)sender;
-                    m.sendMenuTo(p,this);
-                }
-            } else {
-                sender.sendMessage(ChatColor.BLUE + "/menu <menu name>");
             }
         } else if ("testChat".equalsIgnoreCase(command)) {
             Player p = (Player)sender;

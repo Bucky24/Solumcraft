@@ -1,7 +1,7 @@
 name: Mail
-version: 0.9
+version: 1.0
 main: com.thepastimers.Mail.Mail
-softdepend: [Database,Permission,Worlds,Chat]
+softdepend: [Database,Permission,Worlds,Chat,UserMap]
 commands:
   mail:
     description: Mail command
