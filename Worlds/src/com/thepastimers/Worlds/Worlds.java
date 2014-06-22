@@ -156,6 +156,9 @@ public class Worlds extends JavaPlugin implements Listener {
 
             WorldTypes type = WorldTypes.getData(w.getName());
             if (type != null) {
+                if (type.getWorldType() == VANILLA && rankNormal){
+                    return NORMAL;
+                }
                 return type.getWorldType();
             }
         }

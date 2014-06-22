@@ -127,7 +127,9 @@ public class Mail extends JavaPlugin implements Listener {
     }
 
     public boolean sendMessage(MailData md) {
+        Player sender = getServer().getPlayer(userMap.getId(md.getSender()));
         if (database == null || md == null) {
+            sender.sendMessage(ChatColor.RED + "Unable to send mail, bad parameters.");
             return false;
         }
 
@@ -138,7 +140,7 @@ public class Mail extends JavaPlugin implements Listener {
         md.setRead(false);
 
         if (!md.save(database)) {
-            getLogger().warning("Unable to save mail.");
+            sender.sendMessage(ChatColor.RED + "Unable to save mail.");
             return false;
         }
 

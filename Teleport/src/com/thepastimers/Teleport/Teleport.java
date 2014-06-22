@@ -97,7 +97,7 @@ public class Teleport extends JavaPlugin {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        if (worlds != null && worlds.getPlayerWorldType(playerName,true) == Worlds.VANILLA) {
             return false;
         }
 

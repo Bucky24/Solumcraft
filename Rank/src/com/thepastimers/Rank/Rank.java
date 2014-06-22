@@ -77,6 +77,9 @@ public class Rank extends JavaPlugin implements Listener {
             return "";
         }
 
+        player = userMap.getUUID(player);
+        if (player == UserMap.NO_USER) return "";
+
         player = player.replace("'","");
 
         PlayerRank rank = PlayerRank.getRankForPlayer(player);
