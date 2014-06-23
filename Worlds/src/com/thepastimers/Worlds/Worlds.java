@@ -39,6 +39,10 @@ public class Worlds extends JavaPlugin implements Listener {
     public static int ECONOMY = 3;
     public static int MAGIC = 4;
 
+    public static int MODE_CREATIVE = 1;
+    public static int MODE_SURVIVAL = 2;
+    public static int MODE_ADVENTURE = 3;
+
     static Map<Player,Location> deathLocs;
 
     Database database;
@@ -59,6 +63,7 @@ public class Worlds extends JavaPlugin implements Listener {
         } else {
             WorldCoords.createTables(database,getLogger());
             WorldTypes.createTables(database,getLogger());
+            PlayerWorld.createTables(database,getLogger());
         }
 
         combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
@@ -233,6 +238,15 @@ public class Worlds extends JavaPlugin implements Listener {
         }
     }
 
+    public PlayerWorld getPlayerWorldData(Player p, World world) {
+        if (p == null || world == null) return null;
+        String uuid = userMap.getUUID(p);
+        if (UserMap.NO_USER.equalsIgnoreCase(uuid)) return null;
+        List<PlayerWorld> playerWorldList = (List<PlayerWorld>)database.select(PlayerWorld.class,"player_id = '" + database.makeSafe(uuid) + "' AND world_name = '" + database.makeSafe(world.getName()) + "'");
+        if (playerWorldList.size() == 0) return null;
+        return playerWorldList.get(0);
+    }
+
     public boolean updatePlayerLocation(Player p) {
         Location pl = p.getLocation();
         World w = pl.getWorld();
@@ -290,7 +304,47 @@ public class Worlds extends JavaPlugin implements Listener {
             }
         }
 
-        p.setGameMode(GameMode.SURVIVAL);
+        // backup player mode
+        PlayerWorld pw = getPlayerWorldData(p,currWorld);
+        if (pw == null) {
+            pw = new PlayerWorld();
+            pw.setWorldName(currWorld.getName());
+            pw.setPlayerId(userMap.getUUID(p));
+        }
+        if (p.getGameMode() == GameMode.CREATIVE) {
+             pw.setMode(MODE_CREATIVE);
+        } else if (p.getGameMode() == GameMode.SURVIVAL) {
+            pw.setMode(MODE_SURVIVAL);
+        } else if (p.getGameMode() == GameMode.ADVENTURE) {
+            pw.setMode(MODE_ADVENTURE);
+        }
+        if (p.isFlying()) {
+            pw.setFlying(true);
+        } else {
+            pw.setFlying(false);
+        }
+        pw.save(database);
+
+        // now load saved mode (if one exists)
+        PlayerWorld npw = getPlayerWorldData(p,to);
+        if (npw == null) {
+            // default to survival
+            p.setGameMode(GameMode.SURVIVAL);
+            p.setFlying(false);
+        } else {
+            if (npw.getMode() == MODE_CREATIVE) {
+                p.setGameMode(GameMode.CREATIVE);
+            } else if (npw.getMode() == MODE_SURVIVAL) {
+                p.setGameMode(GameMode.SURVIVAL);
+            } else if (npw.getMode() == MODE_ADVENTURE) {
+                p.setGameMode(GameMode.ADVENTURE);
+            }
+            if (npw.isFlying()) {
+                p.setFlying(true);
+            } else {
+                p.setFlying(false);
+            }
+        }
 
         return true;
     }

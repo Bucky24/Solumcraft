@@ -227,7 +227,6 @@ public class Database extends JavaPlugin {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
 
-            killConnection(connection);
             return results;
         } catch (Exception e) {
             getLogger().warning("select: Unable to run query:");
@@ -331,12 +330,14 @@ public class Database extends JavaPlugin {
             while (set.next()) {
                 count ++;
             }
+            killConnection(connection);
             if (count == 0) {
                 getLogger().info("Unable to find database table " + table + ", attempting to create");
                 boolean result = query(definition);
                 return result;
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 

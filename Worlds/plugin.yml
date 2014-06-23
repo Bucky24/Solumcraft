@@ -1,5 +1,5 @@
 name: Worlds
-version: 1.6
+version: 1.7
 main: com.thepastimers.Worlds.Worlds
 softdepend: [Database,CombatLog,Inventory,UserMap]
 commands:

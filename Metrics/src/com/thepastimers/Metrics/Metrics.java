@@ -193,15 +193,15 @@ public class Metrics extends JavaPlugin implements Listener {
         //p.sendMessage("You have spent " + parseDate(time) + " on this server");
 
         if (logins == 0) {
-            World w = getServer().getWorld("vanilla");
-            if (w == null) {
-                w = getServer().getWorld("main");
-            }
+            //World w = getServer().getWorld("vanilla");
+            //if (w == null) {
+            World w = getServer().getWorld("main");
+            //}
             if (w != null) {
-            //p.teleport(w.getSpawnLocation());
-                //TeleportPlayer pt = new TeleportPlayer(this,p,w);
-                //pt.runTaskLater(this,1);
-                //getLogger().info("Teleporting new player " + p.getName() + " to spawn on world " + w.getName());
+                p.teleport(w.getSpawnLocation());
+                TeleportPlayer pt = new TeleportPlayer(this,p,w);
+                pt.runTaskLater(this,1);
+                getLogger().info("Teleporting new player " + p.getName() + " to spawn on world " + w.getName());
             }
            // p.sendMessage(ChatColor.GREEN + "According to records, you are a new player. Welcome!");
             //p.sendMessage(ChatColor.GREEN + "As solumcraft is a grief and raid friendly server, we recommend that you avoid trusting random strangers.");
