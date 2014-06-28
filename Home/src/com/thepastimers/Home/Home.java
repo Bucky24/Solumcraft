@@ -1,5 +1,6 @@
 package com.thepastimers.Home;
 
+import com.thepastimers.Alias.Alias;
 import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
@@ -38,6 +39,7 @@ public class Home extends JavaPlugin implements Listener {
     CombatLog combatLog;
     Worlds worlds;
     UserMap userMap;
+    Alias alias;
 
     Map<HomeData,Date> lastHome;
 
@@ -78,6 +80,11 @@ public class Home extends JavaPlugin implements Listener {
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
+        }
+
+        alias = (Alias)getServer().getPluginManager().getPlugin("Alias");
+        if (alias == null) {
+            getLogger().warning("Unabelt to load Alias Plugin.");
         }
 
         lastHome = new HashMap<HomeData,Date>();
@@ -358,6 +365,7 @@ public class Home extends JavaPlugin implements Listener {
         if (sender instanceof Player) {
             Player p = (Player)sender;
             playerName = p.getName();
+            playerName = alias.getAlias(playerName);
             uuid = p.getUniqueId().toString();
         } else {
             playerName = "CONSOLE";
@@ -548,7 +556,7 @@ public class Home extends JavaPlugin implements Listener {
 
             List<HomeData> homes = getHomes(player);
 
-            sender.sendMessage("Home list (" + getHomeCount(playerName) + "/" + getMaxHomes(playerName) + "):");
+            sender.sendMessage("Home list (" + getHomeCount(player) + "/" + getMaxHomes(player) + "):");
 
             for (HomeData h : homes) {
                 sender.sendMessage(h.getName() + " (" + (int)h.getX() + "," + (int)h.getY() + "," + (int)h.getZ() + "), in " + h.getWorld());

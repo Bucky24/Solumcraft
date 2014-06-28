@@ -19,6 +19,7 @@
       <module fileurl="file://$PROJECT_DIR$/ExtCommands/ExtCommands.iml" filepath="$PROJECT_DIR$/ExtCommands/ExtCommands.iml" />
       <module fileurl="file://$PROJECT_DIR$/Farming/Farming.iml" filepath="$PROJECT_DIR$/Farming/Farming.iml" />
       <module fileurl="file://$PROJECT_DIR$/Home/Home.iml" filepath="$PROJECT_DIR$/Home/Home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Improvements/Improvements.iml" filepath="$PROJECT_DIR$/Improvements/Improvements.iml" />
       <module fileurl="file://$PROJECT_DIR$/Inventory/Inventory.iml" filepath="$PROJECT_DIR$/Inventory/Inventory.iml" />
       <module fileurl="file://$PROJECT_DIR$/ItemName/ItemName.iml" filepath="$PROJECT_DIR$/ItemName/ItemName.iml" />
       <module fileurl="file://$PROJECT_DIR$/Kit/Kit.iml" filepath="$PROJECT_DIR$/Kit/Kit.iml" />
