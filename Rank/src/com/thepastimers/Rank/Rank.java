@@ -233,7 +233,7 @@ public class Rank extends JavaPlugin implements Listener {
         return rank.equalsIgnoreCase(rankObj.getRank());
     }
 
-    private boolean isAuthorized(String player) {
+    private boolean isAuthorized(String player, String toRank) {
         if (player == null) {
             return false;
         }
@@ -243,6 +243,8 @@ public class Rank extends JavaPlugin implements Listener {
         }
 
         String rank = getRank(player);
+
+        if ("owner".equalsIgnoreCase(toRank)) return false;
 
         if (rank.equalsIgnoreCase("gameadmin") || rank.equalsIgnoreCase("admin") || rank.equalsIgnoreCase("owner")) {
             return true;
@@ -404,7 +406,8 @@ public class Rank extends JavaPlugin implements Listener {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!isAuthorized(uuid)) {
+                    String newRank = args[2].toLowerCase();
+                    if (!isAuthorized(uuid,newRank)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank set");
                         return true;
@@ -420,7 +423,6 @@ public class Rank extends JavaPlugin implements Listener {
                             sender.sendMessage(ChatColor.RED + "That user cannot be found");
                             return true;
                         }
-                        String newRank = args[2].toLowerCase();
 
                         if (!setRank(playerUuid,newRank)) {
                             sender.sendMessage("Unable to set rank");
@@ -431,7 +433,7 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank set <player> <rank>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("remove")) {
-                    if (!isAuthorized(uuid)) {
+                    if (!isAuthorized(uuid,null)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank remove");
                         return true;
@@ -456,7 +458,7 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank remove <player>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!isAuthorized(uuid)) {
+                    if (!isAuthorized(uuid,null)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank check");
                         return true;
@@ -483,7 +485,7 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.RED + "/rank check <player>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("list")) {
-                    if (!isAuthorized(uuid)) {
+                    if (!isAuthorized(uuid,null)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /rank list");
                         return true;
@@ -514,7 +516,7 @@ public class Rank extends JavaPlugin implements Listener {
                 String secondCommand = args[0];
 
                 if (secondCommand.equalsIgnoreCase("set")) {
-                    if (!isAuthorized(uuid)) {
+                    if (!isAuthorized(uuid,null)) {
                         sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
                         getLogger().info(playerName + " attempted unauthorized access of /title set");
                         return true;

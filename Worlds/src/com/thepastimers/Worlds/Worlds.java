@@ -340,10 +340,18 @@ public class Worlds extends JavaPlugin implements Listener {
                 p.setGameMode(GameMode.ADVENTURE);
             }
             if (npw.isFlying()) {
+                p.setAllowFlight(true);
                 p.setFlying(true);
             } else {
                 p.setFlying(false);
+                p.setAllowFlight(false);
             }
+        }
+
+        if (getWorldType(to.getName()) == VANILLA) {
+            p.setGameMode(GameMode.SURVIVAL);
+            p.setFlying(false);
+            p.setAllowFlight(false);
         }
 
         return true;

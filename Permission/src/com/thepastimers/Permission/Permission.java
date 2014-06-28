@@ -307,7 +307,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms remove <player> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(uuid,"perms_set")) {
+                    if (!hasPermission(uuid,"perms_list")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms check");
                         return true;
                     }
@@ -335,7 +335,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/perms check <player> <perm>");
                     }
                 } else if ("list".equalsIgnoreCase(secondCommand)) {
-                    if (!hasPermission(uuid,"perms_set")) {
+                    if (!hasPermission(uuid,"perms_list")) {
                         getLogger().info(playerName + " attempted unauthorized access of /perms list");
                         return true;
                     }
@@ -436,7 +436,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms remove <group> <perm>");
                     }
                 } else if (secondCommand.equalsIgnoreCase("check")) {
-                    if (!hasPermission(uuid,"groupperms_set")) {
+                    if (!hasPermission(uuid,"groupperms_list")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms check");
                         return true;
                     }
@@ -455,7 +455,7 @@ public class Permission extends JavaPlugin {
                         sender.sendMessage("/groupperms check <group> <perm>");
                     }
                 } else if ("list".equalsIgnoreCase(secondCommand)) {
-                    if (!hasPermission(uuid,"groupperms_set")) {
+                    if (!hasPermission(uuid,"groupperms_list")) {
                         getLogger().info(playerName + " attempted unauthorized access of /groupperms list");
                         return true;
                     }

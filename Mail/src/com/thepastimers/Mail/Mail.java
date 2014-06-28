@@ -148,6 +148,7 @@ public class Mail extends JavaPlugin implements Listener {
         if (p != null) {
             p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail to view your messages.");
         }
+        sender.sendMessage(ChatColor.GREEN + "Mail sent!");
 
         return true;
     }
@@ -363,7 +364,6 @@ public class Mail extends JavaPlugin implements Listener {
                                         body.append(args[i]).append(" ");
                                     }
                                     md.setMessage(md.getMessage() + body.toString() + "NEWLINE");
-                                    getLogger().info(md.getMessage());
                                 }
                             }
                         } else if ("removeLine".equalsIgnoreCase(subSubCommand)) {

@@ -5,6 +5,7 @@ import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Logger.Logger;
 import com.thepastimers.Permission.Permission;
+import com.thepastimers.Rank.Rank;
 import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,6 +43,7 @@ public class AdminTools extends JavaPlugin implements Listener {
     Logger logger;
     Coord coord;
     UserMap userMap;
+    Rank rank;
 
     @Override
     public void onEnable() {
@@ -72,6 +74,11 @@ public class AdminTools extends JavaPlugin implements Listener {
         userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
         if (userMap == null) {
             getLogger().warning("Unable to load UserMap plugin.");
+        }
+
+        rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
+        if (rank == null) {
+            getLogger().warning("Unable to load Rank plugin.");
         }
 
         getLogger().info("Table info: ");
@@ -309,6 +316,13 @@ public class AdminTools extends JavaPlugin implements Listener {
                 Timestamp until = null;
                 int offset = -1;
 
+                if (permission.hasPermission(name,"admin_cant_ban")) {
+                    if (!"owner".equalsIgnoreCase(rank.getRank(playerName))) {
+                        sender.sendMessage(ChatColor.RED + "You may not ban this person.");
+                        return true;
+                    }
+                }
+
                 int reasonOffset = 1;
 
                 try {
@@ -419,6 +433,13 @@ public class AdminTools extends JavaPlugin implements Listener {
             if (args.length > 0) {
                 String player = args[0];
                 String reason = "";
+
+                if (permission.hasPermission(player,"admin_cant_ban")) {
+                    if (!"owner".equalsIgnoreCase(rank.getRank(playerName))) {
+                        sender.sendMessage(ChatColor.RED + "You may not kick this person.");
+                        return true;
+                    }
+                }
 
                 Player p = getServer().getPlayer(player);
                 if (p == null) {
