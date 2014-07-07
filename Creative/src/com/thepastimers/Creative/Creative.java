@@ -115,9 +115,9 @@ public class Creative extends JavaPlugin implements Listener {
     @EventHandler
     public void placeBlock(BlockPlaceEvent event) {
         Player p = event.getPlayer();
-        if (event.getBlockPlaced().getType() == Material.BEDROCK) {
+        if (event.getBlockPlaced().getType() == Material.BEDROCK || event.getBlockPlaced().getType() == Material.MONSTER_EGGS) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                p.sendMessage(ChatColor.RED + "You do not have permission to place this block (" + allPerms + ")");
                 event.setCancelled(true);
             }
         }

@@ -286,6 +286,11 @@ public class Worlds extends JavaPlugin implements Listener {
             cWorld = "world";
         }
 
+        String tWorld = to.getName();
+        if (getWorldType(tWorld) == NORMAL) {
+            tWorld = "world";
+        }
+
         if (inventory != null) {
             saved = inventory.saveInventory(p,cWorld + "_" + player);
         }
@@ -296,7 +301,7 @@ public class Worlds extends JavaPlugin implements Listener {
         } else {
             inventory.clearInventory(p);
             try {
-                inventory.loadInventory(p,to.getName() + "_" + player);
+                inventory.loadInventory(p,tWorld + "_" + player);
                 p.sendMessage(ChatColor.GREEN + "Your inventory has been saved and will be reloaded when you return to your previous world");
             } catch (Exception e) {
                 inventory.loadInventory(p,cWorld + "_" + player);

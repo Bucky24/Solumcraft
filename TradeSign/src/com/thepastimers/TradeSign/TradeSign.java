@@ -164,6 +164,7 @@ public class TradeSign extends JavaPlugin implements Listener {
 
     @EventHandler
     public void breakSign(BlockBreakEvent event) {
+        String uuid = userMap.getUUID(event.getPlayer());
         if (event.getBlock().getType() == Material.SIGN || event.getBlock().getType() == Material.SIGN_POST || event.getBlock().getType() == Material.WALL_SIGN) {
             SignData data = getSignAt(event.getBlock().getX(),event.getBlock().getY(),event.getBlock().getZ(),event.getBlock().getWorld().getName());
             if (data != null) {
@@ -173,7 +174,7 @@ public class TradeSign extends JavaPlugin implements Listener {
                     data.delete(database);
                     return;
                 }
-                if (event.getPlayer().getName().equals(data.getPlayer())) {
+                if (data.getPlayer().equalsIgnoreCase(uuid)) {
                     Player p = event.getPlayer();
                     if (itemName == null) {
                         p.sendMessage(ChatColor.RED + "This action is not currently possible");
@@ -209,7 +210,6 @@ public class TradeSign extends JavaPlugin implements Listener {
             Location l = b.getLocation();
             SignData data = getSignAt(l.getBlockX(),l.getBlockY(),l.getBlockZ(),l.getWorld().getName());
             if (data != null) {
-                getLogger().info("Handle purchase event: " + b);
                 handlePurchase(p,data,b);
                 return true;
             }
@@ -320,7 +320,9 @@ public class TradeSign extends JavaPlugin implements Listener {
         Sign s = (Sign)b.getState();
         boolean owner = false;
 
-        if (p.getName().equalsIgnoreCase(data.getPlayer())) {
+        String uuid = userMap.getUUID(p);
+
+        if (uuid.equalsIgnoreCase(data.getPlayer())) {
             owner = true;
         }
         if ("SERVER".equalsIgnoreCase(data.getPlayer())) {

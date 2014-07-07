@@ -1,5 +1,7 @@
 package com.thepastimers.Kit;
 
+import com.thepastimers.Chat.Chat;
+import com.thepastimers.Chat.ChatObject;
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
@@ -34,6 +36,7 @@ public class Kit extends JavaPlugin implements Listener {
     Permission permission;
     Worlds worlds;
     UserMap userMap;
+    Chat chat;
 
     @Override
     public void onEnable() {
@@ -66,6 +69,11 @@ public class Kit extends JavaPlugin implements Listener {
         userMap = (UserMap)getServer().getPluginManager().getPlugin("UserMap");
         if (userMap == null) {
             getLogger().warning("Unable to load UserMap plugin. Some functionality may not be available.");
+        }
+
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat == null) {
+            getLogger().warning("Unable to load Chat plugin. Some functionality may not be available.");
         }
 
         getLogger().info("Table info: ");
@@ -193,11 +201,21 @@ public class Kit extends JavaPlugin implements Listener {
         return true;
     }
 
+    public void drawKit(KitData kd, Player player) {
+        JSONArray items = kd.getItems();
+        for (int i=0;i<items.size();i++) {
+            String item = (String)items.get(i);
+            ChatObject.make().text(item + " ").command("[Remove]","/kit " + kd.getName() + " removeItem " + i,ChatColor.RED).send(chat,player);
+        }
+    }
+
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
+        Player playerObj = null;
 
         if (sender instanceof Player) {
-            playerName = ((Player)sender).getName();
+            playerObj = (Player)sender;
+            playerName = playerObj.getName();
         } else {
             playerName = "CONSOLE";
         }
@@ -262,9 +280,13 @@ public class Kit extends JavaPlugin implements Listener {
                         // we don't need to check for kit_kit perms because we've already done this
                         KitData kitData = getKit(kit);
                         sender.sendMessage("Items in " + kit);
-                        JSONArray items = kitData.getItems();
-                        for (int i=0;i<items.size();i++) {
-                            sender.sendMessage((String)items.get(i));
+                        if (permission.hasPermission(playerName,"kit_create")) {
+                            drawKit(kitData,playerObj);
+                        } else {
+                            JSONArray items = kitData.getItems();
+                            for (int i=0;i<items.size();i++) {
+                                sender.sendMessage((String)items.get(i));
+                            }
                         }
                     } else if ("remove".equalsIgnoreCase(subCommand)) {
                         if (getKit(kit) == null) {
@@ -302,7 +324,7 @@ public class Kit extends JavaPlugin implements Listener {
                 sender.sendMessage("/kit <name> [create|view|remove]");
                 sender.sendMessage("List of kits (type /kit <name> to use): ");
                 for (KitData kd : kits) {
-                    sender.sendMessage(kd.getName());
+                    ChatObject.make().command(kd.getName(),"/kit " + kd.getName() + " view").send(chat,playerObj);
                 }
             }
         } else {

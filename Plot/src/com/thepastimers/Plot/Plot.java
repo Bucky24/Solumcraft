@@ -16,6 +16,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
@@ -354,7 +355,7 @@ public class Plot extends JavaPlugin implements Listener {
         plotLeaveListener.put(c,blah);
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void chestInteract(PlayerInteractEvent event) {
         ChestProtect protect = (ChestProtect)getServer().getPluginManager().getPlugin("ChestProtect");
         if (protect != null) return;
@@ -378,7 +379,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void blockBreak(BlockBreakEvent event) {
         if (logger != null) {
             logger.logEvent("plot_BlockBreakEvent");
@@ -392,7 +393,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void paintingBreak(HangingBreakByEntityEvent event) {
         if (logger != null) {
             logger.logEvent("plot_HangingBreakByEntityEvent");
@@ -417,7 +418,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void blockPlace(BlockPlaceEvent event) {
         if (logger != null) {
             logger.logEvent("plot_BlockPlaceEvent");
@@ -431,7 +432,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void liquid(PlayerBucketEmptyEvent event) {
         if (logger != null) {
         logger.logEvent("plot_PlayerBucketEmptyEvent");
@@ -445,7 +446,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void liquidMoved(BlockFromToEvent event) {
         if (logger != null) {
             logger.logEvent("plot_BlockFromToEvent");
@@ -615,7 +616,7 @@ public class Plot extends JavaPlugin implements Listener {
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }*/
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void damage(EntityDamageByEntityEvent event) {
         if (logger != null) {
             logger.logEvent("plot_EntityDamageByEntityEvent");
@@ -663,7 +664,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void death(PlayerDeathEvent event) {
         if (logger != null) {
             logger.logEvent("plot_PlayerDeathEvent");
@@ -692,7 +693,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void normalDamage(EntityDamageEvent event) {
         if (logger != null) {
             logger.logEvent("plot_EntityDamageEvent");
@@ -716,7 +717,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void spawn(CreatureSpawnEvent event) {
         EntityType type = event.getEntityType();
         PlotData pd = plotAt(event.getEntity().getLocation());
@@ -735,7 +736,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void explode(EntityExplodeEvent event) {
         //getLogger().info("Explosion!");
         Location l = event.getLocation();
@@ -767,7 +768,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority= EventPriority.LOWEST)
     public void fireSpread(BlockSpreadEvent event) {
         Location l = event.getBlock().getLocation();
 
@@ -1048,7 +1049,7 @@ public class Plot extends JavaPlugin implements Listener {
                         return true;
                     } else {
                         sender.sendMessage("You are in " + pd.getName() + ", owned by " + pd.getOwner() + ". Bounds: (" + pd.getX1() + "," + pd.getZ1() + ") to (" + pd.getX2() + "," + pd.getZ2() + ")");
-                        sender.sendMessage("Pvp: " + pd.isPvp() + ", pve: " + pd.isPve());
+                        sender.sendMessage("Pvp: " + pd.isPvp() + ", pve: " + pd.isPve() + ", chest protect: " + pd.isChestProtect());
                         String coOwner = "";
                         String resident = "";
                         String worker = "";
@@ -1189,11 +1190,22 @@ public class Plot extends JavaPlugin implements Listener {
                             } else {
                                 sender.sendMessage(ChatColor.RED + "Could not update plot");
                             }
+                        } else if ("chest_protect".equalsIgnoreCase(flag)) {
+                            if ("on".equalsIgnoreCase(val)) {
+                                pd.setChestProtect(true);
+                            } else if ("off".equalsIgnoreCase(val)) {
+                                pd.setChestProtect(false);
+                            }
+                            if (pd.save(database)) {
+                                sender.sendMessage(ChatColor.GREEN + "Chest Protect for this plot is now " + val);
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Could not update plot");
+                            }
                         } else {
                             sender.sendMessage("/" + command + " flag <pvp|pve> <on|off>");
                         }
                     } else {
-                        sender.sendMessage("/" + command + " flag <pvp|pve> <on|off>");
+                        sender.sendMessage("/" + command + " flag <pvp|pve|chest_protect> <on|off>");
                     }
                 } else if ("name".equalsIgnoreCase(subCommand)) {
 
