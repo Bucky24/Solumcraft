@@ -217,9 +217,8 @@ public class Worlds extends JavaPlugin implements Listener {
     @EventHandler
     public void placeBlock(BlockPlaceEvent event) {
         Player p = event.getPlayer();
-        if (getPlayerWorldType(p.getName()) == Worlds.ECONOMY) {
-            if (event.getBlockPlaced().getType() == Material.ENDER_CHEST || event.getBlockPlaced().getType() == Material.PISTON_BASE
-                    || event.getBlockPlaced().getType() == Material.PISTON_STICKY_BASE) {
+        if (getPlayerWorldType(p.getName()) == Worlds.ECONOMY || getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+            if (event.getBlockPlaced().getType() == Material.ENDER_CHEST) {
                 p.sendMessage(ChatColor.RED + "You cannot place that block in this world");
                 event.setCancelled(true);
             }

@@ -872,7 +872,7 @@ public class Plot extends JavaPlugin implements Listener {
                     int x2 = (int)c2.getX();
                     int z2 = (int)c2.getZ();
 
-                    if (!"economy".equalsIgnoreCase(p.getWorld().getName()) && !override) {
+                    if (!"economy".equalsIgnoreCase(p.getWorld().getName()) && !override && !subPlot) {
                         sender.sendMessage(ChatColor.RED + "Protected plots can only be created in the economy world");
                         return true;
                     }
