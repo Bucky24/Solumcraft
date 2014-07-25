@@ -380,6 +380,23 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority= EventPriority.LOWEST)
+    public void entityInteract(PlayerInteractEntityEvent event) {
+        Player pl = event.getPlayer();
+        Entity e = event.getRightClicked();
+        if (e == null) return;
+        PlotData pd = plotAt(e.getLocation());
+        if (pd != null) {
+            if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
+                PlotPerms pp = getPlotPermobject(pd,pl.getName());
+                if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
+                    pl.sendMessage(ChatColor.RED + "You do not have permissions interact with this");
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority= EventPriority.LOWEST)
     public void blockBreak(BlockBreakEvent event) {
         if (logger != null) {
             logger.logEvent("plot_BlockBreakEvent");
@@ -471,18 +488,6 @@ public class Plot extends JavaPlugin implements Listener {
             return;
         }
     }
-
-    /*@EventHandler
-    public void damageNormal(EntityDamageEvent event) {
-        Entity damaged = event.getEntity();
-        if (event instanceof EntityDamageByEntityEvent) {
-            // handled in another function
-            return;
-        } else if(damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
-                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
-                event.setCancelled(true);
-        }
-    }*/
 
     /*@EventHandler
     public void playerMove(PlayerMoveEvent event) {
@@ -649,7 +654,7 @@ public class Plot extends JavaPlugin implements Listener {
             } else if (!pd.isPve()) {
                 event.setCancelled(true);
             }
-        } else if(damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
+        } else if(damaged instanceof ItemFrame || damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
                 || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
             if (damager instanceof Player) {
                 Player p = (Player)damager;
