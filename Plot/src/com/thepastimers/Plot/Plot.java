@@ -286,7 +286,7 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (perm == PlotPerms.WORKER) {
             return (material == Material.WHEAT || material == Material.PUMPKIN || material == Material.MELON_BLOCK
-                    || material == Material.SUGAR_CANE_BLOCK);
+                    || material == Material.SUGAR_CANE_BLOCK || material == Material.CARROT || material == Material.POTATO);
         }
 
         return false;
@@ -655,7 +655,8 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         } else if(damaged instanceof ItemFrame || damaged instanceof Cow || damaged instanceof Pig || damaged instanceof Sheep
-                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow || "CraftAnimals".equalsIgnoreCase(damaged.toString())) {
+                || damaged instanceof Chicken || damaged instanceof Horse || damaged instanceof MushroomCow
+                || "CraftAnimals".equalsIgnoreCase(damaged.toString()) || damaged instanceof Ocelot) {
             if (damager instanceof Player) {
                 Player p = (Player)damager;
                 int perms = getPlotPerms(pd,p.getName());
@@ -791,7 +792,7 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (sender instanceof Player) {
             playerName = ((Player)sender).getName();
-        } else {
+        } else {                                                            F
             playerName = "CONSOLE";
         }
 
