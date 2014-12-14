@@ -1,9 +1,9 @@
 package com.thepastimers.Database;
 
-import com.solumcraft.RainbowSetup.Command;
-import com.solumcraft.RainbowSetup.CommandSender;
-import com.solumcraft.RainbowSetup.Player;
-import com.solumcraft.RainbowSetup.JavaPlugin;
+import RainbowSetup.Command;
+import RainbowSetup.CommandSender;
+import RainbowSetup.Player;
+import RainbowSetup.JavaPlugin;
 //import org.bukkit.command.Command;
 //import org.bukkit.command.CommandSender;
 //import org.bukkit.entity.Player;
