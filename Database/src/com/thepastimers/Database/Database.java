@@ -1,9 +1,13 @@
 package com.thepastimers.Database;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.solumcraft.RainbowSetup.Command;
+import com.solumcraft.RainbowSetup.CommandSender;
+import com.solumcraft.RainbowSetup.Player;
+import com.solumcraft.RainbowSetup.JavaPlugin;
+//import org.bukkit.command.Command;
+//import org.bukkit.command.CommandSender;
+//import org.bukkit.entity.Player;
+//import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;

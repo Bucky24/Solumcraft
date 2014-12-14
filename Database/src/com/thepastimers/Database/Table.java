@@ -1,6 +1,7 @@
 package com.thepastimers.Database;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import com.solumcraft.RainbowSetup.JavaPlugin;
+//import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
 import java.sql.*;
