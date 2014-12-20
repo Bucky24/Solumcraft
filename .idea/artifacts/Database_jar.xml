@@ -5,7 +5,6 @@
       <element id="module-output" name="Database" />
       <element id="file-copy" path="$PROJECT_DIR$/Database/plugin.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/Database/config.yml" />
-      <element id="module-output" name="RainbowSetup" />
     </root>
   </artifact>
 </component>

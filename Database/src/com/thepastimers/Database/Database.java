@@ -56,8 +56,9 @@ public class Database extends JavaPlugin {
             getLogger().warning("Unable to load driver");
             enabled = false;
         }
-
+getLogger().info("We're now here!");
         saveDefaultConfig();
+        getLogger().info("Saved default config! getting new config!");
         password = getConfig().getString("password");
         username = getConfig().getString("username");
         String host = getConfig().getString("server");
@@ -73,7 +74,7 @@ public class Database extends JavaPlugin {
             killConnection(connection);
         } catch (Exception e) {
             getLogger().warning("Unable to connect to database!");
-            e.printStackTrace();
+            getLogger().logError(e);
             enabled = false;
         }
 

@@ -9,6 +9,18 @@ import PluginReference.MC_Player;
  * Time: 7:15 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class CommandSender implements MC_Player {
+public class CommandSender {
+    public MC_Player player;
 
+    public CommandSender(MC_Player p) {
+        player = p;
+    }
+
+    public void sendMessage(String message) {
+        player.sendMessage(message);
+    }
+
+    public String getName() {
+        return player.getName();
+    }
 }

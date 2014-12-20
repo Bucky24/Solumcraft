@@ -4,16 +4,17 @@ import PluginReference.MC_EventInfo;
 import PluginReference.MC_Player;
 import PluginReference.MC_Server;
 import PluginReference.PluginBase;
+import sun.plugin2.main.server.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.Enumeration;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -29,6 +30,9 @@ import java.util.zip.ZipInputStream;
 
 public class MyPlugin extends PluginBase {
     private static String pluginDir = "bukkit_plugins";
+    Map<String,JavaPlugin> pluginMap;
+
+    Logger logger;
 
     ////////////////////////////
     // Rainbow functions
@@ -37,8 +41,31 @@ public class MyPlugin extends PluginBase {
     public void onStartup(MC_Server argServer){
         System.out.println("RainbowSetup active!");
 
+        pluginMap = new HashMap<String, JavaPlugin>();
+
         this.loadPlugins();
+
+        logger = new Logger();
     }
+
+    @Override
+    public void onServerFullyLoaded() {
+        System.out.println("Server loaded, beginning to initialize plugins.");
+        Iterator it = pluginMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            try {
+                plugin.onEnable();
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
+    }
+
+    ///////////////////////////
+    // Events
+    ///////////////////////////
 
     @Override
     public void onPlayerInput(MC_Player plr, String msg, MC_EventInfo ei) {
@@ -47,10 +74,24 @@ public class MyPlugin extends PluginBase {
             msg = msg.substring(1);
             String[] commandArr = msg.split(" ");
             String command = commandArr[0];
+            CommandSender sender = new CommandSender(plr);
             commandArr = Arrays.copyOfRange(commandArr, 1, commandArr.length);
-            //onCommand((CommandSender)plr,new Command(command),command,commandArr);
+            Iterator it = pluginMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                JavaPlugin plugin = (JavaPlugin)pair.getValue();
+                try {
+                    plugin.onCommand(sender,new Command(command),command,commandArr);
+                } catch (Exception e) {
+                    logger.logError(e);
+                }
+            }
         }
     }
+
+    /////////////////////////
+    // Other
+    /////////////////////////
 
     private void loadPlugins() {
         System.out.println("Loading plugins...");
@@ -64,32 +105,44 @@ public class MyPlugin extends PluginBase {
         }
 
         for (File entry : pluginDir.listFiles()) {
+            if (!entry.getName().endsWith(".jar")) {
+                continue;
+            }
             System.out.println("Plugin jar: " + entry.getName());
 
             try {
                 URL myJarFile = new URL("jar:file:"+entry.getAbsolutePath()+"!/");
+                URL rainbow = new URL("jar:file:/testbed/plugins_mod/RainbowSetup.jar!/");
 
-                JarURLConnection connection = (JarURLConnection)myJarFile.openConnection();
+                /*JarURLConnection connection = (JarURLConnection)myJarFile.openConnection();
                 JarFile jarFile = connection.getJarFile();
                 Enumeration<JarEntry> jarEnum = jarFile.entries();
                 while (jarEnum.hasMoreElements()) {
-                    JarEntry jarEntry = jarEnum.nextElement();
-                    System.out.println(jarEntry.getName());
-                }
+                    try {
+                        JarEntry jarEntry = jarEnum.nextElement();
+                        System.out.println(jarEntry.getName());
+                    } catch (Exception e) {
+                        System.out.println("Could not print entry");
+                    }
+                }*/
 
                 URLClassLoader sysLoader = (URLClassLoader)ClassLoader.getSystemClassLoader();
                 Class sysClass = URLClassLoader.class;
                 Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
                 sysMethod.setAccessible(true);
                 sysMethod.invoke(sysLoader, new Object[]{myJarFile});
-                URLClassLoader cl = URLClassLoader.newInstance(new URL[]{myJarFile});
+                sysMethod.invoke(sysLoader, new Object[]{rainbow});
+                URLClassLoader cl = URLClassLoader.newInstance(new URL[]{rainbow,myJarFile});
+
 
                 InputStream input = cl.getResourceAsStream("plugin.yml");
+                if (input == null) {
+                    throw new Exception("File plugin.yml is not available");
+                }
                 byte[] data = new byte[(int) input.available()];
                 input.read(data);
                 input.close();
                 String mainClass = "";
-
                 String str = new String(data, "UTF-8");
                 String[] strArr = str.split("\n");
                 for (String configLine : strArr) {
@@ -103,11 +156,26 @@ public class MyPlugin extends PluginBase {
                 } else {
                     System.out.println("Got main class of " + mainClass);
                 }
-                Class MyClass = cl.loadClass(mainClass);
-                Object MyClassObj = MyClass.newInstance();
+
+                Class<?> jarClass;
+                try {
+                    jarClass = Class.forName(mainClass, true, cl);
+                } catch (ClassNotFoundException ex) {
+                    throw new Exception("Cannot find main class `" + mainClass + "'", ex);
+                }
+
+                Class<? extends JavaPlugin> pluginClass;
+                try {
+                    pluginClass = jarClass.asSubclass(JavaPlugin.class);
+                } catch (ClassCastException ex) {
+                    throw new Exception("main class `" + mainClass + "' does not extend JavaPlugin", ex);
+                }
+
+                Object MyClassObj = pluginClass.newInstance();
+                String className = pluginClass.getName();
+                pluginMap.put(className,(JavaPlugin)MyClassObj);
             } catch (Exception e) {
-                System.out.println("Can't load jar " + entry.getAbsolutePath() + "!");
-                System.out.println(e.getMessage());
+                System.out.println("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }

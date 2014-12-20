@@ -1,8 +1,5 @@
 package RainbowSetup;
 
-import PluginReference.MC_EventInfo;
-import PluginReference.MC_Player;
-import PluginReference.MC_Server;
 import PluginReference.PluginBase;
 
 import java.util.Arrays;
@@ -28,12 +25,14 @@ public class JavaPlugin extends PluginBase {
     }
 
     public void saveDefaultConfig() {
-        getLogger().warning("saveDefaultConfig is not implemented");
+        Class<?> callerClass = getClass();
+        ConfigHandler handler = new ConfigHandler(callerClass.getSimpleName(),logger);
+        handler.createDefaultConfig(callerClass.getSimpleName(),logger);
     }
 
     public ConfigHandler getConfig() {
         Class<?> callerClass = getClass();
-        return new ConfigHandler(callerClass.getName());
+        return new ConfigHandler(callerClass.getSimpleName(),logger);
     }
 
     ///////////////////////////////////////////////
