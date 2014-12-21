@@ -24,7 +24,8 @@ public class UserMap extends JavaPlugin implements Listener {
     public void onEnable() {
         getLogger().info("UserMap init");
 
-        getServer().getPluginManager().registerEvents(this,this);
+        getServer();
+        //getServer().getPluginManager().registerEvents(this,this);
 
         database = (Database)getServer().getPluginManager().getPlugin("Database");
         if (database == null) {

@@ -4,21 +4,19 @@ import PluginReference.MC_EventInfo;
 import PluginReference.MC_Player;
 import PluginReference.MC_Server;
 import PluginReference.PluginBase;
-import sun.plugin2.main.server.Plugin;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Method;
-import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +28,9 @@ import java.util.zip.ZipInputStream;
 
 public class MyPlugin extends PluginBase {
     private static String pluginDir = "bukkit_plugins";
+    private static URLClassLoader sysLoader;
     Map<String,JavaPlugin> pluginMap;
+    MC_Server server;
 
     Logger logger;
 
@@ -38,14 +38,27 @@ public class MyPlugin extends PluginBase {
     // Rainbow functions
     ////////////////////////////
     @Override
-    public void onStartup(MC_Server argServer){
+    public void onStartup(MC_Server argServer) {
         System.out.println("RainbowSetup active!");
+
+        server = argServer;
 
         pluginMap = new HashMap<String, JavaPlugin>();
 
-        this.loadPlugins();
-
         logger = new Logger();
+
+        try {
+            sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+            URL rainbow = new URL("jar:file:/testbed/plugins_mod/RainbowSetup.jar!/");
+            Class sysClass = URLClassLoader.class;
+            Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
+            sysMethod.setAccessible(true);
+            sysMethod.invoke(sysLoader, new Object[]{rainbow});
+        } catch (Exception e) {
+            logger.logError(e);
+        }
+
+        this.loadPlugins();
     }
 
     @Override
@@ -74,7 +87,7 @@ public class MyPlugin extends PluginBase {
             msg = msg.substring(1);
             String[] commandArr = msg.split(" ");
             String command = commandArr[0];
-            CommandSender sender = new CommandSender(plr);
+            CommandSender sender = new Player(plr);
             commandArr = Arrays.copyOfRange(commandArr, 1, commandArr.length);
             Iterator it = pluginMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -92,6 +105,45 @@ public class MyPlugin extends PluginBase {
     /////////////////////////
     // Other
     /////////////////////////
+
+    public MyPlugin getPluginManager() {
+        return this;
+    }
+
+    public JavaPlugin getPlugin(String plugin) {
+        logger.info("Getting plugin " + plugin);
+        return pluginMap.get(plugin);
+    }
+
+    public void registerEvents(JavaPlugin plugin, Listener listener) {
+
+    }
+
+    public Player getPlayer(String player) {
+        MC_Player p = server.getOnlinePlayerByName(player);
+        if (p == null) return null;
+        return new Player(p);
+    }
+
+    public OfflinePlayer getOfflinePlayer(String player) {
+        List<MC_Player> players = server.getOfflinePlayers();
+        for (MC_Player p : players) {
+            if (p.getName().equals(player)) {
+                return new OfflinePlayer(p);
+            }
+        }
+        return null;
+    }
+
+    public List<Player> getOnlinePlayers() {
+        List<MC_Player> players = server.getPlayers();
+        List<Player> response = new ArrayList<Player>();
+        for (MC_Player player : players) {
+            Player p = new Player(player);
+            response.add(p);
+        }
+        return response;
+    }
 
     private void loadPlugins() {
         System.out.println("Loading plugins...");
@@ -112,7 +164,6 @@ public class MyPlugin extends PluginBase {
 
             try {
                 URL myJarFile = new URL("jar:file:"+entry.getAbsolutePath()+"!/");
-                URL rainbow = new URL("jar:file:/testbed/plugins_mod/RainbowSetup.jar!/");
 
                 /*JarURLConnection connection = (JarURLConnection)myJarFile.openConnection();
                 JarFile jarFile = connection.getJarFile();
@@ -125,14 +176,11 @@ public class MyPlugin extends PluginBase {
                         System.out.println("Could not print entry");
                     }
                 }*/
-
-                URLClassLoader sysLoader = (URLClassLoader)ClassLoader.getSystemClassLoader();
                 Class sysClass = URLClassLoader.class;
                 Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
                 sysMethod.setAccessible(true);
                 sysMethod.invoke(sysLoader, new Object[]{myJarFile});
-                sysMethod.invoke(sysLoader, new Object[]{rainbow});
-                URLClassLoader cl = URLClassLoader.newInstance(new URL[]{rainbow,myJarFile});
+                URLClassLoader cl = URLClassLoader.newInstance(new URL[]{myJarFile});
 
 
                 InputStream input = cl.getResourceAsStream("plugin.yml");
@@ -159,7 +207,7 @@ public class MyPlugin extends PluginBase {
 
                 Class<?> jarClass;
                 try {
-                    jarClass = Class.forName(mainClass, true, cl);
+                    jarClass = Class.forName(mainClass, true, sysLoader);
                 } catch (ClassNotFoundException ex) {
                     throw new Exception("Cannot find main class `" + mainClass + "'", ex);
                 }
@@ -171,9 +219,10 @@ public class MyPlugin extends PluginBase {
                     throw new Exception("main class `" + mainClass + "' does not extend JavaPlugin", ex);
                 }
 
-                Object MyClassObj = pluginClass.newInstance();
+                JavaPlugin MyClassObj = pluginClass.newInstance();
+                MyClassObj.server = this;
                 String className = pluginClass.getName();
-                pluginMap.put(className,(JavaPlugin)MyClassObj);
+                pluginMap.put(className,MyClassObj);
             } catch (Exception e) {
                 System.out.println("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();

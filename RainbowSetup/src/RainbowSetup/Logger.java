@@ -13,6 +13,7 @@ import java.io.*;
  */
 public class Logger {
     String logFile = "/testbed/bukkit_log.log";
+
     public void info(String message) {
         writeFile("INFO: " + message);
         System.out.println("INFO: " + message);

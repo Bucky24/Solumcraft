@@ -1,4 +1,4 @@
-package RainbowSetup;
+package org.bukkit.command;
 
 /**
  * Created with IntelliJ IDEA.

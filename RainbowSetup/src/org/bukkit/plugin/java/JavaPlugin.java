@@ -1,8 +1,11 @@
-package RainbowSetup;
+package org.bukkit.plugin.java;
 
 import PluginReference.PluginBase;
-
-import java.util.Arrays;
+import RainbowSetup.MyPlugin;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import RainbowSetup.ConfigHandler;
+import RainbowSetup.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +16,7 @@ import java.util.Arrays;
  */
 public class JavaPlugin extends PluginBase {
     private static Logger logger;
+    public MyPlugin server;
 
     /////////////////////////////
     // Instance methods
@@ -33,6 +37,10 @@ public class JavaPlugin extends PluginBase {
     public ConfigHandler getConfig() {
         Class<?> callerClass = getClass();
         return new ConfigHandler(callerClass.getSimpleName(),logger);
+    }
+
+    public MyPlugin getServer() {
+        return server;
     }
 
     ///////////////////////////////////////////////

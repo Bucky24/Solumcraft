@@ -3,6 +3,7 @@ package com.thepastimers.UserMap;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
 import org.bukkit.entity.Player;
+import RainbowSetup.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created by rwijtman on 3/7/14.
