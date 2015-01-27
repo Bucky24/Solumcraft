@@ -14,9 +14,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,9 +31,10 @@ import java.util.*;
 
 public class MyPlugin extends PluginBase {
     private static String pluginDir = "bukkit_plugins";
-    private static URLClassLoader sysLoader;
-    Map<String,JavaPlugin> pluginMap;
     MC_Server server;
+    private Map<String, JavaPlugin> pluginMap;
+    private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
+    private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
 
     Logger logger;
 
@@ -47,17 +51,6 @@ public class MyPlugin extends PluginBase {
 
         logger = new Logger();
 
-        try {
-            sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
-            URL rainbow = new URL("jar:file:/testbed/plugins_mod/RainbowSetup.jar!/");
-            Class sysClass = URLClassLoader.class;
-            Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
-            sysMethod.setAccessible(true);
-            sysMethod.invoke(sysLoader, new Object[]{rainbow});
-        } catch (Exception e) {
-            logger.logError(e);
-        }
-
         this.loadPlugins();
     }
 
@@ -68,6 +61,7 @@ public class MyPlugin extends PluginBase {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            plugin.server = this;
             try {
                 plugin.onEnable();
             } catch (Exception e) {
@@ -163,70 +157,73 @@ public class MyPlugin extends PluginBase {
             System.out.println("Plugin jar: " + entry.getName());
 
             try {
-                URL myJarFile = new URL("jar:file:"+entry.getAbsolutePath()+"!/");
+                //printJarContents(entry);
 
-                /*JarURLConnection connection = (JarURLConnection)myJarFile.openConnection();
-                JarFile jarFile = connection.getJarFile();
-                Enumeration<JarEntry> jarEnum = jarFile.entries();
-                while (jarEnum.hasMoreElements()) {
-                    try {
-                        JarEntry jarEntry = jarEnum.nextElement();
-                        System.out.println(jarEntry.getName());
-                    } catch (Exception e) {
-                        System.out.println("Could not print entry");
-                    }
-                }*/
-                Class sysClass = URLClassLoader.class;
-                Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
-                sysMethod.setAccessible(true);
-                sysMethod.invoke(sysLoader, new Object[]{myJarFile});
-                URLClassLoader cl = URLClassLoader.newInstance(new URL[]{myJarFile});
-
-
-                InputStream input = cl.getResourceAsStream("plugin.yml");
-                if (input == null) {
-                    throw new Exception("File plugin.yml is not available");
-                }
-                byte[] data = new byte[(int) input.available()];
-                input.read(data);
-                input.close();
-                String mainClass = "";
-                String str = new String(data, "UTF-8");
-                String[] strArr = str.split("\n");
-                for (String configLine : strArr) {
-                    String[] configArr = configLine.split(":");
-                    if (configArr.length == 2 && configArr[0].equals("main")) {
-                        mainClass = configArr[1].trim();
-                    }
-                }
-                if (mainClass.equals("")) {
-                    throw new Exception("Cannot find main class in file.");
-                } else {
-                    System.out.println("Got main class of " + mainClass);
-                }
-
-                Class<?> jarClass;
+                PluginDescription description;
                 try {
-                    jarClass = Class.forName(mainClass, true, sysLoader);
-                } catch (ClassNotFoundException ex) {
-                    throw new Exception("Cannot find main class `" + mainClass + "'", ex);
+                    description = PluginDescription.getDescriptionForPlugin(entry);
+                    PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
+                    loaders.put(description.name, loader);
+                    pluginMap.put(description.name,loader.plugin);
+                } catch (Exception e) {
+                    PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader());
+                    loaders.put(entry.getName(), loader);
                 }
 
-                Class<? extends JavaPlugin> pluginClass;
-                try {
-                    pluginClass = jarClass.asSubclass(JavaPlugin.class);
-                } catch (ClassCastException ex) {
-                    throw new Exception("main class `" + mainClass + "' does not extend JavaPlugin", ex);
-                }
 
-                JavaPlugin MyClassObj = pluginClass.newInstance();
-                MyClassObj.server = this;
-                String className = pluginClass.getName();
-                pluginMap.put(className,MyClassObj);
             } catch (Exception e) {
                 System.out.println("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();
             }
+        }
+    }
+
+    Class<?> getClassByName(final String name, String handlerName) {
+        //logger.info("MyPlugin.getClassByName: " + name);
+        Class<?> cachedClass = classes.get(name);
+
+        if (cachedClass != null) {
+            return cachedClass;
+        } else {
+            for (String current : loaders.keySet()) {
+                if (current.equals(handlerName)) continue;
+                PluginClassLoader loader = loaders.get(current);
+
+                try {
+                    cachedClass = loader.findClass(name, false);
+                } catch (ClassNotFoundException cnfe) {
+                    //logger.info("MyPlugin.getClassByName: loader couldn't find " + name + ", got ClassNotFoundException");
+                }
+                if (cachedClass != null) {
+                    return cachedClass;
+                }
+            }
+        }
+        return null;
+    }
+
+    void setClass(final String name, final Class<?> clazz) {
+        if (!classes.containsKey(name)) {
+            classes.put(name, clazz);
+        }
+    }
+
+    private static void printJarContents(File entry) {
+        try {
+            URL myJarFile = new URL("jar:file:" + entry.getAbsolutePath() + "!/");
+            JarURLConnection connection = (JarURLConnection) myJarFile.openConnection();
+            JarFile jarFile = connection.getJarFile();
+            Enumeration<JarEntry> jarEnum = jarFile.entries();
+            while (jarEnum.hasMoreElements()) {
+                try {
+                    JarEntry jarEntry = jarEnum.nextElement();
+                    System.out.println(jarEntry.getName());
+                } catch (Exception e) {
+                    System.out.println("Could not print entry");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Can't print jar contents, got exception.");
         }
     }
 }

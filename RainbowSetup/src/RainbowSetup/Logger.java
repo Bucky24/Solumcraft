@@ -24,10 +24,19 @@ public class Logger {
         System.out.println("WARN: " + message);
     }
 
-    public void logError(Exception e) {
-        writeFile("Exception: " + e.getMessage());
-        System.out.println("Exception: " + e.getMessage());
-        StackTraceElement[] elements = e.getStackTrace();
+    public void logError(Throwable e) {
+        this.logError(e.getMessage(),e.getStackTrace());
+        Throwable cause = e.getCause();
+        if (cause != null) {
+            writeFile("Caused by:");
+            System.out.println("Caused by:");
+            logError(cause);
+        }
+    }
+
+    public void logError(String message, StackTraceElement[] elements) {
+        writeFile("Exception: " + message);
+        System.out.println("Exception: " + message);
         for (int i=0;i<elements.length;i++) {
             StackTraceElement elem = elements[i];
             writeFile(elem.toString());

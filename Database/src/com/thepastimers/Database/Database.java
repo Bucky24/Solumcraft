@@ -52,9 +52,8 @@ public class Database extends JavaPlugin {
             getLogger().warning("Unable to load driver");
             enabled = false;
         }
-getLogger().info("We're now here!");
+
         saveDefaultConfig();
-        getLogger().info("Saved default config! getting new config!");
         password = getConfig().getString("password");
         username = getConfig().getString("username");
         String host = getConfig().getString("server");
@@ -62,12 +61,16 @@ getLogger().info("We're now here!");
         String database = getConfig().getString("database");
         url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 
-        getLogger().info("Making connection");
+        getLogger().info("Making connection to " + url);
         try {
             connection = DriverManager.getConnection(url,username,password);
             connections ++;
-            //totalConn ++;
+            totalConn ++;
             killConnection(connection);
+        } catch (ExceptionInInitializerError e2) {
+            getLogger().warning("Unable to connect to database!");
+            getLogger().logError(e2);
+            enabled = false;
         } catch (Exception e) {
             getLogger().warning("Unable to connect to database!");
             getLogger().logError(e);
