@@ -2,7 +2,8 @@ package RainbowSetup;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -12,10 +13,12 @@ import java.util.jar.JarFile;
 public class PluginDescription {
     public String name;
     public String mainClass;
+    public List<String> softDepends;
 
     public PluginDescription() {
         name = "";
         mainClass = "";
+        softDepends = new ArrayList<String>();
     }
 
     public static PluginDescription getDescriptionForPlugin(File entry) throws Exception {
@@ -38,6 +41,14 @@ public class PluginDescription {
                 desc.mainClass = configArr[1].trim();
             } else if (configArr.length == 2 && configArr[0].equals("name")) {
                 desc.name = configArr[1].trim();
+            } else if (configArr.length > 1 && configArr[0].equals("softdepend")) {
+                String plugins = configArr[1].trim();
+                plugins = plugins.replace("[","");
+                plugins = plugins.replace("]","");
+                String[] pluginArr = plugins.split(",");
+                for (String plugin : pluginArr) {
+                    desc.softDepends.add(plugin);
+                }
             }
         }
 

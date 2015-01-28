@@ -10,7 +10,7 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Chat" />
     <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="library" name="bukkit-1.7.9-R0.2" level="project" />
+    <orderEntry type="module" module-name="RainbowSetup" />
+    <orderEntry type="library" name="PluginReference" level="project" />
   </component>
 </module>
-

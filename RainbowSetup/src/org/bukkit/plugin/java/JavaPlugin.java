@@ -2,6 +2,7 @@ package org.bukkit.plugin.java;
 
 import PluginReference.PluginBase;
 import RainbowSetup.MyPlugin;
+import RainbowSetup.PluginDescription;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import RainbowSetup.ConfigHandler;
@@ -17,6 +18,8 @@ import RainbowSetup.Logger;
 public class JavaPlugin extends PluginBase {
     private static Logger logger;
     public MyPlugin server;
+    public Class myClass;
+    public PluginDescription description;
 
     /////////////////////////////
     // Instance methods

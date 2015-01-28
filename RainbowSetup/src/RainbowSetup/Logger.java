@@ -11,8 +11,12 @@ import java.io.*;
  * Time: 6:56 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Logger {
+public class Logger extends java.util.logging.Logger {
     String logFile = "/testbed/bukkit_log.log";
+
+    public Logger() {
+        super("",null);
+    }
 
     public void info(String message) {
         writeFile("INFO: " + message);

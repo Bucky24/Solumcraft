@@ -792,7 +792,7 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (sender instanceof Player) {
             playerName = ((Player)sender).getName();
-        } else {                                                            F
+        } else {
             playerName = "CONSOLE";
         }
 

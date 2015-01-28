@@ -9,6 +9,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class MyPlugin extends PluginBase {
     private static String pluginDir = "bukkit_plugins";
     MC_Server server;
     private Map<String, JavaPlugin> pluginMap;
+    private Map<String, JavaPlugin> readyPluginMap;
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
 
@@ -48,6 +50,7 @@ public class MyPlugin extends PluginBase {
         server = argServer;
 
         pluginMap = new HashMap<String, JavaPlugin>();
+        readyPluginMap = new HashMap<String, JavaPlugin>();
 
         logger = new Logger();
 
@@ -57,13 +60,53 @@ public class MyPlugin extends PluginBase {
     @Override
     public void onServerFullyLoaded() {
         System.out.println("Server loaded, beginning to initialize plugins.");
+        List<JavaPlugin> plugins = new ArrayList<JavaPlugin>();
         Iterator it = pluginMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            plugins.add(plugin);
+        }
+
+        Object[] pluginList = plugins.toArray();
+
+        for (int i=0;i<pluginList.length;i++) {
+            JavaPlugin plugin = (JavaPlugin)pluginList[i];
             plugin.server = this;
+            for (String dep : plugin.description.softDepends) {
+                logger.info(plugin.description.name + " Depends on " + dep);
+                if (!readyPluginMap.containsKey(dep)) {
+                    logger.info("Dep not loaded!");
+                    boolean found = false;
+                    int foundIndex = -1;
+                    for (int j=i;j<pluginList.length;j++) {
+                        JavaPlugin p2 = (JavaPlugin)pluginList[j];
+                        logger.info(p2.description.name);
+                        if (p2.description.name.equals(dep)) {
+                            found = true;
+                            foundIndex = j;
+                        }
+                    }
+                    if (found) {
+                        logger.info("But we're loading it soon!");
+                        // if the plugins are not dependent on each other, then swap them
+                        // note this doesn't handle dependency circles, such as A -> B -> C -> A
+                        // will have to improve it if that ever happens.
+                        JavaPlugin p2 = (JavaPlugin)pluginList[foundIndex];
+                        if (!p2.description.softDepends.contains(plugin.description.name)) {
+                            logger.info("Swapping spaces!");
+                            pluginList[i] = p2;
+                            pluginList[foundIndex] = plugin;
+                            plugin = p2;
+                            logger.info("Now loading " + plugin.description.name);
+                        }
+                    }
+                }
+            }
             try {
+                System.out.println("Enabling " + plugin.description.name);
                 plugin.onEnable();
+                readyPluginMap.put(plugin.description.name,plugin);
             } catch (Exception e) {
                 logger.logError(e);
             }
@@ -96,22 +139,37 @@ public class MyPlugin extends PluginBase {
         }
     }
 
-    /////////////////////////
-    // Other
-    /////////////////////////
+    @Override
+    public void onPlayerJoin(MC_Player plr) {
+        Iterator it = pluginMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            try {
+                List<Method> methods = this.getMethodsThatTakeEvent(plugin, PlayerJoinEvent.class);
+                for (Method m : methods) {
+                    PlayerJoinEvent event = new PlayerJoinEvent(new Player(plr));
+                    m.invoke(plugin,event);
+                }
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
+    }
+
+    ///////////////////////////////////
+    // Official "server" functions
+    ///////////////////////////////////
 
     public MyPlugin getPluginManager() {
         return this;
     }
 
     public JavaPlugin getPlugin(String plugin) {
-        logger.info("Getting plugin " + plugin);
-        return pluginMap.get(plugin);
+        return readyPluginMap.get(plugin);
     }
 
-    public void registerEvents(JavaPlugin plugin, Listener listener) {
-
-    }
+    public void registerEvents(JavaPlugin plugin, Listener listener) {}
 
     public Player getPlayer(String player) {
         MC_Player p = server.getOnlinePlayerByName(player);
@@ -139,6 +197,14 @@ public class MyPlugin extends PluginBase {
         return response;
     }
 
+    public void broadcastMessage(String message) {
+        server.broadcastMessage(message);
+    }
+
+    /////////////////////////
+    // Other
+    /////////////////////////
+
     private void loadPlugins() {
         System.out.println("Loading plugins...");
         String cwd = System.getProperty("user.dir");
@@ -150,7 +216,9 @@ public class MyPlugin extends PluginBase {
             return;
         }
 
-        for (File entry : pluginDir.listFiles()) {
+        File[] files = pluginDir.listFiles();
+
+        for (File entry : files) {
             if (!entry.getName().endsWith(".jar")) {
                 continue;
             }
@@ -162,12 +230,16 @@ public class MyPlugin extends PluginBase {
                 PluginDescription description;
                 try {
                     description = PluginDescription.getDescriptionForPlugin(entry);
+
+                    // TODO: At this point we need to verify dependencies, since otherwise classes don't load properly.
+
                     PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
                     loaders.put(description.name, loader);
                     pluginMap.put(description.name,loader.plugin);
                 } catch (Exception e) {
                     PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader());
                     loaders.put(entry.getName(), loader);
+                    logger.warning(e.getMessage());
                 }
 
 
@@ -225,5 +297,21 @@ public class MyPlugin extends PluginBase {
         } catch (Exception e) {
             System.out.println("Can't print jar contents, got exception.");
         }
+    }
+
+    private List<Method> getMethodsThatTakeEvent(JavaPlugin plugin, Class comp) {
+        List<Method> methods = new ArrayList<Method>();
+        Class c = plugin.myClass;
+        Method[] allMethods = c.getDeclaredMethods();
+        for (Method m : allMethods) {
+            Class<?>[] pType  = m.getParameterTypes();
+            for (int i = 0; i < pType.length; i++) {
+                if (comp.equals(pType[i])) {
+                    methods.add(m);
+                }
+            }
+        }
+
+        return methods;
     }
 }

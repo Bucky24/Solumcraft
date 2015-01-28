@@ -1,21 +1,11 @@
 package RainbowSetup;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.plugin2.main.server.Plugin;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.JarURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 /**
  * Created by solum on 12/20/2014.
@@ -38,6 +28,8 @@ public class PluginClassLoader extends URLClassLoader {
             jarClass = Class.forName(description.mainClass, true, this);
         } catch (ClassNotFoundException ex) {
             throw new Exception("Cannot find main class `" + description.mainClass + "'", ex);
+        } catch (NoClassDefFoundError ex) {
+            throw new Exception("Cannot load main class `" + description.mainClass + "'", ex);
         }
 
         Class<? extends JavaPlugin> pluginClass;
@@ -47,7 +39,11 @@ public class PluginClassLoader extends URLClassLoader {
             throw new Exception("main class `" + description.mainClass + "' does not extend JavaPlugin", ex);
         }
 
+        loader.logger.info("Loaded plugin " + description.name);
+
         plugin = pluginClass.newInstance();
+        plugin.myClass = jarClass;
+        plugin.description = description;
     }
 
     public PluginClassLoader(MyPlugin loader, File file, ClassLoader parent) throws Exception {
