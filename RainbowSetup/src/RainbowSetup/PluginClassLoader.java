@@ -64,38 +64,38 @@ public class PluginClassLoader extends URLClassLoader {
     }
 
     Class<?> findClass(String className, boolean checkGlobal) throws ClassNotFoundException {
-        //System.out.println("PluginClassLoader(" + this.name +").findClass: looking for " + className);
+        System.out.println("PluginClassLoader(" + this.name +").findClass: looking for " + className);
         Class<?> result = classes.get(className);
 
         if (result == null) {
             if (checkGlobal) {
-                //System.out.println("PluginClassLoader(" + this.name + ").findClass: checking global for " + className);
+                System.out.println("PluginClassLoader(" + this.name + ").findClass: checking global for " + className);
                 result = loader.getClassByName(className, this.name);
             }
 
             if (result == null) {
-                //System.out.println("PluginClassLoader(" + this.name + ").findClass: global can't find " + className);
+                System.out.println("PluginClassLoader(" + this.name + ").findClass: global can't find " + className);
                 try {
                     result = super.findClass(className);
                 } catch (ClassNotFoundException e) {
-                    //System.out.println("PluginClassLoader(" + this.name + ").findClass: parent can't find " + className + ", got exception!");
+                    System.out.println("PluginClassLoader(" + this.name + ").findClass: parent can't find " + className + ", got exception!");
                     throw e;
                 }
 
                 if (result != null) {
-                    //System.out.println("PluginClassLoader(" + this.name + ").findClass: parent found " + className);
+                    System.out.println("PluginClassLoader(" + this.name + ").findClass: parent found " + className);
                     loader.setClass(className, result);
                 } else {
-                    //System.out.println("PluginClassLoader(" + this.name + ").findClass: parent can't find " + className);
+                    System.out.println("PluginClassLoader(" + this.name + ").findClass: parent can't find " + className);
                 }
             }
         }
-        //System.out.println("PluginClassLoader(" + this.name + ").findClass: done searching for " + className);
+        System.out.println("PluginClassLoader(" + this.name + ").findClass: done searching for " + className);
         if (result == null) {
-            //System.out.println("PluginClassLoader(" + this.name +").findClass: can't find " + className);
+            System.out.println("PluginClassLoader(" + this.name +").findClass: can't find " + className);
         } else {
             classes.put(className, result);
-            //System.out.println("PluginClassLoader(" + this.name +").findClass: found " + className);
+            System.out.println("PluginClassLoader(" + this.name +").findClass: found " + className);
         }
         return result;
     }

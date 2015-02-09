@@ -218,6 +218,9 @@ public class MyPlugin extends PluginBase {
 
         File[] files = pluginDir.listFiles();
 
+        Map<PluginDescription,File> plugins = new HashMap<PluginDescription, File>();
+        List<File> extraJars = new ArrayList<File>();
+
         for (File entry : files) {
             if (!entry.getName().endsWith(".jar")) {
                 continue;
@@ -225,33 +228,73 @@ public class MyPlugin extends PluginBase {
             System.out.println("Plugin jar: " + entry.getName());
 
             try {
-                //printJarContents(entry);
-
                 PluginDescription description;
                 try {
                     description = PluginDescription.getDescriptionForPlugin(entry);
-
-                    // TODO: At this point we need to verify dependencies, since otherwise classes don't load properly.
-
-                    PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
-                    loaders.put(description.name, loader);
-                    pluginMap.put(description.name,loader.plugin);
+                    plugins.put(description,entry);
                 } catch (Exception e) {
-                    PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader());
-                    loaders.put(entry.getName(), loader);
-                    logger.warning(e.getMessage());
+                    logger.warning("Adding " + entry.getName() + " as extra jar");
+                    extraJars.add(entry);
                 }
-
-
             } catch (Exception e) {
                 System.out.println("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }
+
+        // extraJars are jars for which there was no plugin.yml. Probably utility jars.
+        for (File entry : extraJars) {
+            try {
+                logger.info("Loading extra jar " + entry.getName());
+                PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader());
+                loaders.put(entry.getName(), loader);
+            } catch (Exception e) {
+                System.out.println("Can't load extra jar " + entry.getAbsolutePath() + ": " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        Map<PluginDescription,File> newPlugins = new HashMap<PluginDescription, File>();
+        while (true) {
+            newPlugins = new HashMap<PluginDescription, File>();
+            Iterator it = plugins.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry)it.next();
+                PluginDescription description = (PluginDescription)pairs.getKey();
+                File entry = (File)pairs.getValue();
+                logger.info("Attempting to load " + description.name);
+
+                // make sure all dependencies were resolved
+                boolean resolved = true;
+                for (String dep : description.depends) {
+                    logger.info("Has dependency on " + dep);
+                    if (!pluginMap.containsKey(dep)) {
+                        logger.info("Which is not resolved");
+                        resolved = false;
+                    }
+                }
+                if (!resolved) {
+                    newPlugins.put(description,entry);
+                } else {
+                    try {
+                        logger.info("Beginning code load");
+                        PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
+                        pluginMap.put(description.name,loader.plugin);
+                        loaders.put(description.name, loader);
+                    } catch (Exception e) {
+                        logger.logError(e);
+                    }
+                }
+            }
+            if (newPlugins.size() == plugins.size()) break;
+            plugins = newPlugins;
+            logger.info("We have " + plugins.keySet().size() + " plugins left");
+        }
+        logger.info(plugins.keySet().size() + " plugins failed to load");
     }
 
     Class<?> getClassByName(final String name, String handlerName) {
-        //logger.info("MyPlugin.getClassByName: " + name);
+        logger.info("MyPlugin.getClassByName: " + name);
         Class<?> cachedClass = classes.get(name);
 
         if (cachedClass != null) {
@@ -264,7 +307,7 @@ public class MyPlugin extends PluginBase {
                 try {
                     cachedClass = loader.findClass(name, false);
                 } catch (ClassNotFoundException cnfe) {
-                    //logger.info("MyPlugin.getClassByName: loader couldn't find " + name + ", got ClassNotFoundException");
+                    logger.info("MyPlugin.getClassByName: loader couldn't find " + name + ", got ClassNotFoundException");
                 }
                 if (cachedClass != null) {
                     return cachedClass;

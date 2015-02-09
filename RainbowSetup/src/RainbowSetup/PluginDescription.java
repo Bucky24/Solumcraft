@@ -14,11 +14,13 @@ public class PluginDescription {
     public String name;
     public String mainClass;
     public List<String> softDepends;
+    public List<String> depends;
 
     public PluginDescription() {
         name = "";
         mainClass = "";
         softDepends = new ArrayList<String>();
+        depends = new ArrayList<String>();
     }
 
     public static PluginDescription getDescriptionForPlugin(File entry) throws Exception {
@@ -48,6 +50,14 @@ public class PluginDescription {
                 String[] pluginArr = plugins.split(",");
                 for (String plugin : pluginArr) {
                     desc.softDepends.add(plugin);
+                }
+            } else if (configArr.length > 1 && configArr[0].equals("depends")) {
+                String plugins = configArr[1].trim();
+                plugins = plugins.replace("[","");
+                plugins = plugins.replace("]","");
+                String[] pluginArr = plugins.split(",");
+                for (String plugin : pluginArr) {
+                    desc.depends.add(plugin);
                 }
             }
         }
