@@ -1,6 +1,7 @@
 package org.bukkit.command;
 
 import PluginReference.MC_Player;
+import org.bukkit.entity.Player;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,18 +10,10 @@ import PluginReference.MC_Player;
  * Time: 7:15 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CommandSender {
+public class CommandSender extends Player {
 
-    public CommandSender() {
-
-    }
-
-    public void sendMessage(String message) {
-
-    }
-
-    public String getName() {
-        return "Undefined";
+    public CommandSender(MC_Player player) {
+        super(player);
     }
 
 }

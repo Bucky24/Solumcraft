@@ -12,7 +12,7 @@ import java.util.UUID;
  * Time: 7:24 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Player extends CommandSender {
+public class Player extends Entity {
     public MC_Player player;
 
     public Player(MC_Player p) {

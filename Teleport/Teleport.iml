@@ -12,7 +12,5 @@
     <orderEntry type="module" module-name="CombatLog" />
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="library" name="bukkit-1.7.9-R0.2" level="project" />
   </component>
 </module>
-

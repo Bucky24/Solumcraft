@@ -7,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +33,7 @@ public class CombatLog extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        getLogger().info("CombatLot disable");
+        getLogger().info("CombatLog disabled");
     }
 
     @EventHandler

@@ -38,6 +38,14 @@ public class Logger extends java.util.logging.Logger {
         }
     }
 
+    public void displayStackTrace() {
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            this.logError(e);
+        }
+    }
+
     public void logError(String message, StackTraceElement[] elements) {
         writeFile("Exception: " + message);
         System.out.println("Exception: " + message);

@@ -7,10 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Database" />
-    <orderEntry type="module" module-name="Chat" />
-    <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="module" module-name="RainbowSetup" />
+    <orderEntry type="module" module-name="Database" scope="PROVIDED" />
+    <orderEntry type="module" module-name="Chat" scope="PROVIDED" />
+    <orderEntry type="module" module-name="UserMap" scope="PROVIDED" />
+    <orderEntry type="module" module-name="RainbowSetup" scope="PROVIDED" />
     <orderEntry type="library" name="PluginReference" level="project" />
   </component>
 </module>

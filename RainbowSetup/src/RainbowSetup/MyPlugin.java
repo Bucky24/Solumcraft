@@ -13,11 +13,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -124,7 +122,7 @@ public class MyPlugin extends PluginBase {
             msg = msg.substring(1);
             String[] commandArr = msg.split(" ");
             String command = commandArr[0];
-            CommandSender sender = new Player(plr);
+            CommandSender sender = new CommandSender(plr);
             commandArr = Arrays.copyOfRange(commandArr, 1, commandArr.length);
             Iterator it = pluginMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -294,7 +292,7 @@ public class MyPlugin extends PluginBase {
     }
 
     Class<?> getClassByName(final String name, String handlerName) {
-        logger.info("MyPlugin.getClassByName: " + name);
+        //logger.info("MyPlugin.getClassByName: " + name);
         Class<?> cachedClass = classes.get(name);
 
         if (cachedClass != null) {
@@ -307,7 +305,7 @@ public class MyPlugin extends PluginBase {
                 try {
                     cachedClass = loader.findClass(name, false);
                 } catch (ClassNotFoundException cnfe) {
-                    logger.info("MyPlugin.getClassByName: loader couldn't find " + name + ", got ClassNotFoundException");
+                    //logger.info("MyPlugin.getClassByName: loader couldn't find " + name + ", got ClassNotFoundException");
                 }
                 if (cachedClass != null) {
                     return cachedClass;
