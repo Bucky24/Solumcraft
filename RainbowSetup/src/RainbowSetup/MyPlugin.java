@@ -32,6 +32,7 @@ public class MyPlugin extends PluginBase {
     private static String pluginDir = "bukkit_plugins";
     MC_Server server;
     private Map<String, JavaPlugin> pluginMap;
+    private List<JavaPlugin> pluginList;
     private Map<String, JavaPlugin> readyPluginMap;
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
@@ -49,6 +50,7 @@ public class MyPlugin extends PluginBase {
 
         pluginMap = new HashMap<String, JavaPlugin>();
         readyPluginMap = new HashMap<String, JavaPlugin>();
+        pluginList = new ArrayList<JavaPlugin>();
 
         logger = new Logger();
 
@@ -57,58 +59,7 @@ public class MyPlugin extends PluginBase {
 
     @Override
     public void onServerFullyLoaded() {
-        System.out.println("Server loaded, beginning to initialize plugins.");
-        List<JavaPlugin> plugins = new ArrayList<JavaPlugin>();
-        Iterator it = pluginMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            JavaPlugin plugin = (JavaPlugin)pair.getValue();
-            plugins.add(plugin);
-        }
-
-        Object[] pluginList = plugins.toArray();
-
-        for (int i=0;i<pluginList.length;i++) {
-            JavaPlugin plugin = (JavaPlugin)pluginList[i];
-            plugin.server = this;
-            for (String dep : plugin.description.softDepends) {
-                logger.info(plugin.description.name + " Depends on " + dep);
-                if (!readyPluginMap.containsKey(dep)) {
-                    logger.info("Dep not loaded!");
-                    boolean found = false;
-                    int foundIndex = -1;
-                    for (int j=i;j<pluginList.length;j++) {
-                        JavaPlugin p2 = (JavaPlugin)pluginList[j];
-                        logger.info(p2.description.name);
-                        if (p2.description.name.equals(dep)) {
-                            found = true;
-                            foundIndex = j;
-                        }
-                    }
-                    if (found) {
-                        logger.info("But we're loading it soon!");
-                        // if the plugins are not dependent on each other, then swap them
-                        // note this doesn't handle dependency circles, such as A -> B -> C -> A
-                        // will have to improve it if that ever happens.
-                        JavaPlugin p2 = (JavaPlugin)pluginList[foundIndex];
-                        if (!p2.description.softDepends.contains(plugin.description.name)) {
-                            logger.info("Swapping spaces!");
-                            pluginList[i] = p2;
-                            pluginList[foundIndex] = plugin;
-                            plugin = p2;
-                            logger.info("Now loading " + plugin.description.name);
-                        }
-                    }
-                }
-            }
-            try {
-                System.out.println("Enabling " + plugin.description.name);
-                plugin.onEnable();
-                readyPluginMap.put(plugin.description.name,plugin);
-            } catch (Exception e) {
-                logger.logError(e);
-            }
-        }
+        initPlugins();
     }
 
     ///////////////////////////
@@ -125,13 +76,19 @@ public class MyPlugin extends PluginBase {
             CommandSender sender = new CommandSender(plr);
             commandArr = Arrays.copyOfRange(commandArr, 1, commandArr.length);
             Iterator it = pluginMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                JavaPlugin plugin = (JavaPlugin)pair.getValue();
-                try {
-                    plugin.onCommand(sender,new Command(command),command,commandArr);
-                } catch (Exception e) {
-                    logger.logError(e);
+            if (command.equalsIgnoreCase("reload")) {
+                logger.info("Reloading server!");
+                loadPlugins();
+                initPlugins();
+            } else {
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    JavaPlugin plugin = (JavaPlugin) pair.getValue();
+                    try {
+                        plugin.onCommand(sender, new Command(command), command, commandArr);
+                    } catch (Exception e) {
+                        logger.logError(e);
+                    }
                 }
             }
         }
@@ -203,7 +160,57 @@ public class MyPlugin extends PluginBase {
     // Other
     /////////////////////////
 
+    private void initPlugins() {
+        System.out.println("Server loaded, beginning to initialize plugins.");
+
+        for (int i=0;i<pluginList.size();i++) {
+            JavaPlugin plugin = (JavaPlugin)pluginList.get(i);
+            plugin.server = this;
+            for (String dep : plugin.description.softDepends) {
+                logger.info(plugin.description.name + " Depends on " + dep);
+                if (!readyPluginMap.containsKey(dep)) {
+                    logger.info("Dep not loaded!");
+                    boolean found = false;
+                    int foundIndex = -1;
+                    for (int j=i;j<pluginList.size();j++) {
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(i);
+                        logger.info(p2.description.name);
+                        if (p2.description.name.equals(dep)) {
+                            found = true;
+                            foundIndex = j;
+                        }
+                    }
+                    if (found) {
+                        logger.info("But we're loading it soon!");
+                        // if the plugins are not dependent on each other, then swap them
+                        // note this doesn't handle dependency circles, such as A -> B -> C -> A
+                        // will have to improve it if that ever happens.
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(foundIndex);
+                        if (!p2.description.softDepends.contains(plugin.description.name)) {
+                            logger.info("Swapping spaces!");
+                            pluginList.set(i, p2);
+                            pluginList.set(foundIndex,plugin);
+                            plugin = p2;
+                            i --;
+                            logger.info("Now loading " + plugin.description.name);
+                        }
+                    }
+                }
+            }
+            try {
+                System.out.println("Enabling " + plugin.description.name);
+                plugin.onEnable();
+                readyPluginMap.put(plugin.description.name,plugin);
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
+    }
+
     private void loadPlugins() {
+        pluginList.clear();
+        pluginMap.clear();
+        readyPluginMap.clear();
         System.out.println("Loading plugins...");
         String cwd = System.getProperty("user.dir");
         System.out.println("Starting in " + cwd);
@@ -278,6 +285,7 @@ public class MyPlugin extends PluginBase {
                         logger.info("Beginning code load");
                         PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
                         pluginMap.put(description.name,loader.plugin);
+                        pluginList.add(loader.plugin);
                         loaders.put(description.name, loader);
                     } catch (Exception e) {
                         logger.logError(e);

@@ -1,9 +1,6 @@
 package com.thepastimers.Chat;
 
-import com.thepastimers.Alias.Alias;
 import com.thepastimers.Database.Database;
-import com.thepastimers.Logger.Logger;
-import com.thepastimers.Worlds.Worlds;
 import net.minecraft.server.v1_7_R3.ChatSerializer;
 import net.minecraft.server.v1_7_R3.IChatBaseComponent;
 import net.minecraft.server.v1_7_R3.PacketPlayOutChat;
@@ -16,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -37,9 +33,6 @@ import java.util.*;
  */
 public class Chat extends JavaPlugin implements Listener {
     Database database;
-    Worlds worlds;
-    Logger logger;
-    Alias alias;
 
     Map<Integer,Map<Class,JavaPlugin>> listeners;
     List<ChatCode> codes;
@@ -57,21 +50,6 @@ public class Chat extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Unable to load Database plugin. Some functionality may not be available");
-        }
-
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
-        if (worlds == null) {
-            getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
-
-        logger = (Logger)getServer().getPluginManager().getPlugin("Logger");
-        if (logger == null) {
-            getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
-        }
-
-        alias = (Alias)getServer().getPluginManager().getPlugin("Alias");
-        if (alias == null) {
-            getLogger().warning("Unable to load Logger plugin. Some functionality may not be available.");
         }
 
         getLogger().info(ChatData.getTableInfo());
@@ -179,10 +157,6 @@ public class Chat extends JavaPlugin implements Listener {
 
     public void sendChat(String message, String player, boolean save, boolean web) {
         String playerName = player;
-        if (alias != null) {
-            player = alias.getAlias(player);
-            playerName = alias.getRetitle(player);
-        }
         ChatData data = new ChatData();
         data.setPlayer(player);
         data.setPlayerString(player);
@@ -233,26 +207,10 @@ public class Chat extends JavaPlugin implements Listener {
         Player[] list = getServer().getOnlinePlayers();
 
         for (Player p : list) {
-            if (worlds != null && worlds.getPlayerWorldType(p.getName(),false) == Worlds.VANILLA) {
-                p.sendMessage(vanillaMessage);
-            } else {
-                p.sendMessage(mainMessage);
-            }
+            p.sendMessage(mainMessage);
         }
         //getLogger().info(mainMessage);
         getLogger().info(vanillaMessage);
-
-        if (logger != null) {
-            Player p = getServer().getPlayer(player);
-            if (p == null) {
-                //getLogger().info("Got player " + player);
-                OfflinePlayer op = getServer().getOfflinePlayer(player);
-                logger.writeEvent(op,"chat",messageBak);
-                //getLogger().info("Player is " + p);
-            } else {
-                logger.writeEvent(p,"chat",messageBak);
-            }
-        }
 
         writeChatLine(mainMessage + "\n");
     }
@@ -280,9 +238,6 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void saveMessage(String message, String player) {
-        if (alias != null) {
-            player = alias.getAlias(player);
-        }
         ChatData data = new ChatData();
         data.setPlayer(player);
         data.setPlayerString(player);
