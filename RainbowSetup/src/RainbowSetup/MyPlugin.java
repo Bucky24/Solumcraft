@@ -198,7 +198,8 @@ public class MyPlugin extends PluginBase {
                 }
             }
             try {
-                System.out.println("Enabling " + plugin.description.name);
+                logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
+                logger.info("Enabling " + plugin.description.name);
                 plugin.onEnable();
                 readyPluginMap.put(plugin.description.name,plugin);
             } catch (Exception e) {
