@@ -10,13 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55640f23-dc61-4070-8499-96331c59ddd8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" afterPath="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
       <change type="MODIFICATION" beforePath="H:\code\solumcraft\RainbowSetup\src\org\bukkit\plugin\java\JavaPlugin.java" afterPath="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/plugin/java/JavaPlugin.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/MyPlugin.java" afterPath="$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/MyPlugin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/Rank.iml" afterPath="$PROJECT_DIR$/Rank/Rank.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" afterPath="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Chat/plugin.yml" afterPath="$PROJECT_DIR$/Chat/plugin.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rank/plugin.yml" afterPath="$PROJECT_DIR$/Rank/plugin.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Solumcraft.iws" />
@@ -89,30 +85,20 @@
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Worlds/plugin.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rank/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="238">
               <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rank.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Rank.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6024" max-vertical-offset="9248">
-              <caret line="374" column="25" selection-start-line="374" selection-start-column="25" selection-end-line="374" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.835536" vertical-offset="3528" max-vertical-offset="9214">
+              <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,27 +106,57 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/Logger.java">
+      <file leaf-file-name="RankData.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1190">
-              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="346" max-vertical-offset="3162">
+              <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerRank.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2022" max-vertical-offset="3043">
+              <caret line="154" column="62" selection-start-line="154" selection-start-column="62" selection-end-line="154" selection-end-column="62" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyPlugin.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/Logger.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
+              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyPlugin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/MyPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6740088" vertical-offset="2805" max-vertical-offset="5916">
-              <caret line="216" column="38" selection-start-line="216" selection-start-column="38" selection-end-line="216" selection-end-column="38" />
+            <state vertical-scroll-proportion="-12.896552" vertical-offset="2618" max-vertical-offset="5916">
+              <caret line="202" column="56" selection-start-line="202" selection-start-column="56" selection-end-line="202" selection-end-column="56" />
               <folding>
-                <element signature="e#1769#1770#0" expanded="true" />
-                <element signature="e#1798#1799#0" expanded="true" />
-                <element signature="e#7953#7978#0" expanded="true" />
-                <element signature="e#9486#9511#0" expanded="true" />
+                <element signature="e#8003#8028#0" expanded="true" />
+                <element signature="e#9536#9561#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyPlugin.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/RainbowTest/src/RainbowTest/MyPlugin.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+              <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -148,18 +164,8 @@
       <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/UserMap/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+            <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="153">
               <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Chat/plugin.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
-              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -168,10 +174,17 @@
       <file leaf-file-name="Chat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-41.03448" vertical-offset="1258" max-vertical-offset="5542">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="5542">
               <caret line="146" column="33" selection-start-line="146" selection-start-column="33" selection-end-line="146" selection-end-column="33" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#5029#5030#0" expanded="false" />
+                <element signature="e#5065#5066#0" expanded="false" />
+                <element signature="e#6118#6119#0" expanded="false" />
+                <element signature="e#6163#6164#0" expanded="false" />
+                <element signature="e#6236#6237#0" expanded="false" />
+                <element signature="e#6287#6288#0" expanded="false" />
+                <element signature="e#6714#6723#0" expanded="false" />
+                <element signature="e#9879#9888#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -180,9 +193,30 @@
       <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Logger/src/com/thepastimers/Logger/Logger.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5933">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="5933">
               <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
-              <folding />
+              <folding>
+                <element signature="e#3307#3308#0" expanded="false" />
+                <element signature="e#3356#3357#0" expanded="false" />
+                <element signature="e#3410#3411#0" expanded="false" />
+                <element signature="e#3456#3457#0" expanded="false" />
+                <element signature="e#3513#3514#0" expanded="false" />
+                <element signature="e#3567#3568#0" expanded="false" />
+                <element signature="e#3629#3630#0" expanded="false" />
+                <element signature="e#3674#3675#0" expanded="false" />
+                <element signature="e#3741#3742#0" expanded="false" />
+                <element signature="e#3795#3796#0" expanded="false" />
+                <element signature="e#3869#3870#0" expanded="false" />
+                <element signature="e#3923#3924#0" expanded="false" />
+                <element signature="e#5392#5393#0" expanded="false" />
+                <element signature="e#5475#5476#0" expanded="false" />
+                <element signature="e#5574#5575#0" expanded="false" />
+                <element signature="e#5627#5628#0" expanded="false" />
+                <element signature="e#6081#6082#0" expanded="false" />
+                <element signature="e#6158#6159#0" expanded="false" />
+                <element signature="e#7212#7213#0" expanded="false" />
+                <element signature="e#7266#7267#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -215,7 +249,6 @@
         <option value="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/event/player/PlayerJoinEvent.java" />
         <option value="$PROJECT_DIR$/UserMap/src/com/thepastimers/UserMap/UserMap.java" />
         <option value="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/ChatColor.java" />
-        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java" />
         <option value="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/plugin/java/JavaPlugin.java" />
@@ -236,8 +269,9 @@
         <option value="$PROJECT_DIR$/Chat/plugin.yml" />
         <option value="$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java" />
         <option value="$PROJECT_DIR$/Rank/plugin.yml" />
-        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
         <option value="$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/MyPlugin.java" />
+        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java" />
+        <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
       </list>
     </option>
   </component>
@@ -292,26 +326,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Solumcraft" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -435,6 +449,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Rank" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RainbowTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RainbowTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RainbowTest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -926,6 +976,26 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Solumcraft" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1140,7 +1210,13 @@
       <option name="project" value="LOCAL" />
       <updated>1424143170050</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Getting rank plugin to actually work, as well as reloading plugins (it's there, just not tested)">
+      <created>1424325896973</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1424325896973</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1160,6 +1236,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32105264" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14925373" sideWeight="0.6952169" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24919957" sideWeight="0.6666667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1172,7 +1249,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6674528" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -1223,7 +1299,8 @@
     </option>
     <MESSAGE value="Adding in dependency resolution." />
     <MESSAGE value="Further work moving plugins to rainbow. Removing bukkit from all plugins to speed things along." />
-    <option name="LAST_COMMIT_MESSAGE" value="Further work moving plugins to rainbow. Removing bukkit from all plugins to speed things along." />
+    <MESSAGE value="Getting rank plugin to actually work, as well as reloading plugins (it's there, just not tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Getting rank plugin to actually work, as well as reloading plugins (it's there, just not tested)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1245,14 +1322,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/RainbowSetup/src/org/bukkit/command/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Plot/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
@@ -1278,29 +1347,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="3196">
-          <caret line="11" column="32" selection-start-line="10" selection-start-column="21" selection-end-line="11" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3162">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerTitle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="3026">
           <caret line="11" column="32" selection-start-line="10" selection-start-column="21" selection-end-line="11" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1369,7 +1421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="193" max-vertical-offset="9554">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1460,7 +1511,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10319">
           <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1475,6 +1525,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1054">
           <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1490,7 +1543,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2941">
           <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1499,7 +1552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="897">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1507,7 +1559,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="897">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1515,7 +1566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
           <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1523,7 +1573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
           <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1531,12 +1580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
           <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-          <folding>
-            <element signature="e#343#344#0" expanded="false" />
-            <element signature="e#372#373#0" expanded="false" />
-            <element signature="e#406#407#0" expanded="false" />
-            <element signature="e#436#437#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1544,7 +1587,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
           <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1552,7 +1594,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2346" max-vertical-offset="7514">
           <caret line="42" column="40" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1560,7 +1601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="897">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1576,9 +1616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22742476" vertical-offset="187" max-vertical-offset="10676">
           <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1594,16 +1631,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.116972476" vertical-offset="0" max-vertical-offset="884">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Chat/src/com/thepastimers/Chat/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-41.03448" vertical-offset="1258" max-vertical-offset="5542">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="5542">
           <caret line="146" column="33" selection-start-line="146" selection-start-column="33" selection-end-line="146" selection-end-column="33" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#5029#5030#0" expanded="false" />
+            <element signature="e#5065#5066#0" expanded="false" />
+            <element signature="e#6118#6119#0" expanded="false" />
+            <element signature="e#6163#6164#0" expanded="false" />
+            <element signature="e#6236#6237#0" expanded="false" />
+            <element signature="e#6287#6288#0" expanded="false" />
+            <element signature="e#6714#6723#0" expanded="false" />
+            <element signature="e#9879#9888#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1620,24 +1663,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5933">
           <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/Logger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1258">
-          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6024" max-vertical-offset="9248">
-          <caret line="374" column="25" selection-start-line="374" selection-start-column="25" selection-end-line="374" selection-end-column="25" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3307#3308#0" expanded="false" />
+            <element signature="e#3356#3357#0" expanded="false" />
+            <element signature="e#3410#3411#0" expanded="false" />
+            <element signature="e#3456#3457#0" expanded="false" />
+            <element signature="e#3513#3514#0" expanded="false" />
+            <element signature="e#3567#3568#0" expanded="false" />
+            <element signature="e#3629#3630#0" expanded="false" />
+            <element signature="e#3674#3675#0" expanded="false" />
+            <element signature="e#3741#3742#0" expanded="false" />
+            <element signature="e#3795#3796#0" expanded="false" />
+            <element signature="e#3869#3870#0" expanded="false" />
+            <element signature="e#3923#3924#0" expanded="false" />
+            <element signature="e#5392#5393#0" expanded="false" />
+            <element signature="e#5475#5476#0" expanded="false" />
+            <element signature="e#5574#5575#0" expanded="false" />
+            <element signature="e#5627#5628#0" expanded="false" />
+            <element signature="e#6081#6082#0" expanded="false" />
+            <element signature="e#6158#6159#0" expanded="false" />
+            <element signature="e#7212#7213#0" expanded="false" />
+            <element signature="e#7266#7267#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1655,21 +1701,63 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="31338" max-vertical-offset="50813">
           <caret line="1923" column="18" selection-start-line="1923" selection-start-column="18" selection-end-line="1923" selection-end-column="18" />
           <folding>
-            <element signature="e#75706#75707#0" expanded="true" />
-            <element signature="e#75757#75758#0" expanded="true" />
+            <element signature="e#75706#75707#0" expanded="false" />
+            <element signature="e#75757#75758#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/MyPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6740088" vertical-offset="2805" max-vertical-offset="5916">
-          <caret line="216" column="38" selection-start-line="216" selection-start-column="38" selection-end-line="216" selection-end-column="38" />
+        <state vertical-scroll-proportion="-12.896552" vertical-offset="2618" max-vertical-offset="5916">
+          <caret line="202" column="56" selection-start-line="202" selection-start-column="56" selection-end-line="202" selection-end-column="56" />
           <folding>
-            <element signature="e#1769#1770#0" expanded="true" />
-            <element signature="e#1798#1799#0" expanded="true" />
-            <element signature="e#7953#7978#0" expanded="true" />
-            <element signature="e#9486#9511#0" expanded="true" />
+            <element signature="e#8003#8028#0" expanded="true" />
+            <element signature="e#9536#9561#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RainbowTest/src/RainbowTest/MyPlugin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/RankData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="346" max-vertical-offset="3162">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RainbowSetup/src/RainbowSetup/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/PlayerRank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2022" max-vertical-offset="3043">
+          <caret line="154" column="62" selection-start-line="154" selection-start-column="62" selection-end-line="154" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.835536" vertical-offset="3528" max-vertical-offset="9214">
+          <caret line="243" column="9" selection-start-line="243" selection-start-column="9" selection-end-line="243" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

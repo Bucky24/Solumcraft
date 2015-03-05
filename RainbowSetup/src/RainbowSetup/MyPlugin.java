@@ -211,6 +211,8 @@ public class MyPlugin extends PluginBase {
         pluginList.clear();
         pluginMap.clear();
         readyPluginMap.clear();
+        classes.clear();
+        loaders.clear();
         System.out.println("Loading plugins...");
         String cwd = System.getProperty("user.dir");
         System.out.println("Starting in " + cwd);

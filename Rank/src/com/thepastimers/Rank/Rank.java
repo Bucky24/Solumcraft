@@ -231,8 +231,6 @@ public class Rank extends JavaPlugin implements Listener {
 
         String rank = getRank(player);
 
-        if ("owner".equalsIgnoreCase(toRank)) return false;
-
         if (rank.equalsIgnoreCase("gameadmin") || rank.equalsIgnoreCase("admin") || rank.equalsIgnoreCase("owner")) {
             return true;
         }
@@ -355,7 +353,6 @@ public class Rank extends JavaPlugin implements Listener {
 
 
         String command = cmd.getName();
-
         if (command.equalsIgnoreCase("rank")) {
             if (args.length > 0) {
                 String secondCommand = args[0];
@@ -365,6 +362,7 @@ public class Rank extends JavaPlugin implements Listener {
                         String newRank = args[2].toLowerCase();
                         if (!isAuthorized(uuid,newRank)) {
                             sender.sendMessage(ChatColor.RED + "You do not have permission to do this (must be console or owner/admin)");
+                            sender.sendMessage(ChatColor.RED + "Your UUID is " + uuid);
                             getLogger().info(playerName + " attempted unauthorized access of /rank set");
                             return true;
                         }
