@@ -36,6 +36,7 @@ public class MyPlugin extends PluginBase {
     private Map<String, JavaPlugin> readyPluginMap;
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
+    private final Map<String, CommandHandler> commandHandlers = new HashMap<String, CommandHandler>();
 
     Logger logger;
 
@@ -68,30 +69,7 @@ public class MyPlugin extends PluginBase {
 
     @Override
     public void onPlayerInput(MC_Player plr, String msg, MC_EventInfo ei) {
-        if (msg.startsWith("/")) {
-            System.out.println("Got command! " + msg);
-            msg = msg.substring(1);
-            String[] commandArr = msg.split(" ");
-            String command = commandArr[0];
-            CommandSender sender = new CommandSender(plr);
-            commandArr = Arrays.copyOfRange(commandArr, 1, commandArr.length);
-            Iterator it = pluginMap.entrySet().iterator();
-            if (command.equalsIgnoreCase("reload")) {
-                logger.info("Reloading server!");
-                loadPlugins();
-                initPlugins();
-            } else {
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    JavaPlugin plugin = (JavaPlugin) pair.getValue();
-                    try {
-                        plugin.onCommand(sender, new Command(command), command, commandArr);
-                    } catch (Exception e) {
-                        logger.logError(e);
-                    }
-                }
-            }
-        }
+
     }
 
     @Override
@@ -160,6 +138,27 @@ public class MyPlugin extends PluginBase {
     // Other
     /////////////////////////
 
+    public void handleCommand(MC_Player player, String command, String[] commandArr) {
+        System.out.println("Got command! " + command);
+        CommandSender sender = new CommandSender(player);
+        Iterator it = pluginMap.entrySet().iterator();
+        if (command.equalsIgnoreCase("reload")) {
+            logger.info("Reloading server!");
+            loadPlugins();
+            initPlugins();
+        } else {
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                JavaPlugin plugin = (JavaPlugin) pair.getValue();
+                try {
+                    plugin.onCommand(sender, new Command(command), command, commandArr);
+                } catch (Exception e) {
+                    logger.logError(e);
+                }
+            }
+        }
+    }
+
     private void initPlugins() {
         System.out.println("Server loaded, beginning to initialize plugins.");
 
@@ -199,6 +198,12 @@ public class MyPlugin extends PluginBase {
             }
             try {
                 logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
+                for (String command : plugin.description.commands) {
+                    if (commandHandlers.containsKey(command)) continue;
+                    CommandHandler handler = new CommandHandler(command,this);
+                    server.registerCommand(handler);
+                    commandHandlers.put(command,handler);
+                }
                 logger.info("Enabling " + plugin.description.name);
                 plugin.onEnable();
                 readyPluginMap.put(plugin.description.name,plugin);
