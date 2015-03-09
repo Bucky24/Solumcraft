@@ -10,5 +10,7 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="module" module-name="UserMap" />
+    <orderEntry type="module" module-name="RainbowSetup" />
+    <orderEntry type="library" name="PluginReference" level="project" />
   </component>
 </module>

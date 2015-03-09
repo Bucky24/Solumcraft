@@ -14,5 +14,7 @@
     <orderEntry type="module" module-name="ChestProtect" />
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="Logger" />
+    <orderEntry type="module" module-name="RainbowSetup" />
+    <orderEntry type="library" name="PluginReference" level="project" />
   </component>
 </module>
