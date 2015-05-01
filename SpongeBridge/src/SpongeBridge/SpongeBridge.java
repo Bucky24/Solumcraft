@@ -1,11 +1,10 @@
 package SpongeBridge;
 
-import com.google.inject.Inject;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.plugin.Plugin;
-import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -28,17 +27,35 @@ public class SpongeBridge {
 
     @Subscribe
     public void onServerStart(ServerStartedEvent event) {
+        logger = new Logger();
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
+
+        pluginMap = new HashMap<String, JavaPlugin>();
+        readyPluginMap = new HashMap<String, JavaPlugin>();
+        pluginList = new ArrayList<JavaPlugin>();
 
         this.loadPlugins();
     }
 
-    @Inject
     private Logger logger;
 
     public Logger getLogger() {
         return logger;
     }
+
+    ///////////////////////////////////////////////////////
+    // Server methods
+    //////////////////////////////////////////////////////
+
+    public SpongeBridge getPluginManager() {
+        return this;
+    }
+
+    public JavaPlugin getPlugin(String plugin) {
+        return readyPluginMap.get(plugin);
+    }
+
+    public void registerEvents(JavaPlugin plugin, Listener listener) {}
 
     //////////////////////////////////////////////////////
     // Plugin loading methods
@@ -50,13 +67,13 @@ public class SpongeBridge {
         readyPluginMap.clear();
         classes.clear();
         loaders.clear();
-        System.out.println("Loading plugins...");
+        getLogger().info("Loading plugins...");
         String cwd = System.getProperty("user.dir");
-        System.out.println("Starting in " + cwd);
+        getLogger().info("Starting in " + cwd);
         File pluginDir = new File(cwd + "/" + SpongeBridge.pluginDir);
         System.out.println("Plugin directory should be " + pluginDir.getAbsolutePath());
         if (!pluginDir.exists()) {
-            System.out.println("Error, expected plugin directory " + pluginDir.getAbsolutePath() + " does not exist!");
+            getLogger().warning("Error, expected plugin directory " + pluginDir.getAbsolutePath() + " does not exist!");
             return;
         }
 
@@ -69,7 +86,7 @@ public class SpongeBridge {
             if (!entry.getName().endsWith(".jar")) {
                 continue;
             }
-            System.out.println("Plugin jar: " + entry.getName());
+            getLogger().info("Plugin jar: " + entry.getName());
 
             try {
                 PluginDescription description;
@@ -77,11 +94,11 @@ public class SpongeBridge {
                     description = PluginDescription.getDescriptionForPlugin(entry);
                     plugins.put(description,entry);
                 } catch (Exception e) {
-                    logger.warn("Adding " + entry.getName() + " as extra jar");
+                    getLogger().warning("Adding " + entry.getName() + " as extra jar");
                     extraJars.add(entry);
                 }
             } catch (Exception e) {
-                System.out.println("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
+                getLogger().warning("Can't load jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -89,11 +106,11 @@ public class SpongeBridge {
         // extraJars are jars for which there was no plugin.yml. Probably utility jars.
         for (File entry : extraJars) {
             try {
-                logger.info("Loading extra jar " + entry.getName());
+                getLogger().info("Loading extra jar " + entry.getName());
                 PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader());
                 loaders.put(entry.getName(), loader);
             } catch (Exception e) {
-                System.out.println("Can't load extra jar " + entry.getAbsolutePath() + ": " + e.getMessage());
+                getLogger().warning("Can't load extra jar " + entry.getAbsolutePath() + ": " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -106,14 +123,14 @@ public class SpongeBridge {
                 Map.Entry pairs = (Map.Entry)it.next();
                 PluginDescription description = (PluginDescription)pairs.getKey();
                 File entry = (File)pairs.getValue();
-                logger.info("Attempting to load " + description.name);
+                getLogger().info("Attempting to load " + description.name);
 
                 // make sure all dependencies were resolved
                 boolean resolved = true;
                 for (String dep : description.depends) {
-                    logger.info("Has dependency on " + dep);
+                    getLogger().info("Has dependency on " + dep);
                     if (!pluginMap.containsKey(dep)) {
-                        logger.info("Which is not resolved");
+                        getLogger().info("Which is not resolved");
                         resolved = false;
                     }
                 }
@@ -121,21 +138,21 @@ public class SpongeBridge {
                     newPlugins.put(description,entry);
                 } else {
                     try {
-                        logger.info("Beginning code load");
+                        getLogger().info("Beginning code load");
                         PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
                         pluginMap.put(description.name,loader.plugin);
                         pluginList.add(loader.plugin);
                         loaders.put(description.name, loader);
                     } catch (Exception e) {
-                        logger.error(e.getMessage());
+                        logger.logError(e);
                     }
                 }
             }
             if (newPlugins.size() == plugins.size()) break;
             plugins = newPlugins;
-            logger.info("We have " + plugins.keySet().size() + " plugins left");
+            getLogger().info("We have " + plugins.keySet().size() + " plugins left");
         }
-        logger.info(plugins.keySet().size() + " plugins failed to load");
+        getLogger().info(plugins.keySet().size() + " plugins failed to load");
     }
 
     Class<?> getClassByName(final String name, String handlerName) {

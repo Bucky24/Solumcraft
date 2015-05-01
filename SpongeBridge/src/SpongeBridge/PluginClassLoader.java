@@ -44,6 +44,7 @@ public class PluginClassLoader extends URLClassLoader {
 
         plugin = pluginClass.newInstance();
         plugin.myClass = jarClass;
+        plugin.server = loader;
         plugin.description = description;
     }
 

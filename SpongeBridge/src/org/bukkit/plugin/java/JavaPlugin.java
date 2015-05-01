@@ -1,7 +1,10 @@
 package org.bukkit.plugin.java;
 
 
+import SpongeBridge.Logger;
 import SpongeBridge.PluginDescription;
+import SpongeBridge.ConfigHandler;
+import SpongeBridge.SpongeBridge;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,15 +14,15 @@ import SpongeBridge.PluginDescription;
  * To change this template use File | Settings | File Templates.
  */
 public class JavaPlugin {
-    /*private static Logger logger;
-    public MyPlugin server;*/
+    private static Logger logger;
+    public SpongeBridge server;
     public Class myClass;
     public PluginDescription description;
 
     /////////////////////////////
     // Instance methods
     /////////////////////////////
-   /* public Logger getLogger() {
+    public Logger getLogger() {
         if (logger == null) {
             logger = new Logger();
         }
@@ -37,7 +40,7 @@ public class JavaPlugin {
         return new ConfigHandler(callerClass.getSimpleName(),logger);
     }
 
-    public MyPlugin getServer() {
+    public SpongeBridge getServer() {
         return server;
     }
 
@@ -49,5 +52,5 @@ public class JavaPlugin {
 
     public void onDisable() {}
 
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {return false;}*/
+    //public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {return false;}*/
 }
