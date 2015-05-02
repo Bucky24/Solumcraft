@@ -1,8 +1,8 @@
 package com.thepastimers.Database;
 
-//import org.bukkit.command.Command;
-//import org.bukkit.command.CommandSender;
-//import org.bukkit.entity.Player;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
@@ -348,7 +348,7 @@ public class Database extends JavaPlugin {
         return true;
     }
 
-    /*@Override
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
 
@@ -402,5 +402,5 @@ public class Database extends JavaPlugin {
             return false;
         }
         return true;
-    }*/
+    }
 }

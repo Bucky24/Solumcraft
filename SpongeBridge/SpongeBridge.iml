@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sponge-1.8-1371-2.1DEV-433" level="project" />
+    <orderEntry type="library" name="guava-18.0" level="project" />
   </component>
 </module>

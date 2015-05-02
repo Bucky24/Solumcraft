@@ -2,9 +2,12 @@ package SpongeBridge;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.command.CommandService;
+import org.spongepowered.api.util.command.CommandSource;
 
 import java.io.File;
 import java.util.*;
@@ -24,9 +27,12 @@ public class SpongeBridge {
     private Map<String, JavaPlugin> readyPluginMap;
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
+    private final Map<String, CommandHandler> commandHandlers = new HashMap<String, CommandHandler>();
+    public Game game;
 
     @Subscribe
     public void onServerStart(ServerStartedEvent event) {
+        this.game = event.getGame();
         logger = new Logger();
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
 
@@ -35,6 +41,7 @@ public class SpongeBridge {
         pluginList = new ArrayList<JavaPlugin>();
 
         this.loadPlugins();
+        this.initPlugins();
     }
 
     private Logger logger;
@@ -44,7 +51,7 @@ public class SpongeBridge {
     }
 
     ///////////////////////////////////////////////////////
-    // Server methods
+    // Bukkit server methods
     //////////////////////////////////////////////////////
 
     public SpongeBridge getPluginManager() {
@@ -56,6 +63,31 @@ public class SpongeBridge {
     }
 
     public void registerEvents(JavaPlugin plugin, Listener listener) {}
+
+    ///////////////////////////////////////////////////////
+    // Bridge server methods
+    ///////////////////////////////////////////////////////
+
+    public void handleCommand(CommandSource source, String command) {
+        /*System.out.println("Got command! " + command);
+        CommandSender sender = new CommandSender(player);
+        Iterator it = pluginMap.entrySet().iterator();
+        if (command.equalsIgnoreCase("reload")) {
+            logger.info("Reloading server!");
+            loadPlugins();
+            initPlugins();
+        } else {
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                JavaPlugin plugin = (JavaPlugin) pair.getValue();
+                try {
+                    plugin.onCommand(sender, new Command(command), command, commandArr);
+                } catch (Exception e) {
+                    logger.logError(e);
+                }
+            }
+        }*/
+    }
 
     //////////////////////////////////////////////////////
     // Plugin loading methods
@@ -153,6 +185,61 @@ public class SpongeBridge {
             getLogger().info("We have " + plugins.keySet().size() + " plugins left");
         }
         getLogger().info(plugins.keySet().size() + " plugins failed to load");
+    }
+
+    private void initPlugins() {
+        System.out.println("Server loaded, beginning to initialize plugins.");
+
+        CommandService cmdService = game.getCommandDispatcher();
+        for (int i=0;i<pluginList.size();i++) {
+            JavaPlugin plugin = (JavaPlugin)pluginList.get(i);
+            plugin.server = this;
+            for (String dep : plugin.description.softDepends) {
+                logger.info(plugin.description.name + " Depends on " + dep);
+                if (!readyPluginMap.containsKey(dep)) {
+                    logger.info("Dep not loaded!");
+                    boolean found = false;
+                    int foundIndex = -1;
+                    for (int j=i;j<pluginList.size();j++) {
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(i);
+                        logger.info(p2.description.name);
+                        if (p2.description.name.equals(dep)) {
+                            found = true;
+                            foundIndex = j;
+                        }
+                    }
+                    if (found) {
+                        logger.info("But we're loading it soon!");
+                        // if the plugins are not dependent on each other, then swap them
+                        // note this doesn't handle dependency circles, such as A -> B -> C -> A
+                        // will have to improve it if that ever happens.
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(foundIndex);
+                        if (!p2.description.softDepends.contains(plugin.description.name)) {
+                            logger.info("Swapping spaces!");
+                            pluginList.set(i, p2);
+                            pluginList.set(foundIndex,plugin);
+                            plugin = p2;
+                            i --;
+                            logger.info("Now loading " + plugin.description.name);
+                        }
+                    }
+                }
+            }
+            try {
+                logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
+                for (String command : plugin.description.commands) {
+                    if (commandHandlers.containsKey(command)) continue;
+                    CommandHandler handler = new CommandHandler(command,this);
+                    cmdService.register(this, handler);
+                    commandHandlers.put(command,handler);
+                }
+                logger.info("Enabling " + plugin.description.name);
+                plugin.onEnable();
+                readyPluginMap.put(plugin.description.name,plugin);
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
     }
 
     Class<?> getClassByName(final String name, String handlerName) {

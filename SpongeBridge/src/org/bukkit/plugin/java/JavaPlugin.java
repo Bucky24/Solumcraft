@@ -5,6 +5,8 @@ import SpongeBridge.Logger;
 import SpongeBridge.PluginDescription;
 import SpongeBridge.ConfigHandler;
 import SpongeBridge.SpongeBridge;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,5 +54,5 @@ public class JavaPlugin {
 
     public void onDisable() {}
 
-    //public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {return false;}*/
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {return false;}
 }
