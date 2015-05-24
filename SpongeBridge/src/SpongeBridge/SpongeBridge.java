@@ -1,15 +1,19 @@
 package SpongeBridge;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
+import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.command.CommandService;
 import org.spongepowered.api.util.command.CommandSource;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -50,6 +54,27 @@ public class SpongeBridge {
         return logger;
     }
 
+    /////////////////////////////////////////////////////////
+    // Event handling
+    /////////////////////////////////////////////////////////
+    @Subscribe
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Iterator it = pluginMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            try {
+                org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(event);
+                List<Method> methods = this.getMethodsThatTakeEvent(plugin, newEvent.getClass());
+                for (Method m : methods) {
+                    m.invoke(plugin,event);
+                }
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
+    }
+
     ///////////////////////////////////////////////////////
     // Bukkit server methods
     //////////////////////////////////////////////////////
@@ -63,6 +88,33 @@ public class SpongeBridge {
     }
 
     public void registerEvents(JavaPlugin plugin, Listener listener) {}
+
+    public List<Player> getOnlinePlayers() {
+        List<Player> players = new ArrayList<Player>();
+
+        Collection<org.spongepowered.api.entity.player.Player> realPlayers = game.getServer().getOnlinePlayers();
+        for (Iterator<org.spongepowered.api.entity.player.Player> i = realPlayers.iterator(); i.hasNext();) {
+            org.spongepowered.api.entity.player.Player player = i.next();
+            players.add(new Player(player));
+        }
+
+        return players;
+    }
+
+    public Player getPlayer(String name) {
+        com.google.common.base.Optional<org.spongepowered.api.entity.player.Player> player = game.getServer().getPlayer(name);
+        return new Player(player.get());
+    }
+
+    public OfflinePlayer getOfflinePlayer(String name) {
+        List<Player> players = getOnlinePlayers();
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                return new OfflinePlayer(player);
+            }
+        }
+        return null;
+    }
 
     ///////////////////////////////////////////////////////
     // Bridge server methods
@@ -188,7 +240,7 @@ public class SpongeBridge {
     }
 
     private void initPlugins() {
-        System.out.println("Server loaded, beginning to initialize plugins.");
+        getLogger().info("Server loaded, beginning to initialize plugins.");
 
         CommandService cmdService = game.getCommandDispatcher();
         for (int i=0;i<pluginList.size();i++) {
@@ -270,5 +322,25 @@ public class SpongeBridge {
         if (!classes.containsKey(name)) {
             classes.put(name, clazz);
         }
+    }
+
+    /////////////////////////////////
+    // Misc
+    /////////////////////////////////
+
+    private List<Method> getMethodsThatTakeEvent(JavaPlugin plugin, Class comp) {
+        List<Method> methods = new ArrayList<Method>();
+        Class c = plugin.myClass;
+        Method[] allMethods = c.getDeclaredMethods();
+        for (Method m : allMethods) {
+            Class<?>[] pType  = m.getParameterTypes();
+            for (int i = 0; i < pType.length; i++) {
+                if (comp.equals(pType[i])) {
+                    methods.add(m);
+                }
+            }
+        }
+
+        return methods;
     }
 }

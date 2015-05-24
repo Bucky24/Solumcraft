@@ -51,6 +51,7 @@ public class UserMap extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
+        getLogger().info("Updating uuid for " + event.getPlayer().getName());
         updateUUID(event.getPlayer());
     }
 

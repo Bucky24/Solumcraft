@@ -3,7 +3,7 @@ package com.thepastimers.UserMap;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
 import org.bukkit.entity.Player;
-import RainbowSetup.Logger;
+import SpongeBridge.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
