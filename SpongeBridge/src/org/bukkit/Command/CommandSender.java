@@ -1,5 +1,6 @@
 package org.bukkit.command;
 
+import org.bukkit.Text;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -8,4 +9,5 @@ import org.bukkit.entity.Player;
  */
 public interface CommandSender extends Entity {
     public abstract void sendMessage(String message);
+    public abstract void sendMessage(Text message);
 }

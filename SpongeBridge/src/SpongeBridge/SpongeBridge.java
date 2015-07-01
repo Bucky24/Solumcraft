@@ -1,6 +1,7 @@
 package SpongeBridge;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Text;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -67,7 +68,7 @@ public class SpongeBridge {
                 org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(event);
                 List<Method> methods = this.getMethodsThatTakeEvent(plugin, newEvent.getClass());
                 for (Method m : methods) {
-                    m.invoke(plugin,event);
+                    m.invoke(plugin,newEvent);
                 }
             } catch (Exception e) {
                 logger.logError(e);
@@ -114,6 +115,10 @@ public class SpongeBridge {
             }
         }
         return null;
+    }
+
+    public void broadcastMessage(Text text) {
+        game.getServer().broadcastMessage(SpongeText.getText(text));
     }
 
     ///////////////////////////////////////////////////////

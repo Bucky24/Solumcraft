@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Database" scope="PROVIDED" />
     <orderEntry type="module" module-name="UserMap" scope="PROVIDED" />
-    <orderEntry type="module" module-name="RainbowSetup" scope="PROVIDED" />
-    <orderEntry type="library" name="PluginReference" level="project" />
+    <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>

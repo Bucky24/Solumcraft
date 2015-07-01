@@ -1,8 +1,6 @@
 package SpongeBridge;
 
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.format.TextStyles;
 import org.spongepowered.api.util.command.CommandCallable;
 import org.spongepowered.api.util.command.CommandException;
 import org.spongepowered.api.util.command.CommandResult;
@@ -37,11 +35,11 @@ public class CommandHandler implements CommandCallable {
     }
 
     public Optional<Text> getShortDescription(CommandSource source) {
-        return SpongeText.getOptinalText(desc);
+        return SpongeText.getOptionalText(desc);
     }
 
     public Optional<Text> getHelp(CommandSource source) {
-        return SpongeText.getOptinalText(help);
+        return SpongeText.getOptionalText(help);
     }
 
     public Text getUsage(CommandSource source) {
