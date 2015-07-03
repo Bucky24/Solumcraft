@@ -1,7 +1,10 @@
 package SpongeBridge;
 
 import com.google.common.base.Optional;
+import org.bukkit.ChatColor;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.TextBuilder;
+import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 
@@ -15,12 +18,23 @@ public class SpongeText {
     }
 
     public static Text getText(String string) {
-        Text.Literal lit = new Text.Literal(TextColors.BLACK, TextStyles.NONE,null,null,null,null,string);
-        return (Text)lit;
+        return getText(org.bukkit.Text.make().text(string));
     }
 
     public static Text getText(org.bukkit.Text object) {
-        Text.Literal lit = new Text.Literal(TextColors.BLACK, TextStyles.NONE,null,null,null,null,"getText of text object stub");
-        return (Text)lit;
+        TextBuilder builder = Texts.builder();
+        ChatColor curColor = null;
+        for (org.bukkit.Text.TextElement element : object.getElements()) {
+            if (element.type == org.bukkit.Text.TextElement.COLOR) {
+                curColor = (ChatColor) element.data;
+            } else if (element.type == org.bukkit.Text.TextElement.TEXT) {
+                TextBuilder text = Texts.builder((String)element.data);
+                if (curColor != null) {
+                    text.color(curColor.getValue());
+                }
+                builder.append(text.build());
+            }
+        }
+        return builder.build();
     }
 }

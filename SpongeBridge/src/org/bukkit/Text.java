@@ -7,6 +7,19 @@ import java.util.List;
  * Created by solum on 6/30/2015.
  */
 public class Text {
+    public static class TextElement {
+        public static int TEXT = 1;
+        public static int COLOR = 2;
+
+        public int type;
+        public Object data;
+
+        public TextElement(int type, Object data) {
+            this.type = type;
+            this.data = data;
+        }
+    }
+
     private List<TextElement> elements;
 
     public Text() {
@@ -26,17 +39,10 @@ public class Text {
         elements.add(new TextElement(TextElement.COLOR,color));
         return this;
     }
-}
 
-class TextElement {
-    public static int TEXT = 1;
-    public static int COLOR = 2;
-
-    public int type;
-    public Object data;
-
-    public TextElement(int type, Object data) {
-        this.type = type;
-        this.data = data;
+    public List<TextElement> getElements() {
+        return elements;
     }
 }
+
+
