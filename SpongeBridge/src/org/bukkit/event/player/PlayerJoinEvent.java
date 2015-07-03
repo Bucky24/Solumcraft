@@ -1,5 +1,6 @@
 package org.bukkit.event.player;
 
+import SpongeBridge.SpongeBridge;
 import org.bukkit.entity.Player;
 
 /**
@@ -8,8 +9,12 @@ import org.bukkit.entity.Player;
 public class PlayerJoinEvent {
     private Player player;
 
-    public PlayerJoinEvent(org.spongepowered.api.event.entity.player.PlayerJoinEvent event) {
-        this.player = new Player(event.getPlayer());
+    public PlayerJoinEvent(SpongeBridge bridge, org.spongepowered.api.event.entity.player.PlayerJoinEvent event) {
+        try {
+            this.player = new Player(event.getEntity());
+        } catch (Exception e) {
+            bridge.getLogger().logError("Can't add player object",e.getStackTrace());
+        }
     }
 
     public Player getPlayer() {

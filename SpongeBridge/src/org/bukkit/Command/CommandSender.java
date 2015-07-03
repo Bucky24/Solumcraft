@@ -1,13 +1,25 @@
 package org.bukkit.command;
 
+import SpongeBridge.SpongeText;
 import org.bukkit.Text;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.spongepowered.api.util.command.CommandSource;
 
 /**
  * Created by solum on 5/2/2015.
  */
-public interface CommandSender extends Entity {
-    public abstract void sendMessage(String message);
-    public abstract void sendMessage(Text message);
+public class CommandSender implements Entity {
+    CommandSource source;
+
+    public CommandSender(CommandSource source) {
+        this.source = source;
+    }
+
+    public void sendMessage(String message) {
+        source.sendMessage(SpongeText.getText(message));
+    }
+
+    public void sendMessage(Text message) {
+        source.sendMessage(SpongeText.getText(message));
+    }
 }

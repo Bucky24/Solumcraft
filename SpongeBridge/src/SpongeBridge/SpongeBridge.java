@@ -2,6 +2,8 @@ package SpongeBridge;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Text;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +13,7 @@ import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.command.CommandService;
-import org.spongepowered.api.util.command.CommandSource;
+import org.spongepowered.api.text.chat.ChatTypes;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -65,7 +67,7 @@ public class SpongeBridge {
             Map.Entry pair = (Map.Entry)it.next();
             JavaPlugin plugin = (JavaPlugin)pair.getValue();
             try {
-                org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(event);
+                org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(this,event);
                 List<Method> methods = this.getMethodsThatTakeEvent(plugin, newEvent.getClass());
                 for (Method m : methods) {
                     m.invoke(plugin,newEvent);
@@ -96,7 +98,11 @@ public class SpongeBridge {
         Collection<org.spongepowered.api.entity.player.Player> realPlayers = game.getServer().getOnlinePlayers();
         for (Iterator<org.spongepowered.api.entity.player.Player> i = realPlayers.iterator(); i.hasNext();) {
             org.spongepowered.api.entity.player.Player player = i.next();
-            players.add(new Player(player));
+            try {
+                players.add(new Player(player));
+            } catch (Exception e) {
+                logger.logError("Can't add player object",e.getStackTrace());
+            }
         }
 
         return players;
@@ -104,7 +110,12 @@ public class SpongeBridge {
 
     public Player getPlayer(String name) {
         com.google.common.base.Optional<org.spongepowered.api.entity.player.Player> player = game.getServer().getPlayer(name);
-        return new Player(player.get());
+        try {
+            return new Player(player.get());
+        } catch (Exception e) {
+            logger.logError(e);
+        }
+        return null;
     }
 
     public OfflinePlayer getOfflinePlayer(String name) {
@@ -118,16 +129,28 @@ public class SpongeBridge {
     }
 
     public void broadcastMessage(Text text) {
-        game.getServer().broadcastMessage(SpongeText.getText(text));
+        for (org.spongepowered.api.entity.player.Player p : game.getServer().getOnlinePlayers()) {
+            p.sendMessage(SpongeText.getText(text));
+        }
     }
 
     ///////////////////////////////////////////////////////
     // Bridge server methods
     ///////////////////////////////////////////////////////
 
-    public void handleCommand(CommandSource source, String command) {
-        /*System.out.println("Got command! " + command);
-        CommandSender sender = new CommandSender(player);
+    public void handleCommand(org.spongepowered.api.util.command.CommandSource source, String command, String []commandArr) {
+        System.out.println("Got command! " + command);
+        CommandSender sender;
+        try {
+            sender = new CommandSender(source);
+            if (source instanceof org.spongepowered.api.entity.player.Player) {
+                org.spongepowered.api.entity.player.Player player = (org.spongepowered.api.entity.player.Player)source;
+                sender = new Player(player);
+            }
+        } catch (Exception e) {
+            logger.logError(e);
+            return;
+        }
         Iterator it = pluginMap.entrySet().iterator();
         if (command.equalsIgnoreCase("reload")) {
             logger.info("Reloading server!");
@@ -143,7 +166,7 @@ public class SpongeBridge {
                     logger.logError(e);
                 }
             }
-        }*/
+        }
     }
 
     //////////////////////////////////////////////////////
@@ -247,7 +270,6 @@ public class SpongeBridge {
     private void initPlugins() {
         getLogger().info("Server loaded, beginning to initialize plugins.");
 
-        CommandService cmdService = game.getCommandDispatcher();
         for (int i=0;i<pluginList.size();i++) {
             JavaPlugin plugin = (JavaPlugin)pluginList.get(i);
             plugin.server = this;
@@ -285,9 +307,9 @@ public class SpongeBridge {
             try {
                 logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
                 for (String command : plugin.description.commands) {
+                    logger.info("Registering " + command);
                     if (commandHandlers.containsKey(command)) continue;
                     CommandHandler handler = new CommandHandler(command,this);
-                    cmdService.register(this, handler);
                     commandHandlers.put(command,handler);
                 }
                 logger.info("Enabling " + plugin.description.name);

@@ -9,23 +9,25 @@ import java.util.UUID;
 /**
  * Created by solum on 5/2/2015.
  */
-public class Player implements CommandSender {
+public class Player extends CommandSender {
     org.spongepowered.api.entity.player.Player serverPlayer;
 
-    public Player(org.spongepowered.api.entity.player.Player player) {
-        this.serverPlayer = player;
+    public Player() {
+        super(null);
+        serverPlayer = null;
+    }
+
+    public Player(org.spongepowered.api.util.command.CommandSource source) throws Exception {
+        super(source);
+        if (source instanceof org.spongepowered.api.entity.player.Player) {
+            this.serverPlayer = (org.spongepowered.api.entity.player.Player)source;
+        } else {
+            throw new Exception("Player constructor called with CommandSource that was not a Player. Class is: " + source.getClass().getName());
+        }
     }
 
     public String getName() {
         return this.serverPlayer.getName();
-    }
-
-    public void sendMessage(String message) {
-        this.serverPlayer.sendMessage(SpongeText.getText(message));
-    }
-
-    public void sendMessage(Text text) {
-        this.serverPlayer.sendMessage(SpongeText.getText(text));
     }
 
     public UUID getUniqueId() {
