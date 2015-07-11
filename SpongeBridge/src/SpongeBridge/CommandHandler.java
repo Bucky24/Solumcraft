@@ -26,10 +26,6 @@ import java.util.List;
 public class CommandHandler implements CommandExecutor {
     String name;
     SpongeBridge plugin;
-    private final String desc = "";
-    private final String help = "";
-
-    private final int arguments = 20;
 
     public CommandHandler(String name, SpongeBridge plugin) {
         this.name = name;
@@ -44,33 +40,21 @@ public class CommandHandler implements CommandExecutor {
     }
 
     public CommandResult execute(CommandSource source, CommandContext context) {
-        String argString = context.<String>getOne("args").orNull();
-        plugin.getLogger().info("Argument is " + argString);
-        if (argString == null) {
-            argString = "";
+        String argString = context.<String>getOne("args").or("");
+
+        String[] argList = argString.split(" ");
+        List<String> finalArgs = new ArrayList<String>();
+        for (String arg : argList) {
+            if (!"".equals(arg)) {
+                finalArgs.add(arg);
+            }
         }
 
-        plugin.handleCommand(source,name,argString.split(" "));
-        return CommandResult.success();
-    }
-
-    public boolean testPermission(CommandSource source) {
-        return source.hasPermission("example.exampleCommand");
-    }
-
-    public Optional<Text> getShortDescription(CommandSource source) {
-        return SpongeText.getOptionalText(desc);
-    }
-
-    public Optional<Text> getHelp(CommandSource source) {
-        return SpongeText.getOptionalText(help);
-    }
-
-    public Text getUsage(CommandSource source) {
-        return SpongeText.getText("/<command> <message>");
-    }
-
-    public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
-        return Collections.emptyList();
+        boolean result = plugin.handleCommand(source,name,finalArgs.toArray(new String[finalArgs.size()]));
+        if (result) {
+            return CommandResult.success();
+        } else {
+            return CommandResult.empty();
+        }
     }
 }

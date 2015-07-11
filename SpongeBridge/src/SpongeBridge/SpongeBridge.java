@@ -49,6 +49,8 @@ public class SpongeBridge {
 
         this.loadPlugins();
         this.initPlugins();
+
+        CommandHandler reloadHandler = new CommandHandler("reload",this);
     }
 
     private Logger logger;
@@ -138,7 +140,7 @@ public class SpongeBridge {
     // Bridge server methods
     ///////////////////////////////////////////////////////
 
-    public void handleCommand(org.spongepowered.api.util.command.CommandSource source, String command, String []commandArr) {
+    public boolean handleCommand(org.spongepowered.api.util.command.CommandSource source, String command, String []commandArr) {
         System.out.println("Got command! " + command);
         CommandSender sender;
         try {
@@ -149,7 +151,7 @@ public class SpongeBridge {
             }
         } catch (Exception e) {
             logger.logError(e);
-            return;
+            return false;
         }
         Iterator it = pluginMap.entrySet().iterator();
         if (command.equalsIgnoreCase("reload")) {
@@ -161,12 +163,16 @@ public class SpongeBridge {
                 Map.Entry pair = (Map.Entry) it.next();
                 JavaPlugin plugin = (JavaPlugin) pair.getValue();
                 try {
-                    plugin.onCommand(sender, new Command(command), command, commandArr);
+                    boolean result = plugin.onCommand(sender, new Command(command), command, commandArr);
+                    if (result) {
+                        return true;
+                    }
                 } catch (Exception e) {
                     logger.logError(e);
                 }
             }
         }
+        return false;
     }
 
     //////////////////////////////////////////////////////
