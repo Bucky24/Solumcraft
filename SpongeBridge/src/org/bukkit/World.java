@@ -17,7 +17,7 @@ public class World {
         return this.world.getName();
     }
 
-    public org.spongepowered.api.world.Location getSpongeLocation(int x, int y, int z) throws Exception {
+    public org.spongepowered.api.world.Location getSpongeLocation(double x, double y, double z) throws Exception {
         return this.world.getLocation(x,y,z);
     }
 
