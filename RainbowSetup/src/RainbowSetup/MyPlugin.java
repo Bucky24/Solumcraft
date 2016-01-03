@@ -172,7 +172,7 @@ public class MyPlugin extends PluginBase {
                     boolean found = false;
                     int foundIndex = -1;
                     for (int j=i;j<pluginList.size();j++) {
-                        JavaPlugin p2 = (JavaPlugin)pluginList.get(i);
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(j);
                         logger.info(p2.description.name);
                         if (p2.description.name.equals(dep)) {
                             found = true;

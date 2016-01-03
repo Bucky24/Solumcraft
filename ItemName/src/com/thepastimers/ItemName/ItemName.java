@@ -1,4 +1,4 @@
-package com.thepastimers.ItemName;
+/*package com.thepastimers.ItemName;
 
 import com.sun.media.sound.AiffFileReader;
 import com.thepastimers.Permission.Permission;
@@ -24,7 +24,7 @@ import java.util.Map;
  * Time: 6:47 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ItemName extends JavaPlugin {
+/*public class ItemName extends JavaPlugin {
     List<ItemData> dataList;
     Permission permission;
 
@@ -626,3 +626,4 @@ public class ItemName extends JavaPlugin {
 
     }
 }
+*/

@@ -10,9 +10,7 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Rank" />
-    <orderEntry type="module" module-name="CombatLog" />
-    <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="module" module-name="Alias" />
+    <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>

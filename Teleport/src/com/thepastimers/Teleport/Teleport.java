@@ -1,9 +1,8 @@
 package com.thepastimers.Teleport;
 
-import com.thepastimers.CombatLog.CombatLog;
-import com.thepastimers.Mute.Mute;
+//import com.thepastimers.Mute.Mute;
 import com.thepastimers.Permission.Permission;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,10 +22,9 @@ import java.util.Map;
  */
 public class Teleport extends JavaPlugin {
     Permission permission;
-    Mute mute;
-    Worlds worlds;
+    //Mute mute;
+    //Worlds worlds;
     Map<String,String> requests;
-    CombatLog combatLog;
 
     @Override
     public void onEnable() {
@@ -38,21 +36,15 @@ public class Teleport extends JavaPlugin {
             getLogger().warning("Unable to load Permission plugin. Some functionality will not be available.");
         }
 
-        mute = (Mute)getServer().getPluginManager().getPlugin("Mute");
-
+        /*mute = (Mute)getServer().getPluginManager().getPlugin("Mute");
         if (mute == null) {
             getLogger().warning("Unable to load Mute plugin. Some functionality will not be available.");
-        }
-
-        combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
-        if (combatLog == null) {
-            getLogger().warning("Unable to load CombatLog plugin. Some functionality will not be available.");
         }
 
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
+        }*/
 
         requests = new HashMap<String,String>();
 
@@ -97,9 +89,9 @@ public class Teleport extends JavaPlugin {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName,true) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(playerName,true) == Worlds.VANILLA) {
             return false;
-        }
+        }*/
 
         String command = cmd.getName();
 
@@ -113,10 +105,10 @@ public class Teleport extends JavaPlugin {
                 //getLogger().info(playerName + " has permission to teleport");
                 String player = args[0];
 
-                if (mute != null && mute.isMutedBy(playerName,player)) {
+                /*if (mute != null && mute.isMutedBy(playerName,player)) {
                     sender.sendMessage(ChatColor.RED + "This player has muted you");
                     return true;
-                }
+                }*/
 
                 Player p = getServer().getPlayer(player);
 
@@ -125,10 +117,10 @@ public class Teleport extends JavaPlugin {
                     return true;
                 }
 
-                if (worlds.getWorldType(p.getWorld().getName()) == Worlds.VANILLA) {
+                /*if (worlds.getWorldType(p.getWorld().getName()) == Worlds.VANILLA) {
                     sender.sendMessage(ChatColor.RED + "That player is currently in the vanilla world and cannot accept teleports at this time");
                     return true;
-                }
+                }*/
                 //getLogger().info(playerName + " is teleporting to valid player");
 
                 if (hasRequest(playerName,player)) {
@@ -155,22 +147,17 @@ public class Teleport extends JavaPlugin {
                 if (hasRequest(player,playerName)) {
                     Player p = getServer().getPlayer(player);
 
-                    if (combatLog != null) {
-                        int seconds = combatLog.secondsSinceCombat(playerName);
-                        if (seconds > -1 && seconds < 10) {
-                            sender.sendMessage(ChatColor.RED + "Teleport canceled due to recent combat");
-                            sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can teleport.");
-                            return true;
-                        }
-                    }
-
                     if (p == null) {
                         sender.sendMessage(player + " is not currently online");
                     } else {
                         Player p2 = (Player)sender;
-                        p.teleport(p2);
-                        p2.sendMessage("Teleporting " + player + " to you");
-                        p.sendMessage("Teleporting you to " + playerName);
+                        try {
+                            p.teleport(p2);
+                            p2.sendMessage("Teleporting " + player + " to you");
+                            p.sendMessage("Teleporting you to " + playerName);
+                        } catch (Exception e) {
+                            p.sendMessage("Can't teleport player");
+                        }
                     }
                     clearRequests(player);
 
@@ -237,7 +224,11 @@ public class Teleport extends JavaPlugin {
 
                 sender.sendMessage("Teleporting " + player + " to " + player2);
 
-                p.teleport(p2);
+                try {
+                    p.teleport(p2);
+                } catch (Exception e) {
+                    sender.sendMessage("Can't teleport player: " + e.getMessage());
+                }
 
             } else if (args.length == 1) {
                 if (playerName.equalsIgnoreCase("CONSOLE")) {
@@ -255,7 +246,11 @@ public class Teleport extends JavaPlugin {
 
                     Player p2 = (Player)sender;
 
-                    p2.teleport(p);
+                    try {
+                        p2.teleport(p);
+                    } catch (Exception e) {
+                        sender.sendMessage("Can't teleport player: " + e.getMessage());
+                    }
                 }
             } else {
                 sender.sendMessage("/tp <player 1> <player 2>");

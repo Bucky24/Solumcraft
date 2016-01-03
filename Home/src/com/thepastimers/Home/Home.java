@@ -1,15 +1,14 @@
 package com.thepastimers.Home;
 
-import com.thepastimers.Alias.Alias;
-import com.thepastimers.CombatLog.CombatLog;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
 import com.thepastimers.UserMap.UserMap;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
+//import org.bukkit.Material;
+import org.bukkit.Text;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -17,11 +16,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
+//import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -36,10 +34,8 @@ public class Home extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Rank rank;
-    CombatLog combatLog;
-    Worlds worlds;
+    //Worlds worlds;
     UserMap userMap;
-    Alias alias;
 
     Map<HomeData,Date> lastHome;
 
@@ -72,20 +68,10 @@ public class Home extends JavaPlugin implements Listener {
             getLogger().warning("Cannot load UserMap plugin. Some functionality may not be available");
         }
 
-        combatLog = (CombatLog)getServer().getPluginManager().getPlugin("CombatLog");
-        if (combatLog == null) {
-            getLogger().warning("Cannot load CombatLog plugin. Some functionality may not be available");
-        }
-
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
-
-        alias = (Alias)getServer().getPluginManager().getPlugin("Alias");
-        if (alias == null) {
-            getLogger().warning("Unabelt to load Alias Plugin.");
-        }
+        }*/
 
         lastHome = new HashMap<HomeData,Date>();
 
@@ -101,7 +87,7 @@ public class Home extends JavaPlugin implements Listener {
         getLogger().info("Home disabled");
     }
 
-    @EventHandler
+    /*@EventHandler
     public void playerDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player p = (Player)event.getEntity();
@@ -126,7 +112,7 @@ public class Home extends JavaPlugin implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -365,7 +351,6 @@ public class Home extends JavaPlugin implements Listener {
         if (sender instanceof Player) {
             Player p = (Player)sender;
             playerName = p.getName();
-            playerName = alias.getAlias(playerName);
             uuid = p.getUniqueId().toString();
         } else {
             playerName = "CONSOLE";
@@ -410,8 +395,8 @@ public class Home extends JavaPlugin implements Listener {
             hd.setWorld(world);
 
             if (hd != null && hd.save(database)) {
-                sender.sendMessage(ChatColor.GREEN + "Home set. You can set " + (getMaxHomes(uuid)-getHomeCount(uuid))
-                        + " more home/s");
+                sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Home set. You can set " + (getMaxHomes(uuid)-getHomeCount(uuid))
+                        + " more home/s"));
             } else {
                 sender.sendMessage(ChatColor.RED + "Unable to set home");
             }
@@ -425,14 +410,6 @@ public class Home extends JavaPlugin implements Listener {
 
             if (args.length >= 1) {
                 name = args[0];
-            }
-
-            if (combatLog != null) {
-                int seconds = combatLog.secondsSinceCombat(playerName);
-                if (seconds > -1 && seconds < 10) {
-                    sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can use /home");
-                    return true;
-                }
             }
 
             HomeData hd = getHome(playerName,name);
@@ -453,14 +430,14 @@ public class Home extends JavaPlugin implements Listener {
                 Location l2 = new Location(getServer().getWorld(hd.getWorld()),hd.getX(),hd.getY()+1,hd.getZ());
 
                 // check if location is safe.
-                Block b = w.getBlockAt(l);
+                /*Block b = w.getBlockAt(l);
                 Block b2 = w.getBlockAt(l2);
 
                 if ((b.getType() != Material.AIR && b.getType() != Material.WATER && b.getType() != Material.STATIONARY_WATER && b.getType() != Material.CARPET) ||
                         (b2.getType() != Material.AIR && b2.getType() != Material.WATER && b2.getType() != Material.STATIONARY_WATER && b2.getType() != Material.CARPET)) {
                     sender.sendMessage(ChatColor.RED + "That location is unsafe to teleport to. Please use /forcehome " + name + " If you really want to teleport there.");
                     return true;
-                }
+                }*/
 
                 p.teleport(l);
                 lastHome.put(hd,new Date());
@@ -470,7 +447,7 @@ public class Home extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "Teleporting you to default home");
                 }
             } catch (Exception e) {
-                sender.sendMessage(ChatColor.RED + "Unable to teleport you");
+                sender.sendMessage(ChatColor.RED + "Unable to teleport you: " + e.getMessage());
             }
         } else if (command.equalsIgnoreCase("forcehome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {
@@ -482,14 +459,6 @@ public class Home extends JavaPlugin implements Listener {
 
             if (args.length >= 1) {
                 name = args[0];
-            }
-
-            if (combatLog != null) {
-                int seconds = combatLog.secondsSinceCombat(playerName);
-                if (seconds > -1 && seconds < 10) {
-                    sender.sendMessage(ChatColor.RED + "You were recently in combat. You must wait another " + (10-seconds) + " seconds before you can use /home");
-                    return true;
-                }
             }
 
             HomeData hd = getHome(playerName,name);
@@ -516,7 +485,7 @@ public class Home extends JavaPlugin implements Listener {
                     sender.sendMessage("Teleporting you to default home");
                 }
             } catch (Exception e) {
-                sender.sendMessage("Unable to teleport you");
+                sender.sendMessage("Unable to teleport you: " + e.getMessage());
             }
         } else if (command.equalsIgnoreCase("delhome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {

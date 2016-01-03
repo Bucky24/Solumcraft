@@ -1,7 +1,7 @@
 name: Teleport
 version: 0.7
 main: com.thepastimers.Teleport.Teleport
-softdepend: [Permission,Mute,CombatLog,Worlds]
+softdepend: [Permission,Mute,Worlds]
 commands:
     tp:
         description: teleport command

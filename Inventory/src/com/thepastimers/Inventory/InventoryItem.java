@@ -1,4 +1,4 @@
-package com.thepastimers.Inventory;
+/*package com.thepastimers.Inventory;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * Time: 2:19 PM
  * To change this template use File | Settings | File Templates.
  */
-public class InventoryItem extends Table {
+/*public class InventoryItem extends Table {
     public static String table = "inventory";
 
     String invName; // generic code
@@ -234,3 +234,4 @@ public class InventoryItem extends Table {
         return is;
     }
 }
+*/

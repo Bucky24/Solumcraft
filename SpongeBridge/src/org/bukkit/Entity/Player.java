@@ -1,5 +1,6 @@
 package org.bukkit.entity;
 
+import org.bukkit.Location;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.command.CommandSender;
 
@@ -35,5 +36,17 @@ public class Player extends CommandSender {
 
     public PlayerInventory getInventory() {
         return new PlayerInventory(serverPlayer.getInventory());
+    }
+
+    public Location getLocation() {
+        return new Location(this.serverPlayer.getLocation(),this.serverPlayer.getWorld());
+    }
+
+    public void teleport(Location l) throws Exception {
+        this.serverPlayer.setLocation(l.getWorld().getSpongeLocation((int) l.getX(), (int) l.getY(), (int) l.getZ()));
+    }
+
+    public void teleport(Player p) throws Exception {
+        this.teleport(p.getLocation());
     }
 }

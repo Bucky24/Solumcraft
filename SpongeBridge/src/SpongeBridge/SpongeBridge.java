@@ -2,6 +2,7 @@ package SpongeBridge;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Text;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -112,9 +113,17 @@ public class SpongeBridge {
     }
 
     public Player getPlayer(String name) {
-        com.google.common.base.Optional<org.spongepowered.api.entity.player.Player> player = game.getServer().getPlayer(name);
         try {
-            return new Player(player.get());
+            org.spongepowered.api.entity.player.Player player = game.getServer().getPlayer(name).orNull();
+            if (player == null) {
+                // try to get via UUID
+                UUID id = UUID.fromString(name);
+                player = game.getServer().getPlayer(id).orNull();
+                if (player == null) {
+                    return null;
+                }
+            }
+            return new Player(player);
         } catch (Exception e) {
             logger.logError(e);
         }
@@ -135,6 +144,14 @@ public class SpongeBridge {
         for (org.spongepowered.api.entity.player.Player p : game.getServer().getOnlinePlayers()) {
             p.sendMessage(SpongeText.getText(text));
         }
+    }
+
+    public World getWorld(String worldName) throws Exception {
+        org.spongepowered.api.world.World world = this.game.getServer().getWorld(worldName).orNull();
+        if (world == null) {
+            throw new Exception("World " + worldName + " does not exist");
+        }
+        return new World(world);
     }
 
     ///////////////////////////////////////////////////////
@@ -278,20 +295,25 @@ public class SpongeBridge {
         getLogger().info("Server loaded, beginning to initialize plugins.");
 
         for (int i=0;i<pluginList.size();i++) {
+            int pluginIndex = i;
+            boolean skipLoading = false;
             JavaPlugin plugin = (JavaPlugin)pluginList.get(i);
             plugin.server = this;
-            for (String dep : plugin.description.softDepends) {
-                logger.info(plugin.description.name + " Depends on " + dep);
+            List<String> deps = new ArrayList<String>();
+            deps.addAll(plugin.description.softDepends);
+            deps.addAll(plugin.description.depends);
+            for (String dep : deps) {
                 if (!readyPluginMap.containsKey(dep)) {
-                    logger.info("Dep not loaded!");
+                    logger.info(plugin.description.name + " Depends on " + dep + ", which is not loaded");
                     boolean found = false;
                     int foundIndex = -1;
-                    for (int j=i;j<pluginList.size();j++) {
-                        JavaPlugin p2 = (JavaPlugin)pluginList.get(i);
+                    for (int j=pluginIndex;j<pluginList.size();j++) {
+                        JavaPlugin p2 = (JavaPlugin)pluginList.get(j);
                         logger.info(p2.description.name);
                         if (p2.description.name.equals(dep)) {
                             found = true;
                             foundIndex = j;
+                            break;
                         }
                     }
                     if (found) {
@@ -302,17 +324,33 @@ public class SpongeBridge {
                         JavaPlugin p2 = (JavaPlugin)pluginList.get(foundIndex);
                         if (!p2.description.softDepends.contains(plugin.description.name)) {
                             logger.info("Swapping spaces!");
-                            pluginList.set(i, p2);
+                            pluginList.set(pluginIndex, p2);
                             pluginList.set(foundIndex,plugin);
                             plugin = p2;
                             i --;
                             logger.info("Now loading " + plugin.description.name);
+                            // don't handle more dependencies
+                            skipLoading = true;
+                            break;
+                        } else {
+                            logger.warning("Plugin " + plugin.description.name + " depends on " + dep + ", which also depends on " + plugin.description.name + ". Cannot continue loading this plugin.");
+                            skipLoading = true;
+                            break;
+                        }
+                    } else {
+                        if (plugin.description.depends.contains(dep)) {
+                            logger.warning("Plugin " + plugin.description.name + " depends on " + dep + ", which was not found. Cannot continue loading this plugin.");
+                            skipLoading = true;
+                            break;
                         }
                     }
                 }
             }
+            if (skipLoading) {
+                continue;
+            }
+            logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
             try {
-                logger.info("Plugin " + plugin.description.name + " has " + plugin.description.commands.size() + " commands");
                 for (String command : plugin.description.commands) {
                     logger.info("Registering " + command);
                     if (commandHandlers.containsKey(command)) continue;

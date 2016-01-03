@@ -1,4 +1,4 @@
-package com.thepastimers.Inventory;
+/*package com.thepastimers.Inventory;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.ItemName.ItemName;
@@ -21,7 +21,7 @@ import java.util.List;
  * Time: 2:14 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Inventory extends JavaPlugin implements Listener {
+/*public class Inventory extends JavaPlugin implements Listener {
     Database database;
     ItemName itemName;
 
@@ -167,3 +167,4 @@ public class Inventory extends JavaPlugin implements Listener {
         return true;
     }
 }
+*/

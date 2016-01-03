@@ -8,9 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="module" module-name="Mute" />
-    <orderEntry type="module" module-name="CombatLog" />
-    <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="UserMap" />
+    <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>

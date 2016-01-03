@@ -8,7 +8,8 @@ import org.spongepowered.api.text.format.TextColors;
  */
 public enum ChatColor {
     BLUE(TextColors.BLUE),
-    RED(TextColors.RED);
+    RED(TextColors.RED),
+    GREEN(TextColors.GREEN);
 
     private final TextColor color;
     ChatColor(TextColor color) { this.color = color; }
