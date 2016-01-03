@@ -9,8 +9,7 @@
     <bookmark url="file://$PROJECT_DIR$/ChestProtect/src/com/thepastimers/ChestProtect/ChestProtect.java" line="579" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2c2114f-e12b-44d1-89e1-56712f84f6c9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/World.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/World.java" />
+    <list default="true" id="f2c2114f-e12b-44d1-89e1-56712f84f6c9" name="Default" comment="Fixing  bug with World class that was causing teleports to teleport to the block edge, rather than the actual position (which caused people to teleport into walls)">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Solumcraft.iws" />
@@ -1164,7 +1163,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451794358076</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fixing  bug with World class that was causing teleports to teleport to the block edge, rather than the actual position (which caused people to teleport into walls)">
+      <created>1451805141760</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1451805141760</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1260,7 +1265,8 @@
     <MESSAGE value="New sponge version as well as fixing commands" />
     <MESSAGE value="Buncha crap for inventory stuff." />
     <MESSAGE value="Lots of bug fixes to SpongeBridge, removing some outdated plugin references (and plugins that aren't being ported yet) in Teleport and Home. Teleport and Home plugins now working properly." />
-    <option name="LAST_COMMIT_MESSAGE" value="Lots of bug fixes to SpongeBridge, removing some outdated plugin references (and plugins that aren't being ported yet) in Teleport and Home. Teleport and Home plugins now working properly." />
+    <MESSAGE value="Fixing  bug with World class that was causing teleports to teleport to the block edge, rather than the actual position (which caused people to teleport into walls)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing  bug with World class that was causing teleports to teleport to the block edge, rather than the actual position (which caused people to teleport into walls)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
