@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
+import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.command.CommandService;
@@ -38,7 +39,7 @@ public class SpongeBridge {
     public Game game;
 
     @Subscribe
-    public void onServerStart(ServerStartedEvent event) {
+    public void onServerInit(InitializationEvent event) {
         this.game = event.getGame();
         logger = new Logger();
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");

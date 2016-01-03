@@ -11,6 +11,7 @@ import com.thepastimers.Worlds.Worlds;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Text;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -59,8 +60,8 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Warning! Unable to load Database module! Critical failure!");
-            getServer().broadcastMessage(ChatColor.RED + "Warning, Plot plugin was unable to connect to Database.");
-            getServer().broadcastMessage(ChatColor.RED + "To prevent griefing of protected plots, server is entering lockdown.");
+            getServer().broadcastMessage(Text.make().text("Warning, Plot plugin was unable to connect to Database.").color(ChatColor.RED));
+            getServer().broadcastMessage(Text.make().text("To prevent griefing of protected plots, server is entering lockdown.").color(ChatColor.RED));
         } else {
             PlotData.createTables(database,getLogger());
             PlotPerms.createTables(database,getLogger());
@@ -76,10 +77,10 @@ public class Plot extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Coord plugin. Some functionality may not be available.");
         }
 
-        money = (Money)getServer().getPluginManager().getPlugin("Money");
+        /*money = (Money)getServer().getPluginManager().getPlugin("Money");
         if (money == null) {
             getLogger().warning("Unable to load Money plugin. some functionality may not be available.");
-        }
+        }*/
 
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {

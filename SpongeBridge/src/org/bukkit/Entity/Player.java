@@ -1,7 +1,6 @@
 package org.bukkit.entity;
 
-import SpongeBridge.SpongeText;
-import org.bukkit.Text;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.command.CommandSender;
 
 import java.util.UUID;
@@ -32,5 +31,9 @@ public class Player extends CommandSender {
 
     public UUID getUniqueId() {
         return this.serverPlayer.getUniqueId();
+    }
+
+    public PlayerInventory getInventory() {
+        return new PlayerInventory(serverPlayer.getInventory());
     }
 }
