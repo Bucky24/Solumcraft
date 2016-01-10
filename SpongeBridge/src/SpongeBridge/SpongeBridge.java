@@ -6,13 +6,16 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.Subscribe;
-import org.spongepowered.api.event.entity.player.PlayerJoinEvent;
+import org.spongepowered.api.event.network.ClientConnectionEvent;
+import org.spongepowered.api.event.network.ClientConnectionEvent.Join;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
+import org.spongepowered.api.event.world.ExplosionEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.service.command.CommandService;
 import org.spongepowered.api.text.chat.ChatTypes;
@@ -64,22 +67,16 @@ public class SpongeBridge {
     /////////////////////////////////////////////////////////
     // Event handling
     /////////////////////////////////////////////////////////
-    @Subscribe
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Iterator it = pluginMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            JavaPlugin plugin = (JavaPlugin)pair.getValue();
-            try {
-                org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(this,event);
-                List<Method> methods = this.getMethodsThatTakeEvent(plugin, newEvent.getClass());
-                for (Method m : methods) {
-                    m.invoke(plugin,newEvent);
-                }
-            } catch (Exception e) {
-                logger.logError(e);
-            }
-        }
+    @Listener
+    public void onPlayerJoin(ClientConnectionEvent.Join event) {
+        org.bukkit.event.player.PlayerJoinEvent newEvent = new org.bukkit.event.player.PlayerJoinEvent(this,event);
+        fireEvent(newEvent);
+    }
+
+    @Listener
+    public void onExplode(ExplosionEvent.Pre event) {
+        org.bukkit.event.entity.EntityExplodeEvent newEvent = new org.bukkit.event.entity.EntityExplodeEvent(this,event);
+        fireEvent(newEvent);
     }
 
     ///////////////////////////////////////////////////////
@@ -94,7 +91,7 @@ public class SpongeBridge {
         return readyPluginMap.get(plugin);
     }
 
-    public void registerEvents(JavaPlugin plugin, Listener listener) {}
+    public void registerEvents(JavaPlugin plugin, org.bukkit.event.Listener listener) {}
 
     public List<Player> getOnlinePlayers() {
         List<Player> players = new ArrayList<Player>();
@@ -158,6 +155,22 @@ public class SpongeBridge {
     ///////////////////////////////////////////////////////
     // Bridge server methods
     ///////////////////////////////////////////////////////
+
+    public void fireEvent(Event newEvent) {
+        Iterator it = pluginMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            JavaPlugin plugin = (JavaPlugin)pair.getValue();
+            try {
+                List<Method> methods = this.getMethodsThatTakeEvent(plugin, newEvent.getClass());
+                for (Method m : methods) {
+                    m.invoke(plugin,newEvent);
+                }
+            } catch (Exception e) {
+                logger.logError(e);
+            }
+        }
+    }
 
     public boolean handleCommand(org.spongepowered.api.util.command.CommandSource source, String command, String []commandArr) {
         System.out.println("Got command! " + command);
