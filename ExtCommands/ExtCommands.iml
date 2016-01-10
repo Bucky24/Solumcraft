@@ -16,5 +16,6 @@
     <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="ItemName" />
     <orderEntry type="module" module-name="Coord" />
+    <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>

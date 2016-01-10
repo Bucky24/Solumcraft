@@ -40,13 +40,13 @@ import java.util.List;
  */
 public class ExtCommands extends JavaPlugin implements Listener {
     Permission permission;
-    Metrics metrics;
+    //Metrics metrics;
     Rank rank;
-    Chat chat;
+    //Chat chat;
     VanishPlugin vanishNoPacket;
     VanishManager manager;
     Worlds worlds;
-    ItemName itemName;
+    //ItemName itemName;
     Coord coord;
 
     @Override
@@ -65,33 +65,33 @@ public class ExtCommands extends JavaPlugin implements Listener {
             permission.registerPermission("command_fly",2);
         }
 
-        metrics = (Metrics)getServer().getPluginManager().getPlugin("Metrics");
+        /*metrics = (Metrics)getServer().getPluginManager().getPlugin("Metrics");
 
         if (metrics == null) {
             getLogger().warning("Unable to load Metrics plugin.");
-        }
+        }*/
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");
         if (rank == null) {
             getLogger().warning("Unable to load Rank plugin.");
         }
 
-        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        /*chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
         if (chat == null) {
             getLogger().warning("Unable to load Chat plugin.");
         } else {
             chat.registerCommand("setTitle",ExtCommands.class,this);
-        }
+        }*/
 
         worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
 
-        itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
+        /*itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
         if (itemName == null) {
             getLogger().warning("Unable to load ItemName plugin. Some functionality may not be available.");
-        }
+        }*/
 
         vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
         if (vanishNoPacket == null) {

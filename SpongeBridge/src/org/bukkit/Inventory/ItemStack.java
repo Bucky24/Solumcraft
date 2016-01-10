@@ -1,5 +1,7 @@
 package org.bukkit.inventory;
 
+import org.bukkit.Material;
+
 /**
  * Created by solum on 12/30/2015.
  */
@@ -10,8 +12,12 @@ public class ItemStack {
         this.stack = stack;
     }
 
-    public ItemType getType() {
-        return new ItemType(stack.getItem());
+    public ItemStack(Material material) {
+        this.stack = org.spongepowered.api.item.inventory.ItemStack.builder().itemType(material.getValue().getType()).quantity(0).build();
+    }
+
+    public Material getType() {
+        return Material.getValueOf(new ItemType(stack.getItem()));
     }
 
     public int getAmount() {

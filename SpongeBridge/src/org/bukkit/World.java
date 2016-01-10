@@ -17,11 +17,15 @@ public class World {
         return this.world.getName();
     }
 
-    public org.spongepowered.api.world.Location getSpongeLocation(double x, double y, double z) throws Exception {
+    public org.spongepowered.api.world.Location getSpongeLocation(double x, double y, double z) {
         return this.world.getLocation(x,y,z);
     }
 
     /*public Block getBlockAt(Location l) throws Exception {
         org.spongepowered.api.world.Location loc = this.world.getLocation((int)l.getX(),(int)l.getY(),(int)l.getZ());
     }*/
+
+    public Location getSpawnLocation() {
+        return new Location(this.world.getSpawnLocation(),this.world);
+    }
 }

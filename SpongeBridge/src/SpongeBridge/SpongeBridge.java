@@ -146,10 +146,11 @@ public class SpongeBridge {
         }
     }
 
-    public World getWorld(String worldName) throws Exception {
+    public World getWorld(String worldName) {
         org.spongepowered.api.world.World world = this.game.getServer().getWorld(worldName).orNull();
         if (world == null) {
-            throw new Exception("World " + worldName + " does not exist");
+            logger.warning("World " + worldName + " does not exist");
+            return null;
         }
         return new World(world);
     }

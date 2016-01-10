@@ -13,4 +13,8 @@ public class ItemType {
     public String name() {
         return itemType.getName();
     }
+
+    public org.spongepowered.api.item.ItemType getType() {
+        return itemType;
+    }
 }

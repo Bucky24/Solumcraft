@@ -3,7 +3,7 @@ package org.bukkit.command;
 import SpongeBridge.SpongeText;
 import org.bukkit.Text;
 import org.bukkit.entity.Entity;
-import org.spongepowered.api.util.command.CommandSource;
+import org.spongepowered.api.command.CommandSource;
 
 /**
  * Created by solum on 5/2/2015.

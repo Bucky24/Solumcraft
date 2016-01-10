@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
  * Created by solum on 7/3/2015.
  */
 public class CommandSource extends Player {
-    org.spongepowered.api.util.command.CommandSource sender;
+    org.spongepowered.api.command.CommandSource sender;
 
-    public CommandSource(org.spongepowered.api.util.command.CommandSource sender) throws Exception {
+    public CommandSource(org.spongepowered.api.command.CommandSource sender) throws Exception {
         this.sender = sender;
     }
 
