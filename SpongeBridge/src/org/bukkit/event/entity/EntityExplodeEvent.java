@@ -1,5 +1,6 @@
 package org.bukkit.event.entity;
 
+import SpongeBridge.SpongeBridge;
 import org.bukkit.event.Event;
 import org.spongepowered.api.event.world.ExplosionEvent;
 
@@ -8,7 +9,7 @@ import org.spongepowered.api.event.world.ExplosionEvent;
  */
 public class EntityExplodeEvent extends Event {
     private ExplosionEvent.Pre event;
-    public EntityExplodeEvent(ExplosionEvent.Pre event) {
+    public EntityExplodeEvent(SpongeBridge bridge, ExplosionEvent.Pre event) {
         this.event = event;
     }
 }
