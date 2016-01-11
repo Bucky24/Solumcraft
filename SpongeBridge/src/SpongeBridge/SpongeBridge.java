@@ -10,15 +10,10 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.Subscribe;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
-import org.spongepowered.api.event.network.ClientConnectionEvent.Join;
-import org.spongepowered.api.event.state.InitializationEvent;
-import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
 import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.service.command.CommandService;
-import org.spongepowered.api.text.chat.ChatTypes;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -27,8 +22,6 @@ import java.util.*;
 /**
  * Created by solum on 4/29/2015.
  */
-
-
 
 @Plugin(id="SpongeBridge", name="Sponge Bridge", version="1.0")
 public class SpongeBridge {
@@ -42,8 +35,8 @@ public class SpongeBridge {
     private final Map<String, CommandHandler> commandHandlers = new HashMap<String, CommandHandler>();
     public Game game;
 
-    @Subscribe
-    public void onServerInit(InitializationEvent event) {
+    @Listener
+    public void onServerInit(GameInitializationEvent event) {
         this.game = event.getGame();
         logger = new Logger();
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
@@ -96,9 +89,9 @@ public class SpongeBridge {
     public List<Player> getOnlinePlayers() {
         List<Player> players = new ArrayList<Player>();
 
-        Collection<org.spongepowered.api.entity.player.Player> realPlayers = game.getServer().getOnlinePlayers();
-        for (Iterator<org.spongepowered.api.entity.player.Player> i = realPlayers.iterator(); i.hasNext();) {
-            org.spongepowered.api.entity.player.Player player = i.next();
+        Collection<org.spongepowered.api.entity.living.player.Player> realPlayers = game.getServer().getOnlinePlayers();
+        for (Iterator<org.spongepowered.api.entity.living.player.Player> i = realPlayers.iterator(); i.hasNext();) {
+            org.spongepowered.api.entity.living.player.Player player = i.next();
             try {
                 players.add(new Player(player));
             } catch (Exception e) {
@@ -111,11 +104,16 @@ public class SpongeBridge {
 
     public Player getPlayer(String name) {
         try {
-            org.spongepowered.api.entity.player.Player player = game.getServer().getPlayer(name).orNull();
+            org.spongepowered.api.entity.living.player.Player player = game.getServer().getPlayer(name).orElse(null);
             if (player == null) {
                 // try to get via UUID
-                UUID id = UUID.fromString(name);
-                player = game.getServer().getPlayer(id).orNull();
+                UUID id;
+                try {
+                    id = UUID.fromString(name);
+                } catch (Exception e) {
+                    return null;
+                }
+                player = game.getServer().getPlayer(id).orElse(null);
                 if (player == null) {
                     return null;
                 }
@@ -138,13 +136,13 @@ public class SpongeBridge {
     }
 
     public void broadcastMessage(Text text) {
-        for (org.spongepowered.api.entity.player.Player p : game.getServer().getOnlinePlayers()) {
+        for (org.spongepowered.api.entity.living.player.Player p : game.getServer().getOnlinePlayers()) {
             p.sendMessage(SpongeText.getText(text));
         }
     }
 
     public World getWorld(String worldName) {
-        org.spongepowered.api.world.World world = this.game.getServer().getWorld(worldName).orNull();
+        org.spongepowered.api.world.World world = this.game.getServer().getWorld(worldName).orElse(null);
         if (world == null) {
             logger.warning("World " + worldName + " does not exist");
             return null;
@@ -172,13 +170,13 @@ public class SpongeBridge {
         }
     }
 
-    public boolean handleCommand(org.spongepowered.api.util.command.CommandSource source, String command, String []commandArr) {
+    public boolean handleCommand(org.spongepowered.api.command.CommandSource source, String command, String []commandArr) {
         System.out.println("Got command! " + command);
         CommandSender sender;
         try {
             sender = new CommandSender(source);
-            if (source instanceof org.spongepowered.api.entity.player.Player) {
-                org.spongepowered.api.entity.player.Player player = (org.spongepowered.api.entity.player.Player)source;
+            if (source instanceof org.spongepowered.api.entity.living.player.Player) {
+                org.spongepowered.api.entity.living.player.Player player = (org.spongepowered.api.entity.living.player.Player)source;
                 sender = new Player(player);
             }
         } catch (Exception e) {
