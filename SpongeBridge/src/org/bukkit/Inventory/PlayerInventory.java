@@ -25,7 +25,7 @@ public class PlayerInventory {
 
         Iterable<Slot> slots = getSlots(inventory);
         for (Slot slot : slots) {
-            org.spongepowered.api.item.inventory.ItemStack stack = slot.peek().orNull();
+            org.spongepowered.api.item.inventory.ItemStack stack = slot.peek().orElse(null);
             if (stack != null) {
                 stackList.add(new ItemStack(stack));
             }

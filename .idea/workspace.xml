@@ -10,12 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2c2114f-e12b-44d1-89e1-56712f84f6c9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/block/BlockBreakEvent.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/BlockList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/entity/EntityExplodeEvent.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/entity/EntityExplodeEvent.java" />
-      <change type="MODIFICATION" beforePath="H:\code\solumcraft\SpongeBridge\src\org\bukkit\entity\EntityType.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/EntityType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" afterPath="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeBridge.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeBridge.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/forge-1.8-11.14.4.1577-universal.jar" />
+      <change type="DELETED" beforePath="H:\code\solumcraft\forge-1.8-11.14.4.1563-universal.jar" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java" />
+      <change type="MODIFICATION" beforePath="H:\code\solumcraft\SpongeBridge\src\org\bukkit\inventory\ItemStack.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java" />
+      <change type="MODIFICATION" beforePath="H:\code\solumcraft\SpongeBridge\src\org\bukkit\entity\Player.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/Player.java" />
+      <change type="MODIFICATION" beforePath="H:\code\solumcraft\SpongeBridge\src\org\bukkit\inventory\PlayerInventory.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/PlayerInventory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java" afterPath="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Solumcraft.iws" />
@@ -99,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExtCommands.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ExtCommands.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45557123" vertical-offset="1853" max-vertical-offset="10829">
-              <caret line="130" column="38" selection-start-line="130" selection-start-column="38" selection-end-line="130" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1853" max-vertical-offset="10829">
+              <caret line="129" column="35" selection-start-line="129" selection-start-column="35" selection-end-line="129" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -114,7 +115,7 @@
       <file leaf-file-name="BlockBreakEvent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/block/BlockBreakEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+            <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="578">
               <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -125,54 +126,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntityType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/EntityType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Home.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Home/src/com/thepastimers/Home/Home.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2059" max-vertical-offset="10183">
-              <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#6542#6552#0" expanded="true" />
-                <element signature="e#7152#7160#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EntityExplodeEvent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/entity/EntityExplodeEvent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#440#441#0" expanded="true" />
-                <element signature="e#474#475#0" expanded="true" />
-                <element signature="e#515#516#0" expanded="true" />
-                <element signature="e#578#579#0" expanded="true" />
-                <element signature="e#614#615#0" expanded="true" />
-                <element signature="e#675#676#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BlockList.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/BlockList.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="476">
               <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -185,41 +142,71 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Material.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/Material.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="175" max-vertical-offset="884">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="44" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerJoinEvent.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/player/PlayerJoinEvent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="33" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpongeBridge.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SpongeBridge.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeBridge.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.827586" vertical-offset="782" max-vertical-offset="7446">
-              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5035261" vertical-offset="0" max-vertical-offset="7446">
+              <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8586#8611#0" expanded="true" />
-                <element signature="e#10129#10154#0" expanded="true" />
                 <element signature="e#12350#12358#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommandHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
+              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerInventory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/PlayerInventory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="114" max-vertical-offset="731">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpongeText.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+              <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ItemStack.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+              <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ItemStack.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/spongeforge-1.8-1577-3.0.0-BETA-1000.jar!/org/spongepowered/api/item/inventory/ItemStack.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.44" vertical-offset="0" max-vertical-offset="1088">
+              <caret line="25" column="15" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="93" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -246,7 +233,6 @@
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/Listener.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/EventHandler.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/EventPriority.java" />
-        <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java" />
         <option value="$PROJECT_DIR$/Database/src/com/thepastimers/Database/Database.java" />
         <option value="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/command/CommandSender.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/command/Command.java" />
@@ -259,11 +245,9 @@
         <option value="$PROJECT_DIR$/.idea/shelf/text_fixes.patch" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/Command/Command.java" />
         <option value="$PROJECT_DIR$/Rank/src/com/thepastimers/Rank/Rank.java" />
-        <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java" />
         <option value="$PROJECT_DIR$/Plot/src/com/thepastimers/Plot/Plot.java" />
         <option value="$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/Inventory/PlayerInventory.java" />
-        <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/PlayerInventory.java" />
         <option value="$PROJECT_DIR$/Home/plugin.yml" />
         <option value="$PROJECT_DIR$/RainbowSetup/src/org/bukkit/World.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/ChatColor.java" />
@@ -282,7 +266,6 @@
         <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/MaterialHandler.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/Material.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemType.java" />
-        <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/Command/CommandSender.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandSource.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/player/PlayerJoinEvent.java" />
@@ -293,6 +276,10 @@
         <option value="$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/Player.java" />
         <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/block/BlockBreakEvent.java" />
+        <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/PlayerInventory.java" />
+        <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java" />
+        <option value="$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java" />
+        <option value="$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java" />
       </list>
     </option>
   </component>
@@ -347,16 +334,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1051,6 +1028,16 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -1066,7 +1053,7 @@
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$PROJECT_DIR$/Home/src/com/thepastimers/Home" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
@@ -1389,14 +1376,20 @@
       <option name="project" value="LOCAL" />
       <updated>1452482669580</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Further conversion support for ExtCommands">
+      <created>1452484346276</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1452484346277</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20324324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20324324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3027027" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1491,7 +1484,8 @@
     <MESSAGE value="Various work on converting entity explode event." />
     <MESSAGE value="Fixing some bugs in SpongeBridge" />
     <MESSAGE value="Finishing conversion to updated sponge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finishing conversion to updated sponge" />
+    <MESSAGE value="Further conversion support for ExtCommands" />
+    <option name="LAST_COMMIT_MESSAGE" value="Further conversion support for ExtCommands" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1513,34 +1507,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Worlds/src/com/thepastimers/Worlds/Worlds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7922">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/SpongeBridge/SpongeBridge/SpongeBridge.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6919">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ItemName/src/com/thepastimers/ItemName/ItemName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10161" max-vertical-offset="10778">
-          <caret line="616" column="47" selection-start-line="616" selection-start-column="47" selection-end-line="616" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Home/plugin.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Inventory/src/com/thepastimers/Inventory/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2371" max-vertical-offset="2975">
@@ -1651,7 +1617,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5285" max-vertical-offset="8075">
           <caret line="336" column="68" selection-start-line="336" selection-start-column="68" selection-end-line="336" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1659,7 +1624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
           <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1701,7 +1665,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
           <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1709,7 +1672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1125731" vertical-offset="246" max-vertical-offset="6018">
           <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1717,7 +1679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33282444" vertical-offset="3573" max-vertical-offset="6035">
           <caret line="226" column="37" selection-start-line="226" selection-start-column="33" selection-end-line="226" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1725,7 +1686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.57163745" vertical-offset="0" max-vertical-offset="684">
           <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1739,14 +1699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/spongeforge-1.8-1577-3.0.0-BETA-1000.jar!/org/spongepowered/api/item/inventory/ItemStack.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.08" vertical-offset="0" max-vertical-offset="1088">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
@@ -1754,17 +1706,6 @@
           <folding>
             <element signature="e#376#377#0" expanded="true" />
             <element signature="e#407#408#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#270#271#0" expanded="true" />
-            <element signature="e#304#305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1783,10 +1724,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
           <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-          <folding>
-            <element signature="e#551#552#0" expanded="true" />
-            <element signature="e#616#617#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1794,7 +1731,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1802,7 +1738,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1818,7 +1753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1834,7 +1768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1491228" vertical-offset="0" max-vertical-offset="765">
           <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1842,11 +1775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2059" max-vertical-offset="10183">
           <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6542#6552#0" expanded="true" />
-            <element signature="e#7152#7160#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1910,29 +1838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeBridge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.827586" vertical-offset="782" max-vertical-offset="7446">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8586#8611#0" expanded="true" />
-            <element signature="e#10129#10154#0" expanded="true" />
-            <element signature="e#12350#12358#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1156">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/event/block/BlockBreakEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
@@ -1947,10 +1852,88 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ExtCommands/src/com/thepastimers/ExtCommands/ExtCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45557123" vertical-offset="1853" max-vertical-offset="10829">
-          <caret line="130" column="38" selection-start-line="130" selection-start-column="38" selection-end-line="130" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1853" max-vertical-offset="10829">
+          <caret line="129" column="35" selection-start-line="129" selection-start-column="35" selection-end-line="129" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/spongeforge-1.8-1577-3.0.0-BETA-1000.jar!/org/spongepowered/api/text/Text.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.72" vertical-offset="3403" max-vertical-offset="8806">
+          <caret line="276" column="20" selection-start-line="276" selection-start-column="20" selection-end-line="276" selection-end-column="20" />
+          <folding>
+            <element signature="e#10898#10899#0" expanded="true" />
+            <element signature="e#10973#10974#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/spongeforge-1.8-1577-3.0.0-BETA-1000.jar!/org/spongepowered/api/item/inventory/ItemStack.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.44" vertical-offset="0" max-vertical-offset="1088">
+          <caret line="25" column="15" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/entity/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1156">
+          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/PlayerInventory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/CommandHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/org/bukkit/inventory/ItemStack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SpongeBridge/src/SpongeBridge/SpongeBridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5035261" vertical-offset="0" max-vertical-offset="7446">
+          <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12350#12358#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2009,7 +1992,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>ExtCommands</last-edited>
+          <last-edited>SpongeBridge</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2033,7 +2016,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>spongeforge-1.8-1577-3.0.0-BETA-1000</last-edited>
+          <last-edited>guava-18.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

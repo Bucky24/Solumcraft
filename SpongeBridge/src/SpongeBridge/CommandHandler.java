@@ -1,23 +1,15 @@
 package SpongeBridge;
 
-import org.bukkit.command.Command;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.Texts;
-import org.spongepowered.api.util.command.CommandCallable;
-import org.spongepowered.api.util.command.CommandException;
-import org.spongepowered.api.util.command.CommandResult;
-import org.spongepowered.api.util.command.CommandSource;
+import org.spongepowered.api.command.CommandResult;
+import org.spongepowered.api.command.CommandSource;
 
-import com.google.common.base.Optional;
-import org.spongepowered.api.util.command.args.CommandContext;
-import org.spongepowered.api.util.command.args.CommandElement;
-import org.spongepowered.api.util.command.args.GenericArguments;
-import org.spongepowered.api.util.command.spec.CommandExecutor;
-import org.spongepowered.api.util.command.spec.CommandSpec;
+import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.command.args.GenericArguments;
+import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,15 +24,15 @@ public class CommandHandler implements CommandExecutor {
         this.plugin = plugin;
 
         CommandSpec spec = CommandSpec.builder()
-                .description(Texts.of("Description"))
-                .arguments(GenericArguments.optional(GenericArguments.remainingJoinedStrings(Texts.of("args"))))
+                .description(Text.of("Description"))
+                .arguments(GenericArguments.optional(GenericArguments.remainingJoinedStrings(Text.of("args"))))
                 .executor(this)
                 .build();
-        plugin.game.getCommandDispatcher().register(plugin, spec, name);
+        plugin.game.getCommandManager().register(plugin, spec, name);
     }
 
     public CommandResult execute(CommandSource source, CommandContext context) {
-        String argString = context.<String>getOne("args").or("");
+        String argString = context.<String>getOne("args").orElse("");
 
         String[] argList = argString.split(" ");
         List<String> finalArgs = new ArrayList<String>();

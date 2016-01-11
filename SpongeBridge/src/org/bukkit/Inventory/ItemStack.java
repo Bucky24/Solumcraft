@@ -1,6 +1,7 @@
 package org.bukkit.inventory;
 
 import org.bukkit.Material;
+import org.spongepowered.api.Sponge;
 
 /**
  * Created by solum on 12/30/2015.
@@ -13,7 +14,8 @@ public class ItemStack {
     }
 
     public ItemStack(Material material) {
-        this.stack = org.spongepowered.api.item.inventory.ItemStack.builder().itemType(material.getValue().getType()).quantity(0).build();
+        org.spongepowered.api.item.inventory.ItemStack.Builder builder = Sponge.getRegistry().createBuilder(org.spongepowered.api.item.inventory.ItemStack.Builder.class);
+        this.stack = builder.itemType(material.getValue().getType()).quantity(0).build();
     }
 
     public Material getType() {

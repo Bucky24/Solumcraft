@@ -20,6 +20,11 @@ public class Player extends CommandSender {
         serverPlayer = null;
     }
 
+    public Player(org.spongepowered.api.entity.living.player.Player player) {
+        super(player);
+        this.serverPlayer = player;
+    }
+
     public Player(org.spongepowered.api.command.CommandSource source) throws Exception {
         super(source);
         if (source instanceof org.spongepowered.api.entity.living.player.Player) {

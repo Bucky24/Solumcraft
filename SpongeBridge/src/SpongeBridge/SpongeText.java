@@ -3,10 +3,6 @@ package SpongeBridge;
 import com.google.common.base.Optional;
 import org.bukkit.ChatColor;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.TextBuilder;
-import org.spongepowered.api.text.Texts;
-import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.text.format.TextStyles;
 
 /**
  * Created by solum on 5/2/2015.
@@ -22,13 +18,13 @@ public class SpongeText {
     }
 
     public static Text getText(org.bukkit.Text object) {
-        TextBuilder builder = Texts.builder();
+        Text.Builder builder = Text.builder();
         ChatColor curColor = null;
         for (org.bukkit.Text.TextElement element : object.getElements()) {
             if (element.type == org.bukkit.Text.TextElement.COLOR) {
                 curColor = (ChatColor) element.data;
             } else if (element.type == org.bukkit.Text.TextElement.TEXT) {
-                TextBuilder text = Texts.builder((String)element.data);
+                Text.Builder text = Text.builder((String)element.data);
                 if (curColor != null) {
                     text.color(curColor.getValue());
                 }
