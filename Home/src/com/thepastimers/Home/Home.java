@@ -133,9 +133,12 @@ public class Home extends JavaPlugin implements Listener {
             return 0;
         }
 
-        if (userMap != null) {
+        if (userMap != null && !groupOnly) {
             player = userMap.getUUID(player);
-            if (UserMap.NO_USER.equalsIgnoreCase(player)) return 0;
+            if (UserMap.NO_USER.equalsIgnoreCase(player)) {
+                // skip the player, we don't have a valid one
+                groupOnly = true;
+            }
         }
 
         int playerMax = 0;
@@ -149,7 +152,6 @@ public class Home extends JavaPlugin implements Listener {
             if (list.size() > 0) {
                 playerMax = list.get(0).getMax();
                 list.clear();
-                list = null;
             }
 
             if (rank != null) {
@@ -159,7 +161,6 @@ public class Home extends JavaPlugin implements Listener {
             if (group.equalsIgnoreCase("")) {
                 group = "all";
             }
-
         } else {
             group = player;
         }
@@ -174,7 +175,6 @@ public class Home extends JavaPlugin implements Listener {
         }
 
         list.clear();
-        list = null;
 
         return Math.max(playerMax, groupMax);
     }
@@ -320,9 +320,11 @@ public class Home extends JavaPlugin implements Listener {
             return false;
         }
 
-        if (userMap != null) {
+        if (userMap != null && !group) {
             name = userMap.getUUID(name);
-            if (UserMap.NO_USER.equalsIgnoreCase(name)) return false;
+            if (UserMap.NO_USER.equalsIgnoreCase(name)) {
+                return false;
+            }
         }
 
         List<MaxHome> data = (List<MaxHome>)database.select(MaxHome.class,"name = '"
