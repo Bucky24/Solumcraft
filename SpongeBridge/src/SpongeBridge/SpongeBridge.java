@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
@@ -68,8 +69,14 @@ public class SpongeBridge {
     }
 
     @Listener
-    public void onExplode(ExplosionEvent.Pre event) {
+    public void onExplode(ExplosionEvent.Detonate event) {
         org.bukkit.event.entity.EntityExplodeEvent newEvent = new org.bukkit.event.entity.EntityExplodeEvent(this,event);
+        fireEvent(newEvent);
+    }
+
+    @Listener
+    public void onBlockBreak(ChangeBlockEvent.Break event) {
+        org.bukkit.event.block.BlockBreakEvent newEvent = new org.bukkit.event.block.BlockBreakEvent(this,event);
         fireEvent(newEvent);
     }
 

@@ -123,7 +123,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
-        if (permission == null || !permission.hasPermission(p.getName(),"command_warn_break")) {
+        if (p == null || permission == null || !permission.hasPermission(p.getName(),"command_warn_break")) {
             return;
         }
 

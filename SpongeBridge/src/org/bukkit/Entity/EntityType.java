@@ -1,15 +1,31 @@
 package org.bukkit.entity;
 
+import org.spongepowered.api.entity.*;
+import org.spongepowered.api.event.cause.Cause;
+
 /**
  * Created by solum on 1/10/2016.
  */
 public enum EntityType {
-    BLUE(TextColors.BLUE),
-    RED(TextColors.RED),
-    GREEN(TextColors.GREEN);
+    CREEPER(EntityTypes.CREEPER);
 
-    private final TextColor color;
-    ChatColor(TextColor color) { this.color = color; }
-    public TextColor getValue() { return color; }
+    private final org.spongepowered.api.entity.EntityType type;
+    EntityType(org.spongepowered.api.entity.EntityType type) { this.type = type; }
+    public org.spongepowered.api.entity.EntityType getValue() { return type; }
+    public static EntityType getForCause(Cause cause) {
+        org.spongepowered.api.entity.Entity entity = cause.first(org.spongepowered.api.entity.Entity.class).orElse(null);
+        if (entity == null) {
+            return null;
+        }
+        return EntityType.getValueOf(entity.getType());
+    }
+    public static EntityType getValueOf(org.spongepowered.api.entity.EntityType type) {
+        for (EntityType e : EntityType.values()) {
+            if (e.getValue().equals(type)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }
 
