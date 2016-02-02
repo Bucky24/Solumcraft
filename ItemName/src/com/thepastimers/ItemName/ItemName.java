@@ -1,4 +1,4 @@
-/*package com.thepastimers.ItemName;
+package com.thepastimers.ItemName;
 
 import com.sun.media.sound.AiffFileReader;
 import com.thepastimers.Permission.Permission;
@@ -24,7 +24,7 @@ import java.util.Map;
  * Time: 6:47 PM
  * To change this template use File | Settings | File Templates.
  */
-/*public class ItemName extends JavaPlugin {
+public class ItemName extends JavaPlugin {
     List<ItemData> dataList;
     Permission permission;
 
@@ -81,7 +81,7 @@ import java.util.Map;
         return new ItemStack(mat);
     }
 
-    public List<ItemStack> recipeContents(Recipe r) {
+    /*public List<ItemStack> recipeContents(Recipe r) {
         List<ItemStack> ret = new ArrayList<ItemStack>();
 
         if (r == null) return ret;
@@ -104,7 +104,7 @@ import java.util.Map;
         }
 
         return ret;
-    }
+    }*/
 
     public int countInInventory(String item, String player) {
         return countInInventory(item,player,false);
@@ -158,7 +158,6 @@ import java.util.Map;
 
             if (is2 == null) {
                 empty ++;
-                continue;
             }
         }
 
@@ -626,4 +625,4 @@ import java.util.Map;
 
     }
 }
-*/
+s

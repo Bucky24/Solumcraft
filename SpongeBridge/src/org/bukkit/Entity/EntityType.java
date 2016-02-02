@@ -7,7 +7,8 @@ import org.spongepowered.api.event.cause.Cause;
  * Created by solum on 1/10/2016.
  */
 public enum EntityType {
-    CREEPER(EntityTypes.CREEPER);
+    CREEPER(EntityTypes.CREEPER),
+    ZOMBIE(EntityTypes.ZOMBIE);
 
     private final org.spongepowered.api.entity.EntityType type;
     EntityType(org.spongepowered.api.entity.EntityType type) { this.type = type; }

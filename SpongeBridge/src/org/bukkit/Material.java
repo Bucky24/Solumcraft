@@ -43,4 +43,13 @@ public enum Material {
         }
         return null;
     }
+
+    public static Material getMaterial(String name) {
+        for (Material e : Material.values()) {
+            if (e.getValue().name().equals(name)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }
