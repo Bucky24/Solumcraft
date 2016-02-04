@@ -6,9 +6,7 @@ import org.spongepowered.api.item.inventory.Inventory;
 import org.spongepowered.api.item.inventory.Slot;
 import org.spongepowered.api.item.inventory.type.CarriedInventory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by solum on 12/30/2015.
@@ -43,5 +41,9 @@ public class PlayerInventory {
             Iterables.concat(slots, getSlots(subInventory));
         }
         return slots;
+    }
+
+    public Iterator<ItemStack> iterator() {
+        return Arrays.asList(this.getContents()).iterator();
     }
 }

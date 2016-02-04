@@ -1,5 +1,6 @@
 package SpongeBridge;
 
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Text;
 import org.bukkit.World;
@@ -41,6 +42,9 @@ public class SpongeBridge {
     public void onServerInit(GameInitializationEvent event) {
         this.game = Sponge.getGame();
         logger = new Logger();
+
+        Material.init(logger);
+
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
 
         pluginMap = new HashMap<String, JavaPlugin>();

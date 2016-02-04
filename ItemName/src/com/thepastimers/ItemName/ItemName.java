@@ -1,13 +1,12 @@
 package com.thepastimers.ItemName;
 
-import com.sun.media.sound.AiffFileReader;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
+//import org.bukkit.enchantments.Enchantment;
+//import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,7 +63,7 @@ public class ItemName extends JavaPlugin {
         return ret;
     }
 
-    public ItemStack getItemFromName(String name) {
+   /* public ItemStack getItemFromName(String name) {
         for (ItemData data : dataList) {
             if (data.compare(name)) {
                 ItemStack is = new ItemStack(data.getMaterial());
@@ -106,7 +105,7 @@ public class ItemName extends JavaPlugin {
         return ret;
     }*/
 
-    public int countInInventory(String item, String player) {
+    /*public int countInInventory(String item, String player) {
         return countInInventory(item,player,false);
     }
 
@@ -274,8 +273,7 @@ public class ItemName extends JavaPlugin {
         return true;
     }
 
-    public boolean isEnchanted(ItemStack is)
-    {
+    public boolean isEnchanted(ItemStack is) {
         if (is == null) return false;
 
         Material t = is.getType();
@@ -329,7 +327,7 @@ public class ItemName extends JavaPlugin {
         }
 
         return false;
-    }
+    }*/
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
@@ -388,9 +386,9 @@ public class ItemName extends JavaPlugin {
 
     private void fillList() {
         // http://www.minecraftforum.net/topic/1994759-new-item-id-system/ for new IDs
-        dataList.add(new ItemData("OAK_PLANK",Material.getMaterial(5),0));
-        dataList.add(new ItemData("SPRUCE_PLANK",Material.getMaterial(5),1));
-        dataList.add(new ItemData("BIRCH_PLANK",Material.getMaterial(5),2));
+        dataList.add(new ItemData("OAK_PLANK",Material.getMaterial("minecraft:planks"),0));
+        dataList.add(new ItemData("SPRUCE_PLANK",Material.getMaterial("minecraft:planks"),1));
+        /*dataList.add(new ItemData("BIRCH_PLANK",Material.getMaterial(5),2));
         dataList.add(new ItemData("JUNGLE_PLANK",Material.getMaterial(5),3));
         dataList.add(new ItemData("ACACIA_PLANK",Material.getMaterial(5),4));
         dataList.add(new ItemData("DK_OAK_PLANK",Material.getMaterial(5),5));
@@ -621,8 +619,7 @@ public class ItemName extends JavaPlugin {
         dataList.add(new ItemData("WITHER_HEAD",Material.getMaterial(397),1));
         dataList.add(new ItemData("ZOMBIE_HEAD",Material.getMaterial(397),2));
         dataList.add(new ItemData("STEVE_HEAD",Material.getMaterial(397),3));
-        dataList.add(new ItemData("CREEPER_HEAD",Material.getMaterial(397),4));
+        dataList.add(new ItemData("CREEPER_HEAD",Material.getMaterial(397),4));*/
 
     }
 }
-s
