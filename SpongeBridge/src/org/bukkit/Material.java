@@ -14,12 +14,12 @@ import java.util.List;
 public class Material {
     private static Logger logger;
 
-    public static Material OAK_PLANK = new Material(ItemTypes.PLANKS,0);
-    public static Material SPRUCE_PLANK = new Material(ItemTypes.PLANKS,1);
+    /*public static Material OAK_PLANK = new Material(ItemTypes.PLANKS);
+    public static Material SPRUCE_PLANK = new Material(ItemTypes.PLANKS);
 
-    public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);
+    public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);*/
 
-    public static Material AIR = new Material(ItemTypes.NONE);
+    public static Material AIR = new Material(ItemTypes.NONE);/*
 
     public static Material WOOD_AXE = new Material(ItemTypes.WOODEN_AXE);
     public static Material WOOD_HOE = new Material(ItemTypes.WOODEN_HOE);
@@ -43,14 +43,14 @@ public class Material {
     public static Material DIAMOND_SPADE = new Material(ItemTypes.DIAMOND_SHOVEL);
     public static Material DIAMOND_SWORD = new Material(ItemTypes.DIAMOND_SWORD);
 
-    static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);
+    static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);*/
 
     public static void init(Logger logger) {
         Material.logger = logger;
     }
 
     private ItemType type;
-    private int durability;
+    private String variant;
     private boolean useDurability;
 
     Material(org.spongepowered.api.item.ItemType type) {
@@ -58,9 +58,9 @@ public class Material {
         useDurability = false;
     }
 
-    Material(org.spongepowered.api.item.ItemType type, int durability) {
+    Material(org.spongepowered.api.item.ItemType type, String variant) {
         this.type = new ItemType(type);
-        this.durability = durability;
+        this.variant = variant;
         useDurability = true;
     }
 
@@ -68,8 +68,8 @@ public class Material {
         return type;
     }
 
-    public int getDurability() {
-        return durability;
+    public String getVariant() {
+        return variant;
     }
 
     private static Material[] values() {
@@ -105,9 +105,9 @@ public class Material {
         return null;
     }
 
-    public static Material getValueOf(ItemType type, int durability) {
+    public static Material getValueOf(ItemType type, String variant) {
         for (Material e : Material.values()) {
-            if (e.getValue().equals(type) && (e.useDurability && e.getDurability() == durability)) {
+            if (e.getValue().equals(type) && (e.useDurability && e.getVariant().equals(variant))) {
                 return e;
             }
         }

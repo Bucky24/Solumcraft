@@ -1,5 +1,7 @@
 package org.bukkit.inventory;
 
+import org.bukkit.Material;
+
 /**
  * Created by solum on 12/30/2015.
  */
@@ -10,11 +12,19 @@ public class ItemType {
         this.itemType = type;
     }
 
+    public ItemType(Material mat) {
+        this.itemType = mat.getValue().itemType;
+    }
+
+    public org.spongepowered.api.item.ItemType getItemType() {
+        return itemType;
+    }
+
     public String name() {
         return itemType.getName();
     }
 
-    public org.spongepowered.api.item.ItemType getType() {
-        return itemType;
+    public boolean equals(ItemType other) {
+        return other.itemType == this.itemType;
     }
 }

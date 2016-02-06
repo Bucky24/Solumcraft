@@ -51,7 +51,12 @@ public class ItemName extends JavaPlugin {
         if (is == null) {
             return null;
         }
-        String ret = is.getType().name();
+        String ret;
+        try {
+            ret = is.getType().name();
+        } catch (Exception e) {
+            ret = is.getSpongeName() + " variant: " + is.getVariant();
+        }
 
         for (ItemData data : dataList) {
             if (data.compare(is.getType(),is.getDurability())) {
