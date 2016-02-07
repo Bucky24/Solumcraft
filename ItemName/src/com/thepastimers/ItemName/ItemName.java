@@ -52,17 +52,20 @@ public class ItemName extends JavaPlugin {
             return null;
         }
         String ret;
-        try {
-            ret = is.getType().name();
-        } catch (Exception e) {
-            ret = is.getSpongeName() + " variant: " + is.getVariant();
-        }
+        ret = is.getType().name();
+
+        boolean found = false;
 
         for (ItemData data : dataList) {
             if (data.compare(is.getType(),is.getDurability())) {
                 ret = data.getRealName();
+                found = true;
                 break;
             }
+        }
+
+        if (!found) {
+            getLogger().warning("No map for item " + is.getType().name() + " with durability " + is.getDurability());
         }
 
         return ret;
@@ -393,17 +396,17 @@ public class ItemName extends JavaPlugin {
         // http://www.minecraftforum.net/topic/1994759-new-item-id-system/ for new IDs
         dataList.add(new ItemData("OAK_PLANK",Material.getMaterial("minecraft:planks"),0));
         dataList.add(new ItemData("SPRUCE_PLANK",Material.getMaterial("minecraft:planks"),1));
-        /*dataList.add(new ItemData("BIRCH_PLANK",Material.getMaterial(5),2));
-        dataList.add(new ItemData("JUNGLE_PLANK",Material.getMaterial(5),3));
-        dataList.add(new ItemData("ACACIA_PLANK",Material.getMaterial(5),4));
-        dataList.add(new ItemData("DK_OAK_PLANK",Material.getMaterial(5),5));
+        dataList.add(new ItemData("BIRCH_PLANK",Material.getMaterial("minecraft:planks"),2));
+        dataList.add(new ItemData("JUNGLE_PLANK",Material.getMaterial("minecraft:planks"),3));
+        dataList.add(new ItemData("ACACIA_PLANK",Material.getMaterial("minecraft:planks"),4));
+        dataList.add(new ItemData("DK_OAK_PLANK",Material.getMaterial("minecraft:planks"),5));
 
-        dataList.add(new ItemData("OAK_SAPLING",Material.getMaterial(6),0));
-        dataList.add(new ItemData("SPRUCE_SAPLING",Material.getMaterial(6),1));
-        dataList.add(new ItemData("BIRCH_SAPLING",Material.getMaterial(6),2));
-        dataList.add(new ItemData("JUNGLE_SAPLING",Material.getMaterial(6),3));
+        dataList.add(new ItemData("OAK_SAPLING",Material.getMaterial("minecraft:sapling"),0));
+        dataList.add(new ItemData("SPRUCE_SAPLING",Material.getMaterial("minecraft:sapling"),1));
+        dataList.add(new ItemData("BIRCH_SAPLING",Material.getMaterial("minecraft:sapling"),2));
+        dataList.add(new ItemData("JUNGLE_SAPLING",Material.getMaterial("minecraft:sapling"),3));
 
-        dataList.add(new ItemData("OAK",Material.getMaterial(17),0));
+        /*dataList.add(new ItemData("OAK",Material.getMaterial(17),0));
         dataList.add(new ItemData("SPRUCE",Material.getMaterial(17),1));
         dataList.add(new ItemData("BIRCH",Material.getMaterial(17),2));
         dataList.add(new ItemData("JUNGLE",Material.getMaterial(17),3));
@@ -475,9 +478,9 @@ public class ItemName extends JavaPlugin {
         dataList.add(new ItemData("QUARTZ",Material.getMaterial(155),0));
         dataList.add(new ItemData("CHISELED_QUARTZ",Material.getMaterial(155),1));
         dataList.add(new ItemData("QUARTZ_PILLAR",Material.getMaterial(155),2));
-
-        dataList.add(new ItemData("WHITE_CLAY",Material.getMaterial(159),0));
-        dataList.add(new ItemData("ORANGE_CLAY",Material.getMaterial(159),1));
+*/
+        dataList.add(new ItemData("WHITE_CLAY",Material.getMaterial("minecraft:stained_hardened_clay"),0));
+        /*dataList.add(new ItemData("ORANGE_CLAY",Material.getMaterial(159),1));
         dataList.add(new ItemData("MAGENTA_CLAY",Material.getMaterial(159),2));
         dataList.add(new ItemData("LT_BLUE_CLAY",Material.getMaterial(159),3));
         dataList.add(new ItemData("YELLOW_CLAY",Material.getMaterial(159),4));

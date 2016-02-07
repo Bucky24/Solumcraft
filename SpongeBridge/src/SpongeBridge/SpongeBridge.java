@@ -16,6 +16,7 @@ import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
+import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.io.File;
@@ -44,6 +45,7 @@ public class SpongeBridge {
         logger = new Logger();
 
         Material.init(logger);
+        org.bukkit.inventory.ItemStack.init(logger);
 
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
 
@@ -200,6 +202,7 @@ public class SpongeBridge {
             logger.info("Reloading server!");
             loadPlugins();
             initPlugins();
+            sender.sendMessage("Reload complete");
         } else {
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();

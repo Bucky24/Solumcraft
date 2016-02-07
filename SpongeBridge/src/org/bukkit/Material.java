@@ -14,8 +14,12 @@ import java.util.List;
 public class Material {
     private static Logger logger;
 
-    /*public static Material OAK_PLANK = new Material(ItemTypes.PLANKS);
-    public static Material SPRUCE_PLANK = new Material(ItemTypes.PLANKS);
+    private static List<Material> materials;
+
+    public static Material WOOD = new Material(ItemTypes.PLANKS);
+    public static Material SAPLING = new Material(ItemTypes.SAPLING);
+
+    /*public static Material SPRUCE_PLANK = new Material(ItemTypes.PLANKS);
 
     public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);*/
 
@@ -47,32 +51,25 @@ public class Material {
 
     public static void init(Logger logger) {
         Material.logger = logger;
+        Material.materials = new ArrayList<Material>();
+
+        Material[] values = staticValues();
+        for (Material m : values) {
+            materials.add(m);
+        }
     }
 
     private ItemType type;
-    private String variant;
-    private boolean useDurability;
 
     Material(org.spongepowered.api.item.ItemType type) {
         this.type = new ItemType(type);
-        useDurability = false;
-    }
-
-    Material(org.spongepowered.api.item.ItemType type, String variant) {
-        this.type = new ItemType(type);
-        this.variant = variant;
-        useDurability = true;
     }
 
     public ItemType getValue() {
         return type;
     }
 
-    public String getVariant() {
-        return variant;
-    }
-
-    private static Material[] values() {
+    private static Material[] staticValues() {
         Field[] declaredFields = Material.class.getDeclaredFields();
         List<Material> staticFields = new ArrayList<Material>();
         for (Field field : declaredFields) {
@@ -96,31 +93,26 @@ public class Material {
     }
 
     public static Material getValueOf(ItemType type) {
-        for (Material e : Material.values()) {
+        for (Material e : Material.materials) {
             if (e.getValue().equals(type)) {
                 return e;
             }
         }
-        logger.warning("Unable to get valid material for item type with name " + type.name());
-        return null;
-    }
+        Material m = new Material(type.getItemType());
+        materials.add(m);
 
-    public static Material getValueOf(ItemType type, String variant) {
-        for (Material e : Material.values()) {
-            if (e.getValue().equals(type) && (e.useDurability && e.getVariant().equals(variant))) {
-                return e;
-            }
-        }
-        logger.warning("Unable to get valid material for item type with name " + type.name());
-        return null;
+        return m;
     }
 
     public static Material getMaterial(String name) {
-        for (Material e : Material.values()) {
+        for (Material e : Material.materials) {
             if (e.getValue().name().equals(name)) {
                 return e;
             }
         }
+
+        logger.warning("Unable to get valid material for name " + name);
+
         return null;
     }
 

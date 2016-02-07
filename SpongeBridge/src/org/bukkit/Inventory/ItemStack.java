@@ -1,5 +1,6 @@
 package org.bukkit.inventory;
 
+import SpongeBridge.Logger;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.spongepowered.api.Sponge;
@@ -7,6 +8,8 @@ import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.block.trait.BlockTrait;
 import org.spongepowered.api.block.trait.EnumTrait;
 import org.spongepowered.api.block.trait.EnumTraits;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.key.Keys;
 
 import java.util.Optional;
@@ -15,6 +18,12 @@ import java.util.Optional;
  * Created by solum on 12/30/2015.
  */
 public class ItemStack {
+    private static Logger logger;
+
+    public static void init(Logger logger) {
+        ItemStack.logger = logger;
+    }
+
     private org.spongepowered.api.item.inventory.ItemStack stack;
 
     public ItemStack(org.spongepowered.api.item.inventory.ItemStack stack) {
@@ -32,7 +41,7 @@ public class ItemStack {
     }
 
     public Material getType() {
-        return Material.getValueOf(new ItemType(stack.getItem()),getVariant());
+        return Material.getValueOf(new ItemType(stack.getItem()));
     }
 
     public org.spongepowered.api.item.inventory.ItemStack getStack() {
@@ -43,32 +52,21 @@ public class ItemStack {
         return stack.getQuantity();
     }
 
-    public String getVariant() {
-        BlockType type = stack.getItem().getBlock().orElse(null);
-        if (type == null) {
-            return "";
-        }
-        BlockTrait trait = type.getTrait(EnumTraits.MONSTER_EGG_VARIANT.toString()).orElse(null);
-        if (trait == null) {
-            return "";
-        }
-        Optional opt = type.getDefaultState().getTraitValue(trait);
-        if (!opt.isPresent()) {
-            return "";
-        }
-        Object obj = opt.get();
-        if (obj == null) {
-            return "";
-        }
-        return obj.toString();
-    }
-
     public short getDurability() {
-        if(stack.supports(Keys.ITEM_DURABILITY)) {
-            Integer optional = stack.get(Keys.ITEM_DURABILITY).orElse(-1);
-            return optional.shortValue();
+        if (stack.supports(Keys.ITEM_DURABILITY)) {
+            Integer optional = stack.get(Keys.ITEM_DURABILITY).orElse(null);
+            if (optional != null) {
+                return optional.shortValue();
+            }
         }
-        return -1;
+        DataContainer cont = stack.toContainer();
+        DataQuery query = DataQuery.of('/',"UnsafeDamage");
+        if (!cont.contains(query)) {
+            return -1;
+        } else {
+            Integer variant = (Integer)cont.get(query).orElse(-1);
+            return variant.shortValue();
+        }
     }
 
     public void setDurability(short durability) {
