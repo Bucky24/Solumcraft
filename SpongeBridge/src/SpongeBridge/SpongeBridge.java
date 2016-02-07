@@ -13,6 +13,9 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
+import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
@@ -84,6 +87,19 @@ public class SpongeBridge {
     public void onBlockBreak(ChangeBlockEvent.Break event) {
         org.bukkit.event.block.BlockBreakEvent newEvent = new org.bukkit.event.block.BlockBreakEvent(this,event);
         fireEvent(newEvent);
+    }
+
+    @Listener
+    public void onEntityDamage(DamageEntityEvent event) {
+        //getLogger().info("Got entity damage event");
+        //getLogger().info(event.toString());
+        Cause cause = event.getCause();
+        Object rootCause = cause.root();
+        //getLogger().info(rootCause.toString());
+        if (rootCause instanceof EntityDamageSource) {
+            org.bukkit.event.entity.EntityDamageByEntityEvent newEvent = new org.bukkit.event.entity.EntityDamageByEntityEvent(this,event);
+            fireEvent(newEvent);
+        }
     }
 
     ///////////////////////////////////////////////////////

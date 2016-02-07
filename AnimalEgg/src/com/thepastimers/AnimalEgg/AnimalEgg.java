@@ -82,6 +82,7 @@ public class AnimalEgg extends JavaPlugin implements Listener {
             if (ent.getType() == EntityType.MUSHROOM_COW) egg = "MOOSHROOM_EGG";
             if (ent.getType() == EntityType.SHEEP) egg = "SHEEP_EGG";
             if (ent.getType() == EntityType.CHICKEN) egg = "CHICKEN_EGG";
+            if (ent.getType() == EntityType.RABBIT) egg = "RABBIT_EGG";
 
             if (!"".equalsIgnoreCase(egg)) {
                 event.setCancelled(true);

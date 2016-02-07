@@ -8,7 +8,15 @@ import org.spongepowered.api.event.cause.Cause;
  */
 public enum EntityType {
     CREEPER(EntityTypes.CREEPER),
-    ZOMBIE(EntityTypes.ZOMBIE);
+    ZOMBIE(EntityTypes.ZOMBIE),
+    COW(EntityTypes.COW),
+    HORSE(EntityTypes.HORSE),
+    PIG(EntityTypes.PIG),
+    WOLF(EntityTypes.WOLF),
+    MUSHROOM_COW(EntityTypes.MUSHROOM_COW),
+    SHEEP(EntityTypes.SHEEP),
+    CHICKEN(EntityTypes.CHICKEN),
+    RABBIT(EntityTypes.RABBIT);
 
     private final org.spongepowered.api.entity.EntityType type;
     EntityType(org.spongepowered.api.entity.EntityType type) { this.type = type; }

@@ -18,6 +18,7 @@ public class Material {
 
     public static Material WOOD = new Material(ItemTypes.PLANKS);
     public static Material SAPLING = new Material(ItemTypes.SAPLING);
+    public static Material STICK = new Material(ItemTypes.STICK);
 
     /*public static Material SPRUCE_PLANK = new Material(ItemTypes.PLANKS);
 

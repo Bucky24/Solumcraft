@@ -8,7 +8,7 @@ import org.spongepowered.api.command.CommandSource;
 /**
  * Created by solum on 5/2/2015.
  */
-public class CommandSender implements Entity {
+public class CommandSender extends Entity {
     CommandSource source;
 
     public CommandSender(CommandSource source) {
