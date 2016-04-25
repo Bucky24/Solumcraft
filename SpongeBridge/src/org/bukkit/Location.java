@@ -38,4 +38,8 @@ public class Location {
     public World getWorld() {
         return this.world;
     }
+
+    public org.spongepowered.api.world.Location getSpongeLocation() {
+        return world.getSpongeLocation(this.x,this.y,this.z);
+    }
 }

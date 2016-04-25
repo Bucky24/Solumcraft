@@ -71,9 +71,13 @@ public class ItemName extends JavaPlugin {
         return ret;
     }
 
-   /* public ItemStack getItemFromName(String name) {
+    public ItemStack getItemFromName(String name) {
         for (ItemData data : dataList) {
             if (data.compare(name)) {
+                if (data.getMaterial() == null) {
+                    getLogger().warning("Got item for " + name + ", but no valid material");
+                    return null;
+                }
                 ItemStack is = new ItemStack(data.getMaterial());
                 is.setDurability(data.getDurability());
                 return is;
@@ -596,34 +600,34 @@ public class ItemName extends JavaPlugin {
         dataList.add(new ItemData("WEAKL_SPLASH",Material.getMaterial(373),16456));
         dataList.add(new ItemData("STRL_SPLASH",Material.getMaterial(373),16457));
         dataList.add(new ItemData("SLOWL_SPLASH",Material.getMaterial(373),16458));
-        dataList.add(new ItemData("INVISL_SPLASH",Material.getMaterial(373),16462));
+        dataList.add(new ItemData("INVISL_SPLASH",Material.getMaterial(373),16462));*/
 
-        dataList.add(new ItemData("CREEPER_EGG",Material.getMaterial(383),50));
-        dataList.add(new ItemData("SKELE_EGG",Material.getMaterial(383),51));
-        dataList.add(new ItemData("SPIDER_EGG",Material.getMaterial(383),52));
-        dataList.add(new ItemData("ZOMBIE_EGG",Material.getMaterial(383),54));
-        dataList.add(new ItemData("SLIME_EGG",Material.getMaterial(383),55));
-        dataList.add(new ItemData("GHAST_EGG",Material.getMaterial(383),56));
-        dataList.add(new ItemData("ZOMBIE_PIG_EGG",Material.getMaterial(383),57));
-        dataList.add(new ItemData("ENDERMAN_EGG",Material.getMaterial(383),58));
-        dataList.add(new ItemData("CAVE_SPIDER_EGG",Material.getMaterial(383),59));
-        dataList.add(new ItemData("SLIVERFISH_EGG",Material.getMaterial(383),60));
-        dataList.add(new ItemData("BLAZE_EGG",Material.getMaterial(383),61));
-        dataList.add(new ItemData("MAGMA_EGG",Material.getMaterial(383),62));
-        dataList.add(new ItemData("BAT_EGG",Material.getMaterial(383),65));
-        dataList.add(new ItemData("WITCH_EGG",Material.getMaterial(383),66));
-        dataList.add(new ItemData("PIG_EGG",Material.getMaterial(383),90));
-        dataList.add(new ItemData("SHEEP_EGG",Material.getMaterial(383),91));
-        dataList.add(new ItemData("COW_EGG",Material.getMaterial(383),92));
-        dataList.add(new ItemData("CHICKEN_EGG",Material.getMaterial(383),93));
-        dataList.add(new ItemData("SQUID_EGG",Material.getMaterial(383),94));
-        dataList.add(new ItemData("WOLF_EGG",Material.getMaterial(383),95));
-        dataList.add(new ItemData("MOOSHROOM_EGG",Material.getMaterial(383),96));
-        dataList.add(new ItemData("CAT_EGG",Material.getMaterial(383),98));
-        dataList.add(new ItemData("HORSE_EGG",Material.getMaterial(383),100));
-        dataList.add(new ItemData("VILLAGER_EGG",Material.getMaterial(383),120));
+        dataList.add(new ItemData("CREEPER_EGG",Material.getMaterial("minecraft:spawn_egg"),50));
+        dataList.add(new ItemData("SKELE_EGG",Material.getMaterial("minecraft:spawn_egg"),51));
+        dataList.add(new ItemData("SPIDER_EGG",Material.getMaterial("minecraft:spawn_egg"),52));
+        dataList.add(new ItemData("ZOMBIE_EGG",Material.getMaterial("minecraft:spawn_egg"),54));
+        dataList.add(new ItemData("SLIME_EGG",Material.getMaterial("minecraft:spawn_egg"),55));
+        dataList.add(new ItemData("GHAST_EGG",Material.getMaterial("minecraft:spawn_egg"),56));
+        dataList.add(new ItemData("ZOMBIE_PIG_EGG",Material.getMaterial("minecraft:spawn_egg"),57));
+        dataList.add(new ItemData("ENDERMAN_EGG",Material.getMaterial("minecraft:spawn_egg"),58));
+        dataList.add(new ItemData("CAVE_SPIDER_EGG",Material.getMaterial("minecraft:spawn_egg"),59));
+        dataList.add(new ItemData("SLIVERFISH_EGG",Material.getMaterial("minecraft:spawn_egg"),60));
+        dataList.add(new ItemData("BLAZE_EGG",Material.getMaterial("minecraft:spawn_egg"),61));
+        dataList.add(new ItemData("MAGMA_EGG",Material.getMaterial("minecraft:spawn_egg"),62));
+        dataList.add(new ItemData("BAT_EGG",Material.getMaterial("minecraft:spawn_egg"),65));
+        dataList.add(new ItemData("WITCH_EGG",Material.getMaterial("minecraft:spawn_egg"),66));
+        dataList.add(new ItemData("PIG_EGG",Material.getMaterial("minecraft:spawn_egg"),90));
+        dataList.add(new ItemData("SHEEP_EGG",Material.getMaterial("minecraft:spawn_egg"),91));
+        dataList.add(new ItemData("COW_EGG",Material.getMaterial("minecraft:spawn_egg"),92));
+        dataList.add(new ItemData("CHICKEN_EGG",Material.getMaterial("minecraft:spawn_egg"),93));
+        dataList.add(new ItemData("SQUID_EGG",Material.getMaterial("minecraft:spawn_egg"),94));
+        dataList.add(new ItemData("WOLF_EGG",Material.getMaterial("minecraft:spawn_egg"),95));
+        dataList.add(new ItemData("MOOSHROOM_EGG",Material.getMaterial("minecraft:spawn_egg"),96));
+        dataList.add(new ItemData("CAT_EGG",Material.getMaterial("minecraft:spawn_egg"),98));
+        dataList.add(new ItemData("HORSE_EGG",Material.getMaterial("minecraft:spawn_egg"),100));
+        dataList.add(new ItemData("VILLAGER_EGG",Material.getMaterial("minecraft:spawn_egg"),120));
 
-        dataList.add(new ItemData("SKELE_HEAD",Material.getMaterial(397),0));
+        /*dataList.add(new ItemData("SKELE_HEAD",Material.getMaterial(397),0));
         dataList.add(new ItemData("WITHER_HEAD",Material.getMaterial(397),1));
         dataList.add(new ItemData("ZOMBIE_HEAD",Material.getMaterial(397),2));
         dataList.add(new ItemData("STEVE_HEAD",Material.getMaterial(397),3));

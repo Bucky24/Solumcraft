@@ -6,6 +6,8 @@ import org.bukkit.Text;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +51,8 @@ public class SpongeBridge {
 
         Material.init(logger);
         org.bukkit.inventory.ItemStack.init(logger);
+        Animals.init(logger);
+        EntityType.init();
 
         getLogger().info("SpongeBridge server start! Loading bukkit plugins now.");
 
@@ -62,7 +66,7 @@ public class SpongeBridge {
         CommandHandler reloadHandler = new CommandHandler("reload",this);
     }
 
-    private Logger logger;
+    public static Logger logger;
 
     public Logger getLogger() {
         return logger;
@@ -91,11 +95,8 @@ public class SpongeBridge {
 
     @Listener
     public void onEntityDamage(DamageEntityEvent event) {
-        //getLogger().info("Got entity damage event");
-        //getLogger().info(event.toString());
         Cause cause = event.getCause();
         Object rootCause = cause.root();
-        //getLogger().info(rootCause.toString());
         if (rootCause instanceof EntityDamageSource) {
             org.bukkit.event.entity.EntityDamageByEntityEvent newEvent = new org.bukkit.event.entity.EntityDamageByEntityEvent(this,event);
             fireEvent(newEvent);
@@ -452,6 +453,7 @@ public class SpongeBridge {
             for (int i = 0; i < pType.length; i++) {
                 if (comp.equals(pType[i])) {
                     methods.add(m);
+                    break;
                 }
             }
         }

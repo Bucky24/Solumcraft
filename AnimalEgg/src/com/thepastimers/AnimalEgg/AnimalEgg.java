@@ -2,7 +2,7 @@ package com.thepastimers.AnimalEgg;
 
 import com.thepastimers.ItemName.ItemName;
 import com.thepastimers.Permission.Permission;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +26,7 @@ import java.security.Permissions;
  * To change this template use File | Settings | File Templates.
  */
 public class AnimalEgg extends JavaPlugin implements Listener {
-    Worlds worlds;
+    //Worlds worlds;
     Permission permission;
     ItemName itemName;
 
@@ -44,10 +44,10 @@ public class AnimalEgg extends JavaPlugin implements Listener {
             getLogger().warning("Unable to connect to Permission plugin");
         }
 
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to connect to Worlds plugin");
-        }
+        }*/
 
         itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
         if (itemName == null) {
@@ -66,8 +66,8 @@ public class AnimalEgg extends JavaPlugin implements Listener {
     public void entityDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             Player p = (Player)event.getDamager();
-            int type = worlds.getPlayerWorldType(p,false);
-            if (type == Worlds.VANILLA) return;
+            //int type = worlds.getPlayerWorldType(p,false);
+            //if (type == Worlds.VANILLA) return;
             if (!permission.hasPermission(p.getName(),eggPerm)) return;
             if (p.getItemInHand().getType() != Material.STICK) return;
 

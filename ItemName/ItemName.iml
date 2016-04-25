@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" scope="PROVIDED" />
     <orderEntry type="module" module-name="SpongeBridge" />
+    <orderEntry type="library" name="spongeforge-1.8.9-1763-3.1.0-BETA-1181" level="project" />
   </component>
 </module>

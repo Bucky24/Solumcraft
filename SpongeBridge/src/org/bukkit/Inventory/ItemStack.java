@@ -1,13 +1,11 @@
 package org.bukkit.inventory;
 
 import SpongeBridge.Logger;
+import SpongeBridge.SpongeBridge;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.block.BlockType;
-import org.spongepowered.api.block.trait.BlockTrait;
-import org.spongepowered.api.block.trait.EnumTrait;
-import org.spongepowered.api.block.trait.EnumTraits;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataQuery;
 import org.spongepowered.api.data.key.Keys;
@@ -37,7 +35,7 @@ public class ItemStack {
 
     public ItemStack(Material material) {
         org.spongepowered.api.item.inventory.ItemStack.Builder builder = Sponge.getRegistry().createBuilder(org.spongepowered.api.item.inventory.ItemStack.Builder.class);
-        this.stack = builder.itemType(material.getValue().getItemType()).quantity(0).build();
+        this.stack = builder.itemType(material.getValue().getItemType()).quantity(1).build();
     }
 
     public Material getType() {
@@ -72,6 +70,18 @@ public class ItemStack {
     public void setDurability(short durability) {
         if (stack.supports(Keys.ITEM_DURABILITY)) {
             stack.offer(Keys.ITEM_DURABILITY, (int)durability);
+        } else {
+            SpongeBridge.logger.warning("Unable to set durability on item " + stack.getItem().getName() + ": does not support the key");
+        }
+
+        if (this.getType().name().equals("minecraft:spawn_egg")) {
+            SpongeBridge.logger.info("got a spawn egg");
+            EntityType type = EntityType.getForDurability(durability);
+            if (type == null) {
+                SpongeBridge.logger.warning("Attempting to set spawn egg type to " + durability + ", but EntityType is not aware of it");
+            } else {
+                stack.offer(Keys.SPAWNABLE_ENTITY_TYPE, type.getValue());
+            }
         }
     }
 

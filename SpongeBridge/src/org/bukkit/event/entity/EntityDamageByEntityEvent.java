@@ -1,9 +1,11 @@
 package org.bukkit.event.entity;
 
 import SpongeBridge.SpongeBridge;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.spongepowered.api.entity.living.animal.Animal;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
@@ -37,7 +39,13 @@ public class EntityDamageByEntityEvent extends Event {
     }
 
     public Entity getEntity() {
-        return new Entity(event.getTargetEntity());
+        org.spongepowered.api.entity.Entity entity = event.getTargetEntity();
+        if (entity instanceof Animal) {
+            bridge.getLogger().info("its an animal");
+            return new Animals(entity);
+        } else {
+            return new Entity(entity);
+        }
     }
 
     public void setCancelled(boolean canceled) {

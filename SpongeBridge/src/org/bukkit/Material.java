@@ -2,7 +2,11 @@ package org.bukkit;
 
 import SpongeBridge.Logger;
 import org.bukkit.inventory.ItemType;
+import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataQuery;
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.item.ItemTypes;
+import org.spongepowered.api.item.inventory.ItemStack;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -24,7 +28,7 @@ public class Material {
 
     public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);*/
 
-    public static Material AIR = new Material(ItemTypes.NONE);/*
+    public static Material AIR = new Material(ItemTypes.NONE);
 
     public static Material WOOD_AXE = new Material(ItemTypes.WOODEN_AXE);
     public static Material WOOD_HOE = new Material(ItemTypes.WOODEN_HOE);
@@ -48,7 +52,9 @@ public class Material {
     public static Material DIAMOND_SPADE = new Material(ItemTypes.DIAMOND_SHOVEL);
     public static Material DIAMOND_SWORD = new Material(ItemTypes.DIAMOND_SWORD);
 
-    static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);*/
+    public static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);
+
+    public static Material SPAWN_EGG = new Material(ItemTypes.SPAWN_EGG);
 
     public static void init(Logger logger) {
         Material.logger = logger;
@@ -119,5 +125,16 @@ public class Material {
 
     public String name() {
         return this.getValue().name();
+    }
+
+    public short getMaxDurability() {
+        ItemStack stack = getValue().getItemType().getTemplate().createStack();
+        if (stack.supports(Keys.ITEM_DURABILITY)) {
+            Integer optional = stack.get(Keys.ITEM_DURABILITY).orElse(null);
+            if (optional != null) {
+                return optional.shortValue();
+            }
+        }
+        return -1;
     }
 }

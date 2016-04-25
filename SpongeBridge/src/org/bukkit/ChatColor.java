@@ -14,4 +14,5 @@ public enum ChatColor {
     private final TextColor color;
     ChatColor(TextColor color) { this.color = color; }
     public TextColor getValue() { return color; }
+    public String getStringValue() { return ":::" + color.getName() + ":::"; }
 }

@@ -1,8 +1,10 @@
 package org.bukkit.command;
 
+import SpongeBridge.SpongeBridge;
 import SpongeBridge.SpongeText;
 import org.bukkit.Text;
 import org.bukkit.entity.Entity;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandSource;
 
 /**
