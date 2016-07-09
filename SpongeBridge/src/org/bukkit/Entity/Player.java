@@ -6,6 +6,8 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.command.CommandSender;
+import org.spongepowered.api.data.type.HandType;
+import org.spongepowered.api.data.type.HandTypes;
 
 import java.util.UUID;
 
@@ -63,8 +65,12 @@ public class Player extends CommandSender {
     }
 
     public ItemStack getItemInHand() {
-        if (this.serverPlayer.getItemInHand().isPresent()) {
-            return new ItemStack(this.serverPlayer.getItemInHand().get());
+        return this.getItemInHand(HandTypes.MAIN_HAND);
+    }
+
+    public ItemStack getItemInHand(HandType type) {
+        if (this.serverPlayer.getItemInHand(type).isPresent()) {
+            return new ItemStack(this.serverPlayer.getItemInHand(type).get());
         } else {
             return new ItemStack(Material.AIR);
         }
