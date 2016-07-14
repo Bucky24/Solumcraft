@@ -21,7 +21,6 @@ import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
-import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.plugin.Plugin;
 
 import java.io.File;
@@ -32,7 +31,7 @@ import java.util.*;
  * Created by solum on 4/29/2015.
  */
 
-@Plugin(id="SpongeBridge", name="Sponge Bridge", version="1.0")
+@Plugin(id="spongebridge", name="Sponge Bridge", version="1.0")
 public class SpongeBridge {
     private static String pluginDir = "bukkit_plugins";
 
