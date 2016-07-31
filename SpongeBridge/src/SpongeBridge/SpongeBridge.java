@@ -15,6 +15,7 @@ import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
+import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
@@ -61,6 +62,7 @@ public class SpongeBridge {
 
         this.loadPlugins();
         this.initPlugins();
+        TimeHandler.init();
 
         CommandHandler reloadHandler = new CommandHandler("reload",this);
     }
@@ -88,6 +90,7 @@ public class SpongeBridge {
 
     @Listener
     public void onBlockBreak(ChangeBlockEvent.Break event) {
+        //getLogger().info(TimeHandler.getTick() + ": Block break event");
         org.bukkit.event.block.BlockBreakEvent newEvent = new org.bukkit.event.block.BlockBreakEvent(this,event);
         fireEvent(newEvent);
     }
@@ -100,6 +103,11 @@ public class SpongeBridge {
             org.bukkit.event.entity.EntityDamageByEntityEvent newEvent = new org.bukkit.event.entity.EntityDamageByEntityEvent(this,event);
             fireEvent(newEvent);
         }
+    }
+
+    @Listener
+    public void onBlockInteract(InteractBlockEvent.Primary event) {
+        //getLogger().info(TimeHandler.getTick() + ": Block interacted, primary");
     }
 
     ///////////////////////////////////////////////////////

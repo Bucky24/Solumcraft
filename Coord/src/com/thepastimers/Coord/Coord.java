@@ -107,7 +107,7 @@ public class Coord extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-     public void blockDamage(BlockDamageEvent event) {
+    public void blockDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();
         if (permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
