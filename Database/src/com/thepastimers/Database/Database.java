@@ -68,12 +68,10 @@ public class Database extends JavaPlugin {
             totalConn ++;
             killConnection(connection);
         } catch (ExceptionInInitializerError e2) {
-            getLogger().warning("Unable to connect to database!");
-            getLogger().logError(e2);
+            getLogger().warning("Unable to connect to database! " + e2.getMessage());
             enabled = false;
         } catch (Exception e) {
-            getLogger().warning("Unable to connect to database!");
-            getLogger().logError(e);
+            getLogger().warning("Unable to connect to database! " + e.getMessage());
             enabled = false;
         }
 
