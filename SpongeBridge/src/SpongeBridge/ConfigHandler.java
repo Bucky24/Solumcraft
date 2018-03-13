@@ -2,6 +2,7 @@ package SpongeBridge;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.Charset;
@@ -20,31 +21,45 @@ import java.util.Map;
  */
 public class ConfigHandler {
     private Map<String,String> config;
+
+    private static String getPluginConfigDir(String plugin) {
+        String cwd = System.getProperty("user.dir");
+        String pluginPath = cwd + "/" + SpongeBridge.pluginDir;
+
+        return pluginPath + "/" + plugin;
+    }
+
     public void createDefaultConfig(String plugin, Logger logger) {
-        String path = "/testbed/bukkit_plugins";
-        path += "/" + plugin;
+        String cwd = System.getProperty("user.dir");
+        String pluginPath = cwd + "/" + SpongeBridge.pluginDir;
+        String path = ConfigHandler.getPluginConfigDir(plugin);
         File dir = new File(path);
 
         path += "/config.yml";
         File f = new File(path);
+        System.out.println("Does config " + path + " exist? " + f.exists());
         if (f.exists()) {
             return;
         }
 
         try {
-            URL myJarFile = new URL("jar:file:/testbed/bukkit_plugins/" + plugin + ".jar!/");
+            URL myJarFile = new URL("jar:file:" + pluginPath + "/" + plugin + ".jar!/config.yml");
 
-            URLClassLoader sysLoader = (URLClassLoader)ClassLoader.getSystemClassLoader();
-            Class sysClass = URLClassLoader.class;
-            Method sysMethod = sysClass.getDeclaredMethod("addURL",new Class[] {URL.class});
-            sysMethod.setAccessible(true);
-            sysMethod.invoke(sysLoader, new Object[]{myJarFile});
-            URLClassLoader cl = URLClassLoader.newInstance(new URL[]{myJarFile});
+            System.out.println("Attempting to create config: " + path);
+            System.out.println("Attempting to find config from jar:file:" + pluginPath + "/" + plugin + ".jar!/config.yml");
 
-            InputStream input = cl.getResourceAsStream("config.yml");
+            JarURLConnection conn = (JarURLConnection)myJarFile.openConnection();
+            InputStream input = conn.getInputStream();
+            if (input == null) {
+                throw new Exception("Unable to get an input stream for config.yml");
+            }
+            System.out.println("Got configuration stream");
             byte[] data = new byte[(int) input.available()];
             input.read(data);
+            System.out.println("Read in data");
             input.close();
+
+            System.out.println("Read in default config file");
 
             String str = new String(data, "UTF-8");
             if (!dir.exists()) {
@@ -59,16 +74,17 @@ public class ConfigHandler {
                 System.out.println("Can't write to config file " + path + ": " + e.getMessage());
             }
 
+        } catch(IOException ioe) {
+            logger.logError("IOException when reading config file: " + ioe.getMessage(), ioe.getStackTrace());
         } catch (Exception e) {
-            logger.warning("Unable to create default configuration for " + plugin + ": " + e.getMessage());
+            logger.warning("Unable to create default configuration for " + plugin + ": (" + e.getClass().getName() + ") " + e.getMessage());
         }
     }
 
-    public ConfigHandler(String plugin,Logger logger) {
+    public ConfigHandler(String plugin, Logger logger) {
         config = new HashMap<String,String>();
         // NOTE: Temporary value only!
-        String path = "/testbed/bukkit_plugins";
-        path += "/" + plugin;
+        String path = ConfigHandler.getPluginConfigDir(plugin);
         path += "/config.yml";
 
         try {

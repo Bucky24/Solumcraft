@@ -12,7 +12,7 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Logger extends java.util.logging.Logger {
-    String logFile = "/testbed/bukkit_log.log";
+    String logFile = "/bukkit_log.log";
 
     public Logger() {
         super("",null);
@@ -57,12 +57,12 @@ public class Logger extends java.util.logging.Logger {
     }
 
     public void writeFile(String message) {
-        try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFile, true)));
-            out.println(message);
-            out.close();
+        /*try {
+            //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFile, true)));
+            //out.println(message);
+            //out.close();
         } catch (IOException e) {
             System.out.println("Can't write to file! " + e.getMessage());
-        }
+        }*/
     }
 }

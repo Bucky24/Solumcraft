@@ -20,6 +20,6 @@ public class EntityExplodeEvent extends Event {
     }
 
     public BlockList blockList() {
-        return new BlockList(event.getTransactions());
+        return new BlockList(event.getAffectedLocations());
     }
 }

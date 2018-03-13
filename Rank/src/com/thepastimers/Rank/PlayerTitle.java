@@ -166,12 +166,12 @@ public class PlayerTitle extends Table {
     public static boolean createTables(Database d, Logger l) {
         if (d == null) return false;
         StringBuilder definition = new StringBuilder("CREATE TABLE " + table + "(");
-        definition.append("`id` int(11) NOT NULL AUTO_INCREMENT,");
+        definition.append("id int(11) NOT NULL AUTO_INCREMENT,");
 
-        definition.append("`player` varchar(50) NOT NULL,");
-        definition.append("`title` varchar(100) NOT NULL,");
+        definition.append("player varchar(50) NOT NULL,");
+        definition.append("title varchar(100) NOT NULL,");
 
-        definition.append("PRIMARY KEY (`id`)");
+        definition.append("PRIMARY KEY (id)");
         definition.append(");");
         boolean result = d.createTableIfNotExists(table,definition.toString());
 

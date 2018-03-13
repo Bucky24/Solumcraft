@@ -26,6 +26,8 @@ import org.spongepowered.api.plugin.Plugin;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -34,7 +36,7 @@ import java.util.*;
 
 @Plugin(id="spongebridge", name="Sponge Bridge", version="1.0")
 public class SpongeBridge {
-    private static String pluginDir = "bukkit_plugins";
+    public static String pluginDir = "bukkit_plugins";
 
     private Map<String, JavaPlugin> pluginMap;
     private List<JavaPlugin> pluginList;

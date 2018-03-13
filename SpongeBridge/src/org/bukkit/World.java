@@ -1,16 +1,8 @@
 package org.bukkit;
 
-import com.flowpowered.math.vector.Vector3i;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.EntityTypes;
-import org.spongepowered.api.entity.Item;
-import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.event.cause.entity.spawn.EntitySpawnCause;
-import org.spongepowered.api.event.cause.entity.spawn.SpawnTypes;
-import org.spongepowered.api.world.Chunk;
 import org.spongepowered.api.world.extent.Extent;
 
 import java.util.Optional;
@@ -42,21 +34,10 @@ public class World {
     }
 
     public void dropItem(Location l, ItemStack is) {
-        /*
-        Vector3i vector = new Vector3i(l.getX(),l.getY(),l.getZ());
-        Item item = (Item) l.getWorld().world.createEntity(EntityTypes.DROPPED_ITEM, vector) ;
-        item.offer(item.getItemData().set(is.getStack()));
-        world.spawnEntity(item);*/
         Extent extent = l.getSpongeLocation().getExtent();
-        Optional<org.spongepowered.api.entity.Entity> optional = extent
+        org.spongepowered.api.entity.Entity entity = extent
                 .createEntity(EntityTypes.EGG, l.getSpongeLocation().getPosition());
-        if (optional.isPresent()) {
-            org.spongepowered.api.entity.Entity entity = optional.get();
-            entity.offer(Keys.REPRESENTED_ITEM, is.getStack().createSnapshot());
-            Cause.Builder builder = Cause.builder();
-            extent.spawnEntity(entity,
-                    Cause.source(EntitySpawnCause.builder()
-                            .entity(entity).type(SpawnTypes.PLUGIN).build()).build());
-        }
+        entity.offer(Keys.REPRESENTED_ITEM, is.getStack().createSnapshot());
+        extent.spawnEntity(entity);
     }
 }

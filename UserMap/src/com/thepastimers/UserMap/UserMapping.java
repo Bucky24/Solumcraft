@@ -134,7 +134,7 @@ public class UserMapping extends Table {
 
     public static void init(Database d) {
         if (d == null) return;
-        d.createTableIfNotExists(table,"CREATE TABLE `user_mapping` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `userName` varchar(100) NOT NULL,  `uuid` varchar(50) NOT NULL,  PRIMARY KEY (`id`))");
+        d.createTableIfNotExists(table,"CREATE TABLE user_mapping (id int(11) NOT NULL AUTO_INCREMENT, userName varchar(100) NOT NULL, uuid varchar(50) NOT NULL, PRIMARY KEY (id))");
     }
 
     public static void refreshCache(Database d, Logger l) {

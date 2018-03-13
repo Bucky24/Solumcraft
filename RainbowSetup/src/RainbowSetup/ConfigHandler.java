@@ -21,7 +21,7 @@ import java.util.Map;
 public class ConfigHandler {
     private Map<String,String> config;
     public void createDefaultConfig(String plugin, Logger logger) {
-        String path = "/testbed/bukkit_plugins";
+        String path = "/bukkit_plugins";
         path += "/" + plugin;
         File dir = new File(path);
 
@@ -32,7 +32,7 @@ public class ConfigHandler {
         }
 
         try {
-            URL myJarFile = new URL("jar:file:/testbed/bukkit_plugins/" + plugin + ".jar!/");
+            URL myJarFile = new URL("jar:file:/bukkit_plugins/" + plugin + ".jar!/");
 
             URLClassLoader sysLoader = (URLClassLoader)ClassLoader.getSystemClassLoader();
             Class sysClass = URLClassLoader.class;
@@ -67,7 +67,7 @@ public class ConfigHandler {
     public ConfigHandler(String plugin,Logger logger) {
         config = new HashMap<String,String>();
         // NOTE: Temporary value only!
-        String path = "/testbed/bukkit_plugins";
+        String path = "/bukkit_plugins";
         path += "/" + plugin;
         path += "/config.yml";
 
