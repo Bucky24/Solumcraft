@@ -1,9 +1,11 @@
-Currently migrated:
+This list is current as of 2018-3-14
+
+Currently migrated and working on sponge (1.12.2):
+Database
 Permissions
 Ranks
+UserMap
 Home
-Kit
-AdminTools (not on server yet)
 
 AdminTools
 administration tools
