@@ -444,12 +444,12 @@ public class Home extends JavaPlugin implements Listener {
                 p.teleport(l);
                 lastHome.put(hd,new Date());
                 if (!"".equalsIgnoreCase(hd.getName())) {
-                    sender.sendMessage(ChatColor.GREEN + "Teleporting you to " + hd.getName());
+                    sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to " + hd.getName()));
                 } else {
-                    sender.sendMessage(ChatColor.GREEN + "Teleporting you to default home");
+                    sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to default home"));
                 }
             } catch (Exception e) {
-                sender.sendMessage(ChatColor.RED + "Unable to teleport you: " + e.getMessage());
+                sender.sendMessage(Text.make().color(ChatColor.RED).text("Unable to teleport you: " + e.getMessage()));
             }
         } else if (command.equalsIgnoreCase("forcehome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {

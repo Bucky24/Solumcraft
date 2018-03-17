@@ -6,6 +6,7 @@ Permissions
 Ranks
 UserMap
 Home
+Teleport
 
 AdminTools
 administration tools
