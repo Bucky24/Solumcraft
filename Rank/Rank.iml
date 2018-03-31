@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="Database" scope="PROVIDED" />
     <orderEntry type="module" module-name="UserMap" scope="PROVIDED" />
     <orderEntry type="module" module-name="SpongeBridge" />
+    <orderEntry type="module" module-name="Chat" />
   </component>
 </module>

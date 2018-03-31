@@ -1,5 +1,7 @@
 package com.thepastimers.Chat;
 
+import org.bukkit.ChatColor;
+
 /**
  * Created with IntelliJ IDEA.
  * User: solum
@@ -9,10 +11,10 @@ package com.thepastimers.Chat;
  */
 public class ChatCode {
     String key;
-    String code;
+    ChatColor code;
     String description;
 
-    public ChatCode(String k, String c, String d) {
+    public ChatCode(String k, ChatColor c, String d) {
         key = k;
         code = c;
         description = d;
@@ -26,11 +28,11 @@ public class ChatCode {
         this.key = key;
     }
 
-    public String getCode() {
+    public ChatColor getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(ChatColor code) {
         this.code = code;
     }
 

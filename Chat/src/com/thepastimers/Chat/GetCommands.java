@@ -4,7 +4,7 @@ import com.thepastimers.Database.Database;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
+//import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Map;
  * Time: 8:04 PM
  * To change this template use File | Settings | File Templates.
  */
-public class GetCommands extends BukkitRunnable {
+/*public class GetCommands extends BukkitRunnable {
     private final Database database;
     private final JavaPlugin plugin;
 
@@ -65,4 +65,4 @@ public class GetCommands extends BukkitRunnable {
             cd.save(database);
         }
     }
-}
+}*/

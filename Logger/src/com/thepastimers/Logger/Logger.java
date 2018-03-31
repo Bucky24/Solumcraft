@@ -118,7 +118,7 @@ public class Logger extends JavaPlugin implements Listener {
     }
 
     public void writeEvent(String event, String data) {
-        writeEvent(new Date(),null,event,data);
+        writeEvent(new Date(),(Player)null,event,data);
     }
 
     public void writeEvent(Date d, Player p, String event) {

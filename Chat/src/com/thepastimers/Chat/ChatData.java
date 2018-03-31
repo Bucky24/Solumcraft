@@ -2,6 +2,7 @@ package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
+import org.bukkit.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class ChatData extends Table {
     String message;
     Timestamp time;
     boolean seen;
-    String playerString;
+    Text playerString;
 
     public int getId() {
         return id;
@@ -71,11 +72,15 @@ public class ChatData extends Table {
         this.seen = seen;
     }
 
-    public String getPlayerString() {
+    public Text getPlayerString() {
         return playerString;
     }
 
     public void setPlayerString(String playerString) {
+        this.playerString = Text.make().text(playerString);
+    }
+
+    public void setPlayerString(Text playerString) {
         this.playerString = playerString;
     }
 
@@ -118,7 +123,7 @@ public class ChatData extends Table {
         }
         if (id == -1) {
             String columns = "(player,message,time,seen,player_string)";
-            String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(message) + "','" + time + "'," + seen + ",'" + d.makeSafe(playerString) + "')";
+            String values = "('" + d.makeSafe(player) + "','" + d.makeSafe(message) + "','" + time + "'," + seen + ",'" + d.makeSafe(playerString.toString()) + "')";
             boolean result = d.query("INSERT INTO " + table + columns + " VALUES" + values);
 
             ResultSet keys = d.getGeneratedKeys();
@@ -142,7 +147,7 @@ public class ChatData extends Table {
             query.append("message = '" + d.makeSafe(message) + "', ");
             query.append("time = '" + time + "', ");
             query.append("seen = " + seen + ", ");
-            query.append("player_string = '" + d.makeSafe(playerString) + "' ");
+            query.append("player_string = '" + d.makeSafe(playerString.toString()) + "' ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());

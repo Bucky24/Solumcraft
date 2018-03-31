@@ -10,6 +10,8 @@ public class Text {
     public static class TextElement {
         public static int TEXT = 1;
         public static int COLOR = 2;
+        public static int STYLE = 3;
+        public static int COMPOUND = 4;
 
         public int type;
         public Object data;
@@ -37,6 +39,16 @@ public class Text {
 
     public Text color(ChatColor color) {
         elements.add(new TextElement(TextElement.COLOR,color));
+        return this;
+    }
+
+    public Text style(ChatStyle style) {
+        elements.add(new TextElement(TextElement.STYLE, style));
+        return this;
+    }
+
+    public Text compound(Text otherText) {
+        elements.add(new TextElement(TextElement.COMPOUND, otherText));
         return this;
     }
 

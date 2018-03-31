@@ -14,4 +14,8 @@ public class OfflinePlayer {
     public Player getPlayer() {
         return player;
     }
+
+    public String getName() {
+        return player.getName();
+    }
 }

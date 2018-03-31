@@ -1,20 +1,21 @@
 package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
-import net.minecraft.server.v1_7_R3.ChatSerializer;
-import net.minecraft.server.v1_7_R3.IChatBaseComponent;
-import net.minecraft.server.v1_7_R3.PacketPlayOutChat;
+//import net.minecraft.server.v1_7_R3.ChatSerializer;
+//import net.minecraft.server.v1_7_R3.IChatBaseComponent;
+//import net.minecraft.server.v1_7_R3.PacketPlayOutChat;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+//import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -62,32 +63,32 @@ public class Chat extends JavaPlugin implements Listener {
 
         codes = new ArrayList<ChatCode>();
 
-        codes.add(new ChatCode(":red:;&c",ChatColor.RED.toString(),"Red text"));
-        codes.add(new ChatCode(":blue:;&1",ChatColor.BLUE.toString(),"Blue text"));
-        codes.add(new ChatCode(":green:;&a",ChatColor.GREEN.toString(),"Green text"));
-        codes.add(new ChatCode(":dark green:;&2",ChatColor.DARK_GREEN.toString(),"Dark Green text"));
-        codes.add(new ChatCode(":yellow:;&e",ChatColor.YELLOW.toString(),"Yellow text"));
-        codes.add(new ChatCode(":purple:;&d",ChatColor.LIGHT_PURPLE.toString(),"Purple text"));
-        codes.add(new ChatCode(":white:;&f",ChatColor.WHITE.toString(),"White text"));
-        codes.add(new ChatCode(":gold:;&6",ChatColor.GOLD.toString(),"Gold text"));
-        codes.add(new ChatCode(":gray:;&7",ChatColor.GRAY.toString(),"Gray text"));
-        codes.add(new ChatCode(":black:;&0",ChatColor.BLACK.toString(),"Black text"));
-        codes.add(new ChatCode(":dark red:;&4",ChatColor.DARK_RED.toString(),"Dark Red text"));
-        codes.add(new ChatCode(":aqua:;&b",ChatColor.AQUA.toString(),"Aqua text"));
-        codes.add(new ChatCode(":dark aqua:;&3",ChatColor.DARK_AQUA.toString(),"Dark Aqua text"));
-        codes.add(new ChatCode(":dark blue:;&9",ChatColor.DARK_BLUE.toString(),"Dark Blue text"));
-        codes.add(new ChatCode(":dark purple:;&5",ChatColor.DARK_PURPLE.toString(),"Dark Purple text"));
-        codes.add(new ChatCode(":dark gray:;&8",ChatColor.DARK_GRAY.toString(),"Dark Gray text"));
+        codes.add(new ChatCode("c",ChatColor.RED,"Red text"));
+        codes.add(new ChatCode("1",ChatColor.BLUE,"Blue text"));
+        codes.add(new ChatCode("a",ChatColor.GREEN,"Green text"));
+        codes.add(new ChatCode("2",ChatColor.DARK_GREEN,"Dark Green text"));
+        codes.add(new ChatCode("e",ChatColor.YELLOW,"Yellow text"));
+        codes.add(new ChatCode("d",ChatColor.LIGHT_PURPLE,"Purple text"));
+        codes.add(new ChatCode("f",ChatColor.WHITE,"White text"));
+        codes.add(new ChatCode("6",ChatColor.GOLD,"Gold text"));
+        codes.add(new ChatCode("7",ChatColor.GRAY,"Gray text"));
+        codes.add(new ChatCode("0",ChatColor.BLACK,"Black text"));
+        codes.add(new ChatCode("4",ChatColor.DARK_RED,"Dark Red text"));
+        codes.add(new ChatCode("b",ChatColor.AQUA,"Aqua text"));
+        codes.add(new ChatCode("3",ChatColor.DARK_AQUA,"Dark Aqua text"));
+        codes.add(new ChatCode("9",ChatColor.DARK_BLUE,"Dark Blue text"));
+        codes.add(new ChatCode("5",ChatColor.DARK_PURPLE,"Dark Purple text"));
+        codes.add(new ChatCode("8",ChatColor.DARK_GRAY,"Dark Gray text"));
 
-        codes.add(new ChatCode(":obf:;&k",ChatColor.getByChar("k").toString(),"Obfuscated text"));
-        codes.add(new ChatCode(":strike:;&m",ChatColor.getByChar("m").toString(),"Strikethrough"));
-        codes.add(new ChatCode(":italic:;&o",ChatColor.getByChar("o").toString(),"Italic"));
-        codes.add(new ChatCode(":underline:;&n",ChatColor.getByChar("n").toString(),"Underline"));
-        codes.add(new ChatCode(":bold:;&l",ChatColor.getByChar("l").toString(),"Bold"));
+        //codes.add(new ChatCode(":obf:;&k",ChatColor.getByChar("k").toString(),"Obfuscated text"));
+        //codes.add(new ChatCode(":strike:;&m",ChatColor.getByChar("m").toString(),"Strikethrough"));
+        //codes.add(new ChatCode(":italic:;&o",ChatColor.getByChar("o").toString(),"Italic"));
+        //codes.add(new ChatCode(":underline:;&n",ChatColor.getByChar("n").toString(),"Underline"));
+        //codes.add(new ChatCode(":bold:;&l",ChatColor.getByChar("l").toString(),"Bold"));
 
-        codes.add(new ChatCode(":reset:;&r",ChatColor.getByChar("r").toString(),"Reset formatting"));
+        //codes.add(new ChatCode(":reset:;&r",ChatColor.getByChar("r").toString(),"Reset formatting"));
 
-        File dataFolder = getDataFolder();
+        /*File dataFolder = getDataFolder();
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
@@ -100,20 +101,20 @@ public class Chat extends JavaPlugin implements Listener {
             chatLog = new PrintWriter(fw);
         } catch (Exception e) {
             getLogger().warning("Unable to create chatLog");
-        }
+        }*/
 
         getLogger().info("Chat init complete");
     }
 
     @Override
     public void onDisable() {
-        chatLog.close();
+        //chatLog.close();
         getLogger().info("Chat disable");
     }
 
     public void writeChatLine(String line) {
-        chatLog.write(line);
-        chatLog.flush();
+        //chatLog.write(line);
+        //chatLog.flush();
     }
 
     public void register(Class c, JavaPlugin plugin) {
@@ -156,14 +157,18 @@ public class Chat extends JavaPlugin implements Listener {
     }
 
     public void sendChat(String message, String player, boolean save, boolean web) {
-        String playerName = player;
         ChatData data = new ChatData();
         data.setPlayer(player);
-        data.setPlayerString(player);
+        data.setPlayerString(Text.make().text("<")
+                .text(player)
+                .text(">")
+                .style(ChatStyle.RESET)
+        );
         data.setMessage(message);
         Date date = new Date();
         data.setTime(new Timestamp(date.getTime()));
         data.setSeen(true);
+        String originalMessage = data.getMessage();
 
         SortedSet<Integer> keys = new TreeSet<Integer>(listeners.keySet());
         for (Integer prio : keys) {
@@ -182,29 +187,34 @@ public class Chat extends JavaPlugin implements Listener {
             }
         }
 
-        // handle colors
-        String bak = data.getPlayerString();
-        data.setPlayerString(replaceColor(data.getPlayerString()));
-        data.setPlayerString(data.getPlayerString() + ChatColor.getByChar("r").toString());
-        data.setPlayerString(data.getPlayerString().replace(player,playerName));
-
-        String messageBak = data.getMessage();
+        /*String messageBak = data.getMessage();
         data.setMessage(replaceColor(data.getMessage()));
-        data.setMessage(data.getMessage() + ChatColor.getByChar("r").toString());
+        data.setMessage(data.getMessage());
         String fancyMessage = data.getMessage();
-        String originalMessage = stripColors(data.getMessage());
+        String originalMessage = stripColors(data.getMessage());*/
 
         Date now = new Date();
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(now);
 
-        String mainMessage = "(" + now.getHours() + ":" + now.getMinutes() + ") <" + data.getPlayerString() + "> " + data.getMessage();
+        int minute = calendar.get(Calendar.MINUTE);
+        String minuteString = minute >= 10 ? "" + minute : "0" + minute;
+        Text mainMessage = Text.make().text("(" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + minuteString + ") ")
+                .compound(data.getPlayerString())
+                .style(ChatStyle.RESET)
+                .text(" ")
+                .text(data.getMessage());
         String vanillaMessage = "";
         if (web) {
-            mainMessage = ChatColor.LIGHT_PURPLE + "[WEB]" + ChatColor.WHITE + " " + mainMessage;
+            mainMessage = Text.make().color(ChatColor.LIGHT_PURPLE)
+                    .text("[WEB]")
+                    .color(ChatColor.WHITE)
+                    .text(" " + mainMessage);
         }
         vanillaMessage = "<" + data.getPlayer() + "> " + originalMessage;
         //getLogger().info(vanillaMessage);
 
-        Player[] list = getServer().getOnlinePlayers();
+        List<Player> list = getServer().getOnlinePlayers();
 
         for (Player p : list) {
             p.sendMessage(mainMessage);
@@ -215,15 +225,32 @@ public class Chat extends JavaPlugin implements Listener {
         writeChatLine(mainMessage + "\n");
     }
     
-    public String replaceColor(String text) {
-       for (ChatCode code : codes) {
-            //getLogger().info(text + " " + code.getKey() + " " + code.getCode());
-            String[] codeList = code.getKey().split(";");
-            for (int i=0;i<codeList.length;i++) {
-                text = text.replace(codeList[i],code.getCode());
+    public Text replaceColor(String text) {
+        Text result = Text.make();
+        boolean atAmpersand = false;
+        StringBuilder builder = new StringBuilder();
+        for (int i=0;i<text.length();i++) {
+            char ch = text.charAt(i);
+            //getLogger().info(Character.toString(ch));
+            if (ch == '&') {
+                result.text(builder.toString());
+                builder.setLength(0);
+                atAmpersand = true;
+            } else if (atAmpersand) {
+                for (ChatCode code : codes) {
+                    //getLogger().info(code.getKey() + " == " + Character.toString(ch));
+                    if (code.getKey().charAt(0) == ch) {
+                        result.color(code.getCode());
+                        break;
+                    }
+                }
+                atAmpersand = false;
+            } else {
+                builder.append(ch);
             }
         }
-        return text;
+        result.text(builder.toString());
+        return result;
     }
 
     public String stripColors(String text) {
@@ -264,29 +291,31 @@ public class Chat extends JavaPlugin implements Listener {
         }
 
         if (database != null) {
-            data.save(database);
+            //data.save(database);
         }
     }
 
     public void sendRaw(String string, Player player) {
-        try {
+        player.sendMessage(string);
+        /*try {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(string);
             sendRaw(jsonObject,player);
         } catch (Exception e) {
             // ignore
-        }
+        }*/
     }
 
-    public void sendRaw(JSONObject obj, Player player) {
+    /*public void sendRaw(JSONObject obj, Player player) {
         IChatBaseComponent comp = ChatSerializer.a(obj.toString());
         PacketPlayOutChat packet = new PacketPlayOutChat(comp, true);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-    }
+    }*/
 
     public void sendRaw(ChatObject obj, Player player) {
-        IChatBaseComponent comp = ChatSerializer.a(obj.toString());
+        this.sendRaw(obj.getText(), player);
+        /*IChatBaseComponent comp = ChatSerializer.a(obj.toString());
         PacketPlayOutChat packet = new PacketPlayOutChat(comp, true);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);*/
     }
 
     @Override
@@ -305,9 +334,9 @@ public class Chat extends JavaPlugin implements Listener {
             sender.sendMessage("Chat codes:");
             for (ChatCode code : codes) {
                 String key = code.getKey().replace(";"," or ");
-                sender.sendMessage(key + " = " + code.getDescription());
+                sender.sendMessage("&" + key + " = " + code.getDescription());
             }
-        } else if ("testChat".equalsIgnoreCase(command)) {
+        }/* else if ("testChat".equalsIgnoreCase(command)) {
             Player p = (Player)sender;
             ChatObject obj = new ChatObject();
             obj.text("Some text").text("Colored text", ChatColor.BLUE);
@@ -318,7 +347,7 @@ public class Chat extends JavaPlugin implements Listener {
             obj = new ChatObject();
             obj.command("A command","/go main").command("Another command","/go economy",ChatColor.DARK_GREEN);
             sendRaw(obj,p);
-        } else {
+        }*/ else {
             return false;
         }
         return true;

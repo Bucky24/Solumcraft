@@ -20,6 +20,7 @@ import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.message.MessageChannelEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
 import org.spongepowered.api.plugin.Plugin;
@@ -110,6 +111,12 @@ public class SpongeBridge {
     @Listener
     public void onBlockInteract(InteractBlockEvent.Primary event) {
         //getLogger().info(TimeHandler.getTick() + ": Block interacted, primary");
+    }
+
+    @Listener
+    public void onChat(MessageChannelEvent.Chat event) {
+        org.bukkit.event.player.AsyncPlayerChatEvent newEvent = new org.bukkit.event.player.AsyncPlayerChatEvent(this, event);
+        fireEvent(newEvent);
     }
 
     ///////////////////////////////////////////////////////

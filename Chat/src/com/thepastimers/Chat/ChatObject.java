@@ -1,5 +1,10 @@
 package com.thepastimers.Chat;
 
+/*
+ * Note: this requires the json-simple jar to be imported to the project and added to the server to run.
+ * It was easy enough to find online this time, hopefully will be next time I run into this again.
+ */
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
@@ -89,6 +94,18 @@ public class ChatObject {
         obj.put("color",color.name().toLowerCase());
         array.add(obj);
         return this;
+    }
+
+    public String getText() {
+        StringBuilder builder = new StringBuilder();
+        for (int i=0;i<array.size();i++) {
+            JSONObject obj = (JSONObject)array.get(i);
+            if (obj.containsKey("text")) {
+                builder.append(obj.get("text"));
+            }
+        }
+
+        return builder.toString();
     }
 
     public void send(Chat c, Player p) {

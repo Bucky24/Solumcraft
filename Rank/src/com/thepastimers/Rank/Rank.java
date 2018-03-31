@@ -1,8 +1,11 @@
 package com.thepastimers.Rank;
 
+import com.thepastimers.Chat.Chat;
+import com.thepastimers.Chat.ChatData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
+import org.bukkit.ChatStyle;
 import org.bukkit.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,6 +26,7 @@ import java.util.List;
 public class Rank extends JavaPlugin implements Listener {
     Database database;
     UserMap userMap;
+    Chat chat;
 
     @Override
     public void onEnable() {
@@ -44,6 +48,11 @@ public class Rank extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load UserMap plugin. Some functionality will not be available.");
         }
 
+        chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
+        if (chat != null) {
+            chat.register(this.myClass, this);
+        }
+
         PlayerRank.refreshCache(database,getLogger());
         PlayerTitle.refreshCache(database,getLogger());
         RankData.refreshCache(database,getLogger());
@@ -58,6 +67,37 @@ public class Rank extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getLogger().info("Rank disabled");
+    }
+
+    public void doChat(ChatData obj) {
+        //getLogger().info("Got dochat for " + obj.getMessage());
+        //getLogger().info("player is" + obj.getPlayer());
+
+        String playerUuid = userMap.getUUID(obj.getPlayer());
+        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+            // user couldn't be found
+            return;
+        }
+
+        PlayerRank playerRank = getRankObject(playerUuid);
+        RankData rank;
+        if (playerRank != null) {
+            rank = RankData.getDataForRank(playerRank.getRank());
+        } else {
+            // Note all should be a constant somewhere or better in DB
+            rank = RankData.getDataForRank("all");
+        }
+        if (rank == null) {
+            return;
+        }
+        //getLogger().info(rank.getFormat());
+        if (!"".equals(rank.getFormat())) {
+            obj.setPlayerString(Text.make()
+                    .compound(chat.replaceColor(rank.getFormat()))
+                    .style(ChatStyle.RESET)
+                    .text(" ")
+                    .compound(obj.getPlayerString()));
+        }
     }
 
     public String getRank(String player) {

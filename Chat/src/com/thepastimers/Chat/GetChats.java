@@ -2,7 +2,7 @@ package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
+//import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 8:04 PM
  * To change this template use File | Settings | File Templates.
  */
-public class GetChats extends BukkitRunnable {
+/*public class GetChats extends BukkitRunnable {
     private final Database database;
     private final JavaPlugin plugin;
 
@@ -37,4 +37,4 @@ public class GetChats extends BukkitRunnable {
             cd.save(database);
         }
     }
-}
+}*/
