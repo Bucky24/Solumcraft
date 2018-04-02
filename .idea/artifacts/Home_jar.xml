@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Home:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Home.jar">
+      <element id="module-output" name="Home" />
+      <element id="file-copy" path="$PROJECT_DIR$/Home/plugin.yml" />
+    </root>
+  </artifact>
+</component>

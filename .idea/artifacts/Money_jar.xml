@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Money:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Money.jar">
+      <element id="module-output" name="Money" />
+      <element id="file-copy" path="$PROJECT_DIR$/Money/plugin.yml" />
+    </root>
+  </artifact>
+</component>

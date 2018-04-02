@@ -3,4 +3,4 @@ plugins
 *.class
 out
 web_apps/chat/setup.php
-.idea/*
+.idea/workspace.xml

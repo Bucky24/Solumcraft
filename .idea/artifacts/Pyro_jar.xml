@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Pyro:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Pyro.jar">
+      <element id="module-output" name="Pyro" />
+      <element id="file-copy" path="$PROJECT_DIR$/Pyro/plugin.yml" />
+    </root>
+  </artifact>
+</component>

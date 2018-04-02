@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Alias:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Alias.jar">
+      <element id="module-output" name="Alias" />
+      <element id="file-copy" path="$PROJECT_DIR$/Alias/plugin.yml" />
+    </root>
+  </artifact>
+</component>

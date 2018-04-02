@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="RainbowTest:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="RainbowTest.jar">
+      <element id="module-output" name="RainbowTest" />
+    </root>
+  </artifact>
+</component>

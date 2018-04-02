@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AdminTools/AdminTools.iml" filepath="$PROJECT_DIR$/AdminTools/AdminTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Alias/Alias.iml" filepath="$PROJECT_DIR$/Alias/Alias.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnimalEgg/AnimalEgg.iml" filepath="$PROJECT_DIR$/AnimalEgg/AnimalEgg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Announce/Announce.iml" filepath="$PROJECT_DIR$/Announce/Announce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CastleWars/CastleWars.iml" filepath="$PROJECT_DIR$/CastleWars/CastleWars.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Chat/Chat.iml" filepath="$PROJECT_DIR$/Chat/Chat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChestProtect/ChestProtect.iml" filepath="$PROJECT_DIR$/ChestProtect/ChestProtect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Clans/Clans.iml" filepath="$PROJECT_DIR$/Clans/Clans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CombatLog/CombatLog.iml" filepath="$PROJECT_DIR$/CombatLog/CombatLog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Coord/Coord.iml" filepath="$PROJECT_DIR$/Coord/Coord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Creative/Creative.iml" filepath="$PROJECT_DIR$/Creative/Creative.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Database/Database.iml" filepath="$PROJECT_DIR$/Database/Database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Edit/Edit.iml" filepath="$PROJECT_DIR$/Edit/Edit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ExtCommands/ExtCommands.iml" filepath="$PROJECT_DIR$/ExtCommands/ExtCommands.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Farming/Farming.iml" filepath="$PROJECT_DIR$/Farming/Farming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Home/Home.iml" filepath="$PROJECT_DIR$/Home/Home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Improvements/Improvements.iml" filepath="$PROJECT_DIR$/Improvements/Improvements.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Inventory/Inventory.iml" filepath="$PROJECT_DIR$/Inventory/Inventory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ItemName/ItemName.iml" filepath="$PROJECT_DIR$/ItemName/ItemName.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Kit/Kit.iml" filepath="$PROJECT_DIR$/Kit/Kit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Logger/Logger.iml" filepath="$PROJECT_DIR$/Logger/Logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Login/Login.iml" filepath="$PROJECT_DIR$/Login/Login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Magic/Magic.iml" filepath="$PROJECT_DIR$/Magic/Magic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mail/Mail.iml" filepath="$PROJECT_DIR$/Mail/Mail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Metrics/Metrics.iml" filepath="$PROJECT_DIR$/Metrics/Metrics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Money/Money.iml" filepath="$PROJECT_DIR$/Money/Money.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mute/Mute.iml" filepath="$PROJECT_DIR$/Mute/Mute.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pattern/Pattern.iml" filepath="$PROJECT_DIR$/Pattern/Pattern.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Permission/Permission.iml" filepath="$PROJECT_DIR$/Permission/Permission.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Plot/Plot.iml" filepath="$PROJECT_DIR$/Plot/Plot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pvp/Pvp.iml" filepath="$PROJECT_DIR$/Pvp/Pvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pyro/Pyro.iml" filepath="$PROJECT_DIR$/Pyro/Pyro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RainbowSetup/RainbowSetup.iml" filepath="$PROJECT_DIR$/RainbowSetup/RainbowSetup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RainbowTest/RainbowTest.iml" filepath="$PROJECT_DIR$/RainbowTest/RainbowTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Rank/Rank.iml" filepath="$PROJECT_DIR$/Rank/Rank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Spawner/Spawner.iml" filepath="$PROJECT_DIR$/Spawner/Spawner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpongeBridge/SpongeBridge.iml" filepath="$PROJECT_DIR$/SpongeBridge/SpongeBridge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Teleport/Teleport.iml" filepath="$PROJECT_DIR$/Teleport/Teleport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TradeSign/TradeSign.iml" filepath="$PROJECT_DIR$/TradeSign/TradeSign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UserMap/UserMap.iml" filepath="$PROJECT_DIR$/UserMap/UserMap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VoteHandler/VoteHandler.iml" filepath="$PROJECT_DIR$/VoteHandler/VoteHandler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Warp/Warp.iml" filepath="$PROJECT_DIR$/Warp/Warp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Worlds/Worlds.iml" filepath="$PROJECT_DIR$/Worlds/Worlds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/solumcraft.iml" filepath="$PROJECT_DIR$/solumcraft.iml" />
+    </modules>
+  </component>
+</project>

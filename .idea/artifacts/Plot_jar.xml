@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Plot:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Plot.jar">
+      <element id="module-output" name="Plot" />
+      <element id="file-copy" path="$PROJECT_DIR$/Plot/plugin.yml" />
+    </root>
+  </artifact>
+</component>

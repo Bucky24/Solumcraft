@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="UserMap:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="UserMap.jar">
+      <element id="module-output" name="UserMap" />
+      <element id="file-copy" path="$PROJECT_DIR$/UserMap/plugin.yml" />
+    </root>
+  </artifact>
+</component>

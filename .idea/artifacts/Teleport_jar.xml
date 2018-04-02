@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Teleport:jar">
+    <output-path>$PROJECT_DIR$/plugins</output-path>
+    <root id="archive" name="Teleport.jar">
+      <element id="module-output" name="Teleport" />
+      <element id="file-copy" path="$PROJECT_DIR$/Teleport/plugin.yml" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,12 @@
+diff a/.idea/artifacts/AdminTools_jar.xml b/.idea/artifacts/AdminTools_jar.xml	(rejected hunks)
+@@ -1,9 +0,0 @@
+-<component name="ArtifactManager">
+-  <artifact type="jar" build-on-make="true" name="AdminTools:jar">
+-    <output-path>$PROJECT_DIR$/plugins</output-path>
+-    <root id="archive" name="AdminTools.jar">
+-      <element id="module-output" name="AdminTools" />
+-      <element id="file-copy" path="$PROJECT_DIR$/AdminTools/plugin.yml" />
+-    </root>
+-  </artifact>
+-</component>
+\ No newline at end of file
