@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Farming:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Farming.jar">
-      <element id="module-output" name="Farming" />
-      <element id="file-copy" path="$PROJECT_DIR$/Farming/plugin.yml" />
-    </root>
-  </artifact>
-</component>

@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="CastleWars:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="CastleWars.jar">
-      <element id="module-output" name="CastleWars" />
-      <element id="file-copy" path="$PROJECT_DIR$/CastleWars/plugin.yml" />
-    </root>
-  </artifact>
-</component>

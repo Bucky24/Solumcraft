@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Rank:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Rank.jar">
-      <element id="module-output" name="Rank" />
-      <element id="file-copy" path="$PROJECT_DIR$/Rank/plugin.yml" />
-    </root>
-  </artifact>
-</component>

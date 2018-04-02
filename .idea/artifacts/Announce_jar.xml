@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Announce:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Announce.jar">
-      <element id="module-output" name="Announce" />
-      <element id="file-copy" path="$PROJECT_DIR$/Announce/plugin.yml" />
-    </root>
-  </artifact>
-</component>

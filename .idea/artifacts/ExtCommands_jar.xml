@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="ExtCommands:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="ExtCommands.jar">
-      <element id="module-output" name="ExtCommands" />
-      <element id="file-copy" path="$PROJECT_DIR$/ExtCommands/plugin.yml" />
-    </root>
-  </artifact>
-</component>

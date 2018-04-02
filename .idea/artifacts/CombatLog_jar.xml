@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="CombatLog:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="CombatLog.jar">
-      <element id="module-output" name="CombatLog" />
-      <element id="file-copy" path="$PROJECT_DIR$/CombatLog/plugin.yml" />
-    </root>
-  </artifact>
-</component>

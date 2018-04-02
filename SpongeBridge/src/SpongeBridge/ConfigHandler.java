@@ -22,7 +22,7 @@ import java.util.Map;
 public class ConfigHandler {
     private Map<String,String> config;
 
-    private static String getPluginConfigDir(String plugin) {
+    public static String getPluginConfigDir(String plugin) {
         String cwd = System.getProperty("user.dir");
         String pluginPath = cwd + "/" + SpongeBridge.pluginDir;
 

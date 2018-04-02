@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Mute:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Mute.jar">
-      <element id="module-output" name="Mute" />
-      <element id="file-copy" path="$PROJECT_DIR$/Mute/plugin.yml" />
-    </root>
-  </artifact>
-</component>

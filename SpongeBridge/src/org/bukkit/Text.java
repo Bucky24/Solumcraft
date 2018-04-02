@@ -55,6 +55,20 @@ public class Text {
     public List<TextElement> getElements() {
         return elements;
     }
+
+    public String getPlainText() {
+        StringBuilder sb = new StringBuilder();
+        for (TextElement element : elements) {
+            if (element.type == TextElement.TEXT) {
+                sb.append(element.data);
+            } else if (element.type == TextElement.COMPOUND) {
+                Text childText = (Text)element.data;
+                sb.append(childText.getPlainText());
+            }
+        }
+
+        return sb.toString();
+    }
 }
 
 

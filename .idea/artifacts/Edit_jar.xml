@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Edit:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Edit.jar">
-      <element id="module-output" name="Edit" />
-      <element id="file-copy" path="$PROJECT_DIR$/Edit/plugin.yml" />
-    </root>
-  </artifact>
-</component>

@@ -8,6 +8,8 @@ import SpongeBridge.SpongeBridge;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.io.File;
+
 /**
  * Created with IntelliJ IDEA.
  * User: solum
@@ -44,6 +46,11 @@ public class JavaPlugin {
 
     public SpongeBridge getServer() {
         return server;
+    }
+
+    public File getDataFolder() {
+        Class<?> callerClass = getClass();
+        return new File(ConfigHandler.getPluginConfigDir((callerClass.getSimpleName())));
     }
 
     ///////////////////////////////////////////////

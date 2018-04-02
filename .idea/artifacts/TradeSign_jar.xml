@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="TradeSign:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="TradeSign.jar">
-      <element id="module-output" name="TradeSign" />
-      <element id="file-copy" path="$PROJECT_DIR$/TradeSign/plugin.yml" />
-    </root>
-  </artifact>
-</component>

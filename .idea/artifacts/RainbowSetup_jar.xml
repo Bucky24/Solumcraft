@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="RainbowSetup:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="RainbowSetup.jar">
-      <element id="module-output" name="RainbowSetup" />
-    </root>
-  </artifact>
-</component>

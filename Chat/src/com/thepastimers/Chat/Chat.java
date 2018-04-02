@@ -88,7 +88,7 @@ public class Chat extends JavaPlugin implements Listener {
 
         //codes.add(new ChatCode(":reset:;&r",ChatColor.getByChar("r").toString(),"Reset formatting"));
 
-        /*File dataFolder = getDataFolder();
+        File dataFolder = getDataFolder();
         if (!dataFolder.exists()) {
             dataFolder.mkdir();
         }
@@ -101,20 +101,20 @@ public class Chat extends JavaPlugin implements Listener {
             chatLog = new PrintWriter(fw);
         } catch (Exception e) {
             getLogger().warning("Unable to create chatLog");
-        }*/
+        }
 
         getLogger().info("Chat init complete");
     }
 
     @Override
     public void onDisable() {
-        //chatLog.close();
+        chatLog.close();
         getLogger().info("Chat disable");
     }
 
     public void writeChatLine(String line) {
-        //chatLog.write(line);
-        //chatLog.flush();
+        chatLog.write(line + "\n");
+        chatLog.flush();
     }
 
     public void register(Class c, JavaPlugin plugin) {
@@ -222,7 +222,7 @@ public class Chat extends JavaPlugin implements Listener {
         //getLogger().info(mainMessage);
         getLogger().info(vanillaMessage);
 
-        writeChatLine(mainMessage + "\n");
+        writeChatLine(mainMessage.getPlainText());
     }
     
     public Text replaceColor(String text) {

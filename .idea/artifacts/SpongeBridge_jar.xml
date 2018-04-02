@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="SpongeBridge:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="SpongeBridge.jar">
-      <element id="module-output" name="SpongeBridge" />
-    </root>
-  </artifact>
-</component>

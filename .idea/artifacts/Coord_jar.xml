@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Coord:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Coord.jar">
-      <element id="module-output" name="Coord" />
-      <element id="file-copy" path="$PROJECT_DIR$/Coord/plugin.yml" />
-    </root>
-  </artifact>
-</component>

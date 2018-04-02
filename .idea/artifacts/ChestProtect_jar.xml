@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="ChestProtect:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="ChestProtect.jar">
-      <element id="module-output" name="ChestProtect" />
-      <element id="file-copy" path="$PROJECT_DIR$/ChestProtect/plugin.yml" />
-    </root>
-  </artifact>
-</component>

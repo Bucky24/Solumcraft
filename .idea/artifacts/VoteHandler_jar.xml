@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="VoteHandler:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="VoteHandler.jar">
-      <element id="module-output" name="VoteHandler" />
-      <element id="file-copy" path="$PROJECT_DIR$/VoteHandler/plugin.yml" />
-    </root>
-  </artifact>
-</component>

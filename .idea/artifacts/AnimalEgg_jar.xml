@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="AnimalEgg:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="AnimalEgg.jar">
-      <element id="module-output" name="AnimalEgg" />
-      <element id="file-copy" path="$PROJECT_DIR$/AnimalEgg/plugin.yml" />
-    </root>
-  </artifact>
-</component>

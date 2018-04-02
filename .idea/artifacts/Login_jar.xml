@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Login:jar">
-    <output-path>$PROJECT_DIR$/plugins</output-path>
-    <root id="archive" name="Login.jar">
-      <element id="module-output" name="Login" />
-      <element id="file-copy" path="$PROJECT_DIR$/Login/plugin.yml" />
-    </root>
-  </artifact>
-</component>
