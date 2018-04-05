@@ -145,6 +145,6 @@ public class MailData extends Table {
 
     public static void init(Database d) {
         if (d == null) return;
-        d.createTableIfNotExists(table,"CREATE TABLE `mail` ( `id` int(11) NOT NULL AUTO_INCREMENT,  `sender` varchar(100) NOT NULL,  `read` tinyint(1) NOT NULL,  `player` varchar(100) NOT NULL,  `message` text NOT NULL, `subject` varchar(150), PRIMARY KEY (`id`))");
+        d.createTableIfNotExists(table,"CREATE TABLE `mail` ( `id` int(11) NOT NULL AUTO_INCREMENT,  sender varchar(100) NOT NULL,  read tinyint(1) NOT NULL,  player varchar(100) NOT NULL,  message text NOT NULL, subject varchar(150), PRIMARY KEY (`id`))");
     }
 }

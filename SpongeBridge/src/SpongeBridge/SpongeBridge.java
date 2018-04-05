@@ -149,6 +149,19 @@ public class SpongeBridge {
         return players;
     }
 
+    public Player getPlayer(UUID id) {
+        try {
+            org.spongepowered.api.entity.living.player.Player player = game.getServer().getPlayer(id).orElse(null);
+            if (player == null) {
+                return null;
+            }
+            return new Player(player);
+        } catch (Exception e) {
+            logger.logError(e);
+        }
+        return null;
+    }
+
     public Player getPlayer(String name) {
         try {
             org.spongepowered.api.entity.living.player.Player player = game.getServer().getPlayer(name).orElse(null);

@@ -5,8 +5,9 @@ import com.thepastimers.Chat.ChatObject;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.UserMap.UserMap;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
+import org.bukkit.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +29,7 @@ import java.util.UUID;
 public class Mail extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
-    Worlds worlds;
+    //Worlds worlds;
     Chat chat;
     UserMap userMap;
 
@@ -53,10 +53,10 @@ public class Mail extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Permission module. Some functionality may not be available.");
         }
 
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
+        }*/
 
         chat = (Chat)getServer().getPluginManager().getPlugin("Chat");
         if (chat == null) {
@@ -97,9 +97,9 @@ public class Mail extends JavaPlugin implements Listener {
 
     @EventHandler
     public void login(PlayerJoinEvent event) {
-        if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
-            return;
-        }
+        //if (worlds != null && worlds.getPlayerWorldType(event.getPlayer().getName()) == Worlds.VANILLA) {
+        //    return;
+        //}
         if (database == null) {
             return;
         }
@@ -109,7 +109,7 @@ public class Mail extends JavaPlugin implements Listener {
         int count = unreadMessages(p.getName());
 
         if (count > 0) {
-            p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail to view your messages.");
+            p.sendMessage(Text.make().color(ChatColor.LIGHT_PURPLE).text("You have unread mail! Use /mail to view your messages."));
         }
     }
 
@@ -129,26 +129,26 @@ public class Mail extends JavaPlugin implements Listener {
     public boolean sendMessage(MailData md) {
         Player sender = getServer().getPlayer(userMap.getId(md.getSender()));
         if (database == null || md == null) {
-            sender.sendMessage(ChatColor.RED + "Unable to send mail, bad parameters.");
+            sender.sendMessage(Text.make().color(ChatColor.RED).text("Unable to send mail, bad parameters."));
             return false;
         }
 
         md.setPlayer(userMap.getUUID(md.getPlayer()));
-        if (md.getPlayer() == UserMap.NO_USER) return false;
+        if (UserMap.NO_USER.equals(md.getPlayer())) return false;
         md.setSender(userMap.getUUID(md.getSender()));
-        if (md.getSender() == UserMap.NO_USER) return false;
+        if (UserMap.NO_USER.equals(md.getSender())) return false;
         md.setRead(false);
 
         if (!md.save(database)) {
-            sender.sendMessage(ChatColor.RED + "Unable to save mail.");
+            sender.sendMessage(Text.make().color(ChatColor.RED).text("Unable to save mail."));
             return false;
         }
 
         Player p = getServer().getPlayer(userMap.getId(md.getPlayer()));
         if (p != null) {
-            p.sendMessage(ChatColor.LIGHT_PURPLE + "You have unread mail! Use /mail to view your messages.");
+            p.sendMessage(Text.make().color(ChatColor.LIGHT_PURPLE).text("You have unread mail! Use /mail to view your messages."));
         }
-        sender.sendMessage(ChatColor.GREEN + "Mail sent!");
+        sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Mail sent!"));
 
         return true;
     }
@@ -238,25 +238,25 @@ public class Mail extends JavaPlugin implements Listener {
             compose.put(player.getName(),md);
         }
         if ("".equalsIgnoreCase(md.getPlayer())) {
-            ChatObject.make().text("To: ",ChatColor.BLUE).suggest("<click to add recipient>","/mail compose to ",ChatColor.GREEN).send(chat,player);
+            player.sendMessage(Text.make().color(ChatColor.BLUE).text("To: ").color(ChatColor.GREEN).suggest("<click to add recipient>", "/mail compose to "));
         } else {
-            ChatObject.make().text("To: ", ChatColor.BLUE).suggest(userMap.getPlayer(md.getPlayer()), "/mail compose to ", ChatColor.GREEN).send(chat, player);
+            player.sendMessage(Text.make().color(ChatColor.BLUE).text("To: ").color(ChatColor.GREEN).suggest(userMap.getPlayer(md.getPlayer()), "/mail compose to "));
         }
         if ("".equalsIgnoreCase(md.getSubject())) {
-            ChatObject.make().text("Subject: ",ChatColor.BLUE).suggest("<click to add subject>","/mail compose subject ",ChatColor.GREEN).send(chat,player);
+            player.sendMessage(Text.make().color(ChatColor.BLUE).text("Subject: ").color(ChatColor.GREEN).suggest("<click to add subject>", "/mail compose subject "));
         } else {
-            ChatObject.make().text("Subject: ", ChatColor.BLUE).suggest(md.getSubject(), "/mail compose subject ", ChatColor.GREEN).send(chat, player);
+            player.sendMessage(Text.make().color(ChatColor.BLUE).text("Subject: ").color(ChatColor.GREEN).suggest(md.getSubject(), "/mail compose subject "));
         }
-        ChatObject.make().text("Content: ",ChatColor.BLUE).send(chat,player);
+        player.sendMessage(Text.make().color(ChatColor.BLUE).text("Content: "));
         String[] content = md.getMessage().split("NEWLINE");
         for (int i=0;i<content.length;i++) {
             String line = content[i];
             line = line.replace("NEWLINE","");
             if ("".equalsIgnoreCase(line)) continue;
-            ChatObject.make().text(line).command(" [Remove]","/mail compose removeLine " + i,ChatColor.RED).send(chat,player);
+            player.sendMessage(Text.make().text(line).color(ChatColor.RED).command(" [Remove]", "/mail compose removeLine " + i));
         }
-        ChatObject.make().suggest("<click to add line>","/mail compose body ",ChatColor.GREEN).send(chat,player);
-        ChatObject.make().command("[Send] ","/mail compose send",ChatColor.BLUE).command("[Cancel]","/mail compose clear",ChatColor.RED).send(chat,player);
+        player.sendMessage(Text.make().color(ChatColor.GREEN).suggest("<click to add line>","/mail compose body "));
+        player.sendMessage(Text.make().color(ChatColor.BLUE).command("[Send]", "/mail compose send").command("[Cancel]", "/mail compose clear"));
     }
 
     public void drawMessage(Player player, MailData md) {
@@ -271,7 +271,7 @@ public class Mail extends JavaPlugin implements Listener {
             if ("".equalsIgnoreCase(line)) continue;
             ChatObject.make().text(line).send(chat,player);
         }
-        ChatObject.make().command("[Reply]","/mail reply " + md.getId(),ChatColor.RED).send(chat,player);
+        player.sendMessage(Text.make().color(ChatColor.GREEN).command("[Reply]", "/mail reply " + md.getId()));
     }
 
     @Override
@@ -284,15 +284,15 @@ public class Mail extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
             return false;
-        }
+        }*/
 
         String command = cmd.getName();
 
         if (command.equalsIgnoreCase("mail")) {
             if (permission == null || !permission.hasPermission(playerName,"mail_mail") || playerName.equalsIgnoreCase("CONSOLE")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permissions for this command (mail_mail)");
+                sender.sendMessage(Text.make().color(ChatColor.RED).text("You don't have permissions for this command (mail_mail)"));
                 return true;
             }
 
@@ -306,12 +306,12 @@ public class Mail extends JavaPlugin implements Listener {
                         try {
                             num = Integer.parseInt(args[1]);
                         } catch (Exception e) {
-                            sender.sendMessage(ChatColor.RED + "Message number must be a valid integer");
+                            sender.sendMessage(Text.make().color(ChatColor.RED).text("Message number must be a valid integer"));
                             return true;
                         }
                         MailData m = getMessage(playerName,num);
                         if (m == null) {
-                            sender.sendMessage(ChatColor.RED + "Invalid message number");
+                            sender.sendMessage(Text.make().color(ChatColor.RED).text("Invalid message number"));
                             return true;
                         }
                         m.setRead(true);
@@ -324,7 +324,7 @@ public class Mail extends JavaPlugin implements Listener {
                             sender.sendMessage("You have no more unread messages");
                         } else {
                             drawMessage(player,md);
-                            sender.sendMessage(ChatColor.GREEN + "You have " + unreadMessages(playerName) + " message remaining.");
+                            sender.sendMessage(Text.make().color(ChatColor.GREEN).text("You have " + unreadMessages(playerName) + " message remaining."));
                         }
                     }
                 } else if ("compose".equalsIgnoreCase(subcommand)) {
@@ -338,7 +338,7 @@ public class Mail extends JavaPlugin implements Listener {
                                 if (md != null) {
                                     String uuid = userMap.getUUID(args[2]);
                                     if (args[2].equalsIgnoreCase(uuid)) {
-                                        player.sendMessage(ChatColor.RED + "Invalid player");
+                                        player.sendMessage(Text.make().color(ChatColor.RED).text("Invalid player"));
                                     } else {
                                         md.setPlayer(userMap.getUUID(uuid));
                                     }
@@ -392,7 +392,7 @@ public class Mail extends JavaPlugin implements Listener {
                         } else if ("clear".equalsIgnoreCase(subSubCommand)) {
                             drawMenu = false;
                             compose.remove(player.getName());
-                            player.sendMessage(ChatColor.GREEN + "Your draft has been removed");
+                            player.sendMessage(Text.make().color(ChatColor.GREEN).text("Your draft has been removed"));
                         }
                     }
                     if (drawMenu) drawComposeMenu(player);
@@ -401,11 +401,11 @@ public class Mail extends JavaPlugin implements Listener {
                     int message = Integer.parseInt(args[1]);
                     MailData md = getMessageById(player.getName(), message);
                     if (md == null) {
-                        player.sendMessage(ChatColor.RED + "Cannot find that message");
+                        player.sendMessage(Text.make().color(ChatColor.RED).text("Cannot find that message"));
                     } else {
                         MailData comp = compose.get(player.getName());
                         if (comp != null) {
-                            player.sendMessage(ChatColor.RED + "You already have a message you are composing. Please discard or send that message first.");
+                            player.sendMessage(Text.make().color(ChatColor.RED).text("You already have a message you are composing. Please discard or send that message first."));
                         } else {
                             comp = new MailData();
                             compose.put(player.getName(),comp);
@@ -421,22 +421,21 @@ public class Mail extends JavaPlugin implements Listener {
                 }
             } else {
                 Player p = (Player)sender;
-                ChatObject.make().command("[Compose]","/mail compose",ChatColor.BLUE).send(chat,p);
+                p.sendMessage(Text.make().color(ChatColor.BLUE).command("[Compose]", "/mail compose"));
                 ChatObject obj;
                 List<MailData> mds = messageList(playerName);
                 if (mds == null) {
                     sender.sendMessage("No messages");
                 } else {
+                    p.sendMessage("Click a message to read it");
                     for (int i=0;i<Math.min(mds.size(),10);i++) {
-                        obj = new ChatObject();
                         MailData md = mds.get(i);
                         String s = userMap.getPlayer(md.getSender());
                         String title = i + ": " + s + "-" + md.getSubject();
                         if (!md.isRead()) {
                             title += " *UNREAD*";
                         }
-                        obj.command(title,"/mail read " + i,ChatColor.BLUE);
-                        chat.sendRaw(obj,p);
+                        p.sendMessage(Text.make().color(ChatColor.BLUE).command(title, "/mail read " + i));
                     }
                 }
             }

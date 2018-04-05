@@ -12,13 +12,23 @@ public class Text {
         public static int COLOR = 2;
         public static int STYLE = 3;
         public static int COMPOUND = 4;
+        public static int COMMAND = 5;
+        public static int SUGGEST = 6;
 
         public int type;
         public Object data;
+        // Used for command string (since data is the display message)
+        public Object data2;
 
         public TextElement(int type, Object data) {
             this.type = type;
             this.data = data;
+        }
+
+        public TextElement(int type, Object data, Object data2) {
+            this.type = type;
+            this.data = data;
+            this.data2 = data2;
         }
     }
 
@@ -52,6 +62,16 @@ public class Text {
         return this;
     }
 
+    public Text command(String message, String command) {
+        elements.add(new TextElement(TextElement.COMMAND, message, command));
+        return this;
+    }
+
+    public Text suggest(String message, String command) {
+        elements.add(new TextElement(TextElement.SUGGEST, message, command));
+        return this;
+    }
+
     public List<TextElement> getElements() {
         return elements;
     }
@@ -64,6 +84,8 @@ public class Text {
             } else if (element.type == TextElement.COMPOUND) {
                 Text childText = (Text)element.data;
                 sb.append(childText.getPlainText());
+            } else if (element.type == TextElement.COMMAND || element.type == TextElement.SUGGEST) {
+                sb.append(element.data);
             }
         }
 

@@ -8,6 +8,7 @@ UserMap
 Home
 Teleport
 Chat
+Mail
 
 AdminTools
 administration tools

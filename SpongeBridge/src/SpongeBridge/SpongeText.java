@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import org.bukkit.ChatColor;
 import org.bukkit.ChatStyle;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.action.TextActions;
 
 /**
  * Created by solum on 5/2/2015.
@@ -38,6 +39,24 @@ public class SpongeText {
                 curStyle = (ChatStyle)element.data;
             } else if (element.type == org.bukkit.Text.TextElement.COMPOUND) {
                 builder.append(getText((org.bukkit.Text)element.data));
+            } else if (element.type == org.bukkit.Text.TextElement.COMMAND) {
+                Text.Builder command = Text.builder((String)element.data).onClick(TextActions.runCommand((String)element.data2));
+                if (curColor != null) {
+                    command.color(curColor.getValue());
+                }
+                if (curStyle != null) {
+                    command.style(curStyle.getValue());
+                }
+                builder.append(command.build());
+            } else if (element.type == org.bukkit.Text.TextElement.SUGGEST) {
+                Text.Builder command = Text.builder((String)element.data).onClick(TextActions.suggestCommand((String)element.data2));
+                if (curColor != null) {
+                    command.color(curColor.getValue());
+                }
+                if (curStyle != null) {
+                    command.style(curStyle.getValue());
+                }
+                builder.append(command.build());
             }
         }
         return builder.build();

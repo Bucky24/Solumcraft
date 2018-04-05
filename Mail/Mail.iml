@@ -9,8 +9,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="module" module-name="Worlds" />
     <orderEntry type="module" module-name="Chat" />
     <orderEntry type="module" module-name="UserMap" />
+    <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>
