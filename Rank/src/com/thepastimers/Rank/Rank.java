@@ -81,23 +81,30 @@ public class Rank extends JavaPlugin implements Listener {
 
         PlayerRank playerRank = getRankObject(playerUuid);
         RankData rank;
+        String rankString = "";
         if (playerRank != null) {
             rank = RankData.getDataForRank(playerRank.getRank());
         } else {
             // Note all should be a constant somewhere or better in DB
             rank = RankData.getDataForRank("all");
         }
-        if (rank == null) {
-            return;
+        if (rank != null) {
+            rankString = rank.getFormat() + " ";
         }
+
+        String title = "";
+        PlayerTitle playerTitle = getTitleObject(playerUuid);
+        if (playerTitle != null) {
+            title = playerTitle.getTitle() + " ";
+        }
+
         //getLogger().info(rank.getFormat());
-        if (!"".equals(rank.getFormat())) {
-            obj.setPlayerString(Text.make()
-                    .compound(chat.replaceColor(rank.getFormat()))
-                    .style(ChatStyle.RESET)
-                    .text(" ")
-                    .compound(obj.getPlayerString()));
-        }
+        obj.setPlayerString(Text.make()
+                .compound(chat.replaceColor(rankString))
+                .style(ChatStyle.RESET)
+                .compound(chat.replaceColor(title))
+                .style(ChatStyle.RESET)
+                .compound(obj.getPlayerString()));
     }
 
     public String getRank(String player) {
@@ -565,11 +572,37 @@ public class Rank extends JavaPlugin implements Listener {
                         sender.sendMessage("Title for " + player + ": " + title);
                     } else {
                         sender.sendMessage("/title check <player>");
+                    }
+                } else if (secondCommand.equalsIgnoreCase("clear")) {
+                    if (!isAuthorized(uuid,null)) {
+                        sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to do this (must be console or owner/admin)"));
+                        getLogger().info(playerName + " attempted unauthorized access of /title set");
+                        return true;
+                    }
+                    if (args.length > 1) {
+                        String player = args[1];
+                        if (userMap == null) {
+                            sender.sendMessage(Text.make().color(ChatColor.RED).text("This functionality is currently unavailable"));
+                            return true;
+                        }
+                        String playerUuid = userMap.getUUID(player);
+                        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+                            sender.sendMessage(Text.make().color(ChatColor.RED).text("That user cannot be found"));
+                            return true;
+                        }
 
+                        PlayerTitle title = getTitleObject(playerUuid);
+                        if (title != null) {
+                            title.delete(database);
+                        }
+
+                        sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Title for player " + player + " removed"));
+                    } else {
+                        sender.sendMessage("/title clear <player>");
                     }
                 }
             } else {
-                sender.sendMessage("/title <set|check>");
+                sender.sendMessage("/title <set|check|clear>");
             }
         } else {
             return false;
