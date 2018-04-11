@@ -19,7 +19,8 @@ public enum EntityType {
     MUSHROOM_COW(EntityTypes.MUSHROOM_COW),
     SHEEP(EntityTypes.SHEEP),
     CHICKEN(EntityTypes.CHICKEN),
-    RABBIT(EntityTypes.RABBIT);
+    RABBIT(EntityTypes.RABBIT),
+    PLAYER(EntityTypes.PLAYER);
 
     private org.spongepowered.api.entity.EntityType type;
     private static Map<Integer,EntityType> durabilityMap;

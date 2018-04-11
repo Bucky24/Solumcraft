@@ -271,7 +271,7 @@ public class Logger extends JavaPlugin implements Listener {
         {
             return;
         }
-        writeEvent("spawn","Entity: " + event.getEntity().getType().name()
+        writeEvent("spawn","entity: " + event.getEntity().getType().name()
                 + ", reason: " + event.getSpawnReason().name()
                 + ", at (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + "," + l.getWorld().getName() + ")");
     }

@@ -1,13 +1,17 @@
 package org.bukkit.entity;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.command.CommandSender;
+import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.data.manipulator.mutable.entity.GameModeData;
 import org.spongepowered.api.data.type.HandType;
 import org.spongepowered.api.data.type.HandTypes;
+import org.spongepowered.api.entity.living.player.gamemode.GameModes;
 
 import java.util.UUID;
 
@@ -16,6 +20,14 @@ import java.util.UUID;
  */
 public class Player extends CommandSender {
     org.spongepowered.api.entity.living.player.Player serverPlayer;
+
+    public static Player fromUser(org.spongepowered.api.entity.living.player.User user) throws Exception {
+        org.spongepowered.api.entity.living.player.Player player = user.getPlayer().orElse(null);
+        if (player == null) {
+            throw new Exception("Unable to get player object from user object");
+        }
+        return new Player(player);
+    }
 
     public Player() {
         super(null);
@@ -74,5 +86,14 @@ public class Player extends CommandSender {
         } else {
             return new ItemStack(Material.AIR);
         }
+    }
+
+    public void setGameMode(GameMode mode) {
+        this.serverPlayer.offer(Keys.GAME_MODE, mode.getValue());
+    }
+
+    public GameMode getGameMode() {
+        org.spongepowered.api.entity.living.player.gamemode.GameMode mode = this.serverPlayer.gameMode().get();
+        return GameMode.getValueOf(mode);
     }
 }

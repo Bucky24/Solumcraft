@@ -10,6 +10,7 @@ import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
@@ -20,6 +21,7 @@ import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.event.message.MessageChannelEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
 import org.spongepowered.api.event.world.ExplosionEvent;
@@ -117,6 +119,27 @@ public class SpongeBridge {
     public void onChat(MessageChannelEvent.Chat event) {
         org.bukkit.event.player.AsyncPlayerChatEvent newEvent = new org.bukkit.event.player.AsyncPlayerChatEvent(this, event);
         fireEvent(newEvent);
+    }
+
+    @Listener
+    public void onDrop(DropItemEvent.Dispense event) {
+        org.spongepowered.api.entity.living.player.Player player = event.getCause().first(org.spongepowered.api.entity.living.player.Player.class).orElse(null);
+
+        if (player != null) {
+            org.bukkit.event.player.PlayerDropItemEvent newEvent = new org.bukkit.event.player.PlayerDropItemEvent(this, event);
+            // end test
+            fireEvent(newEvent);
+        }
+    }
+
+    @Listener
+    public void onBlockPlace(ChangeBlockEvent.Place event) {
+        org.spongepowered.api.entity.living.player.Player player = event.getCause().first(org.spongepowered.api.entity.living.player.Player.class).orElse(null);
+
+        if (player != null) {
+            BlockPlaceEvent newEvent = new BlockPlaceEvent(this, event);
+            fireEvent(newEvent);
+        }
     }
 
     ///////////////////////////////////////////////////////

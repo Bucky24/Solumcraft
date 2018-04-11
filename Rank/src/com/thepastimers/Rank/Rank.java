@@ -148,6 +148,8 @@ public class Rank extends JavaPlugin implements Listener {
                 break;
             }
 
+            getLogger().info("rank is now" + newRank);
+
             RankData data = rankDataList.get(0);
             ranks.add(data.getParentRank());
             newRank = data.getParentRank();

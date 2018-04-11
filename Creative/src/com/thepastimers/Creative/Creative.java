@@ -2,21 +2,22 @@ package com.thepastimers.Creative;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
-import com.thepastimers.Plot.Plot;
-import com.thepastimers.Plot.PlotData;
-import com.thepastimers.Plot.PlotPerms;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Plot.Plot;
+//import com.thepastimers.Plot.PlotData;
+//import com.thepastimers.Plot.PlotPerms;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+//import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
+//import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -41,8 +42,8 @@ import java.util.Map;
 public class Creative extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
-    Plot plot;
-    Worlds worlds;
+    //Plot plot;
+    //Worlds worlds;
 
     String allPerms = "creative_all";
     String commandPerm = "creative_command";
@@ -70,18 +71,18 @@ public class Creative extends JavaPlugin implements Listener {
             permission.registerPermission(economyCreative,2);
         }
 
-        plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
+        /*plot = (Plot)getServer().getPluginManager().getPlugin("Plot");
         if (plot == null) {
             getLogger().warning("Unable to load Plot module. Some functionality may not be available.");
         } else {
             getLogger().info("Registering plot handlers");
             plot.registerPlotLeave(Creative.class,this);
-        }
+        }*/
 
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
+        }*/
 
         getLogger().info("Creative loaded");
     }
@@ -146,7 +147,7 @@ public class Creative extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
@@ -164,9 +165,9 @@ public class Creative extends JavaPlugin implements Listener {
                 }
             }
         }
-    }
+    }*/
 
-    @EventHandler
+    /*@EventHandler
     public void playerThrow(PlayerEggThrowEvent event) {
         LivingEntity le = (LivingEntity)event.getEgg().getShooter();
         if (le instanceof Player) {
@@ -253,7 +254,7 @@ public class Creative extends JavaPlugin implements Listener {
         if (permission.hasPermission(playerName,creativePlot)) {
             player.setGameMode(GameMode.SURVIVAL);
         }
-    }
+    }*/
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -278,13 +279,13 @@ public class Creative extends JavaPlugin implements Listener {
                         return true;
                     }
 
-                    if (worlds.getWorldType(p.getWorld().getName()) == Worlds.ECONOMY) {
+                    /*if (worlds.getWorldType(p.getWorld().getName()) == Worlds.ECONOMY) {
                         if (!permission.hasPermission(playerName,economyCreative)) {
                             sender.sendMessage(ChatColor.RED + "You cannot use creative in economy world (" + economyCreative + ")");
                             return true;
                         }
-                    }
-                    PlayerInventory inv = p.getInventory();
+                    }*/
+                    /*PlayerInventory inv = p.getInventory();
 
                     ItemStack[] contents = inv.getContents();
 
@@ -294,16 +295,16 @@ public class Creative extends JavaPlugin implements Listener {
                             empty = false;
                             break;
                         }
-                    }
+                    }*/
 
-                    for (ItemStack is : inv.getArmorContents()) {
+                    /*for (ItemStack is : inv.getArmorContents()) {
                         if (is != null && is.getType() != Material.AIR) {
                             empty = false;
                             break;
                         }
-                    }
+                    }*/
 
-                    if (permission.hasPermission(playerName,creativePlot)) {
+                    /*if (permission.hasPermission(playerName,creativePlot)) {
                         if (plot == null) {
                             p.sendMessage(ChatColor.RED + "This action cannot be taken at this time");
                             return true;
@@ -317,32 +318,32 @@ public class Creative extends JavaPlugin implements Listener {
                             p.sendMessage(ChatColor.RED + "You can only use /gm inside a plot that you own");
                             return true;
                         }
-                    }
+                    }*/
 
-                    if (!empty) {
+                    /*if (!empty) {
                         if (permission == null || !permission.hasPermission(playerName,allPerms)) {
                             p.sendMessage(ChatColor.RED + "Please empty your inventory before activating creative mode.");
                             return true;
                         }
-                    }
+                    }*/
 
                     p.setGameMode(GameMode.CREATIVE);
                 } else if ("0".equalsIgnoreCase(mode) && p.getGameMode() == GameMode.CREATIVE) {
                     if (permission == null || !permission.hasPermission(playerName,allPerms)) {
-                        PlayerInventory inv = p.getInventory();
+                        /*PlayerInventory inv = p.getInventory();
                         ItemStack[] itemList = inv.getContents();
 
                         for (int i=0;i<itemList.length;i++) {
                             itemList[i] = null;
-                        }
-                        inv.setContents(itemList);
+                        }*/
+                        /*inv.setContents(itemList);
 
                         itemList = inv.getArmorContents();
 
                         for (int i=0;i<itemList.length;i++) {
                             itemList[i] = null;
                         }
-                        inv.setArmorContents(itemList);
+                        inv.setArmorContents(itemList);*/
                     }
                     p.setGameMode(GameMode.SURVIVAL);
                 } else {

@@ -28,6 +28,8 @@ public class Material {
 
     public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);*/
 
+    public static Material TNT = new Material(ItemTypes.TNT);
+
     public static Material AIR = new Material(ItemTypes.NONE);
 
     public static Material WOOD_AXE = new Material(ItemTypes.WOODEN_AXE);
@@ -54,7 +56,9 @@ public class Material {
 
     public static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);
 
-    public static Material SPAWN_EGG = new Material(ItemTypes.SPAWN_EGG);
+    public static Material MONSTER_EGGS = new Material(ItemTypes.SPAWN_EGG);
+
+    public static Material BEDROCK = new Material(ItemTypes.BEDROCK);
 
     public static void init(Logger logger) {
         Material.logger = logger;

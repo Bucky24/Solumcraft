@@ -21,13 +21,13 @@ import java.util.List;
  * Time: 2:14 PM
  * To change this template use File | Settings | File Templates.
  */
-/*public class Inventory extends JavaPlugin implements Listener {
+/*public class inventory extends JavaPlugin implements Listener {
     Database database;
     ItemName itemName;
 
     @Override
     public void onEnable() {
-        getLogger().info("Inventory init");
+        getLogger().info("inventory init");
 
         getServer().getPluginManager().registerEvents(this,this);
 
@@ -46,7 +46,7 @@ import java.util.List;
         getLogger().info("Table data:");
         getLogger().info(InventoryItem.getTableInfo(true));
 
-        getLogger().info("Inventory init complete");
+        getLogger().info("inventory init complete");
     }
 
     @EventHandler
@@ -68,7 +68,7 @@ import java.util.List;
 
     @Override
     public void onDisable() {
-        getLogger().info("Inventory disabled");
+        getLogger().info("inventory disabled");
     }
 
     public boolean saveInventory(Player p, String name) {

@@ -71,9 +71,9 @@ public class Worlds extends JavaPlugin implements Listener {
             getLogger().warning("Cannot load CombatLog plugin. Some functionality may not be available");
         }
 
-        inventory = (Inventory)getServer().getPluginManager().getPlugin("Inventory");
+        inventory = (Inventory)getServer().getPluginManager().getPlugin("inventory");
         if (inventory == null) {
-            getLogger().warning("Cannot load Inventory plugin. Some functionality may not be available");
+            getLogger().warning("Cannot load inventory plugin. Some functionality may not be available");
         }
 
         rank = (Rank)getServer().getPluginManager().getPlugin("Rank");

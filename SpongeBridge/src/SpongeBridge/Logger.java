@@ -12,10 +12,16 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Logger extends java.util.logging.Logger {
-    String logFile = "/bukkit_log.log";
+    static String LOG_FILE = "bukkit_log.log";
+
+    File myFile;
 
     public Logger() {
         super("",null);
+
+        String cwd = System.getProperty("user.dir");
+        myFile = new File(cwd + "/" + LOG_FILE);
+        System.out.println("Log directory is " + myFile.getAbsolutePath());
     }
 
     public void info(String message) {
@@ -57,12 +63,12 @@ public class Logger extends java.util.logging.Logger {
     }
 
     public void writeFile(String message) {
-        /*try {
-            //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFile, true)));
-            //out.println(message);
-            //out.close();
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(myFile, true)));
+            out.println(message);
+            out.close();
         } catch (IOException e) {
             System.out.println("Can't write to file! " + e.getMessage());
-        }*/
+        }
     }
 }

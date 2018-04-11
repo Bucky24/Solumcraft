@@ -1,4 +1,4 @@
-name: Inventory
+name: inventory
 version: 0.5
-main: com.thepastimers.Inventory.Inventory
+main: com.thepastimers.inventory.inventory
 softdepend: [Database,ItemName]
