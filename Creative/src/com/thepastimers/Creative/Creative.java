@@ -116,7 +116,9 @@ public class Creative extends JavaPlugin implements Listener {
     @EventHandler
     public void placeBlock(BlockPlaceEvent event) {
         Player p = event.getPlayer();
-        if (event.getBlockPlaced().getType() == Material.BEDROCK || event.getBlockPlaced().getType() == Material.MONSTER_EGGS) {
+        if (event.getBlockPlaced().getType() == Material.BEDROCK ||
+                event.getBlockPlaced().getType() == Material.MONSTER_EGGS ||
+                event.getBlockPlaced().getType() == Material.SOUL_SAND) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(ChatColor.RED + "You do not have permission to place this block (" + allPerms + ")");
                 event.setCancelled(true);
@@ -147,25 +149,23 @@ public class Creative extends JavaPlugin implements Listener {
         }
     }
 
-    /*@EventHandler
+    @EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
         if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
-            List<Entity> entityList = event.getEntity().getNearbyEntities(20,20,20);
-            for (Entity e : entityList) {
-                if (e.getType() == EntityType.PLAYER) {
-                    Player p = (Player)e;
-                    if (p.getGameMode() == GameMode.CREATIVE) {
-                        if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                            event.setCancelled(true);
-                        }
-                    }
+            Player p = event.getPlayer();
+            if (p == null) {
+                return;
+            }
+            if (p.getGameMode() == GameMode.CREATIVE) {
+                if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
+                    event.setCancelled(true);
                 }
             }
         }
-    }*/
+    }
 
     /*@EventHandler
     public void playerThrow(PlayerEggThrowEvent event) {

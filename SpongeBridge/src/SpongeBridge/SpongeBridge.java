@@ -11,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
@@ -20,6 +21,7 @@ import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
+import org.spongepowered.api.event.entity.SpawnEntityEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.event.message.MessageChannelEvent;
@@ -140,6 +142,12 @@ public class SpongeBridge {
             BlockPlaceEvent newEvent = new BlockPlaceEvent(this, event);
             fireEvent(newEvent);
         }
+    }
+
+    @Listener
+    public void entitySpawn(SpawnEntityEvent event) {
+        CreatureSpawnEvent newEvent = new CreatureSpawnEvent(this, event);
+        fireEvent(newEvent);
     }
 
     ///////////////////////////////////////////////////////

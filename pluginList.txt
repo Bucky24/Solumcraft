@@ -9,6 +9,7 @@ Home
 Teleport
 Chat
 Mail
+Creative
 
 AdminTools
 administration tools

@@ -17,7 +17,7 @@ public class Block {
         org.spongepowered.api.block.BlockState state = snapshot.getState();
         ItemType type = state.getType().getItem().orElse(null);
         if (type == null) {
-            System.out.println("Did not get a type for block state");
+            //System.out.println("Did not get a type for block state");
             return null;
         }
         return Material.getValueOf(new org.bukkit.inventory.ItemType(type));

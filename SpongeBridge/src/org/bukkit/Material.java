@@ -57,6 +57,7 @@ public class Material {
     public static Material ENCHANTED_BOOK = new Material(ItemTypes.ENCHANTED_BOOK);
 
     public static Material MONSTER_EGGS = new Material(ItemTypes.SPAWN_EGG);
+    public static Material SOUL_SAND = new Material(ItemTypes.SOUL_SAND);
 
     public static Material BEDROCK = new Material(ItemTypes.BEDROCK);
 
