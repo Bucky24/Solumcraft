@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
@@ -147,6 +148,12 @@ public class SpongeBridge {
     @Listener
     public void entitySpawn(SpawnEntityEvent event) {
         CreatureSpawnEvent newEvent = new CreatureSpawnEvent(this, event);
+        fireEvent(newEvent);
+    }
+
+    @Listener
+    public void playerInteract(InteractBlockEvent event) {
+        PlayerInteractEvent newEvent = new PlayerInteractEvent(this, event);
         fireEvent(newEvent);
     }
 

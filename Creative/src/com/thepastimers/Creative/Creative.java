@@ -17,7 +17,7 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-//import org.bukkit.event.block.Action;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -180,7 +180,7 @@ public class Creative extends JavaPlugin implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void playerOpen(PlayerInteractEvent event) {
@@ -206,7 +206,7 @@ public class Creative extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void playerInteract(PlayerInteractEntityEvent event) {
         Entity e = event.getRightClicked();
         Player p = event.getPlayer();

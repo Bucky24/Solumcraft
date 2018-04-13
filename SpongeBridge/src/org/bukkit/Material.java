@@ -61,6 +61,16 @@ public class Material {
 
     public static Material BEDROCK = new Material(ItemTypes.BEDROCK);
 
+    public static Material CHEST = new Material(ItemTypes.CHEST);
+    public static Material FURNACE = new Material(ItemTypes.FURNACE);
+    public static Material BURNING_FURNACE = new Material(ItemTypes.FURNACE);
+    public static Material ENDER_CHEST = new Material(ItemTypes.ENDER_CHEST);
+    public static Material TRAPPED_CHEST = new Material(ItemTypes.TRAPPED_CHEST);
+    public static Material DISPENSER = new Material(ItemTypes.DISPENSER);
+    public static Material HOPPER = new Material(ItemTypes.HOPPER);
+    public static Material HOPPER_MINECART = new Material(ItemTypes.HOPPER_MINECART);
+    public static Material DROPPER = new Material(ItemTypes.DROPPER);
+
     public static void init(Logger logger) {
         Material.logger = logger;
         Material.materials = new ArrayList<Material>();
