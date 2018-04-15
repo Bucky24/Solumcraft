@@ -1,7 +1,7 @@
 name: Coord
 version: 1.5
 main: com.thepastimers.Coord.Coord
-softdepend: [Permission,Worlds]
+softdepend: [Permission]
 commands:
     coord:
         description: coord commands

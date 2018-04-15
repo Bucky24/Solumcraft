@@ -1,9 +1,7 @@
 package org.bukkit.entity;
 
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import SpongeBridge.SpongeText;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.command.CommandSender;
@@ -95,5 +93,14 @@ public class Player extends CommandSender {
     public GameMode getGameMode() {
         org.spongepowered.api.entity.living.player.gamemode.GameMode mode = this.serverPlayer.gameMode().get();
         return GameMode.getValueOf(mode);
+    }
+
+    public boolean isOp() {
+        // sponge has no concept of OP
+        return false;
+    }
+
+    public void kickPlayer(String reason) {
+        this.serverPlayer.kick(SpongeText.getText(Text.make().text(reason)));
     }
 }

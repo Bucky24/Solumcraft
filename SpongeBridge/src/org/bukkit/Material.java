@@ -71,6 +71,23 @@ public class Material {
     public static Material HOPPER_MINECART = new Material(ItemTypes.HOPPER_MINECART);
     public static Material DROPPER = new Material(ItemTypes.DROPPER);
 
+    public static Material WHEAT = new Material(ItemTypes.WHEAT);
+    public static Material PUMPKIN = new Material(ItemTypes.PUMPKIN);
+    public static Material MELON = new Material(ItemTypes.MELON);
+    public static Material MELON_BLOCK = new Material(ItemTypes.MELON_BLOCK);
+    public static Material CARROT = new Material(ItemTypes.CARROT);
+    public static Material POTATO = new Material(ItemTypes.POTATO);
+
+    public static Material ACACIA_DOOR = new Material(ItemTypes.ACACIA_DOOR);
+    public static Material BIRCH_DOOR = new Material(ItemTypes.BIRCH_DOOR);
+    public static Material DARK_OAK_DOOR = new Material(ItemTypes.DARK_OAK_DOOR);
+    public static Material IRON_DOOR = new Material(ItemTypes.IRON_DOOR);
+    public static Material JUNGLE_DOOR = new Material(ItemTypes.JUNGLE_DOOR);
+    public static Material SPRUCE_DOOR = new Material(ItemTypes.SPRUCE_DOOR);
+    public static Material WOODEN_DOOR = new Material(ItemTypes.WOODEN_DOOR);
+
+    public static Material SIGN = new Material(ItemTypes.SIGN);
+
     public static void init(Logger logger) {
         Material.logger = logger;
         Material.materials = new ArrayList<Material>();

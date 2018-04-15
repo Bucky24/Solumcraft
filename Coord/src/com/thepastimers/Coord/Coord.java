@@ -1,10 +1,7 @@
 package com.thepastimers.Coord;
 
 import com.thepastimers.Permission.Permission;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
+//import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -40,7 +37,6 @@ public class Coord extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this,this);
 
         permission = (Permission)getServer().getPluginManager().getPlugin("Permission");
-
         if (permission == null) {
             getLogger().warning("Unable to load Permission plugin. Some functionality may not be available");
         }
@@ -74,7 +70,7 @@ public class Coord extends JavaPlugin implements Listener {
         return popCoords(player,getCoordSize(player));
     }
 
-    public List<CoordData> popCoords(String player,int count) {
+    public List<CoordData> popCoords(String player, int count) {
         return popCoords(player,count,true);
     }
 
@@ -106,7 +102,7 @@ public class Coord extends JavaPlugin implements Listener {
         coords.remove(player);
     }
 
-    @EventHandler
+    /*@EventHandler
     public void blockDamage(BlockDamageEvent event) {
         Player p = event.getPlayer();
         Block b = event.getBlock();
@@ -122,17 +118,17 @@ public class Coord extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void hitBlock(PlayerInteractEvent event) {
         Player p = event.getPlayer();
-        if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
             return;
-        }
+        }*/
         Block b = event.getClickedBlock();
         if (b == null) return;
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        //getLogger().info("got block");
         if (permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
             if (p.getItemInHand().getType() == Material.STICK) {
                 Location l = b.getLocation();
@@ -150,9 +146,9 @@ public class Coord extends JavaPlugin implements Listener {
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
-        if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(p.getName()) == Worlds.VANILLA) {
             return;
-        }
+        }*/
         Block b = event.getBlock();
         if (p.getGameMode() == GameMode.CREATIVE && permission != null && permission.hasPermission(p.getName(),"coord_coord")) {
             if (p.getItemInHand().getType() == Material.STICK) {
@@ -182,7 +178,7 @@ public class Coord extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("coord")) {
             if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
-                sender.sendMessage("You do not have permissions for this command");
+                sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
                 return true;
             }
             if (args.length > 0) {
@@ -191,7 +187,7 @@ public class Coord extends JavaPlugin implements Listener {
                 if (subcommand.equalsIgnoreCase("clear")) {
                     if (args.length > 1) {
                         if (permission == null || !permission.hasPermission(playerName,"coord_admin")) {
-                            sender.sendMessage("You do not have permissions for this command");
+                            sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_admin)"));
                             return true;
                         }
                         String player = args[1];
@@ -207,7 +203,7 @@ public class Coord extends JavaPlugin implements Listener {
                     }
                 } else if ("set".equalsIgnoreCase(subcommand)) {
                     if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
-                        sender.sendMessage(ChatColor.RED + "You do not have permissions for this command (coord_coord)");
+                        sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
                         return true;
                     }
 

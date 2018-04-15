@@ -10,10 +10,6 @@
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Coord" />
-    <orderEntry type="module" module-name="Money" />
-    <orderEntry type="module" module-name="ChestProtect" />
-    <orderEntry type="module" module-name="Worlds" />
-    <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="SpongeBridge" />
   </component>
 </module>

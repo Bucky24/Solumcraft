@@ -8,7 +8,7 @@ import com.thepastimers.Coord.CoordData;
 //import com.thepastimers.Metrics.Metrics;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
-import com.thepastimers.Worlds.Worlds;
+//import com.thepastimers.Worlds.Worlds;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,11 +22,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
+//import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.kitteh.vanish.VanishManager;
-import org.kitteh.vanish.VanishPlugin;
+//import org.kitteh.vanish.VanishManager;
+//import org.kitteh.vanish.VanishPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +43,9 @@ public class ExtCommands extends JavaPlugin implements Listener {
     //Metrics metrics;
     Rank rank;
     //Chat chat;
-    VanishPlugin vanishNoPacket;
-    VanishManager manager;
-    Worlds worlds;
+    //VanishPlugin vanishNoPacket;
+    //VanishManager manager;
+    //Worlds worlds;
     //ItemName itemName;
     Coord coord;
 
@@ -83,22 +83,22 @@ public class ExtCommands extends JavaPlugin implements Listener {
             chat.registerCommand("setTitle",ExtCommands.class,this);
         }*/
 
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
-        }
+        }*/
 
         /*itemName = (ItemName)getServer().getPluginManager().getPlugin("ItemName");
         if (itemName == null) {
             getLogger().warning("Unable to load ItemName plugin. Some functionality may not be available.");
         }*/
 
-        vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
+        /*vanishNoPacket = (VanishPlugin)getServer().getPluginManager().getPlugin("VanishNoPacket");
         if (vanishNoPacket == null) {
             getLogger().warning("Unable to load VanishNoPacket plugin.");
         } else {
             manager = vanishNoPacket.getManager();
-        }
+        }*/
 
         coord = (Coord)getServer().getPluginManager().getPlugin("Coord");
         if (coord == null) {
@@ -144,7 +144,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void pourLiquid(PlayerBucketEmptyEvent event) {
         Player p = event.getPlayer();
         ItemStack is = p.getItemInHand();
@@ -164,9 +164,9 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 p.setItemInHand(is);
             }
         }
-    }
+    }*/
 
-    public void handleCommand(CommandData data) {
+    /*public void handleCommand(CommandData data) {
         String response = "";
         String command = data.getCommand();
         if ("setTitle".equalsIgnoreCase(command)) {
@@ -201,7 +201,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             response = ":red:Unknown command";
         }
         data.setResponse(response);
-    }
+    }*/
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -213,9 +213,9 @@ public class ExtCommands extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
             return false;
-        }
+        }*/
 
         String command = cmd.getName();
 
@@ -229,11 +229,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
             World w = p.getWorld();
             //getLogger().info(w.getName());
-            if (worlds != null) {
+            /*if (worlds != null) {
                 if (worlds.getWorldType(w.getName()) == Worlds.NORMAL) {
                     w = getServer().getWorld("world");
                 }
-            }
+            }*/
 
             p.teleport(w.getSpawnLocation());
 
@@ -289,7 +289,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             p.getWorld().setSpawnLocation(l.getBlockX(),l.getBlockY(),l.getBlockZ());
 
             sender.sendMessage("Set spawn for this world to (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ")");
-        } else if (command.equalsIgnoreCase("clear")) {
+        }/* else if (command.equalsIgnoreCase("clear")) {
             if (permission == null || !permission.hasPermission(playerName,"command_clear")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_clear)");
                 return true;
@@ -413,7 +413,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage("/clear <mobs|bosses|cats|chickens>");
             }
-        } else if (command.equalsIgnoreCase("itemCheck")) {
+        }*//* else if (command.equalsIgnoreCase("itemCheck")) {
             if (permission == null || !permission.hasPermission(playerName,"command_item_check")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_item_check)");
                 return true;
@@ -427,7 +427,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 sender.sendMessage(ChatColor.GREEN + "The item in your hand is: " + s.getType().name() + " (" + s.getType().getId() + "), durability " + s.getDurability() + "/" + s.getType().getMaxDurability());
                 sender.sendMessage(ChatColor.GREEN + "ItemName plugin knows it as: " + itemName.getItemName(s));
             }
-        } else if ("opCheck".equalsIgnoreCase(command)) {
+        }*//* else if ("opCheck".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_op_check")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_op_check)");
                 return true;
@@ -465,7 +465,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage(ChatColor.RED + "/opCheck <player> <broadcast>");
             }
-        } else if ("pot".equalsIgnoreCase(command)) {
+        }*/ else if ("pot".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_pot")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_pot)");
                 return true;
@@ -506,7 +506,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage(ChatColor.RED + "/setTitle <title>");
             }
-        } else if ("hide".equalsIgnoreCase(command)) {
+        }/* else if ("hide".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_vanish") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_vanish)");
                 return true;
@@ -516,7 +516,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             if (manager != null) {
                 manager.toggleVanish(p);
             }
-        } else if ("spawnDragon".equalsIgnoreCase(command)) {
+        }*//* else if ("spawnDragon".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_dragon") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_dragon)");
                 return true;
@@ -526,7 +526,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             Location l = p.getLocation();
 
             l.getWorld().spawnEntity(l,EntityType.ENDER_DRAGON);
-        } else if ("spawnCrystal".equalsIgnoreCase(command)) {
+        }*//* else if ("spawnCrystal".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_dragon") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_dragon)");
                 return true;
@@ -555,7 +555,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             Location l = new Location(w,x,y,z);
 
             w.spawnEntity(l,EntityType.ENDER_CRYSTAL);
-        } else if ("stack".equalsIgnoreCase(command)) {
+        }*//* else if ("stack".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_stack") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_stack)");
                 return true;
@@ -593,7 +593,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 }
             }
             p.getInventory().setContents(items);
-        } else if ("fly".equalsIgnoreCase(command)) {
+        }*//* else if ("fly".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_fly") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_fly)");
                 return true;
@@ -607,7 +607,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 p.setAllowFlight(true);
                 p.sendMessage(ChatColor.BLUE + "Flying is now enabled");
             }
-        } else if ("seed".equalsIgnoreCase(command)) {
+        }*/ else if ("seed".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_seed") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_seed)");
                 return true;
@@ -617,14 +617,14 @@ public class ExtCommands extends JavaPlugin implements Listener {
             World w = p.getWorld();
             sender.sendMessage(ChatColor.BLUE + "Seed for " + w.getName() + ": " + w.getSeed());
 
-        } else if ("killzig".equalsIgnoreCase(command)) {
+        }/* else if ("killzig".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_killzig") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_killzig)");
                 return true;
             }
 
             sender.sendMessage(ChatColor.LIGHT_PURPLE + "Zigx89 has died at your hand!");
-        } else {
+        }*/ else {
             return false;
         }
 

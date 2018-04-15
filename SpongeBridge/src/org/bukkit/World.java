@@ -1,5 +1,6 @@
 package org.bukkit;
 
+import com.flowpowered.math.vector.Vector3i;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.EntityTypes;
@@ -33,11 +34,19 @@ public class World {
         return new Location(this.world.getSpawnLocation(),this.world);
     }
 
+    public void setSpawnLocation(int x, int y, int z) {
+        this.world.getProperties().setSpawnPosition(new Vector3i(x, y, z));
+    }
+
     public void dropItem(Location l, ItemStack is) {
         Extent extent = l.getSpongeLocation().getExtent();
         org.spongepowered.api.entity.Entity entity = extent
                 .createEntity(EntityTypes.EGG, l.getSpongeLocation().getPosition());
         entity.offer(Keys.REPRESENTED_ITEM, is.getStack().createSnapshot());
         extent.spawnEntity(entity);
+    }
+
+    public long getSeed() {
+        return this.world.getProperties().getSeed();
     }
 }

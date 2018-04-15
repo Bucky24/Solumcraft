@@ -42,4 +42,16 @@ public class Location {
     public org.spongepowered.api.world.Location getSpongeLocation() {
         return world.getSpongeLocation(this.x,this.y,this.z);
     }
+
+    public int getBlockX() {
+        return (int)this.getX();
+    }
+
+    public int getBlockY() {
+        return (int)this.getY();
+    }
+
+    public int getBlockZ() {
+        return (int)this.getZ();
+    }
 }

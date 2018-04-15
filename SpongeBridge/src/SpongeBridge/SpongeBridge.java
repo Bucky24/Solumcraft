@@ -12,17 +12,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.ChangeBlockEvent;
 import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.EventContext;
+import org.spongepowered.api.event.cause.EventContextKey;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
+import org.spongepowered.api.event.entity.CollideEntityEvent;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
+import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.entity.SpawnEntityEvent;
+import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
 import org.spongepowered.api.event.message.MessageChannelEvent;
@@ -155,6 +163,31 @@ public class SpongeBridge {
     public void playerInteract(InteractBlockEvent event) {
         PlayerInteractEvent newEvent = new PlayerInteractEvent(this, event);
         fireEvent(newEvent);
+    }
+
+    @Listener
+    public void playerInteractEntity(InteractEntityEvent.Secondary event) {
+        PlayerInteractEntityEvent newEvent = new PlayerInteractEntityEvent(this, event);
+        fireEvent(newEvent);
+    }
+
+    @Listener
+    public void onItemPickup(CollideEntityEvent event) {
+        List<Entity> entityItems = event.getEntities();
+        boolean itemFound = false;
+        boolean forOnlinePlayer = false;
+        for (Entity entity : entityItems) {
+            if (entity.getType().equals(EntityTypes.ITEM)) {
+                itemFound = true;
+            }
+        }
+
+        /*if (itemFound) {
+            for (Entity entity : entityItems) {
+                getLogger().info(entity.getType().getName());
+            }
+            //getLogger().info("item picked up");
+        }*/
     }
 
     ///////////////////////////////////////////////////////

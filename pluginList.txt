@@ -9,7 +9,10 @@ Home
 Teleport
 Chat
 Mail
-Creative
+Creative (not fully migrated)
+Coords
+Plot (not fully migrated)
+ExtCommands (with most of the commands disabled)
 
 AdminTools
 administration tools

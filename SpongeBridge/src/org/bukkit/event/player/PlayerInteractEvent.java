@@ -31,6 +31,8 @@ public class PlayerInteractEvent extends Event {
     public Action getAction() {
         if (event instanceof org.spongepowered.api.event.block.InteractBlockEvent.Primary) {
             return Action.LEFT_CLICK_BLOCK;
+        } else if (event instanceof org.spongepowered.api.event.block.InteractBlockEvent.Secondary) {
+            return Action.RIGHT_CLICK_BLOCK;
         }
 
         return null;

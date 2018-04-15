@@ -1,7 +1,7 @@
 name: Plot
 version: 4.8
 main: com.thepastimers.Plot.Plot
-softdepend: [Database,Permission,Coord,Money,Worlds,Logger]
+softdepend: [Database,Permission,Coord]
 commands:
     plot:
         description: plot commands

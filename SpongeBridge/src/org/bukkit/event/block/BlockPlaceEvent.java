@@ -30,6 +30,10 @@ public class BlockPlaceEvent extends Event {
         return null;
     }
 
+    public Block getBlock() {
+        return this.getBlockPlaced();
+    }
+
     public void setCancelled(boolean cancelled) {
         this.event.setCancelled(cancelled);
     }

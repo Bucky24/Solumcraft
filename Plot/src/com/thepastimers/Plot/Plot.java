@@ -3,34 +3,34 @@ package com.thepastimers.Plot;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
-import com.thepastimers.Logger.Logger;
-import com.thepastimers.Money.Money;
 import com.thepastimers.Permission.Permission;
-import com.thepastimers.ChestProtect.ChestProtect;
-import com.thepastimers.Worlds.Worlds;
-import org.bukkit.GameMode;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Text;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.ChatColor;
-import org.bukkit.potion.Potion;
 
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.List;
+
+//import com.thepastimers.Logger.Logger;
+//import com.thepastimers.Money.Money;
+//import com.thepastimers.ChestProtect.ChestProtect;
+//import com.thepastimers.Worlds.Worlds;
+//import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+//import org.bukkit.potion.Potion;
 
 
 /**
@@ -44,11 +44,11 @@ public class Plot extends JavaPlugin implements Listener {
     Database database;
     Permission permission;
     Coord coord;
-    Money money;
-    Worlds worlds;
-    Logger logger;
-    Map<Class,Map<JavaPlugin,Integer>> plotEnterListener;
-    Map<Class,Map<JavaPlugin,Integer>> plotLeaveListener;
+    //Money money;
+    //Worlds worlds;
+    //Logger logger;
+    //Map<Class,Map<JavaPlugin,Integer>> plotEnterListener;
+    //Map<Class,Map<JavaPlugin,Integer>> plotLeaveListener;
 
     @Override
     public void onEnable() {
@@ -82,7 +82,7 @@ public class Plot extends JavaPlugin implements Listener {
             getLogger().warning("Unable to load Money plugin. some functionality may not be available.");
         }*/
 
-        worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
+        /*worlds = (Worlds)getServer().getPluginManager().getPlugin("Worlds");
         if (worlds == null) {
             getLogger().warning("Unable to load Worlds plugin. Some functionality may not be available.");
         }
@@ -93,7 +93,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         plotEnterListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
-        plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
+        plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();*/
 
         getLogger().info("Table info: ");
         //getLogger().info(PlotData.getTableInfo());
@@ -271,6 +271,7 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     public boolean canModifyBlock(String player, Material material, PlotData pd) {
+       // getLogger().info("Material is " + material);
         if (material == null || player == null) {
             return false;
         }
@@ -281,13 +282,15 @@ public class Plot extends JavaPlugin implements Listener {
 
         int perm = getPlotPerms(pd,player);
 
+        //getLogger().info("perms are " + player + " " + perm);
+
         if (perm >= PlotPerms.RESIDENT) {
             return true;
         }
 
         if (perm == PlotPerms.WORKER) {
             return (material == Material.WHEAT || material == Material.PUMPKIN || material == Material.MELON_BLOCK
-                    || material == Material.SUGAR_CANE_BLOCK || material == Material.CARROT || material == Material.POTATO);
+                    /*|| material == Material.SUGAR_CANE_BLOCK*/ || material == Material.CARROT || material == Material.POTATO);
         }
 
         return false;
@@ -333,7 +336,7 @@ public class Plot extends JavaPlugin implements Listener {
         return pp.delete(database);
     }
 
-    public void registerPlotEnter(Class c, JavaPlugin plugin) {
+    /*public void registerPlotEnter(Class c, JavaPlugin plugin) {
         registerPlotEnter(c,plugin,0);
     }
 
@@ -354,19 +357,18 @@ public class Plot extends JavaPlugin implements Listener {
             plotLeaveListener = new HashMap<Class, Map<JavaPlugin,Integer>>();
         }
         plotLeaveListener.put(c,blah);
-    }
+    }*/
 
     @EventHandler(priority= EventPriority.LOWEST)
     public void chestInteract(PlayerInteractEvent event) {
-        ChestProtect protect = (ChestProtect)getServer().getPluginManager().getPlugin("ChestProtect");
-        if (protect != null) return;
+        //ChestProtect protect = (ChestProtect)getServer().getPluginManager().getPlugin("ChestProtect");
+        //if (protect != null) return;
         Player pl = event.getPlayer();
         Block bl = event.getClickedBlock();
         if (bl == null) return;
         PlotData pd = plotAt(bl.getLocation());
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            bl = event.getClickedBlock();
             pl = event.getPlayer();
             if (pd != null) {
                 if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
@@ -399,19 +401,19 @@ public class Plot extends JavaPlugin implements Listener {
 
     @EventHandler(priority= EventPriority.LOWEST)
     public void blockBreak(BlockBreakEvent event) {
-        if (logger != null) {
+        /*if (logger != null) {
             logger.logEvent("plot_BlockBreakEvent");
-        }
+        }*/
         Player p = event.getPlayer();
         Block b = event.getBlock();
 
         if (!canModifyBlock(p,b)) {
-            p.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
+            p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to break blocks here"));
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void paintingBreak(HangingBreakByEntityEvent event) {
         if (logger != null) {
             logger.logEvent("plot_HangingBreakByEntityEvent");
@@ -434,23 +436,23 @@ public class Plot extends JavaPlugin implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler(priority= EventPriority.LOWEST)
     public void blockPlace(BlockPlaceEvent event) {
-        if (logger != null) {
+        /*if (logger != null) {
             logger.logEvent("plot_BlockPlaceEvent");
-        }
+        }*/
         Player p = event.getPlayer();
         Block b = event.getBlock();
 
         if (!canModifyBlock(p,b)) {
-            p.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
+            p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to place blocks here"));
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void liquid(PlayerBucketEmptyEvent event) {
         if (logger != null) {
         logger.logEvent("plot_PlayerBucketEmptyEvent");
@@ -462,9 +464,9 @@ public class Plot extends JavaPlugin implements Listener {
             p.sendMessage(ChatColor.RED + "You do not have permissions to modify blocks here");
             event.setCancelled(true);
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void liquidMoved(BlockFromToEvent event) {
         if (logger != null) {
             logger.logEvent("plot_BlockFromToEvent");
@@ -488,7 +490,7 @@ public class Plot extends JavaPlugin implements Listener {
             event.setCancelled(true);
             return;
         }
-    }
+    }*/
 
     /*@EventHandler
     public void playerMove(PlayerMoveEvent event) {
@@ -498,7 +500,7 @@ public class Plot extends JavaPlugin implements Listener {
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }*/
 
-    private boolean handleMove(Location l, Location l2, Player p) {
+    /*private boolean handleMove(Location l, Location l2, Player p) {
         for (Class c : plotEnterListener.keySet()) {
             try {
                 Map<JavaPlugin,Integer> blah = plotEnterListener.get(c);
@@ -612,7 +614,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         return true;
-    }
+    }*/
 
     /*@EventHandler
     public void playerTeleport(PlayerTeleportEvent event) {
@@ -622,7 +624,7 @@ public class Plot extends JavaPlugin implements Listener {
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void damage(EntityDamageByEntityEvent event) {
         if (logger != null) {
             logger.logEvent("plot_EntityDamageByEntityEvent");
@@ -669,9 +671,9 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void death(PlayerDeathEvent event) {
         if (logger != null) {
             logger.logEvent("plot_PlayerDeathEvent");
@@ -698,9 +700,9 @@ public class Plot extends JavaPlugin implements Listener {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void normalDamage(EntityDamageEvent event) {
         if (logger != null) {
             logger.logEvent("plot_EntityDamageEvent");
@@ -722,9 +724,9 @@ public class Plot extends JavaPlugin implements Listener {
         if (!pd.isPve()) {
             event.setCancelled(true);
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void spawn(CreatureSpawnEvent event) {
         EntityType type = event.getEntityType();
         PlotData pd = plotAt(event.getEntity().getLocation());
@@ -741,9 +743,9 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void explode(EntityExplodeEvent event) {
         //getLogger().info("Explosion!");
         Location l = event.getLocation();
@@ -773,9 +775,9 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 
-    @EventHandler(priority= EventPriority.LOWEST)
+    /*@EventHandler(priority= EventPriority.LOWEST)
     public void fireSpread(BlockSpreadEvent event) {
         Location l = event.getBlock().getLocation();
 
@@ -785,7 +787,7 @@ public class Plot extends JavaPlugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
+    }*/
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -797,9 +799,9 @@ public class Plot extends JavaPlugin implements Listener {
             playerName = "CONSOLE";
         }
 
-        if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
+        /*if (worlds != null && worlds.getPlayerWorldType(playerName) == Worlds.VANILLA) {
             return false;
-        }
+        }*/
 
         String command = cmd.getName();
 
@@ -852,7 +854,7 @@ public class Plot extends JavaPlugin implements Listener {
                         return true;
                     }
 
-                    boolean override = false;
+                    /*boolean override = false;
 
                     if (args.length > 1) {
                         String flag = args[1];
@@ -862,7 +864,7 @@ public class Plot extends JavaPlugin implements Listener {
                                 sender.sendMessage(ChatColor.GREEN + "Override enabled");
                             }
                         }
-                    }
+                    }*/
 
                     List<CoordData> coords = coord.popCoords(playerName,2);
 
@@ -879,10 +881,10 @@ public class Plot extends JavaPlugin implements Listener {
                     int x2 = (int)c2.getX();
                     int z2 = (int)c2.getZ();
 
-                    if (!"economy".equalsIgnoreCase(p.getWorld().getName()) && !override && !subPlot) {
+                    /*if (!"economy".equalsIgnoreCase(p.getWorld().getName()) && !override && !subPlot) {
                         sender.sendMessage(ChatColor.RED + "Protected plots can only be created in the economy world");
                         return true;
-                    }
+                    }*/
 
                     if (x1 > x2) {
                         int tmp = x1;
@@ -896,13 +898,13 @@ public class Plot extends JavaPlugin implements Listener {
                         z2 = tmp;
                     }
 
-                    if (subPlot) {
+                    /*if (subPlot) {
                         if (plotAt(x1,z1,p.getWorld().getName(),false).getId() != parent.getId()
                                 || plotAt(x2,z2,p.getWorld().getName(),false).getId() != parent.getId()) {
                             sender.sendMessage("This subplot is not entirely within the parent plot.");
                             return true;
                         }
-                    }
+                    }*/
 
                     if (plotIntersect(x1,z1,x2,z2,p.getWorld().getName(),subPlot)) {
                         sender.sendMessage("There is already a plot intersecting (" + x1 + "," + z1 + ") and (" + x2 + "," + z2 + ")");
@@ -912,13 +914,13 @@ public class Plot extends JavaPlugin implements Listener {
                     int width = x2-x1;
                     int height = z2-z1;
 
-                    if ((width == 0 || height == 0)
+                    /*if ((width == 0 || height == 0)
                             || ((width < 100 || height < 100 || width > 100 || height > 100) && !override && !subPlot)) {
                         sender.sendMessage("This plot is " + width + "x" + height + ". It cannot be less then 100x100. It cannot be greater then 100x100");
                         return true;
-                    }
+                    }*/
 
-                    double cost = 0;
+                    /*double cost = 0;
 
                     int count = PlotData.getPlayerPlotCount(playerName);
 
@@ -935,20 +937,21 @@ public class Plot extends JavaPlugin implements Listener {
                             sender.sendMessage("You don't have enough money");
                             return true;
                         }
-                    }
+                    }*/
 
                     if (!subPlot) {
                         sender.sendMessage("Coords: " + x1 + "," + z1 + " to " + x2 + "," + z2);
-                        sender.sendMessage("You are purchasing a plot sized " + width + "x" + height + " and costing $" + cost);
+                        sender.sendMessage("You are creating a plot sized " + width + "x" + height);
+                        //sender.sendMessage("You are purchasing a plot sized " + width + "x" + height + " and costing $" + cost);
                     } else {
                         sender.sendMessage("Coords: " + x1 + "," + z1 + " to " + x2 + "," + z2);
-                        sender.sendMessage("You are creating a plot sized " + width + "x" + height);
+                        sender.sendMessage("You are creating a sub-plot sized " + width + "x" + height);
                     }
 
                     if (subCommand.equalsIgnoreCase("create")) {
                         sender.sendMessage("Attempting to create plot.");
 
-                        if (!override && !subPlot) {
+                        /*if (!override && !subPlot) {
                             if (!money.give(playerName,-cost)) {
                                 sender.sendMessage("Unable to deduct cost from your account.");
                                 return true;
@@ -956,7 +959,7 @@ public class Plot extends JavaPlugin implements Listener {
                                 sender.sendMessage("Deducted $" + cost + " from your account.");
                                 getLogger().info(playerName + " purchased plot for $" + cost);
                             }
-                        }
+                        }*/
 
                         PlotData pd = new PlotData();
                         pd.setX1(x1);
@@ -981,14 +984,14 @@ public class Plot extends JavaPlugin implements Listener {
                     }
                 } else if (subCommand.equalsIgnoreCase("release")) {
                     Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotrelease")) {
-                        sender.sendMessage("You don't have permissions for this command (plot_plotrelease)");
+                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plotcreate)");
                         return true;
                     }
 
                     if (args.length < 2) {
                         sender.sendMessage(ChatColor.RED + "Warning! The /" + command + " release command will REMOVE your plot!");
-                        sender.sendMessage(ChatColor.RED + "You will have to recreate it completely (and pay the cost again)");
+                        sender.sendMessage(ChatColor.RED + "You will have to recreate it completely");
                         sender.sendMessage(ChatColor.RED + "If you really want to remove it, use /" + command + " release yes");
                         return true;
                     }
@@ -1018,7 +1021,7 @@ public class Plot extends JavaPlugin implements Listener {
 
                     sender.sendMessage("Attempting to remove plot");
 
-                    for (Class c : plotLeaveListener.keySet()) {
+                    /*for (Class c : plotLeaveListener.keySet()) {
                         try {
                             Map<JavaPlugin,Integer> blah = plotEnterListener.get(c);
                             JavaPlugin plugin = (JavaPlugin)blah.keySet().toArray()[0];
@@ -1029,7 +1032,7 @@ public class Plot extends JavaPlugin implements Listener {
                         } catch (Exception e) {
                             getLogger().warning("Unable to call handlePlotLeave for " + c.getName());
                         }
-                    }
+                    }*/
 
                     if (!pd.delete(database)) {
                         sender.sendMessage("Unable to remove plot.");
@@ -1080,8 +1083,8 @@ public class Plot extends JavaPlugin implements Listener {
                     }
                 } else if (subCommand.equalsIgnoreCase("setperm")) {
                     Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotsetperm")) {
-                        sender.sendMessage("You don't have permissions for this command (plot_plotsetperm)");
+                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plot)");
                         return true;
                     }
 
@@ -1117,8 +1120,8 @@ public class Plot extends JavaPlugin implements Listener {
                     }
                 } else if (subCommand.equalsIgnoreCase("removeperm")) {
                     Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotsetperm")) {
-                        sender.sendMessage("You don't have permissions for this command (plot_plotsetperm)");
+                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                        sender.sendMessage("You don't have permissions for this command (plot_plot)");
                         return true;
                     }
 
@@ -1146,7 +1149,7 @@ public class Plot extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " removeperm <player>");
                     }
-                } else if ("flag".equalsIgnoreCase(subCommand)) {
+                }/* else if ("flag".equalsIgnoreCase(subCommand)) {
                     Player p = (Player)sender;
                     if (!permission.hasPermission(playerName,"plot_plotflag")) {
                         sender.sendMessage("You don't have permissions for this command (plot_plotflag)");
@@ -1214,7 +1217,7 @@ public class Plot extends JavaPlugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " flag <pvp|pve|chest_protect> <on|off>");
                     }
-                } else if ("name".equalsIgnoreCase(subCommand)) {
+                }*/ else if ("name".equalsIgnoreCase(subCommand)) {
 
                     Player p = (Player)sender;
                     if (!permission.hasPermission(playerName,"plot_plot")) {

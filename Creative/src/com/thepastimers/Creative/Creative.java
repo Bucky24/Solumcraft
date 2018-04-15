@@ -9,6 +9,7 @@ import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Text;
 import org.bukkit.block.Block;
 //import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
@@ -120,13 +121,13 @@ public class Creative extends JavaPlugin implements Listener {
                 event.getBlockPlaced().getType() == Material.MONSTER_EGGS ||
                 event.getBlockPlaced().getType() == Material.SOUL_SAND) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to place this block (" + allPerms + ")");
+                p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to place this block (" + allPerms + ")"));
                 event.setCancelled(true);
             }
         }
         if (event.getBlockPlaced().getType() == Material.TNT && p.getGameMode() == GameMode.CREATIVE) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to do this (" + allPerms + ")"));
                 event.setCancelled(true);
             }
         }
@@ -137,13 +138,13 @@ public class Creative extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
         if (event.getBlock().getType() == Material.BEDROCK) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to do this (" + allPerms + ")"));
                 event.setCancelled(true);
             }
         }
         if (event.getBlock().getType() == Material.TNT && p.getGameMode() == GameMode.CREATIVE) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                p.sendMessage(ChatColor.RED + "You do not have permission to do this (" + allPerms + ")");
+                p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to do this (" + allPerms + ")"));
                 event.setCancelled(true);
             }
         }
@@ -199,14 +200,14 @@ public class Creative extends JavaPlugin implements Listener {
                 || block.getType() == Material.HOPPER_MINECART || block.getType() == Material.DROPPER) {
             if (p.getGameMode() == GameMode.CREATIVE) {
                 if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                    p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
+                    p.sendMessage(Text.make().color(ChatColor.RED).text("You cannot interact with that while in creative mode (" + allPerms + ")"));
                     event.setCancelled(true);
                 }
             }
         }
     }
 
-    /*@EventHandler
+    @EventHandler
     public void playerInteract(PlayerInteractEntityEvent event) {
         Entity e = event.getRightClicked();
         Player p = event.getPlayer();
@@ -215,14 +216,14 @@ public class Creative extends JavaPlugin implements Listener {
         if (e.getType() == EntityType.HORSE) {
             if (p.getGameMode() == GameMode.CREATIVE) {
                 if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                    p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
+                    p.sendMessage(Text.make().color(ChatColor.RED).text("You cannot interact with that while in creative mode (" + allPerms + ")"));
                     event.setCancelled(true);
                 }
             }
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void playerPickup(PlayerPickupItemEvent event) {
         Player p = event.getPlayer();
         if (p.getGameMode() == GameMode.CREATIVE) {
@@ -275,7 +276,7 @@ public class Creative extends JavaPlugin implements Listener {
 
                 if ("1".equalsIgnoreCase(mode) && p.getGameMode() == GameMode.SURVIVAL) {
                     if (permission == null || !permission.hasPermission(playerName,commandPerm) || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage("You do not have permissions to use this command (" + commandPerm + ")");
+                        sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to use this command (" + commandPerm + ")"));
                         return true;
                     }
 
@@ -346,22 +347,6 @@ public class Creative extends JavaPlugin implements Listener {
                         inv.setArmorContents(itemList);*/
                     }
                     p.setGameMode(GameMode.SURVIVAL);
-                } else {
-                    if (permission == null || !permission.hasPermission(playerName,"creative_other")) {
-                        return true;
-                    }
-                    Player other = getServer().getPlayer(mode);
-                    if (other == null) {
-                        p.sendMessage(ChatColor.GREEN + "Player does not exist");
-                    } else {
-                        if (other.getGameMode() == GameMode.CREATIVE) {
-                            p.sendMessage(ChatColor.GREEN + mode + " is in creative mode");
-                        } else if (other.getGameMode() == GameMode.SURVIVAL) {
-                            p.sendMessage(ChatColor.GREEN + mode + " is in survival mode");
-                        } else {
-                            p.sendMessage(ChatColor.GREEN + mode + " is in an unknown mode");
-                        }
-                    }
                 }
             } else {
                 sender.sendMessage("/gm <0|1>");
@@ -379,20 +364,20 @@ public class Creative extends JavaPlugin implements Listener {
                     p = getServer().getOfflinePlayer(player).getPlayer();
                 }
                 if (p == null) {
-                    sender.sendMessage(ChatColor.RED + player + " has never played on this server");
+                    sender.sendMessage(Text.make().color(ChatColor.RED).text(player + " has never played on this server"));
                 } else {
                     if (p.getGameMode() == GameMode.ADVENTURE) {
-                        sender.sendMessage(ChatColor.BLUE + player + " is in adventure mode");
+                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in adventure mode"));
                     } else if (p.getGameMode() == GameMode.SURVIVAL) {
-                        sender.sendMessage(ChatColor.BLUE + player + " is in survival mode");
+                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in survival mode"));
                     } else if (p.getGameMode() == GameMode.CREATIVE) {
-                        sender.sendMessage(ChatColor.BLUE + player + " is in creative mode");
+                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in creative mode"));
                     } else {
-                        sender.sendMessage(ChatColor.BLUE + player + " is in an unknown mode");
+                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in an unknown mode"));
                     }
                 }
             } else {
-                sender.sendMessage(ChatColor.RED + "/gmcheck <player>");
+                sender.sendMessage("/gmcheck <player>");
             }
         } else {
             return false;
