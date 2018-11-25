@@ -2,6 +2,7 @@ package org.bukkit.block;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.world.extent.Extent;
@@ -23,6 +24,25 @@ public class Block {
         materialOverrides = new HashMap<String, ItemType>();
         materialOverrides.put("minecraft:standing_sign", ItemTypes.SIGN);
         materialOverrides.put("minecraft:wall_sign", ItemTypes.SIGN);
+        materialOverrides.put("minecraft:flowing_water", ItemTypes.WATER_BUCKET);
+        materialOverrides.put("minecraft:flowing_lava", ItemTypes.LAVA_BUCKET);
+        materialOverrides.put("minecraft:bed", ItemTypes.BED);
+        materialOverrides.put("minecraft:wooden_door", ItemTypes.WOODEN_DOOR);
+        materialOverrides.put("minecraft:iron_door", ItemTypes.IRON_DOOR);
+        materialOverrides.put("minecraft:spruce_door", ItemTypes.SPRUCE_DOOR);
+        materialOverrides.put("minecraft:birch_door", ItemTypes.BIRCH_DOOR);
+        materialOverrides.put("minecraft:jungle_door", ItemTypes.JUNGLE_DOOR);
+        materialOverrides.put("minecraft:acacia_door", ItemTypes.ACACIA_DOOR);
+        materialOverrides.put("minecraft:dark_oak_door", ItemTypes.DARK_OAK_DOOR);
+        materialOverrides.put("minecraft:wheat", ItemTypes.WHEAT);
+        materialOverrides.put("minecraft:flower_pot", ItemTypes.FLOWER_POT);
+        materialOverrides.put("minecraft:carrots", ItemTypes.CARROT);
+        materialOverrides.put("minecraft:potatoes", ItemTypes.POTATO);
+        materialOverrides.put("minecraft:beetroots", ItemTypes.BEETROOT);
+        materialOverrides.put("minecraft:reeds", ItemTypes.REEDS);
+        // No this does't make any sense but I don't want to make it a pumpkin since it's not
+        materialOverrides.put("minecraft:pumpkin_stem", ItemTypes.PUMPKIN_SEEDS);
+        materialOverrides.put("minecraft:fire", ItemTypes.FLINT_AND_STEEL);
     }
 
     public Block(org.spongepowered.api.block.BlockSnapshot snapshot) {

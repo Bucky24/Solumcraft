@@ -8,7 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" scope="PROVIDED" />
-    <orderEntry type="module" module-name="SpongeBridge" />
-    <orderEntry type="library" name="spongeforge-1.10.2-2002-5.0.0-BETA-1550" level="project" />
+    <orderEntry type="module" module-name="SpongeBridge" scope="PROVIDED" />
   </component>
 </module>

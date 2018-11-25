@@ -257,22 +257,26 @@ public class Plot extends JavaPlugin implements Listener {
     }
 
     public boolean canModifyBlock(Player player, Block block) {
-        if (block == null || player == null) {
+        if (player == null) {
             return false;
         }
         return canModifyBlock(player.getName(),block);
     }
 
     public boolean canModifyBlock(String player, Block block) {
-        if (block == null || player == null) {
+        if (player == null) {
             return false;
         }
-        return canModifyBlock(player,block.getType(),plotAt(block.getLocation()));
+        Material mat = null;
+        if (block != null) {
+            mat = block.getType();
+        }
+        return canModifyBlock(player, mat,plotAt(block.getLocation()));
     }
 
     public boolean canModifyBlock(String player, Material material, PlotData pd) {
        // getLogger().info("Material is " + material);
-        if (material == null || player == null) {
+        if (player == null) {
             return false;
         }
 
@@ -288,7 +292,7 @@ public class Plot extends JavaPlugin implements Listener {
             return true;
         }
 
-        if (perm == PlotPerms.WORKER) {
+        if (perm == PlotPerms.WORKER && material != null) {
             return (material == Material.WHEAT || material == Material.PUMPKIN || material == Material.MELON_BLOCK
                     /*|| material == Material.SUGAR_CANE_BLOCK*/ || material == Material.CARROT || material == Material.POTATO);
         }
@@ -407,7 +411,7 @@ public class Plot extends JavaPlugin implements Listener {
         Player p = event.getPlayer();
         Block b = event.getBlock();
 
-        if (!canModifyBlock(p,b)) {
+        if (p != null && !canModifyBlock(p,b)) {
             p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to break blocks here"));
             event.setCancelled(true);
         }

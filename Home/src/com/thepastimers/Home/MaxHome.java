@@ -106,7 +106,7 @@ public class MaxHome extends Table {
 
             query.append("name = '" + d.makeSafe(name) + "'" + ", ");
             query.append("max = " + max + ", ");
-            query.append("`group` = " + group + " ");
+            query.append("group = " + group + " ");
 
             query.append("WHERE id = " + id);
             return d.query(query.toString());
@@ -128,7 +128,7 @@ public class MaxHome extends Table {
 
         definition.append("name varchar(50) NOT NULL,");
         definition.append("max int(11) NOT NULL,");
-        definition.append("group int(1) NOT NULL,");
+        definition.append("`group` int(1) NOT NULL,");
 
         definition.append("PRIMARY KEY (id)");
         definition.append(");");

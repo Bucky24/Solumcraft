@@ -52,6 +52,16 @@ public class Logger extends java.util.logging.Logger {
         }
     }
 
+    public void logError(String message, Throwable e) {
+        this.logError(message + e.getMessage(),e.getStackTrace());
+        Throwable cause = e.getCause();
+        if (cause != null) {
+            writeFile("Caused by:");
+            System.out.println("Caused by:");
+            logError(cause);
+        }
+    }
+
     public void logError(String message, StackTraceElement[] elements) {
         writeFile("Exception: " + message);
         System.out.println("Exception: " + message);

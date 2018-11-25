@@ -10,6 +10,5 @@
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="ItemName" />
     <orderEntry type="module" module-name="SpongeBridge" />
-    <orderEntry type="library" name="spongeforge-1.10.2-2002-5.0.0-BETA-1550" level="project" />
   </component>
 </module>

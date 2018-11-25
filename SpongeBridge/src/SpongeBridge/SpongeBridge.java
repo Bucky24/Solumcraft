@@ -43,6 +43,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by solum on 4/29/2015.
@@ -296,7 +297,7 @@ public class SpongeBridge {
                     m.invoke(plugin,newEvent);
                 }
             } catch (Exception e) {
-                logger.logError(e);
+                logger.logError("Attempting to fire event " + newEvent.getClass().getName(), e);
             }
         }
     }
@@ -422,7 +423,7 @@ public class SpongeBridge {
                         PluginClassLoader loader = new PluginClassLoader(this, entry, getClass().getClassLoader(), description);
                         pluginMap.put(description.name,loader.plugin);
                         pluginList.add(loader.plugin);
-                        loaders.put(description.name, loader);
+                        loaders.put(description.name, loader);;
                     } catch (Exception e) {
                         logger.logError(e);
                     }
@@ -442,6 +443,7 @@ public class SpongeBridge {
             int pluginIndex = i;
             boolean skipLoading = false;
             JavaPlugin plugin = (JavaPlugin)pluginList.get(i);
+            getLogger().info("Loading " + plugin.description.name);
             plugin.server = this;
             List<String> deps = new ArrayList<String>();
             deps.addAll(plugin.description.softDepends);
@@ -453,7 +455,7 @@ public class SpongeBridge {
                     int foundIndex = -1;
                     for (int j=pluginIndex;j<pluginList.size();j++) {
                         JavaPlugin p2 = (JavaPlugin)pluginList.get(j);
-                        logger.info(p2.description.name);
+                        logger.info("Will be loading" + p2.description.name);
                         if (p2.description.name.equals(dep)) {
                             found = true;
                             foundIndex = j;

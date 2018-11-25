@@ -152,8 +152,8 @@ public class Creative extends JavaPlugin implements Listener {
 
     @EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
-                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
+        if (/*event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
+                || */event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
             Player p = event.getPlayer();
