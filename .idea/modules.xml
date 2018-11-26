@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/Alias/Alias.iml" filepath="$PROJECT_DIR$/Alias/Alias.iml" />
       <module fileurl="file://$PROJECT_DIR$/AnimalEgg/AnimalEgg.iml" filepath="$PROJECT_DIR$/AnimalEgg/AnimalEgg.iml" />
       <module fileurl="file://$PROJECT_DIR$/Announce/Announce.iml" filepath="$PROJECT_DIR$/Announce/Announce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BukkitBridge/BukkitBridge.iml" filepath="$PROJECT_DIR$/BukkitBridge/BukkitBridge.iml" />
       <module fileurl="file://$PROJECT_DIR$/CastleWars/CastleWars.iml" filepath="$PROJECT_DIR$/CastleWars/CastleWars.iml" />
       <module fileurl="file://$PROJECT_DIR$/Chat/Chat.iml" filepath="$PROJECT_DIR$/Chat/Chat.iml" />
       <module fileurl="file://$PROJECT_DIR$/ChestProtect/ChestProtect.iml" filepath="$PROJECT_DIR$/ChestProtect/ChestProtect.iml" />

@@ -1,9 +1,9 @@
 package com.thepastimers.Database;
 
+import BukkitBridge.Plugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 @SuppressWarnings("unchecked")
 
-public class Database extends JavaPlugin {
+public class Database extends Plugin {
     boolean enabled = true;
     String url;
     String username;
@@ -54,6 +54,7 @@ public class Database extends JavaPlugin {
         }
 
         saveDefaultConfig();
+        getLogger().info(getConfig().saveToString());
         password = getConfig().getString("password");
         username = getConfig().getString("username");
         String host = getConfig().getString("server");
@@ -69,11 +70,11 @@ public class Database extends JavaPlugin {
             killConnection(connection);
         } catch (ExceptionInInitializerError e2) {
             getLogger().warning("Unable to connect to database!");
-            getLogger().logError(e2);
+            logger().logError(e2);
             enabled = false;
         } catch (Exception e) {
             getLogger().warning("Unable to connect to database!");
-            getLogger().logError(e);
+            logger().logError(e);
             enabled = false;
         }
 

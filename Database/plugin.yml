@@ -1,6 +1,7 @@
 name: Database
 version: 3.0
 main: com.thepastimers.Database.Database
+depend: [BukkitBridge]
 commands:
     db:
         description: none

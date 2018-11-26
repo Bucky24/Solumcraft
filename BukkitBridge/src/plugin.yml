@@ -1,0 +1,4 @@
+name: BukkitBridge
+version: 0.1
+main: BukkitBridge.BukkitBridge
+depend: []

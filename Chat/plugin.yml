@@ -1,7 +1,7 @@
 name: Chat
 version: 2.1
 main: com.thepastimers.Chat.Chat
-depends: [Database]
+depend: [BukkitBridge, Database]
 commands:
     codes:
         description: lists allowed chat codes

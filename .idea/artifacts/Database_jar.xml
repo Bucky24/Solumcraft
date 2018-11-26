@@ -5,6 +5,7 @@
       <element id="file-copy" path="$PROJECT_DIR$/Database/plugin.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/Database/config.yml" />
       <element id="module-output" name="Database" />
+      <element id="library" level="project" name="mysql-connector-java-5.1.7-bin" />
     </root>
   </artifact>
 </component>

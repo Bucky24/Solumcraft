@@ -129,11 +129,11 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
         if (!event.isCancelled()) {
             ItemStack is = p.getItemInHand();
-            if (is.getType() == Material.WOOD_AXE || is.getType() == Material.WOOD_HOE || is.getType() == Material.WOOD_PICKAXE || is.getType() == Material.WOOD_SPADE ||
-                is.getType() == Material.STONE_AXE || is.getType() == Material.STONE_HOE || is.getType() == Material.STONE_PICKAXE || is.getType() == Material.STONE_SPADE ||
-                is.getType() == Material.IRON_AXE || is.getType() == Material.IRON_HOE || is.getType() == Material.IRON_PICKAXE || is.getType() == Material.IRON_SPADE ||
-                is.getType() == Material.GOLD_AXE || is.getType() == Material.GOLD_HOE || is.getType() == Material.GOLD_PICKAXE || is.getType() == Material.GOLD_SPADE ||
-                is.getType() == Material.DIAMOND_AXE || is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_PICKAXE || is.getType() == Material.DIAMOND_SPADE) {
+            if (is.getType() == Material.WOODEN_AXE || is.getType() == Material.WOODEN_HOE || is.getType() == Material.WOODEN_PICKAXE || is.getType() == Material.WOODEN_SHOVEL ||
+                is.getType() == Material.STONE_AXE || is.getType() == Material.STONE_HOE || is.getType() == Material.STONE_PICKAXE || is.getType() == Material.STONE_SHOVEL ||
+                is.getType() == Material.IRON_AXE || is.getType() == Material.IRON_HOE || is.getType() == Material.IRON_PICKAXE || is.getType() == Material.IRON_SHOVEL ||
+                is.getType() == Material.GOLDEN_AXE || is.getType() == Material.GOLDEN_HOE || is.getType() == Material.GOLDEN_PICKAXE || is.getType() == Material.GOLDEN_SHOVEL ||
+                is.getType() == Material.DIAMOND_AXE || is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_PICKAXE || is.getType() == Material.DIAMOND_SHOVEL) {
                 short durab = is.getDurability();
                 durab ++;
                 short max = is.getType().getMaxDurability();

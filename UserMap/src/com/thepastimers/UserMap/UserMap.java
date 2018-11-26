@@ -33,7 +33,7 @@ public class UserMap extends JavaPlugin implements Listener {
         UserMapping.init(database);
         getLogger().info("Table info: ");
         getLogger().info(UserMapping.getTableInfo());
-        UserMapping.refreshCache(database,getLogger());
+        UserMapping.refreshCache(database, getLogger());
 
         // now map every user that's currently on the server
 

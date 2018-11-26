@@ -2,7 +2,7 @@ package com.thepastimers.Chat;
 
 import com.thepastimers.Database.Database;
 import com.thepastimers.Database.Table;
-import org.bukkit.Text;
+import BukkitBridge.Text;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

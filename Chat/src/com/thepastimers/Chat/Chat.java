@@ -1,28 +1,23 @@
 package com.thepastimers.Chat;
 
+import BukkitBridge.Plugin;
+import BukkitBridge.Text;
+import BukkitBridge.TextStyle;
 import com.thepastimers.Database.Database;
-//import net.minecraft.server.v1_7_R3.ChatSerializer;
-//import net.minecraft.server.v1_7_R3.IChatBaseComponent;
-//import net.minecraft.server.v1_7_R3.PacketPlayOutChat;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-//import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
-import org.bukkit.entity.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -32,7 +27,7 @@ import java.util.*;
  * Time: 9:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Chat extends JavaPlugin implements Listener {
+public class Chat extends Plugin implements Listener {
     Database database;
 
     Map<Integer,Map<Class,JavaPlugin>> listeners;
@@ -162,7 +157,7 @@ public class Chat extends JavaPlugin implements Listener {
         data.setPlayerString(Text.make().text("<")
                 .text(player)
                 .text(">")
-                .style(ChatStyle.RESET)
+                .style(TextStyle.RESET)
         );
         data.setMessage(message);
         Date date = new Date();
@@ -201,7 +196,7 @@ public class Chat extends JavaPlugin implements Listener {
         String minuteString = minute >= 10 ? "" + minute : "0" + minute;
         Text mainMessage = Text.make().text("(" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + minuteString + ") ")
                 .compound(data.getPlayerString())
-                .style(ChatStyle.RESET)
+                .style(TextStyle.RESET)
                 .text(" ")
                 .text(data.getMessage());
         String vanillaMessage = "";
@@ -214,9 +209,9 @@ public class Chat extends JavaPlugin implements Listener {
         vanillaMessage = "<" + data.getPlayer() + "> " + originalMessage;
         //getLogger().info(vanillaMessage);
 
-        List<Player> list = getServer().getOnlinePlayers();
+        List<BukkitBridge.Player> list = server().getOnlinePlayers();
 
-        for (Player p : list) {
+        for (BukkitBridge.Player p : list) {
             p.sendMessage(mainMessage);
         }
         //getLogger().info(mainMessage);

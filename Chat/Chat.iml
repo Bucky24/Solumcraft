@@ -8,7 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Database" />
-    <orderEntry type="module" module-name="SpongeBridge" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -18,5 +17,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="craftbukkit-1.13.1" level="project" />
+    <orderEntry type="module" module-name="BukkitBridge" />
   </component>
 </module>

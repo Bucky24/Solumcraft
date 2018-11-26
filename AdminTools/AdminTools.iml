@@ -12,7 +12,6 @@
     <orderEntry type="module" module-name="Logger" />
     <orderEntry type="module" module-name="Coord" />
     <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="library" name="craftbukkit-1.7.9-R0.2" level="project" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="library" name="guava-18.0" level="project" />
     <orderEntry type="library" name="spongeforge-1.10.2-2002-5.0.0-BETA-1550" level="project" />
