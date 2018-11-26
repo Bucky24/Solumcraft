@@ -1,5 +1,6 @@
 package com.thepastimers.Home;
 
+import BukkitBridge.Text;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 import com.thepastimers.Rank.Rank;
@@ -8,7 +9,6 @@ import com.thepastimers.UserMap.UserMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 //import org.bukkit.Material;
-import org.bukkit.Text;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -362,6 +362,8 @@ public class Home extends JavaPlugin implements Listener {
             sender.sendMessage(ChatColor.RED + "Could not get a proper UUID for you, aborting command.");
         }
 
+        BukkitBridge.Sender mySender = BukkitBridge.Sender.fromSender(sender);
+
         String command = cmd.getName();
 
         if (command.equalsIgnoreCase("sethome")) {
@@ -397,7 +399,7 @@ public class Home extends JavaPlugin implements Listener {
             hd.setWorld(world);
 
             if (hd != null && hd.save(database)) {
-                sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Home set. You can set " + (getMaxHomes(uuid)-getHomeCount(uuid))
+                mySender.sendMessage(Text.make().color(ChatColor.GREEN).text("Home set. You can set " + (getMaxHomes(uuid)-getHomeCount(uuid))
                         + " more home/s"));
             } else {
                 sender.sendMessage(ChatColor.RED + "Unable to set home");
@@ -444,12 +446,12 @@ public class Home extends JavaPlugin implements Listener {
                 p.teleport(l);
                 lastHome.put(hd,new Date());
                 if (!"".equalsIgnoreCase(hd.getName())) {
-                    sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to " + hd.getName()));
+                    mySender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to " + hd.getName()));
                 } else {
-                    sender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to default home"));
+                    mySender.sendMessage(Text.make().color(ChatColor.GREEN).text("Teleporting you to default home"));
                 }
             } catch (Exception e) {
-                sender.sendMessage(Text.make().color(ChatColor.RED).text("Unable to teleport you: " + e.getMessage()));
+                mySender.sendMessage(Text.make().color(ChatColor.RED).text("Unable to teleport you: " + e.getMessage()));
             }
         } else if (command.equalsIgnoreCase("forcehome")) {
             if (permission == null || !permission.hasPermission(playerName,"home_home") || playerName.equalsIgnoreCase("CONSOLE")) {

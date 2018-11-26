@@ -1,13 +1,15 @@
 package com.thepastimers.Plot;
 
+import BukkitBridge.Plugin;
+import BukkitBridge.Text;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Text;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,7 +23,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ import java.util.List;
  * Time: 7:43 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Plot extends JavaPlugin implements Listener {
+public class Plot extends Plugin implements Listener {
     Database database;
     Permission permission;
     Coord coord;
@@ -60,8 +61,8 @@ public class Plot extends JavaPlugin implements Listener {
 
         if (database == null) {
             getLogger().warning("Warning! Unable to load Database module! Critical failure!");
-            getServer().broadcastMessage(Text.make().text("Warning, Plot plugin was unable to connect to Database.").color(ChatColor.RED));
-            getServer().broadcastMessage(Text.make().text("To prevent griefing of protected plots, server is entering lockdown.").color(ChatColor.RED));
+            server().broadcastMessage(Text.make().text("Warning, Plot plugin was unable to connect to Database.").color(ChatColor.RED));
+            server().broadcastMessage(Text.make().text("To prevent griefing of protected plots, server is entering lockdown.").color(ChatColor.RED));
         } else {
             PlotData.createTables(database,getLogger());
             PlotPerms.createTables(database,getLogger());
@@ -293,7 +294,7 @@ public class Plot extends JavaPlugin implements Listener {
         }
 
         if (perm == PlotPerms.WORKER && material != null) {
-            return (material == Material.WHEAT || material == Material.PUMPKIN || material == Material.MELON_BLOCK
+            return (material == Material.WHEAT || material == Material.PUMPKIN || material == Material.MELON
                     /*|| material == Material.SUGAR_CANE_BLOCK*/ || material == Material.CARROT || material == Material.POTATO);
         }
 
@@ -371,6 +372,12 @@ public class Plot extends JavaPlugin implements Listener {
         Block bl = event.getClickedBlock();
         if (bl == null) return;
         PlotData pd = plotAt(bl.getLocation());
+        // allowed things to interact with
+        if (bl.getType() == Material.DARK_OAK_DOOR || bl.getType() == Material.ACACIA_DOOR
+            || bl.getType() == Material.BIRCH_DOOR || bl.getType() == Material.IRON_DOOR || bl.getType() == Material.JUNGLE_DOOR
+            || bl.getType() == Material.OAK_DOOR || bl.getType() == Material.SPRUCE_DOOR) {
+            return;
+        }
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             pl = event.getPlayer();
@@ -378,7 +385,7 @@ public class Plot extends JavaPlugin implements Listener {
                 if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
                     PlotPerms pp = getPlotPermobject(pd,pl.getName());
                     if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
-                        pl.sendMessage(ChatColor.RED + "You do not have permissions interact with this");
+                        pl.sendMessage(ChatColor.RED + "You do not have permissions to interact with this");
                         event.setCancelled(true);
                     }
                 }
@@ -396,7 +403,7 @@ public class Plot extends JavaPlugin implements Listener {
             if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
                 PlotPerms pp = getPlotPermobject(pd,pl.getName());
                 if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
-                    pl.sendMessage(ChatColor.RED + "You do not have permissions interact with this");
+                    pl.sendMessage(ChatColor.RED + "You do not have permissions to interact with this");
                     event.setCancelled(true);
                 }
             }
@@ -408,10 +415,10 @@ public class Plot extends JavaPlugin implements Listener {
         /*if (logger != null) {
             logger.logEvent("plot_BlockBreakEvent");
         }*/
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
         Block b = event.getBlock();
 
-        if (p != null && !canModifyBlock(p,b)) {
+        if (p != null && !canModifyBlock(p.getPlayer(),b)) {
             p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to break blocks here"));
             event.setCancelled(true);
         }
@@ -447,10 +454,10 @@ public class Plot extends JavaPlugin implements Listener {
         /*if (logger != null) {
             logger.logEvent("plot_BlockPlaceEvent");
         }*/
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
         Block b = event.getBlock();
 
-        if (!canModifyBlock(p,b)) {
+        if (!canModifyBlock(p.getPlayer(),b)) {
             p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to place blocks here"));
             event.setCancelled(true);
         }

@@ -7,6 +7,14 @@ public class Player {
         this.player = player;
     }
 
+    public static Player fromPlayer(org.bukkit.entity.Player player) {
+        return new Player(player);
+    }
+
+    public org.bukkit.entity.Player getPlayer() {
+        return this.player;
+    }
+
     public void sendMessage(Text text) {
         this.player.sendMessage(text.getPlainText());
     }

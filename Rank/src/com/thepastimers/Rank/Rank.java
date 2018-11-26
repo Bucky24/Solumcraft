@@ -93,6 +93,7 @@ public class Rank extends Plugin implements Listener {
         if (rank != null) {
             rankString = rank.getFormat() + " ";
         }
+        //getLogger().info(rank + " " + rankString);
 
         String title = "";
         PlayerTitle playerTitle = getTitleObject(playerUuid);

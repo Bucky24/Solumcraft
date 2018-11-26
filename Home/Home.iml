@@ -11,6 +11,7 @@
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="module" module-name="UserMap" />
-    <orderEntry type="module" module-name="SpongeBridge" />
+    <orderEntry type="library" name="craftbukkit-1.13.1" level="project" />
+    <orderEntry type="module" module-name="BukkitBridge" />
   </component>
 </module>
