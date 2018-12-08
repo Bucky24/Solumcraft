@@ -15,6 +15,14 @@ public class Player {
         return this.player;
     }
 
+    public org.bukkit.GameMode getGameMode() {
+        return this.player.getGameMode();
+    }
+
+    public String getName() {
+        return this.player.getName();
+    }
+
     public void sendMessage(Text text) {
         this.player.sendMessage(text.getPlainText());
     }

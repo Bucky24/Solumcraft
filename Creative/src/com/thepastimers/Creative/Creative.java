@@ -1,5 +1,7 @@
 package com.thepastimers.Creative;
 
+import BukkitBridge.Plugin;
+import BukkitBridge.Text;
 import com.thepastimers.Database.Database;
 import com.thepastimers.Permission.Permission;
 //import com.thepastimers.Plot.Plot;
@@ -9,7 +11,6 @@ import com.thepastimers.Permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.Text;
 import org.bukkit.block.Block;
 //import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
@@ -40,7 +41,7 @@ import java.util.Map;
  * Time: 8:37 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Creative extends JavaPlugin implements Listener {
+public class Creative extends Plugin implements Listener {
     Database database;
     Permission permission;
     //Plot plot;
@@ -116,9 +117,8 @@ public class Creative extends JavaPlugin implements Listener {
 
     @EventHandler
     public void placeBlock(BlockPlaceEvent event) {
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
         if (event.getBlockPlaced().getType() == Material.BEDROCK ||
-                event.getBlockPlaced().getType() == Material.MONSTER_EGGS ||
                 event.getBlockPlaced().getType() == Material.SOUL_SAND) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to place this block (" + allPerms + ")"));
@@ -135,7 +135,7 @@ public class Creative extends JavaPlugin implements Listener {
 
     @EventHandler
     public void breakBlock(BlockBreakEvent event) {
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
         if (event.getBlock().getType() == Material.BEDROCK) {
             if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                 p.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permission to do this (" + allPerms + ")"));
@@ -152,8 +152,8 @@ public class Creative extends JavaPlugin implements Listener {
 
     @EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
-        if (/*event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
-                || */event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
+        /*if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
+                || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
             Player p = event.getPlayer();
@@ -165,7 +165,7 @@ public class Creative extends JavaPlugin implements Listener {
                     event.setCancelled(true);
                 }
             }
-        }
+        }*/
     }
 
     /*@EventHandler
@@ -186,7 +186,7 @@ public class Creative extends JavaPlugin implements Listener {
     @EventHandler
     public void playerOpen(PlayerInteractEvent event) {
         Block block = event.getClickedBlock();
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
 
         if (block == null) return;
 
@@ -194,7 +194,7 @@ public class Creative extends JavaPlugin implements Listener {
             return;
         }
 
-        if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BURNING_FURNACE
+        if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE
                 || block.getType() == Material.ENDER_CHEST || block.getType() == Material.TRAPPED_CHEST
                 || block.getType() == Material.DISPENSER || block.getType() == Material.HOPPER
                 || block.getType() == Material.HOPPER_MINECART || block.getType() == Material.DROPPER) {
@@ -210,7 +210,7 @@ public class Creative extends JavaPlugin implements Listener {
     @EventHandler
     public void playerInteract(PlayerInteractEntityEvent event) {
         Entity e = event.getRightClicked();
-        Player p = event.getPlayer();
+        BukkitBridge.Player p = BukkitBridge.Player.fromPlayer(event.getPlayer());
 
         if (e == null) return;
         if (e.getType() == EntityType.HORSE) {
@@ -260,6 +260,7 @@ public class Creative extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";
+        BukkitBridge.Sender bridgeSender = BukkitBridge.Sender.fromSender(sender);
 
         if (sender instanceof Player) {
             playerName = ((Player)sender).getName();
@@ -276,7 +277,7 @@ public class Creative extends JavaPlugin implements Listener {
 
                 if ("1".equalsIgnoreCase(mode) && p.getGameMode() == GameMode.SURVIVAL) {
                     if (permission == null || !permission.hasPermission(playerName,commandPerm) || playerName.equalsIgnoreCase("CONSOLE")) {
-                        sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to use this command (" + commandPerm + ")"));
+                        bridgeSender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions to use this command (" + commandPerm + ")"));
                         return true;
                     }
 
@@ -364,16 +365,16 @@ public class Creative extends JavaPlugin implements Listener {
                     p = getServer().getOfflinePlayer(player).getPlayer();
                 }
                 if (p == null) {
-                    sender.sendMessage(Text.make().color(ChatColor.RED).text(player + " has never played on this server"));
+                    bridgeSender.sendMessage(Text.make().color(ChatColor.RED).text(player + " has never played on this server"));
                 } else {
                     if (p.getGameMode() == GameMode.ADVENTURE) {
-                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in adventure mode"));
+                        bridgeSender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in adventure mode"));
                     } else if (p.getGameMode() == GameMode.SURVIVAL) {
-                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in survival mode"));
+                        bridgeSender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in survival mode"));
                     } else if (p.getGameMode() == GameMode.CREATIVE) {
-                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in creative mode"));
+                        bridgeSender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in creative mode"));
                     } else {
-                        sender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in an unknown mode"));
+                        bridgeSender.sendMessage(Text.make().color(ChatColor.BLUE).text(player + " is in an unknown mode"));
                     }
                 }
             } else {
