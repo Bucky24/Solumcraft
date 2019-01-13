@@ -237,7 +237,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
             p.teleport(w.getSpawnLocation());
 
-            sender.sendMessage("Teleporting you to spawn.");
+            sender.sendMessage(ChatColor.BLUE + "Teleporting you to spawn.");
         } else if (command.equalsIgnoreCase("tpe")) {
             if (permission == null || !permission.hasPermission(playerName,"command_tpe")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_tpe)");
@@ -266,7 +266,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
 
                 Player p = getServer().getPlayer(playerName);
                 if (p == null) {
-                    sender.sendMessage("This player does not exist");
+                    sender.sendMessage(ChatColor.RED + "This player does not exist");
                     return true;
                 }
 
@@ -288,7 +288,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             Location l = p.getLocation();
             p.getWorld().setSpawnLocation(l.getBlockX(),l.getBlockY(),l.getBlockZ());
 
-            sender.sendMessage("Set spawn for this world to (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ")");
+            sender.sendMessage(ChatColor.GREEN + "Set spawn for this world to (" + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ")");
         }/* else if (command.equalsIgnoreCase("clear")) {
             if (permission == null || !permission.hasPermission(playerName,"command_clear")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_clear)");
@@ -477,7 +477,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage("This command added for Kurama_09");
             }
-        } else if ("setTitle".equalsIgnoreCase(command)) {
+        }/* else if ("setTitle".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"title_self")) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (title_self)");
                 return true;
@@ -506,7 +506,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             } else {
                 sender.sendMessage(ChatColor.RED + "/setTitle <title>");
             }
-        }/* else if ("hide".equalsIgnoreCase(command)) {
+        }*//* else if ("hide".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_vanish") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_vanish)");
                 return true;
@@ -607,7 +607,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
                 p.setAllowFlight(true);
                 p.sendMessage(ChatColor.BLUE + "Flying is now enabled");
             }
-        }*/ else if ("seed".equalsIgnoreCase(command)) {
+        }*//* else if ("seed".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_seed") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_seed)");
                 return true;
@@ -617,7 +617,7 @@ public class ExtCommands extends JavaPlugin implements Listener {
             World w = p.getWorld();
             sender.sendMessage(ChatColor.BLUE + "Seed for " + w.getName() + ": " + w.getSeed());
 
-        }/* else if ("killzig".equalsIgnoreCase(command)) {
+        }*//* else if ("killzig".equalsIgnoreCase(command)) {
             if (permission == null || !permission.hasPermission(playerName,"command_killzig") || "CONSOLE".equalsIgnoreCase(playerName)) {
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command (command_killzig)");
                 return true;
