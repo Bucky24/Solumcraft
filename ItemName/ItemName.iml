@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" scope="PROVIDED" />
-    <orderEntry type="module" module-name="SpongeBridge" scope="PROVIDED" />
+    <orderEntry type="library" name="craftbukkit-1.14.3" level="project" />
   </component>
 </module>

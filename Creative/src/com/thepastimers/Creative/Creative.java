@@ -22,6 +22,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -149,37 +150,34 @@ public class Creative extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void eggThrow(PlayerEggThrowEvent event) {
+        Player p = event.getPlayer();
+        if (p.getGameMode() == GameMode.CREATIVE) {
+            if (permission == null || !permission.hasPermission(p.getName(), allPerms)) {
+                event.setHatching(false);
+            }
+        }
+    }
+
+    /*@EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
-        /*if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
+        getLogger().info("spawned" + event.getSpawnReason());
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_IRONGOLEM
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN
                 || event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.BUILD_WITHER) {
-            Player p = event.getPlayer();
-            if (p == null) {
-                return;
-            }
-            if (p.getGameMode() == GameMode.CREATIVE) {
-                if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                    event.setCancelled(true);
-                }
-            }
-        }*/
-    }
-
-    @EventHandler
-    public void playerThrow(PlayerEggThrowEvent event) {
-        LivingEntity le = (LivingEntity)event.getEgg().getShooter();
-        if (le instanceof Player) {
-            Player p = (Player)le;
-            if (event.getHatchingType() != EntityType.CHICKEN) {
+            LivingEntity entity = event.
+            getLogger().info(entity.getName());
+            if (entity != null && entity instanceof Player) {
+                Player p = (Player)entity;
                 if (p.getGameMode() == GameMode.CREATIVE) {
-                    if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
-                        event.setHatching(false);
+                    if (permission == null || !permission.hasPermission(p.getName(), allPerms)) {
+                        event.setCancelled(true);
                     }
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void playerOpen(PlayerInteractEvent event) {
@@ -192,10 +190,33 @@ public class Creative extends JavaPlugin implements Listener {
             return;
         }
 
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            // not a great way to check this, does not work for some monster eggs
+            if (event.getMaterial().name().equals("MONSTER_EGG")) {
+                if (p.getGameMode() == GameMode.CREATIVE) {
+                    if (permission == null || !permission.hasPermission(p.getName(), allPerms)) {
+                        p.sendMessage(ChatColor.RED + "You cannot throw that while in creative mode (" + allPerms + ")");
+                        event.setCancelled(true);
+                    }
+                }
+            }
+        }
+
         if (block.getType() == Material.CHEST || block.getType() == Material.FURNACE
                 || block.getType() == Material.ENDER_CHEST || block.getType() == Material.TRAPPED_CHEST
                 || block.getType() == Material.DISPENSER || block.getType() == Material.HOPPER
-                || block.getType() == Material.HOPPER_MINECART || block.getType() == Material.DROPPER) {
+                || block.getType() == Material.HOPPER_MINECART || block.getType() == Material.DROPPER
+                || block.getType() == Material.SHULKER_BOX || block.getType() == Material.BARREL
+                || block.getType() == Material.BLAST_FURNACE || block.getType() == Material.SMOKER
+                || block.getType() == Material.BLACK_SHULKER_BOX || block.getType() == Material.BLACK_SHULKER_BOX
+                || block.getType() == Material.BLUE_SHULKER_BOX || block.getType() == Material.BROWN_SHULKER_BOX
+                || block.getType() == Material.CYAN_SHULKER_BOX || block.getType() == Material.GRAY_SHULKER_BOX
+                || block.getType() == Material.GREEN_SHULKER_BOX || block.getType() == Material.LIGHT_BLUE_SHULKER_BOX
+                || block.getType() == Material.LIGHT_GRAY_SHULKER_BOX || block.getType() == Material.LIME_SHULKER_BOX
+                || block.getType() == Material.MAGENTA_SHULKER_BOX|| block.getType() == Material.ORANGE_SHULKER_BOX
+                || block.getType() == Material.PINK_SHULKER_BOX || block.getType() == Material.PURPLE_SHULKER_BOX
+                || block.getType() == Material.RED_SHULKER_BOX || block.getType() == Material.WHITE_SHULKER_BOX
+                || block.getType() == Material.YELLOW_SHULKER_BOX) {
             if (p.getGameMode() == GameMode.CREATIVE) {
                 if (permission == null || !permission.hasPermission(p.getName(),allPerms)) {
                     p.sendMessage(ChatColor.RED + "You cannot interact with that while in creative mode (" + allPerms + ")");
@@ -284,7 +305,7 @@ public class Creative extends JavaPlugin implements Listener {
                             return true;
                         }
                     }*/
-                    /*PlayerInventory inv = p.getInventory();
+                    PlayerInventory inv = p.getInventory();
 
                     ItemStack[] contents = inv.getContents();
 
@@ -294,14 +315,14 @@ public class Creative extends JavaPlugin implements Listener {
                             empty = false;
                             break;
                         }
-                    }*/
+                    }
 
-                    /*for (ItemStack is : inv.getArmorContents()) {
+                    for (ItemStack is : inv.getArmorContents()) {
                         if (is != null && is.getType() != Material.AIR) {
                             empty = false;
                             break;
                         }
-                    }*/
+                    }
 
                     /*if (permission.hasPermission(playerName,creativePlot)) {
                         if (plot == null) {
@@ -319,12 +340,12 @@ public class Creative extends JavaPlugin implements Listener {
                         }
                     }*/
 
-                    /*if (!empty) {
+                    if (!empty) {
                         if (permission == null || !permission.hasPermission(playerName,allPerms)) {
                             p.sendMessage(ChatColor.RED + "Please empty your inventory before activating creative mode.");
                             return true;
                         }
-                    }*/
+                    }
 
                     p.setGameMode(GameMode.CREATIVE);
                 } else if ("0".equalsIgnoreCase(mode) && p.getGameMode() == GameMode.CREATIVE) {

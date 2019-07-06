@@ -5,8 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-//import org.bukkit.enchantments.Enchantment;
-//import org.bukkit.entity.Item;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -117,7 +117,7 @@ public class ItemName extends JavaPlugin {
         return ret;
     }*/
 
-    /*public int countInInventory(String item, String player) {
+    public int countInInventory(String item, String player) {
         return countInInventory(item,player,false);
     }
 
@@ -187,24 +187,24 @@ public class ItemName extends JavaPlugin {
         while (amountDone < amount) {
             int toDoTotal = is.getMaxStackSize();
             if (amountDone + toDoTotal > amount) {
-                toDoTotal = amount-amountDone;
+                toDoTotal = amount - amountDone;
             }
 
             int toDo = toDoTotal;
 
-            for (int i=0;i<items.length;i++) {
+            for (int i = 0; i < items.length; i++) {
                 ItemStack is3 = items[i];
                 if (is3 != null && is3.getType() == is.getType() && is3.getDurability() == is.getDurability()) {
                     if (is3.getAmount() + toDo <= is.getMaxStackSize()) {
                         is3.setAmount(is3.getAmount() + toDo);
                         break;
                     } else {
-                        toDo -= (is.getMaxStackSize()-is3.getAmount());
+                        toDo -= (is.getMaxStackSize() - is3.getAmount());
                         is3.setAmount(is.getMaxStackSize());
                     }
                 }
                 if (items[i] == null) {
-                    ItemStack is2 = new ItemStack(is.getType(),toDo);
+                    ItemStack is2 = new ItemStack(is.getType(), toDo);
                     is2.setDurability(is.getDurability());
                     is2.setData(is.getData());
                     is2.setItemMeta(is.getItemMeta());
@@ -310,11 +310,11 @@ public class ItemName extends JavaPlugin {
         if (is == null) return false;
         
         Material t = is.getType();
-        if (t == Material.WOOD_SPADE || t == Material.STONE_SPADE || t == Material.IRON_SPADE || t == Material.GOLD_SPADE || t == Material.DIAMOND_SPADE
-                || t == Material.WOOD_AXE || t == Material.STONE_AXE || t == Material.IRON_AXE || t == Material.GOLD_AXE || t == Material.DIAMOND_AXE
-                || t == Material.WOOD_PICKAXE || t == Material.STONE_PICKAXE || t == Material.IRON_PICKAXE || t == Material.GOLD_PICKAXE || t == Material.DIAMOND_PICKAXE
-                || t == Material.WOOD_HOE || t == Material.STONE_HOE || t == Material.IRON_HOE || t == Material.GOLD_HOE || t == Material.DIAMOND_HOE
-                || t == Material.WOOD_SWORD || t == Material.STONE_SWORD || t == Material.IRON_SWORD || t == Material.GOLD_SWORD || t == Material.DIAMOND_SWORD
+        if (t == Material.WOODEN_SHOVEL || t == Material.STONE_SHOVEL || t == Material.IRON_SHOVEL || t == Material.GOLDEN_SHOVEL || t == Material.DIAMOND_SHOVEL
+                || t == Material.WOODEN_AXE || t == Material.STONE_AXE || t == Material.IRON_AXE || t == Material.GOLDEN_AXE || t == Material.DIAMOND_AXE
+                || t == Material.WOODEN_PICKAXE || t == Material.STONE_PICKAXE || t == Material.IRON_PICKAXE || t == Material.GOLDEN_PICKAXE || t == Material.DIAMOND_PICKAXE
+                || t == Material.WOODEN_HOE || t == Material.STONE_HOE || t == Material.IRON_HOE || t == Material.GOLDEN_HOE || t == Material.DIAMOND_HOE
+                || t == Material.WOODEN_SWORD || t == Material.STONE_SWORD || t == Material.IRON_SWORD || t == Material.GOLDEN_SWORD || t == Material.DIAMOND_SWORD
                 || t == Material.BOW || t == Material.ANVIL || t == Material.FLINT_AND_STEEL || t == Material.FISHING_ROD) {
             return true;
         }
@@ -331,15 +331,15 @@ public class ItemName extends JavaPlugin {
         if (is == null) return false;
 
         Material t = is.getType();
-        if (t == Material.IRON_BOOTS || t == Material.IRON_LEGGINGS || t == Material.IRON_CHESTPLATE || t == Material.IRON_HELMET || t == Material.IRON_BARDING
-                || t == Material.GOLD_BOOTS || t == Material.GOLD_LEGGINGS || t == Material.GOLD_CHESTPLATE || t == Material.GOLD_HELMET || t == Material.GOLD_BARDING
-                || t == Material.DIAMOND_BOOTS || t == Material.DIAMOND_LEGGINGS || t == Material.DIAMOND_CHESTPLATE || t == Material.DIAMOND_HELMET || t == Material.DIAMOND_BARDING
+        if (t == Material.IRON_BOOTS || t == Material.IRON_LEGGINGS || t == Material.IRON_CHESTPLATE || t == Material.IRON_HELMET || t == Material.IRON_HORSE_ARMOR
+                || t == Material.GOLDEN_BOOTS || t == Material.GOLDEN_LEGGINGS || t == Material.GOLDEN_CHESTPLATE || t == Material.GOLDEN_HELMET || t == Material.GOLDEN_HORSE_ARMOR
+                || t == Material.DIAMOND_BOOTS || t == Material.DIAMOND_LEGGINGS || t == Material.DIAMOND_CHESTPLATE || t == Material.DIAMOND_HELMET || t == Material.DIAMOND_HORSE_ARMOR
                 || t == Material.LEATHER_BOOTS || t == Material.LEATHER_LEGGINGS || t == Material.LEATHER_CHESTPLATE || t == Material.LEATHER_HELMET) {
             return true;
         }
 
         return false;
-    }*/
+    }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         String playerName = "";

@@ -9,7 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="library" name="craftbukkit-1.13.1" level="project" />
     <orderEntry type="module" module-name="BukkitBridge" />
+    <orderEntry type="library" name="craftbukkit-1.14.3" level="project" />
   </component>
 </module>
