@@ -23,6 +23,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.Potion;
@@ -392,6 +393,28 @@ public class Plot extends Plugin implements Listener {
                         pl.sendMessage(ChatColor.RED + "You do not have permissions to interact with this");
                         event.setCancelled(true);
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority=EventPriority.LOW)
+    public void frameInteract(HangingBreakByEntityEvent event) {
+        Entity remover = event.getRemover();
+
+        if (!(remover instanceof Player)) {
+            return;
+        }
+
+        Player pl = (Player)remover;
+
+        PlotData pd = plotAt(event.getEntity().getLocation());
+        if (pd != null) {
+            if (!pl.getName().equalsIgnoreCase(pd.getOwner())) {
+                PlotPerms pp = getPlotPermobject(pd,pl.getName());
+                if (pp == null || pp.getPerm() < PlotPerms.RESIDENT) {
+                    pl.sendMessage(ChatColor.RED + "You do not have permissions to interact with this");
+                    event.setCancelled(true);
                 }
             }
         }
