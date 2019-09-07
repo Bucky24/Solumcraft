@@ -13,17 +13,21 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.Potion;
 
+import java.util.Iterator;
 import java.util.List;
 
 //import com.thepastimers.Logger.Logger;
@@ -635,11 +639,11 @@ public class Plot extends Plugin implements Listener {
         handleMove(event.getFrom(),event.getTo(),event.getPlayer());
     }*/
 
-    /*@EventHandler(priority= EventPriority.LOWEST)
+    @EventHandler(priority= EventPriority.LOWEST)
     public void damage(EntityDamageByEntityEvent event) {
-        if (logger != null) {
-            logger.logEvent("plot_EntityDamageByEntityEvent");
-        }
+        //if (logger != null) {
+        //    logger.logEvent("plot_EntityDamageByEntityEvent");
+        //}
         Entity damaged  = event.getEntity();
         Entity damager = event.getDamager();
 
@@ -682,7 +686,7 @@ public class Plot extends Plugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }*/
+    }
 
     /*@EventHandler(priority= EventPriority.LOWEST)
     public void death(PlayerDeathEvent event) {
@@ -713,11 +717,11 @@ public class Plot extends Plugin implements Listener {
         }
     }*/
 
-    /*@EventHandler(priority= EventPriority.LOWEST)
+    @EventHandler(priority= EventPriority.LOWEST)
     public void normalDamage(EntityDamageEvent event) {
-        if (logger != null) {
-            logger.logEvent("plot_EntityDamageEvent");
-        }
+        //if (logger != null) {
+        //    logger.logEvent("plot_EntityDamageEvent");
+        //}
         if (event.getEntityType() != EntityType.PLAYER) {
             return;
         }
@@ -735,7 +739,7 @@ public class Plot extends Plugin implements Listener {
         if (!pd.isPve()) {
             event.setCancelled(true);
         }
-    }*/
+    }
 
     /*@EventHandler(priority= EventPriority.LOWEST)
     public void spawn(CreatureSpawnEvent event) {
@@ -756,7 +760,7 @@ public class Plot extends Plugin implements Listener {
         }
     }*/
 
-    /*@EventHandler(priority= EventPriority.LOWEST)
+    @EventHandler(priority= EventPriority.LOWEST)
     public void explode(EntityExplodeEvent event) {
         //getLogger().info("Explosion!");
         Location l = event.getLocation();
@@ -786,7 +790,7 @@ public class Plot extends Plugin implements Listener {
                 event.setCancelled(true);
             }
         }
-    }*/
+    }
 
     /*@EventHandler(priority= EventPriority.LOWEST)
     public void fireSpread(BlockSpreadEvent event) {
@@ -1130,8 +1134,8 @@ public class Plot extends Plugin implements Listener {
                         sender.sendMessage("/" + command + " setperm <player> <coowner|resident|worker>");
                     }
                 } else if (subCommand.equalsIgnoreCase("removeperm")) {
-                    Player p = (Player)sender;
-                    if (!permission.hasPermission(playerName,"plot_plotcreate")) {
+                    Player p = (Player) sender;
+                    if (!permission.hasPermission(playerName, "plot_plotcreate")) {
                         sender.sendMessage("You don't have permissions for this command (plot_plot)");
                         return true;
                     }
@@ -1139,14 +1143,14 @@ public class Plot extends Plugin implements Listener {
                     if (args.length > 1) {
                         String player = args[1];
 
-                        PlotData pd = plotAt(p.getLocation().getBlockX(),p.getLocation().getBlockZ(),p.getWorld().getName(),subPlot);
+                        PlotData pd = plotAt(p.getLocation().getBlockX(), p.getLocation().getBlockZ(), p.getWorld().getName(), subPlot);
 
                         if (pd == null) {
                             sender.sendMessage("You are not currently inside a plot.");
                             return true;
                         }
 
-                        int perms = getPlotPerms(pd,playerName);
+                        int perms = getPlotPerms(pd, playerName);
                         if (perms < PlotPerms.COOWNER) {
                             sender.sendMessage("You don't have permission to do this");
                             return true;
@@ -1160,7 +1164,7 @@ public class Plot extends Plugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " removeperm <player>");
                     }
-                }/* else if ("flag".equalsIgnoreCase(subCommand)) {
+                } else if ("flag".equalsIgnoreCase(subCommand)) {
                     Player p = (Player)sender;
                     if (!permission.hasPermission(playerName,"plot_plotflag")) {
                         sender.sendMessage("You don't have permissions for this command (plot_plotflag)");
@@ -1228,7 +1232,7 @@ public class Plot extends Plugin implements Listener {
                     } else {
                         sender.sendMessage("/" + command + " flag <pvp|pve|chest_protect> <on|off>");
                     }
-                }*/ else if ("name".equalsIgnoreCase(subCommand)) {
+                } else if ("name".equalsIgnoreCase(subCommand)) {
 
                     Player p = (Player)sender;
                     if (!permission.hasPermission(playerName,"plot_plot")) {
