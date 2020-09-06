@@ -1,6 +1,7 @@
 package com.thepastimers.UserMap;
 
 import com.thepastimers.Database.Database;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,11 +60,7 @@ public class UserMap extends JavaPlugin implements Listener {
         if (player == null) {
             return null;
         }
-        UserMapping um = UserMapping.getMappingForPlayer(player);
-        if (um == null) {
-            return null;
-        }
-        return um;
+        return UserMapping.getMappingForPlayer(player);
     }
 
     public String getUUID(Player player) {
@@ -87,10 +84,10 @@ public class UserMap extends JavaPlugin implements Listener {
             return p.getUniqueId().toString();
         }
 
-        OfflinePlayer op = getServer().getOfflinePlayer(player);
-        if (op != null) {
+        OfflinePlayer[] ops = Bukkit.getOfflinePlayers();
+        for (OfflinePlayer op : ops) {
             Player pop = op.getPlayer();
-            if (pop != null) {
+            if (pop != null && pop.getName().equals(player)) {
                 return pop.getUniqueId().toString();
             }
         }
@@ -103,8 +100,7 @@ public class UserMap extends JavaPlugin implements Listener {
     }
 
     public UUID getId(String uuid) {
-        UUID id = UUID.fromString(uuid);
-        return id;
+        return UUID.fromString(uuid);
     }
 
     public void updateUUID(Player p) {

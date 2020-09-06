@@ -1,7 +1,9 @@
 name: Home
-version: 1.7
+version: "1.7"
+api-version: "1.15"
 main: com.thepastimers.Home.Home
-softdepend: [Database,Permission,Rank,UserMap]
+depend: [Database, Permission]
+softdepend: [Rank,UserMap]
 commands:
     home:
         description: home command

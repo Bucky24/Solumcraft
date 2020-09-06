@@ -1,7 +1,9 @@
 name: ExtCommands
-version: 1.8
+version: "1.9"
+api-version: "1.15"
 main: com.thepastimers.ExtCommands.ExtCommands
-softdepend: [Permission, Metrics,Rank,Worlds,ItemName,Coord]
+depend: [Permission]
+softdepend: [Metrics,Rank,Worlds,ItemName,Coord]
 commands:
     spawn:
         description: teleports to spawn

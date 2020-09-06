@@ -9,10 +9,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" />
     <orderEntry type="module" module-name="Rank" />
-    <orderEntry type="module" module-name="Chat" />
     <orderEntry type="module" module-name="Database" />
     <orderEntry type="module" module-name="Coord" />
-    <orderEntry type="library" name="craftbukkit-1.13.1" level="project" />
     <orderEntry type="module" module-name="BukkitBridge" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
   </component>
 </module>

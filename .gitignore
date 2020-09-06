@@ -4,3 +4,4 @@ plugins
 out
 web_apps/chat/setup.php
 .idea/workspace.xml
+spigot_stuff

@@ -14,6 +14,6 @@
     <orderEntry type="module" module-name="UserMap" />
     <orderEntry type="module" module-name="Rank" />
     <orderEntry type="library" name="guava-18.0" level="project" />
-    <orderEntry type="library" name="spongeforge-1.10.2-2002-5.0.0-BETA-1550" level="project" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
   </component>
 </module>

@@ -1,5 +1,6 @@
 name: Creative
-version: 1.5
+version: "1.5"
+api-version: "1.15"
 main: com.thepastimers.Creative.Creative
 softdepend: [Database,Permission,Plot,Worlds]
 commands:

@@ -112,31 +112,6 @@ public class Chat extends Plugin implements Listener {
         chatLog.flush();
     }
 
-    public void register(Class c, JavaPlugin plugin) {
-        register(c,plugin,1);
-    }
-
-    public void register(Class c, JavaPlugin plugin, int priority) {
-        if (listeners == null) {
-            listeners = new HashMap<Integer,Map<Class,JavaPlugin>>();
-        }
-        Map<Class,JavaPlugin> listenerMap = listeners.get(priority);
-        if (listenerMap == null) {
-            listenerMap = new HashMap<Class, JavaPlugin>();
-            listeners.put(priority,listenerMap);
-        }
-        listenerMap.put(c,plugin);
-    }
-
-    public void registerCommand(String command, Class c, JavaPlugin plugin) {
-        Map<Class,JavaPlugin> classMap = new HashMap<Class, JavaPlugin>();
-        classMap.put(c,plugin);
-        if (commandListeners == null) {
-            commandListeners = new HashMap<String, Map<Class, JavaPlugin>>();
-        }
-        commandListeners.put(command, classMap);
-    }
-
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         sendChat(event.getMessage(),event.getPlayer().getName());
@@ -346,5 +321,48 @@ public class Chat extends Plugin implements Listener {
             return false;
         }
         return true;
+    }
+
+    //////////////////////////////////////////////
+    // Chat modifiers
+    //////////////////////////////////////////////
+
+    public void handleRank(ChatData obj) {
+        //getLogger().info("Got dochat for " + obj.getMessage());
+        //getLogger().info("player is" + obj.getPlayer());
+
+        String playerUuid = userMap.getUUID(obj.getPlayer());
+        if (UserMap.NO_USER.equalsIgnoreCase(playerUuid)) {
+            // user couldn't be found
+            return;
+        }
+
+        PlayerRank playerRank = getRankObject(playerUuid);
+        RankData rank;
+        String rankString = "";
+        if (playerRank != null) {
+            rank = RankData.getDataForRank(playerRank.getRank());
+        } else {
+            // Note all should be a constant somewhere or better in DB
+            rank = RankData.getDataForRank("all");
+        }
+        if (rank != null) {
+            rankString = rank.getFormat() + " ";
+        }
+        //getLogger().info(rank + " " + rankString);
+
+        String title = "";
+        PlayerTitle playerTitle = getTitleObject(playerUuid);
+        if (playerTitle != null) {
+            title = playerTitle.getTitle() + " ";
+        }
+
+        //getLogger().info(rank.getFormat());
+        obj.setPlayerString(Text.make()
+                .compound(chat.replaceColor(rankString))
+                .style(TextStyle.RESET)
+                .compound(chat.replaceColor(title))
+                .style(TextStyle.RESET)
+                .compound(obj.getPlayerString()));
     }
 }

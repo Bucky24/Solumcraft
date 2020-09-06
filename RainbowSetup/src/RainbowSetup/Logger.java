@@ -1,7 +1,5 @@
 package RainbowSetup;
 
-import com.sun.deploy.util.ArrayUtil;
-
 import java.io.*;
 
 /**

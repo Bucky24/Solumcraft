@@ -1,5 +1,6 @@
 name: Permission
-version: 1.6
+version: "1.6"
+api-version: "1.15"
 main: com.thepastimers.Permission.Permission
 depends: [BukkitBridge]
 softdepend: [Database,Rank,UserMap]

@@ -9,8 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Database" scope="PROVIDED" />
     <orderEntry type="module" module-name="UserMap" scope="PROVIDED" />
-    <orderEntry type="module" module-name="Chat" />
-    <orderEntry type="library" name="craftbukkit-1.13.1" level="project" />
     <orderEntry type="module" module-name="BukkitBridge" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
   </component>
 </module>

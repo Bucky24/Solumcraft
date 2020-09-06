@@ -1,7 +1,7 @@
 package com.thepastimers.ExtCommands;
 
 //import com.thepastimers.Chat.Chat;
-import com.thepastimers.Chat.CommandData;
+//import com.thepastimers.Chat.CommandData;
 import com.thepastimers.Coord.Coord;
 import com.thepastimers.Coord.CoordData;
 //import com.thepastimers.ItemName.ItemName;
@@ -24,6 +24,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 //import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.plugin.java.JavaPlugin;
 //import org.kitteh.vanish.VanishManager;
 //import org.kitteh.vanish.VanishPlugin;
@@ -128,13 +129,14 @@ public class ExtCommands extends JavaPlugin implements Listener {
         }
 
         if (!event.isCancelled()) {
-            ItemStack is = p.getItemInHand();
+            ItemStack is = p.getInventory().getItemInMainHand();
             if (is.getType() == Material.WOODEN_AXE || is.getType() == Material.WOODEN_HOE || is.getType() == Material.WOODEN_PICKAXE || is.getType() == Material.WOODEN_SHOVEL ||
                 is.getType() == Material.STONE_AXE || is.getType() == Material.STONE_HOE || is.getType() == Material.STONE_PICKAXE || is.getType() == Material.STONE_SHOVEL ||
                 is.getType() == Material.IRON_AXE || is.getType() == Material.IRON_HOE || is.getType() == Material.IRON_PICKAXE || is.getType() == Material.IRON_SHOVEL ||
                 is.getType() == Material.GOLDEN_AXE || is.getType() == Material.GOLDEN_HOE || is.getType() == Material.GOLDEN_PICKAXE || is.getType() == Material.GOLDEN_SHOVEL ||
                 is.getType() == Material.DIAMOND_AXE || is.getType() == Material.DIAMOND_HOE || is.getType() == Material.DIAMOND_PICKAXE || is.getType() == Material.DIAMOND_SHOVEL) {
-                short durab = is.getDurability();
+                Damageable meta = (Damageable)is.getItemMeta();
+                int durab = meta.getDamage();
                 durab ++;
                 short max = is.getType().getMaxDurability();
                 if (durab >= max-3 && durab <= max) {

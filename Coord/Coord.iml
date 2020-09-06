@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Permission" />
-    <orderEntry type="module" module-name="SpongeBridge" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
+    <orderEntry type="module" module-name="BukkitBridge" />
   </component>
 </module>

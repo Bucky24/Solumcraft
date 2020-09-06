@@ -1,5 +1,6 @@
 package com.thepastimers.Coord;
 
+import BukkitBridge.Text;
 import com.thepastimers.Permission.Permission;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -178,7 +179,7 @@ public class Coord extends JavaPlugin implements Listener {
 
         if (command.equalsIgnoreCase("coord")) {
             if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
-                sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
+                //sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
                 return true;
             }
             if (args.length > 0) {
@@ -187,7 +188,7 @@ public class Coord extends JavaPlugin implements Listener {
                 if (subcommand.equalsIgnoreCase("clear")) {
                     if (args.length > 1) {
                         if (permission == null || !permission.hasPermission(playerName,"coord_admin")) {
-                            sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_admin)"));
+                            //sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_admin)"));
                             return true;
                         }
                         String player = args[1];
@@ -203,7 +204,7 @@ public class Coord extends JavaPlugin implements Listener {
                     }
                 } else if ("set".equalsIgnoreCase(subcommand)) {
                     if (permission == null || !permission.hasPermission(playerName,"coord_coord")) {
-                        sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
+                        //sender.sendMessage(Text.make().color(ChatColor.RED).text("You do not have permissions for this command (coord_coord)"));
                         return true;
                     }
 

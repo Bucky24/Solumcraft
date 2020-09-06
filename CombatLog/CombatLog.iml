@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="PluginReference" level="project" />
     <orderEntry type="module" module-name="RainbowSetup" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
   </component>
 </module>

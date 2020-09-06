@@ -1,5 +1,6 @@
 name: Database
-version: 3.0
+version: "3.0"
+api-version: "1.15"
 main: com.thepastimers.Database.Database
 depend: [BukkitBridge]
 commands:

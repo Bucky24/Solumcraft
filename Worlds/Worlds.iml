@@ -13,5 +13,6 @@
     <orderEntry type="module" module-name="Inventory" />
     <orderEntry type="module" module-name="UserMap" />
     <orderEntry type="module" module-name="SpongeBridge" />
+    <orderEntry type="library" name="spigot-1.16.2" level="project" />
   </component>
 </module>
