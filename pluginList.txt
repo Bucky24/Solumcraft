@@ -1,5 +1,7 @@
 This list is current as of 2018-3-14
 
+Currently migrated to latest spigot (
+
 Currently migrated and working on sponge (1.12.2):
 Database
 Permissions
